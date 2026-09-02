@@ -1,0 +1,32 @@
+name: Build APK with Docker Buildozer
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Build with Docker
+      run: |
+        docker run --rm \
+          -v $(pwd):/home/user/hostcwd \
+          -v ~/.buildozer:/home/user/.buildozer \
+          kivy/buildozer \
+          bash -c "cd /home/user/hostcwd && buildozer -v android debug"
+    
+    - name: List APK
+      run: ls -la bin/ || echo "No bin directory"
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: CryptoMasterX1-APK
+        path: bin/*.apk
+        if-no-files-found: warn
