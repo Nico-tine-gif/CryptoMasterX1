@@ -6,65 +6,45 @@ on:
   workflow_dispatch:
 
 jobs:
-  # First job: Code Safety
   safety:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
       - name: Install safety tools
-        run: |
-          pip install bandit safety
-      
-      - name: Run Bandit security scan
+        run: pip install bandit
+      - name: Run Bandit
         run: bandit -r . -f json -o bandit-report.json || true
-      
-      - name: Upload safety report
+      - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: safety-report
           path: bandit-report.json
           if-no-files-found: warn
 
-  # Second job: Build APK (runs after safety)
   apk:
     needs: safety
     runs-on: ubuntu-latest
-    if: always()  # Run even if safety fails
-    
+    if: always()
     steps:
       - uses: actions/checkout@v4
-      
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
-      - name: Install system dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            git zip unzip openjdk-17-jdk \
-            python3-pip autoconf libtool \
-            pkg-config zlib1g-dev libncurses5-dev \
-            libncursesw5-dev libtinfo5 cmake \
-            libffi-dev libssl-dev
-      
-      - name: Install Python packages
-        run: |
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
           pip install --upgrade pip
           pip install buildozer cython
-      
       - name: Build APK
         run: |
           mkdir -p .buildozer
           buildozer -v android debug || true
-      
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
