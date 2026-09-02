@@ -1,13 +1,12 @@
-name: Python Code Safety Check
+name: Python Code Safety
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  safety-check:
+  safety:
     runs-on: ubuntu-latest
     
     steps:
@@ -16,18 +15,16 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.11'
     
-    - name: Install dependencies
+    - name: Install tools
       run: |
-        pip install bandit
-        pip install safety
+        pip install bandit safety
     
-    - name: Run Bandit (security linter)
-      run: |
-        bandit -r . -f json -o bandit-report.json || true
+    - name: Run Bandit
+      run: bandit -r . -f json -o bandit-report.json || true
     
-    - name: Upload Bandit report
+    - name: Upload report
       uses: actions/upload-artifact@v4
       with:
         name: bandit-report
