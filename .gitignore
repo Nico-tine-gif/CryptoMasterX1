@@ -43,3 +43,4 @@ Thumbs.db
 *.jks
 *.keystore
 .github/workflows/
+.github/
