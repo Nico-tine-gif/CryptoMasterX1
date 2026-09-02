@@ -1,0 +1,1709 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/build_backup_20260826_150523/__pycache__/phase3_account_verify.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\n============================================================\nCRYPTOMASTERX1\nPHASE 3 — BINANCE ACCOUNT IDENTITY & PERMISSION VERIFICATION\n============================================================\n\nREAD-ONLY ACCOUNT VERIFICATION\n\nThis module:\n    - connects to Binance Spot\n    - authenticates with API key + secret\n    - verifies the actual Binance account\n    - checks Spot trading permission\n    - checks withdrawal permission\n    - records the result safely\n    - NEVER submits an order\n    - NEVER cancels an order\n    - NEVER enables execution\n    - NEVER enables withdrawals\n\nEXECUTION REMAINS LOCKED.\n============================================================\n')
+              STORE_NAME               0 (__doc__)
+
+ 27           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (('annotations',))
+              IMPORT_NAME              1 (__future__)
+              IMPORT_FROM              2 (annotations)
+              STORE_NAME               2 (annotations)
+              POP_TOP
+
+ 29           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              3 (hashlib)
+              STORE_NAME               3 (hashlib)
+
+ 30           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              4 (hmac)
+              STORE_NAME               4 (hmac)
+
+ 31           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              5 (json)
+              STORE_NAME               5 (json)
+
+ 32           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              6 (os)
+              STORE_NAME               6 (os)
+
+ 33           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              7 (sys)
+              STORE_NAME               7 (sys)
+
+ 34           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              8 (time)
+              STORE_NAME               8 (time)
+
+ 35           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('datetime', 'timezone'))
+              IMPORT_NAME              9 (datetime)
+              IMPORT_FROM              9 (datetime)
+              STORE_NAME               9 (datetime)
+              IMPORT_FROM             10 (timezone)
+              STORE_NAME              10 (timezone)
+              POP_TOP
+
+ 36           LOAD_CONST               1 (0)
+              LOAD_CONST               5 (('Path',))
+              IMPORT_NAME             11 (pathlib)
+              IMPORT_FROM             12 (Path)
+              STORE_NAME              12 (Path)
+              POP_TOP
+
+ 37           LOAD_CONST               1 (0)
+              LOAD_CONST               6 (('urlencode',))
+              IMPORT_NAME             13 (urllib.parse)
+              IMPORT_FROM             14 (urlencode)
+              STORE_NAME              14 (urlencode)
+              POP_TOP
+
+ 39           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME             15 (requests)
+              STORE_NAME              15 (requests)
+
+ 46           LOAD_CONST               7 ('CryptoMasterX1')
+              STORE_NAME              16 (PROJECT)
+
+ 47           LOAD_CONST               8 ('PHASE_3')
+              STORE_NAME              17 (PHASE)
+
+ 48           LOAD_CONST               9 ('1.0.0')
+              STORE_NAME              18 (VERSION)
+
+ 50           LOAD_CONST              10 ('https://api.binance.com')
+              STORE_NAME              19 (BASE_URL)
+
+ 51           LOAD_CONST              11 ('/api/v3/account')
+              STORE_NAME              20 (ACCOUNT_ENDPOINT)
+
+ 53           LOAD_NAME               12 (Path)
+              PUSH_NULL
+              LOAD_NAME               21 (__file__)
+              CALL                     1
+              LOAD_ATTR               45 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               46 (parent)
+              STORE_NAME              24 (ROOT)
+
+ 54           LOAD_NAME               24 (ROOT)
+              LOAD_CONST              12 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              25 (STATE_DIR)
+
+ 55           LOAD_NAME               24 (ROOT)
+              LOAD_CONST              13 ('reports')
+              BINARY_OP               11 (/)
+              STORE_NAME              26 (REPORT_DIR)
+
+ 57           LOAD_NAME               26 (REPORT_DIR)
+              LOAD_CONST              14 ('phase3_account_verification.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              27 (REPORT_FILE)
+
+ 60           LOAD_CONST              15 (False)
+              STORE_NAME              28 (EXECUTION_AUTHORIZED)
+
+ 61           LOAD_CONST              15 (False)
+              STORE_NAME              29 (ORDER_SUBMISSION)
+
+ 62           LOAD_CONST              15 (False)
+              STORE_NAME              30 (BOT_ARMED)
+
+ 63           LOAD_CONST              15 (False)
+              STORE_NAME              31 (LIVE_EXECUTION)
+
+ 64           LOAD_CONST              16 ('LOCKED')
+              STORE_NAME              32 (TRANSMISSION)
+
+ 71           LOAD_CONST              17 ('\x1b[0m')
+              STORE_NAME              33 (RESET)
+
+ 72           LOAD_CONST              18 ('\x1b[92m')
+              STORE_NAME              34 (GREEN)
+
+ 73           LOAD_CONST              19 ('\x1b[91m')
+              STORE_NAME              35 (RED)
+
+ 74           LOAD_CONST              20 ('\x1b[93m')
+              STORE_NAME              36 (YELLOW)
+
+ 75           LOAD_CONST              21 ('\x1b[96m')
+              STORE_NAME              37 (CYAN)
+
+ 76           LOAD_CONST              22 ('\x1b[1m')
+              STORE_NAME              38 (BOLD)
+
+ 79           LOAD_CONST              23 (<code object now_utc at 0x7645631f10, file "./build_backup_20260826_150523/phase3_account_verify.py", line 79>)
+              MAKE_FUNCTION
+              STORE_NAME              39 (now_utc)
+
+ 83           LOAD_CONST              24 (<code object ensure_directories at 0x7645613cf0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 83>)
+              MAKE_FUNCTION
+              STORE_NAME              40 (ensure_directories)
+
+ 88           LOAD_CONST              33 (('value', 'str'))
+              LOAD_CONST              25 (<code object sha256_short at 0x76455c1bb0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 88>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              41 (sha256_short)
+
+ 94           LOAD_CONST              34 ((True,))
+              LOAD_CONST              26 (<code object print_status at 0x7645631b80, file "./build_backup_20260826_150523/phase3_account_verify.py", line 94>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              42 (print_status)
+
+106           LOAD_CONST              27 (<code object get_credentials at 0xb400007795eee170, file "./build_backup_20260826_150523/phase3_account_verify.py", line 106>)
+              MAKE_FUNCTION
+              STORE_NAME              43 (get_credentials)
+
+151           LOAD_CONST              28 (<code object signed_account_request at 0xb400007765eb34d0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 151>)
+              MAKE_FUNCTION
+              STORE_NAME              44 (signed_account_request)
+
+189           LOAD_CONST              29 (<code object sanitize_account at 0x7645380390, file "./build_backup_20260826_150523/phase3_account_verify.py", line 189>)
+              MAKE_FUNCTION
+              STORE_NAME              45 (sanitize_account)
+
+214           LOAD_CONST              30 (<code object save_report at 0x764562d1a0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 214>)
+              MAKE_FUNCTION
+              STORE_NAME              46 (save_report)
+
+242           LOAD_CONST              31 (<code object main at 0xb4000076f5ec0180, file "./build_backup_20260826_150523/phase3_account_verify.py", line 242>)
+              MAKE_FUNCTION
+              STORE_NAME              47 (main)
+
+636           LOAD_NAME               48 (__name__)
+              LOAD_CONST              32 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       15 (to L1)
+
+637           LOAD_NAME               40 (ensure_directories)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+
+638           LOAD_NAME               47 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             3 (None)
+
+636   L1:     RETURN_CONST             3 (None)
+
+Disassembly of <code object now_utc at 0x7645631f10, file "./build_backup_20260826_150523/phase3_account_verify.py", line 79>:
+ 79           RESUME                   0
+
+ 80           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object ensure_directories at 0x7645613cf0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 83>:
+ 83           RESUME                   0
+
+ 84           LOAD_GLOBAL              0 (STATE_DIR)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('parents', 'exist_ok'))
+              CALL_KW                  2
+              POP_TOP
+
+ 85           LOAD_GLOBAL              4 (REPORT_DIR)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('parents', 'exist_ok'))
+              CALL_KW                  2
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object sha256_short at 0x76455c1bb0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 88>:
+ 88           RESUME                   0
+
+ 89           LOAD_GLOBAL              0 (hashlib)
+              LOAD_ATTR                2 (sha256)
+              PUSH_NULL
+
+ 90           LOAD_FAST                0 (value)
+              LOAD_ATTR                5 (encode + NULL|self)
+              LOAD_CONST               1 ('utf-8')
+              CALL                     1
+
+ 89           CALL                     1
+
+ 91           LOAD_ATTR                7 (hexdigest + NULL|self)
+              CALL                     0
+              LOAD_CONST               0 (None)
+              LOAD_CONST               2 (24)
+
+ 89           BINARY_SLICE
+              RETURN_VALUE
+
+Disassembly of <code object print_status at 0x7645631b80, file "./build_backup_20260826_150523/phase3_account_verify.py", line 94>:
+ 94           RESUME                   0
+
+ 95           LOAD_FAST                2 (good)
+              TO_BOOL
+              POP_JUMP_IF_FALSE        6 (to L1)
+              LOAD_GLOBAL              0 (GREEN)
+              JUMP_FORWARD             5 (to L2)
+      L1:     LOAD_GLOBAL              2 (RED)
+      L2:     STORE_FAST               3 (colour)
+
+ 96           LOAD_GLOBAL              5 (print + NULL)
+
+ 97           LOAD_FAST                0 (label)
+              LOAD_CONST               1 ('<34')
+              FORMAT_WITH_SPEC
+
+ 98           LOAD_FAST                3 (colour)
+              FORMAT_SIMPLE
+              LOAD_FAST                1 (value)
+              FORMAT_SIMPLE
+              LOAD_GLOBAL              6 (RESET)
+              FORMAT_SIMPLE
+
+ 97           BUILD_STRING             4
+
+ 96           CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object get_credentials at 0xb400007795eee170, file "./build_backup_20260826_150523/phase3_account_verify.py", line 106>:
+106           RESUME                   0
+
+107           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+108           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_GLOBAL              2 (BOLD)
+              FORMAT_SIMPLE
+              LOAD_GLOBAL              4 (CYAN)
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('BINANCE API CREDENTIALS')
+              LOAD_GLOBAL              6 (RESET)
+              FORMAT_SIMPLE
+              BUILD_STRING             4
+              CALL                     1
+              POP_TOP
+
+109           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               2 ('----------------------------------------------------------------')
+              CALL                     1
+              POP_TOP
+
+111           LOAD_GLOBAL              1 (print + NULL)
+
+112           LOAD_CONST               3 ('Credentials are entered locally into Termux.')
+
+111           CALL                     1
+              POP_TOP
+
+115           LOAD_GLOBAL              1 (print + NULL)
+
+116           LOAD_CONST               4 ('They are NEVER printed by this program.')
+
+115           CALL                     1
+              POP_TOP
+
+119           LOAD_GLOBAL              1 (print + NULL)
+
+120           LOAD_CONST               5 ('They are NEVER written to the report.')
+
+119           CALL                     1
+              POP_TOP
+
+123           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+125           LOAD_GLOBAL              8 (os)
+              LOAD_ATTR               10 (environ)
+              LOAD_ATTR               13 (get + NULL|self)
+              LOAD_CONST               6 ('BINANCE_API_KEY')
+              CALL                     1
+              STORE_FAST               0 (api_key)
+
+127           LOAD_FAST                0 (api_key)
+              TO_BOOL
+              POP_JUMP_IF_TRUE        25 (to L1)
+
+128           LOAD_GLOBAL             15 (input + NULL)
+
+129           LOAD_CONST               7 ('Enter Binance API Key: ')
+
+128           CALL                     1
+
+130           LOAD_ATTR               17 (strip + NULL|self)
+              CALL                     0
+
+128           STORE_FAST               0 (api_key)
+
+132   L1:     LOAD_GLOBAL              8 (os)
+              LOAD_ATTR               10 (environ)
+              LOAD_ATTR               13 (get + NULL|self)
+              LOAD_CONST               8 ('BINANCE_API_SECRET')
+              CALL                     1
+              STORE_FAST               1 (api_secret)
+
+134           LOAD_FAST                1 (api_secret)
+              TO_BOOL
+              POP_JUMP_IF_TRUE        25 (to L2)
+
+135           LOAD_GLOBAL             15 (input + NULL)
+
+136           LOAD_CONST               9 ('Enter Binance API Secret: ')
+
+135           CALL                     1
+
+137           LOAD_ATTR               17 (strip + NULL|self)
+              CALL                     0
+
+135           STORE_FAST               1 (api_secret)
+
+139   L2:     LOAD_FAST                0 (api_key)
+              TO_BOOL
+              POP_JUMP_IF_FALSE        7 (to L3)
+              LOAD_FAST                1 (api_secret)
+              TO_BOOL
+              POP_JUMP_IF_TRUE        11 (to L4)
+
+140   L3:     LOAD_GLOBAL             19 (ValueError + NULL)
+
+141           LOAD_CONST              10 ('API key and API secret are required.')
+
+140           CALL                     1
+              RAISE_VARARGS            1
+
+144   L4:     LOAD_FAST_LOAD_FAST      1 (api_key, api_secret)
+              BUILD_TUPLE              2
+              RETURN_VALUE
+
+Disassembly of <code object signed_account_request at 0xb400007765eb34d0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 151>:
+151           RESUME                   0
+
+153           LOAD_GLOBAL              1 (int + NULL)
+              LOAD_GLOBAL              2 (time)
+              LOAD_ATTR                2 (time)
+              PUSH_NULL
+              CALL                     0
+              LOAD_CONST               1 (1000)
+              BINARY_OP                5 (*)
+              CALL                     1
+              STORE_FAST               2 (timestamp)
+
+156           LOAD_FAST                2 (timestamp)
+
+157           LOAD_CONST               2 (5000)
+
+158           LOAD_CONST               3 ('true')
+
+155           LOAD_CONST               4 (('timestamp', 'recvWindow', 'omitZeroBalances'))
+              BUILD_CONST_KEY_MAP      3
+              STORE_FAST               3 (params)
+
+161           LOAD_GLOBAL              5 (urlencode + NULL)
+              LOAD_FAST                3 (params)
+              CALL                     1
+              STORE_FAST               4 (query_string)
+
+163           LOAD_GLOBAL              6 (hmac)
+              LOAD_ATTR                8 (new)
+              PUSH_NULL
+
+164           LOAD_FAST                1 (api_secret)
+              LOAD_ATTR               11 (encode + NULL|self)
+              LOAD_CONST               5 ('utf-8')
+              CALL                     1
+
+165           LOAD_FAST                4 (query_string)
+              LOAD_ATTR               11 (encode + NULL|self)
+              LOAD_CONST               5 ('utf-8')
+              CALL                     1
+
+166           LOAD_GLOBAL             12 (hashlib)
+              LOAD_ATTR               14 (sha256)
+
+163           CALL                     3
+
+167           LOAD_ATTR               17 (hexdigest + NULL|self)
+              CALL                     0
+
+163           STORE_FAST               5 (signature)
+
+169           LOAD_FAST_LOAD_FAST     83 (signature, params)
+              LOAD_CONST               6 ('signature')
+              STORE_SUBSCR
+
+172           LOAD_CONST               7 ('X-MBX-APIKEY')
+              LOAD_FAST                0 (api_key)
+
+171           BUILD_MAP                1
+              STORE_FAST               6 (headers)
+
+175           LOAD_GLOBAL             18 (requests)
+              LOAD_ATTR               20 (get)
+              PUSH_NULL
+
+176           LOAD_GLOBAL             22 (BASE_URL)
+              LOAD_GLOBAL             24 (ACCOUNT_ENDPOINT)
+              BINARY_OP                0 (+)
+
+177           LOAD_FAST                3 (params)
+
+178           LOAD_FAST                6 (headers)
+
+179           LOAD_CONST               8 (15)
+
+175           LOAD_CONST               9 (('params', 'headers', 'timeout'))
+              CALL_KW                  4
+              STORE_FAST               7 (response)
+
+182           LOAD_FAST                7 (response)
+              RETURN_VALUE
+
+Disassembly of <code object sanitize_account at 0x7645380390, file "./build_backup_20260826_150523/phase3_account_verify.py", line 189>:
+189           RESUME                   0
+
+198           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               1 ('accountType')
+              CALL                     1
+
+199           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               2 ('canTrade')
+              CALL                     1
+
+200           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               3 ('canWithdraw')
+              CALL                     1
+
+201           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               4 ('canDeposit')
+              CALL                     1
+
+202           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               5 ('brokered')
+              CALL                     1
+
+203           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+
+204           LOAD_CONST               6 ('requireSelfTradePrevention')
+
+203           CALL                     1
+
+206           LOAD_FAST                0 (data)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               7 ('preventSor')
+              CALL                     1
+
+197           LOAD_CONST               8 (('account_type', 'can_trade', 'can_withdraw', 'can_deposit', 'brokered', 'require_self_trade_prevention', 'prevent_sor'))
+              BUILD_CONST_KEY_MAP      7
+              RETURN_VALUE
+
+Disassembly of <code object save_report at 0x764562d1a0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 214>:
+ 214            RESUME                   0
+
+ 216            LOAD_GLOBAL              0 (STATE_DIR)
+                LOAD_CONST               1 ('phase3_account_verification.json')
+                BINARY_OP               11 (/)
+                STORE_FAST               1 (STATE_FILE)
+
+ 219            LOAD_GLOBAL              2 (REPORT_FILE)
+                LOAD_ATTR                5 (open + NULL|self)
+
+ 220            LOAD_CONST               2 ('w')
+
+ 221            LOAD_CONST               3 ('utf-8')
+
+ 219            LOAD_CONST               4 (('encoding',))
+                CALL_KW                  2
+                BEFORE_WITH
+
+ 222    L1:     STORE_FAST               2 (f)
+
+ 223            LOAD_GLOBAL              6 (json)
+                LOAD_ATTR                8 (dump)
+                PUSH_NULL
+
+ 224            LOAD_FAST                0 (result)
+
+ 225            LOAD_FAST                2 (f)
+
+ 226            LOAD_CONST               5 (4)
+
+ 227            LOAD_CONST               6 (True)
+
+ 223            LOAD_CONST               7 (('indent', 'sort_keys'))
+                CALL_KW                  4
+                POP_TOP
+
+ 219    L2:     LOAD_CONST               0 (None)
+                LOAD_CONST               0 (None)
+                LOAD_CONST               0 (None)
+                CALL                     2
+                POP_TOP
+
+ 231    L3:     LOAD_FAST                1 (STATE_FILE)
+                LOAD_ATTR                5 (open + NULL|self)
+
+ 232            LOAD_CONST               2 ('w')
+
+ 233            LOAD_CONST               3 ('utf-8')
+
+ 231            LOAD_CONST               4 (('encoding',))
+                CALL_KW                  2
+                BEFORE_WITH
+
+ 234    L4:     STORE_FAST               2 (f)
+
+ 235            LOAD_GLOBAL              6 (json)
+                LOAD_ATTR                8 (dump)
+                PUSH_NULL
+
+ 236            LOAD_FAST                0 (result)
+
+ 237            LOAD_FAST                2 (f)
+
+ 238            LOAD_CONST               5 (4)
+
+ 239            LOAD_CONST               6 (True)
+
+ 235            LOAD_CONST               7 (('indent', 'sort_keys'))
+                CALL_KW                  4
+                POP_TOP
+
+ 231    L5:     LOAD_CONST               0 (None)
+                LOAD_CONST               0 (None)
+                LOAD_CONST               0 (None)
+                CALL                     2
+                POP_TOP
+                RETURN_CONST             0 (None)
+
+ 219    L6:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         1 (to L7)
+                RERAISE                  2
+        L7:     POP_TOP
+        L8:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+                JUMP_BACKWARD_NO_INTERRUPT 63 (to L3)
+
+  --    L9:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+
+ 231   L10:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         1 (to L11)
+                RERAISE                  2
+       L11:     POP_TOP
+       L12:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+                RETURN_CONST             0 (None)
+
+  --   L13:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L1 to L2 -> L6 [1] lasti
+  L4 to L5 -> L10 [1] lasti
+  L6 to L8 -> L9 [3] lasti
+  L10 to L12 -> L13 [3] lasti
+
+Disassembly of <code object main at 0xb4000076f5ec0180, file "./build_backup_20260826_150523/phase3_account_verify.py", line 242>:
+ 242            RESUME                   0
+
+ 244            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 245            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('================================================================')
+                CALL                     1
+                POP_TOP
+
+ 246            LOAD_GLOBAL              1 (print + NULL)
+
+ 247            LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+                LOAD_GLOBAL              4 (CYAN)
+                FORMAT_SIMPLE
+
+ 248            LOAD_CONST               2 ('CRYPTOMASTERX1')
+
+ 249            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 247            BUILD_STRING             4
+
+ 246            CALL                     1
+                POP_TOP
+
+ 251            LOAD_GLOBAL              1 (print + NULL)
+
+ 252            LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+
+ 253            LOAD_CONST               3 ('PHASE 3 — BINANCE ACCOUNT VERIFICATION')
+
+ 254            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 252            BUILD_STRING             3
+
+ 251            CALL                     1
+                POP_TOP
+
+ 256            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('================================================================')
+                CALL                     1
+                POP_TOP
+
+ 258            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 259            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               4 ('Project       : ')
+                LOAD_GLOBAL              8 (PROJECT)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 260            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               5 ('Phase         : ')
+                LOAD_GLOBAL             10 (PHASE)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 261            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               6 ('Endpoint      : ')
+                LOAD_GLOBAL             12 (ACCOUNT_ENDPOINT)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 262            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               7 ('UTC Time      : ')
+                LOAD_GLOBAL             15 (now_utc + NULL)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 268            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 269            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+                LOAD_CONST               8 ('SAFETY BOUNDARY')
+                LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+                BUILD_STRING             3
+                CALL                     1
+                POP_TOP
+
+ 270            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               9 ('----------------------------------------------------------------')
+                CALL                     1
+                POP_TOP
+
+ 272            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 273            LOAD_CONST              10 ('Execution authorization')
+
+ 274            LOAD_CONST              11 ('LOCKED')
+
+ 275            LOAD_GLOBAL             18 (EXECUTION_AUTHORIZED)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 272            CALL                     3
+                POP_TOP
+
+ 278            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 279            LOAD_CONST              13 ('Order submission')
+
+ 280            LOAD_CONST              14 ('DISABLED')
+
+ 281            LOAD_GLOBAL             20 (ORDER_SUBMISSION)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 278            CALL                     3
+                POP_TOP
+
+ 284            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 285            LOAD_CONST              15 ('Bot armed')
+
+ 286            LOAD_CONST              16 ('NO')
+
+ 287            LOAD_GLOBAL             22 (BOT_ARMED)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 284            CALL                     3
+                POP_TOP
+
+ 290            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 291            LOAD_CONST              17 ('Live execution')
+
+ 292            LOAD_CONST              14 ('DISABLED')
+
+ 293            LOAD_GLOBAL             24 (LIVE_EXECUTION)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 290            CALL                     3
+                POP_TOP
+
+ 296            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 297            LOAD_CONST              18 ('Transmission')
+
+ 298            LOAD_CONST              11 ('LOCKED')
+
+ 299            LOAD_GLOBAL             26 (TRANSMISSION)
+                LOAD_CONST              11 ('LOCKED')
+                COMPARE_OP              72 (==)
+
+ 296            CALL                     3
+                POP_TOP
+
+ 306            NOP
+
+ 307    L1:     LOAD_GLOBAL             29 (get_credentials + NULL)
+                CALL                     0
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST    1 (api_key, api_secret)
+
+ 320    L2:     LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 321            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+                LOAD_CONST              21 ('BINANCE CONNECTION')
+                LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+                BUILD_STRING             3
+                CALL                     1
+                POP_TOP
+
+ 322            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               9 ('----------------------------------------------------------------')
+                CALL                     1
+                POP_TOP
+
+ 324            NOP
+
+ 326    L3:     LOAD_GLOBAL             39 (signed_account_request + NULL)
+
+ 327            LOAD_FAST_CHECK          0 (api_key)
+
+ 328            LOAD_FAST_CHECK          1 (api_secret)
+
+ 326            CALL                     2
+                STORE_FAST               3 (response)
+
+ 349    L4:     LOAD_FAST_CHECK          3 (response)
+                LOAD_ATTR               44 (status_code)
+                LOAD_CONST              24 (200)
+                COMPARE_OP             119 (bool(!=))
+                POP_JUMP_IF_FALSE      191 (to L7)
+
+ 351            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 352            LOAD_CONST              25 ('Binance authentication')
+
+ 353            LOAD_CONST              23 ('FAILED')
+
+ 354            LOAD_CONST              12 (False)
+
+ 351            CALL                     3
+                POP_TOP
+
+ 357            NOP
+
+ 358    L5:     LOAD_FAST                3 (response)
+                LOAD_ATTR               47 (json + NULL|self)
+                CALL                     0
+                STORE_FAST               4 (error)
+
+ 360            LOAD_FAST                4 (error)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              26 ('code')
+                CALL                     1
+                STORE_FAST               5 (code)
+
+ 361            LOAD_FAST                4 (error)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              27 ('msg')
+                CALL                     1
+                STORE_FAST               6 (message)
+
+ 363            LOAD_GLOBAL              1 (print + NULL)
+
+ 364            LOAD_GLOBAL             32 (RED)
+                FORMAT_SIMPLE
+
+ 365            LOAD_CONST              28 ('Binance error ')
+                LOAD_FAST                5 (code)
+                FORMAT_SIMPLE
+                LOAD_CONST              29 (': ')
+                LOAD_FAST                6 (message)
+                FORMAT_SIMPLE
+
+ 366            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 364            BUILD_STRING             6
+
+ 363            CALL                     1
+                POP_TOP
+
+ 377    L6:     LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 378            LOAD_GLOBAL              1 (print + NULL)
+
+ 379            LOAD_CONST              31 ('Possible causes:')
+
+ 378            CALL                     1
+                POP_TOP
+
+ 381            LOAD_GLOBAL              1 (print + NULL)
+
+ 382            LOAD_CONST              32 ('  - invalid API credentials')
+
+ 381            CALL                     1
+                POP_TOP
+
+ 384            LOAD_GLOBAL              1 (print + NULL)
+
+ 385            LOAD_CONST              33 ('  - API key disabled')
+
+ 384            CALL                     1
+                POP_TOP
+
+ 387            LOAD_GLOBAL              1 (print + NULL)
+
+ 388            LOAD_CONST              34 ('  - IP restriction')
+
+ 387            CALL                     1
+                POP_TOP
+
+ 390            LOAD_GLOBAL              1 (print + NULL)
+
+ 391            LOAD_CONST              35 ('  - timestamp/time synchronization issue')
+
+ 390            CALL                     1
+                POP_TOP
+
+ 393            LOAD_GLOBAL              1 (print + NULL)
+
+ 394            LOAD_CONST              36 ('  - insufficient API permissions')
+
+ 393            CALL                     1
+                POP_TOP
+
+ 397            LOAD_GLOBAL             34 (sys)
+                LOAD_ATTR               36 (exit)
+                PUSH_NULL
+                LOAD_CONST              20 (1)
+                CALL                     1
+                POP_TOP
+
+ 403    L7:     NOP
+
+ 404    L8:     LOAD_FAST                3 (response)
+                LOAD_ATTR               47 (json + NULL|self)
+                CALL                     0
+                STORE_FAST               7 (account)
+
+ 416    L9:     LOAD_GLOBAL             53 (sanitize_account + NULL)
+                LOAD_FAST_CHECK          7 (account)
+                CALL                     1
+                STORE_FAST               8 (safe)
+
+ 418            LOAD_FAST                8 (safe)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              39 ('can_trade')
+                CALL                     1
+                STORE_FAST               9 (can_trade)
+
+ 419            LOAD_FAST                8 (safe)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              40 ('can_withdraw')
+                CALL                     1
+                STORE_FAST              10 (can_withdraw)
+
+ 420            LOAD_FAST                8 (safe)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              41 ('can_deposit')
+                CALL                     1
+                STORE_FAST              11 (can_deposit)
+
+ 427            LOAD_FAST_CHECK          0 (api_key)
+
+ 428            LOAD_CONST              42 (':')
+
+ 427            BINARY_OP                0 (+)
+
+ 429            LOAD_GLOBAL             55 (str + NULL)
+                LOAD_FAST                8 (safe)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              43 ('account_type')
+                CALL                     1
+                CALL                     1
+
+ 427            BINARY_OP                0 (+)
+
+ 426            STORE_FAST              12 (identity_material)
+
+ 432            LOAD_GLOBAL             57 (sha256_short + NULL)
+
+ 433            LOAD_FAST               12 (identity_material)
+
+ 432            CALL                     1
+                STORE_FAST              13 (identity_fingerprint)
+
+ 436            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 437            LOAD_CONST              44 ('Binance account')
+
+ 438            LOAD_CONST              45 ('VERIFIED')
+
+ 439            LOAD_CONST              46 (True)
+
+ 436            CALL                     3
+                POP_TOP
+
+ 442            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 443            LOAD_CONST              47 ('Account type')
+
+ 444            LOAD_GLOBAL             55 (str + NULL)
+                LOAD_FAST                8 (safe)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              43 ('account_type')
+                CALL                     1
+                CALL                     1
+
+ 445            LOAD_CONST              46 (True)
+
+ 442            CALL                     3
+                POP_TOP
+
+ 448            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 449            LOAD_CONST              48 ('Account fingerprint')
+
+ 450            LOAD_FAST               13 (identity_fingerprint)
+
+ 451            LOAD_CONST              46 (True)
+
+ 448            CALL                     3
+                POP_TOP
+
+ 467            LOAD_CONST              12 (False)
+                STORE_FAST              14 (CRYPTOMASTER_WITHDRAWALS)
+
+ 468            LOAD_CONST              12 (False)
+                STORE_FAST              15 (CRYPTOMASTER_DEPOSITS)
+
+ 469            LOAD_CONST              12 (False)
+                STORE_FAST              16 (CRYPTOMASTER_TRANSFERS)
+
+ 471            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 472            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+                LOAD_CONST              49 ('ACCOUNT CAPABILITIES / SECURITY POLICY')
+                LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+                BUILD_STRING             3
+                CALL                     1
+                POP_TOP
+
+ 473            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               9 ('----------------------------------------------------------------')
+                CALL                     1
+                POP_TOP
+
+ 475            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 476            LOAD_CONST              50 ('Spot trading capability')
+
+ 477            LOAD_FAST                9 (can_trade)
+                TO_BOOL
+                POP_JUMP_IF_FALSE        2 (to L10)
+                LOAD_CONST              51 ('ENABLED')
+                JUMP_FORWARD             1 (to L11)
+       L10:     LOAD_CONST              14 ('DISABLED')
+
+ 478   L11:     LOAD_FAST                9 (can_trade)
+                LOAD_CONST              46 (True)
+                IS_OP                    0
+
+ 475            CALL                     3
+                POP_TOP
+
+ 481            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 482            LOAD_CONST              52 ('Binance withdrawal flag')
+
+ 483            LOAD_FAST               10 (can_withdraw)
+                TO_BOOL
+                POP_JUMP_IF_FALSE        2 (to L12)
+                LOAD_CONST              53 ('TRUE')
+                JUMP_FORWARD             1 (to L13)
+       L12:     LOAD_CONST              54 ('FALSE')
+
+ 484   L13:     LOAD_CONST              46 (True)
+
+ 481            CALL                     3
+                POP_TOP
+
+ 487            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 488            LOAD_CONST              55 ('CryptoMasterX1 withdrawals')
+
+ 489            LOAD_CONST              56 ('FORBIDDEN')
+
+ 490            LOAD_FAST               14 (CRYPTOMASTER_WITHDRAWALS)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 487            CALL                     3
+                POP_TOP
+
+ 493            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 494            LOAD_CONST              57 ('Binance deposit flag')
+
+ 495            LOAD_FAST               11 (can_deposit)
+                TO_BOOL
+                POP_JUMP_IF_FALSE        2 (to L14)
+                LOAD_CONST              53 ('TRUE')
+                JUMP_FORWARD             1 (to L15)
+       L14:     LOAD_CONST              54 ('FALSE')
+
+ 496   L15:     LOAD_CONST              46 (True)
+
+ 493            CALL                     3
+                POP_TOP
+
+ 499            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 500            LOAD_CONST              58 ('CryptoMasterX1 deposits')
+
+ 501            LOAD_CONST              56 ('FORBIDDEN')
+
+ 502            LOAD_FAST               15 (CRYPTOMASTER_DEPOSITS)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 499            CALL                     3
+                POP_TOP
+
+ 505            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 506            LOAD_CONST              59 ('CryptoMasterX1 transfers')
+
+ 507            LOAD_CONST              56 ('FORBIDDEN')
+
+ 508            LOAD_FAST               16 (CRYPTOMASTER_TRANSFERS)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 505            CALL                     3
+                POP_TOP
+
+ 516            LOAD_CONST              46 (True)
+
+ 517            LOAD_CONST              46 (True)
+
+ 518            LOAD_FAST                9 (can_trade)
+                LOAD_CONST              46 (True)
+                IS_OP                    0
+
+ 522            LOAD_FAST               14 (CRYPTOMASTER_WITHDRAWALS)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 525            LOAD_FAST               15 (CRYPTOMASTER_DEPOSITS)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 528            LOAD_FAST               16 (CRYPTOMASTER_TRANSFERS)
+                LOAD_CONST              12 (False)
+                IS_OP                    0
+
+ 530            LOAD_CONST              46 (True)
+
+ 531            LOAD_CONST              46 (True)
+
+ 532            LOAD_CONST              46 (True)
+
+ 533            LOAD_CONST              46 (True)
+
+ 515            LOAD_CONST              60 (('binance_connection', 'account_identity', 'spot_trade_permission', 'withdrawal_policy_forbidden', 'deposit_policy_forbidden', 'transfer_policy_forbidden', 'execution_locked', 'order_submission_disabled', 'bot_not_armed', 'transmission_locked'))
+                BUILD_CONST_KEY_MAP     10
+                STORE_FAST              17 (checks)
+
+ 536            LOAD_GLOBAL             59 (sum + NULL)
+                LOAD_CONST              61 (<code object <genexpr> at 0x764539c130, file "./build_backup_20260826_150523/phase3_account_verify.py", line 536>)
+                MAKE_FUNCTION
+
+ 537            LOAD_FAST               17 (checks)
+                LOAD_ATTR               61 (values + NULL|self)
+                CALL                     0
+                GET_ITER
+
+ 536            CALL                     0
+                CALL                     1
+                STORE_FAST              18 (passed)
+
+ 541            LOAD_GLOBAL             63 (round + NULL)
+
+ 542            LOAD_FAST               18 (passed)
+                LOAD_GLOBAL             65 (len + NULL)
+                LOAD_FAST               17 (checks)
+                CALL                     1
+                BINARY_OP               11 (/)
+                LOAD_CONST              62 (100)
+                BINARY_OP                5 (*)
+
+ 543            LOAD_CONST              63 (2)
+
+ 541            CALL                     2
+                STORE_FAST              19 (score)
+
+ 551            LOAD_GLOBAL              8 (PROJECT)
+
+ 552            LOAD_GLOBAL             10 (PHASE)
+
+ 553            LOAD_GLOBAL             66 (VERSION)
+
+ 554            LOAD_GLOBAL             15 (now_utc + NULL)
+                CALL                     0
+
+ 557            LOAD_CONST              45 ('VERIFIED')
+
+ 558            LOAD_CONST              64 ('BINANCE_SPOT')
+
+ 559            LOAD_FAST                8 (safe)
+                LOAD_ATTR               49 (get + NULL|self)
+                LOAD_CONST              43 ('account_type')
+                CALL                     1
+
+ 560            LOAD_FAST               13 (identity_fingerprint)
+
+ 556            LOAD_CONST              65 (('status', 'exchange', 'account_type', 'account_fingerprint'))
+                BUILD_CONST_KEY_MAP      4
+
+ 564            LOAD_FAST                9 (can_trade)
+
+ 565            LOAD_FAST               10 (can_withdraw)
+
+ 566            LOAD_FAST               11 (can_deposit)
+
+ 563            LOAD_CONST              66 (('can_trade', 'can_withdraw', 'can_deposit'))
+                BUILD_CONST_KEY_MAP      3
+
+ 570            LOAD_FAST                9 (can_trade)
+                LOAD_CONST              46 (True)
+                IS_OP                    0
+
+ 571            LOAD_CONST              12 (False)
+
+ 572            LOAD_CONST              12 (False)
+
+ 573            LOAD_CONST              12 (False)
+
+ 569            LOAD_CONST              67 (('spot_trading', 'withdrawals', 'deposits', 'transfers'))
+                BUILD_CONST_KEY_MAP      4
+
+ 576            LOAD_FAST               17 (checks)
+
+ 578            LOAD_FAST               19 (score)
+
+ 581            LOAD_CONST              12 (False)
+
+ 582            LOAD_CONST              12 (False)
+
+ 583            LOAD_CONST              12 (False)
+
+ 584            LOAD_CONST              12 (False)
+
+ 585            LOAD_CONST              11 ('LOCKED')
+
+ 580            LOAD_CONST              68 (('execution_authorized', 'order_submission', 'bot_armed', 'live_execution', 'transmission'))
+                BUILD_CONST_KEY_MAP      5
+
+ 590            LOAD_FAST               19 (score)
+                LOAD_CONST              69 (100.0)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE        2 (to L16)
+
+ 589            LOAD_CONST              70 ('PHASE_4 — MARKET DISCOVERY')
+                JUMP_FORWARD             1 (to L17)
+
+ 591   L16:     LOAD_CONST              71 ('REVIEW PHASE 3')
+
+ 550   L17:     LOAD_CONST              72 (('project', 'phase', 'version', 'timestamp_utc', 'verification', 'binance_account_capabilities', 'cryptomaster_security_policy', 'checks', 'health_score', 'execution_boundary', 'next_phase'))
+                BUILD_CONST_KEY_MAP     11
+                STORE_FAST              20 (report)
+
+ 595            LOAD_GLOBAL             69 (save_report + NULL)
+                LOAD_FAST               20 (report)
+                CALL                     1
+                POP_TOP
+
+ 601            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 602            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('================================================================')
+                CALL                     1
+                POP_TOP
+
+ 604            LOAD_FAST               19 (score)
+                LOAD_CONST              69 (100.0)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       55 (to L18)
+
+ 606            LOAD_GLOBAL              1 (print + NULL)
+
+ 607            LOAD_GLOBAL             70 (GREEN)
+                FORMAT_SIMPLE
+                LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+
+ 608            LOAD_CONST              73 ('PHASE 3 COMPLETE — ACCOUNT VERIFIED')
+
+ 609            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 607            BUILD_STRING             4
+
+ 606            CALL                     1
+                POP_TOP
+
+ 612            LOAD_GLOBAL              1 (print + NULL)
+
+ 613            LOAD_GLOBAL             70 (GREEN)
+                FORMAT_SIMPLE
+
+ 614            LOAD_CONST              74 ('EXECUTION REMAINS LOCKED.')
+
+ 615            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 613            BUILD_STRING             3
+
+ 612            CALL                     1
+                POP_TOP
+                JUMP_FORWARD            30 (to L19)
+
+ 620   L18:     LOAD_GLOBAL              1 (print + NULL)
+
+ 621            LOAD_GLOBAL             72 (YELLOW)
+                FORMAT_SIMPLE
+                LOAD_GLOBAL              2 (BOLD)
+                FORMAT_SIMPLE
+
+ 622            LOAD_CONST              75 ('PHASE 3 REQUIRES REVIEW')
+
+ 623            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 621            BUILD_STRING             4
+
+ 620            CALL                     1
+                POP_TOP
+
+ 626   L19:     LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('================================================================')
+                CALL                     1
+                POP_TOP
+
+ 628            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 629            LOAD_GLOBAL              1 (print + NULL)
+
+ 630            LOAD_CONST              76 ('Report: ')
+                LOAD_GLOBAL             74 (REPORT_FILE)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+
+ 629            CALL                     1
+                POP_TOP
+
+ 633            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+                RETURN_CONST             0 (None)
+
+  --   L20:     PUSH_EXC_INFO
+
+ 309            LOAD_GLOBAL             30 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       69 (to L24)
+                STORE_FAST               2 (exc)
+
+ 310   L21:     LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 311            LOAD_GLOBAL              1 (print + NULL)
+
+ 312            LOAD_GLOBAL             32 (RED)
+                FORMAT_SIMPLE
+                LOAD_CONST              19 ('Credential input failed: ')
+                LOAD_FAST                2 (exc)
+                FORMAT_SIMPLE
+                LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+                BUILD_STRING             4
+
+ 311            CALL                     1
+                POP_TOP
+
+ 314            LOAD_GLOBAL             34 (sys)
+                LOAD_ATTR               36 (exit)
+                PUSH_NULL
+                LOAD_CONST              20 (1)
+                CALL                     1
+                POP_TOP
+       L22:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               2 (exc)
+                DELETE_FAST              2 (exc)
+                EXTENDED_ARG             3
+                JUMP_BACKWARD_NO_INTERRUPT 1020 (to L2)
+
+  --   L23:     LOAD_CONST               0 (None)
+                STORE_FAST               2 (exc)
+                DELETE_FAST              2 (exc)
+                RERAISE                  1
+
+ 309   L24:     RERAISE                  0
+
+  --   L25:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L26:     PUSH_EXC_INFO
+
+ 331            LOAD_GLOBAL             40 (requests)
+                LOAD_ATTR               42 (RequestException)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       71 (to L30)
+                STORE_FAST               2 (exc)
+
+ 333   L27:     LOAD_GLOBAL             17 (print_status + NULL)
+
+ 334            LOAD_CONST              22 ('Binance connection')
+
+ 335            LOAD_CONST              23 ('FAILED')
+
+ 336            LOAD_CONST              12 (False)
+
+ 333            CALL                     3
+                POP_TOP
+
+ 339            LOAD_GLOBAL              1 (print + NULL)
+
+ 340            LOAD_GLOBAL             32 (RED)
+                FORMAT_SIMPLE
+                LOAD_FAST                2 (exc)
+                FORMAT_SIMPLE
+                LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+                BUILD_STRING             3
+
+ 339            CALL                     1
+                POP_TOP
+
+ 343            LOAD_GLOBAL             34 (sys)
+                LOAD_ATTR               36 (exit)
+                PUSH_NULL
+                LOAD_CONST              20 (1)
+                CALL                     1
+                POP_TOP
+       L28:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               2 (exc)
+                DELETE_FAST              2 (exc)
+                EXTENDED_ARG             4
+                JUMP_BACKWARD_NO_INTERRUPT 1056 (to L4)
+
+  --   L29:     LOAD_CONST               0 (None)
+                STORE_FAST               2 (exc)
+                DELETE_FAST              2 (exc)
+                RERAISE                  1
+
+ 331   L30:     RERAISE                  0
+
+  --   L31:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L32:     PUSH_EXC_INFO
+
+ 369            LOAD_GLOBAL             30 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       40 (to L34)
+                POP_TOP
+
+ 371            LOAD_GLOBAL              1 (print + NULL)
+
+ 372            LOAD_GLOBAL             32 (RED)
+                FORMAT_SIMPLE
+
+ 373            LOAD_CONST              30 ('HTTP ')
+                LOAD_FAST                3 (response)
+                LOAD_ATTR               44 (status_code)
+                FORMAT_SIMPLE
+
+ 374            LOAD_GLOBAL              6 (RESET)
+                FORMAT_SIMPLE
+
+ 372            BUILD_STRING             4
+
+ 371            CALL                     1
+                POP_TOP
+       L33:     POP_EXCEPT
+                EXTENDED_ARG             3
+                JUMP_BACKWARD_NO_INTERRUPT 1004 (to L6)
+
+ 369   L34:     RERAISE                  0
+
+  --   L35:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L36:     PUSH_EXC_INFO
+
+ 406            LOAD_GLOBAL             50 (ValueError)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       39 (to L38)
+                POP_TOP
+
+ 408            LOAD_GLOBAL             17 (print_status + NULL)
+
+ 409            LOAD_CONST              37 ('Account response')
+
+ 410            LOAD_CONST              38 ('INVALID')
+
+ 411            LOAD_CONST              12 (False)
+
+ 408            CALL                     3
+                POP_TOP
+
+ 414            LOAD_GLOBAL             34 (sys)
+                LOAD_ATTR               36 (exit)
+                PUSH_NULL
+                LOAD_CONST              20 (1)
+                CALL                     1
+                POP_TOP
+       L37:     POP_EXCEPT
+                EXTENDED_ARG             3
+                JUMP_BACKWARD_NO_INTERRUPT 941 (to L9)
+
+ 406   L38:     RERAISE                  0
+
+  --   L39:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L1 to L2 -> L20 [0]
+  L3 to L4 -> L26 [0]
+  L5 to L6 -> L32 [0]
+  L8 to L9 -> L36 [0]
+  L20 to L21 -> L25 [1] lasti
+  L21 to L22 -> L23 [1] lasti
+  L23 to L25 -> L25 [1] lasti
+  L26 to L27 -> L31 [1] lasti
+  L27 to L28 -> L29 [1] lasti
+  L29 to L31 -> L31 [1] lasti
+  L32 to L33 -> L35 [1] lasti
+  L34 to L35 -> L35 [1] lasti
+  L36 to L37 -> L39 [1] lasti
+  L38 to L39 -> L39 [1] lasti
+
+Disassembly of <code object <genexpr> at 0x764539c130, file "./build_backup_20260826_150523/phase3_account_verify.py", line 536>:
+ 536           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+
+ 537           GET_ITER
+       L2:     FOR_ITER                16 (to L5)
+               STORE_FAST               1 (value)
+
+ 538           LOAD_FAST                1 (value)
+               TO_BOOL
+
+ 537   L3:     POP_JUMP_IF_TRUE         2 (to L4)
+               JUMP_BACKWARD           12 (to L2)
+       L4:     LOAD_CONST               0 (1)
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           18 (to L2)
+       L5:     END_FOR
+               POP_TOP
+               RETURN_CONST             1 (None)
+
+  --   L6:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L3 -> L6 [0] lasti
+  L4 to L6 -> L6 [0] lasti
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\n============================================================\nCRYPTOMASTERX1\nPHASE 3 — BINANCE ACCOUNT IDENTITY & PERMISSION VERIFICATION\n============================================================\n\nREAD-ONLY ACCOUNT VERIFICATION\n\nThis module:\n    - connects to Binance Spot\n    - authenticates with API key + secret\n    - verifies the actual Binance account\n    - checks Spot trading permission\n    - checks withdrawal permission\n    - records the result safely\n    - NEVER submits an order\n    - NEVER cancels an order\n    - NEVER enables execution\n    - NEVER enables withdrawals\n\nEXECUTION REMAINS LOCKED.\n============================================================\n'
+[1] 0
+[2] ('annotations',)
+[3] None
+[4] ('datetime', 'timezone')
+[5] ('Path',)
+[6] ('urlencode',)
+[7] 'CryptoMasterX1'
+[8] 'PHASE_3'
+[9] '1.0.0'
+[10] 'https://api.binance.com'
+[11] '/api/v3/account'
+[12] 'state'
+[13] 'reports'
+[14] 'phase3_account_verification.json'
+[15] False
+[16] 'LOCKED'
+[17] '\x1b[0m'
+[18] '\x1b[92m'
+[19] '\x1b[91m'
+[20] '\x1b[93m'
+[21] '\x1b[96m'
+[22] '\x1b[1m'
+[23] <code object now_utc at 0x7645631f10, file "./build_backup_20260826_150523/phase3_account_verify.py", line 79>
+[24] <code object ensure_directories at 0x7645613cf0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 83>
+[25] <code object sha256_short at 0x76455c1bb0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 88>
+[26] <code object print_status at 0x7645631b80, file "./build_backup_20260826_150523/phase3_account_verify.py", line 94>
+[27] <code object get_credentials at 0xb400007795eee170, file "./build_backup_20260826_150523/phase3_account_verify.py", line 106>
+[28] <code object signed_account_request at 0xb400007765eb34d0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 151>
+[29] <code object sanitize_account at 0x7645380390, file "./build_backup_20260826_150523/phase3_account_verify.py", line 189>
+[30] <code object save_report at 0x764562d1a0, file "./build_backup_20260826_150523/phase3_account_verify.py", line 214>
+[31] <code object main at 0xb4000076f5ec0180, file "./build_backup_20260826_150523/phase3_account_verify.py", line 242>
+[32] '__main__'
+[33] ('value', 'str')
+[34] (True,)
+
+
+NAMES
+=====
+
+'__doc__'
+'__future__'
+'annotations'
+'hashlib'
+'hmac'
+'json'
+'os'
+'sys'
+'time'
+'datetime'
+'timezone'
+'pathlib'
+'Path'
+'urllib.parse'
+'urlencode'
+'requests'
+'PROJECT'
+'PHASE'
+'VERSION'
+'BASE_URL'
+'ACCOUNT_ENDPOINT'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE_DIR'
+'REPORT_DIR'
+'REPORT_FILE'
+'EXECUTION_AUTHORIZED'
+'ORDER_SUBMISSION'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'TRANSMISSION'
+'RESET'
+'GREEN'
+'RED'
+'YELLOW'
+'CYAN'
+'BOLD'
+'now_utc'
+'ensure_directories'
+'sha256_short'
+'print_status'
+'get_credentials'
+'signed_account_request'
+'sanitize_account'
+'save_report'
+'main'
+'__name__'

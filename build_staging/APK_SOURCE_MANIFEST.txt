@@ -1,0 +1,38 @@
+CRYPTOMASTERX1 APK SOURCE MANIFEST
+
+This directory is STAGING ONLY.
+
+The APK source must receive only the verified consolidated
+CryptoMasterX1 engine.
+
+Required engine files:
+
+phase1_scanner.py
+account_binding.py
+phase3_account_verify.py
+phase4_market_discovery.py
+phase5_market_intelligence.py
+phase6_trade_intelligence.py
+phase7_final_validation.py
+phase8_execution_lifecycle_v8.py
+pipeline_v8_contract.py
+build_consolidated_v8.py
+run_consolidated_v8.py
+conductor.py
+
+Architecture:
+
+1  SYSTEM / MACHINE CORE
+2  ACCOUNT BINDING
+3  ACCOUNT + PERMISSION VERIFICATION
+4  MARKET SCANNING + DISCOVERY
+5  TRADE INTELLIGENCE + DETECTORS
+6  TRADE VERIFICATION + FINAL CONSTRUCTION
+7  EXECUTION + ORDER OPENING
+8  TRADE LIFECYCLE MANAGEMENT
+
+Execution:
+LOCKED during verification.
+
+Withdrawals:
+FORBIDDEN.

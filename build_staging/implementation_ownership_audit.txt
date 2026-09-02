@@ -1,0 +1,1727 @@
+CRYPTOMASTERX1 IMPLEMENTATION OWNERSHIP AUDIT
+Generated: Wed Aug 26 13:00:21 EAT 2026
+
+TARGET ARCHITECTURE:
+P1 SYSTEM / MACHINE CORE
+P2 ACCOUNT BINDING
+P3 ACCOUNT + PERMISSION VERIFICATION
+P4 MARKET SCANNING + DISCOVERY
+P5 TRADE INTELLIGENCE + DETECTORS
+P6 TRADE VERIFICATION + FINAL CONSTRUCTION
+P7 EXECUTION + ORDER OPENING
+P8 TRADE LIFECYCLE MANAGEMENT
+
+============================================================
+PHASE 4 — DISCOVERY
+============================================================
+8:def get_all_usdt():
+10:        data=requests.get("https://api.binance.com/api/v3/exchangeInfo", timeout=15).json()
+11:        spot=[s for s in data['symbols'] if s['symbol'].endswith('USDT') and s['status']=='TRADING']
+12:        return [s['symbol'] for s in spot]
+13:    except: return ["BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT","XRPUSDT"]
+15:def get_24h(symbols):
+17:        all24=requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=15).json()
+18:        m={x['symbol']:x for x in all24}
+19:        return [m[s] for s in symbols if s in m]
+22:print("DISCOVERING BINANCE SPOT/USDT UNIVERSE")
+23:symbols=get_all_usdt()
+24:print(f"Eligible Spot USDT markets : {len(symbols)}")
+25:tickers=get_24h(symbols)
+26:qualified=[]; bulls=[]; bears=[]
+27:for t in tickers:
+29:        vol=float(t['quoteVolume']); ch=float(t['priceChangePercent']); trades=int(t['count'])
+32:            qualified.append(t)
+33:            if ch>0: bulls.append((t['symbol'], ch, q, vol, trades))
+34:            else: bears.append((t['symbol'], ch, q, vol, trades))
+37:bulls=sorted(bulls, key=lambda x: x[2], reverse=True)[:100]
+38:bears=sorted(bears, key=lambda x: x[2], reverse=True)[:100]
+39:all_markets = bulls + bears
+41:print(f"Qualified markets : {len(all_markets)} Bull {len(bulls)} Bear {len(bears)}")
+44:markets_list = [{"symbol": b[0], "priceChangePercent": b[1], "quality": b[2]} for b in all_markets]
+48:  "eligible": len(symbols),
+49:  "discovery": {
+50:    "markets": markets_list,
+51:    "qualified_markets": len(markets_list),
+52:    "eligible_markets": len(symbols)
+55:  "safe_bulls": [{"symbol":b[0],"priceChangePercent":b[1],"quality":b[2],"volume":b[3],"trades":b[4]} for b in bulls],
+56:  "safe_bears": [{"symbol":b[0],"priceChangePercent":b[1],"quality":b[2],"volume":b[3],"trades":b[4]} for b in bears],
+59:(STATE_DIR/"phase4_market_discovery.json").write_text(json.dumps(out, indent=2))
+60:print(f"State saved with discovery.markets = {len(markets_list)}")
+63:for i,b in enumerate(bulls[:10],1): print(f"{i}. {b[0]} {b[1]:+.2f}%")
+65:for i,b in enumerate(bears[:10],1): print(f"{i}. {b[0]} {b[1]:+.2f}%")
+
+============================================================
+PHASE 5 — INTELLIGENCE / DETECTORS
+============================================================
+15:VERSION = "5.1-CLEAN"
+30:MAX_5M_EXTENSION_ATR = 2.0
+31:RSI_OVERBOUGHT = 75.0
+32:RSI_OVERSOLD = 25.0
+34:SL_ATR_MULTIPLIER = 1.20
+35:TP1_ATR_MULTIPLIER = 1.80
+36:TP2_ATR_MULTIPLIER = 3.00
+51:def now_utc():
+55:def ensure_directories():
+60:def save_json(path, data):
+70:def load_json(path):
+80:def get_json(path, params=None):
+130:def fetch_klines(symbol, interval, limit):
+132:        "/api/v3/klines",
+164:def closes(candles):
+168:def highs(candles):
+172:def lows(candles):
+176:def ema(values, period):
+183:    for price in values[period:]:
+185:            (price - value) * multiplier
+192:def rsi(values, period=14):
+227:def atr(candles, period=14):
+259:def safe_pct(a, b):
+266:def trend_score(values):
+283:def momentum_score(values):
+310:def analyze_symbol(symbol):
+311:    h1 = fetch_klines(
+317:    m15 = fetch_klines(
+323:    m5 = fetch_klines(
+344:    momentum = (
+345:        momentum_score(h1c)
+346:        + momentum_score(m15c)
+347:        + momentum_score(m5c)
+354:        + momentum
+380:    confidence = min(
+391:            atr5 * SL_ATR_MULTIPLIER
+394:            atr5 * TP1_ATR_MULTIPLIER
+397:            atr5 * TP2_ATR_MULTIPLIER
+403:            atr5 * SL_ATR_MULTIPLIER
+406:            atr5 * TP1_ATR_MULTIPLIER
+409:            atr5 * TP2_ATR_MULTIPLIER
+439:            and rsi5 < RSI_OVERBOUGHT
+444:            and rsi5 > RSI_OVERSOLD
+448:    anti_chase = (
+449:        extension <= MAX_5M_EXTENSION_ATR
+452:    qualified = (
+454:        and confidence >= MIN_CONFIDENCE
+457:        and anti_chase
+463:        "qualified": qualified,
+464:        "confidence": round(confidence, 2),
+480:def get_phase4_universe():
+518:        "qualified_markets",
+531:def update_monitor(symbol, result):
+536:            "qualified_cycles": 0,
+556:def scan():
+560:    qualified_results = []
+571:    def analyze_one(index_symbol):
+614:                if result.get("qualified") is True:
+615:                    qualified_results.append(result)
+637:        "qualified_candidates": len(qualified_results),
+640:            for x in qualified_results
+645:            for x in qualified_results
+651:            for x in qualified_results
+656:            for x in qualified_results
+659:        "all_qualified": qualified_results,
+663:            "qualified": len(qualified_results),
+668:def build_state(
+676:        "version": VERSION,
+677:        "timestamp_utc": now_utc(),
+694:            "qualified_candidates":
+695:                result["qualified_candidates"],
+712:            "all_qualified":
+713:                result["all_qualified"],
+735:def display(
+776:        f"{result['qualified_candidates']}"
+796:                f"CONF:{item['confidence']:>5.1f}% "
+798:                f"RSI:{item['rsi_5m']:>6.2f}"
+815:                f"CONF:{item['confidence']:>5.1f}% "
+817:                f"RSI:{item['rsi_5m']:>6.2f}"
+843:def main():
+897:                "version": VERSION,
+898:                "timestamp_utc": now_utc(),
+
+============================================================
+PHASE 6 — VERIFICATION / CONSTRUCTION
+============================================================
+12:from urllib.error import HTTPError, URLError
+28:ATR_PERIOD = 14
+35:SL_ATR_MULTIPLIER = 1.20
+39:MAX_ENTRY_EXTENSION_ATR = 1.50
+40:MAX_REFERENCE_DRIFT_ATR = 2.50
+59:def now():
+63:def save(path, data):
+68:def load(path):
+70:        raise FileNotFoundError(f"Required state missing: {path}")
+74:def number(value, default=None):
+79:    except (TypeError, ValueError):
+87:def binance_get(path, params=None):
+104:    except HTTPError as exc:
+105:        body = exc.read().decode(errors="replace")
+106:        raise RuntimeError(f"Binance HTTP {exc.code}: {body}")
+107:    except URLError as exc:
+108:        raise RuntimeError(f"Binance network error: {exc}")
+111:def candles(symbol, interval="5m", limit=120):
+141:def ema(values, period):
+148:    for price in values[period:]:
+149:        value = ((price - value) * multiplier) + value
+154:def atr(rows, period=14):
+161:        current = rows[i]
+165:            current["high"] - current["low"],
+166:            abs(current["high"] - previous["close"]),
+167:            abs(current["low"] - previous["close"]),
+182:def extract_candidates(obj):
+193:    def walk(value):
+199:                    or value.get("confidence") is not None
+233:def digest_phase5():
+239:        raise RuntimeError(
+250:def fresh_market(symbol):
+253:    if len(rows) < EMA_SLOW + ATR_PERIOD + 2:
+254:        raise RuntimeError(f"{symbol}: insufficient fresh candles")
+262:    slow = ema(closes, EMA_SLOW)
+263:    fresh_atr = atr(closed, ATR_PERIOD)
+265:    if fast is None or slow is None or fresh_atr is None:
+266:        raise RuntimeError(f"{symbol}: fresh indicator calculation failed")
+268:    current_price = rows[-1]["close"]
+270:    if current_price > fast > slow:
+272:    elif current_price < fast < slow:
+277:    extension = abs(current_price - fast) / fresh_atr
+281:        "price": current_price,
+283:        "ema_slow": slow,
+284:        "atr": fresh_atr,
+285:        "fresh_direction": direction,
+288:        "fresh_checked_utc": now(),
+296:def exchange_info(symbol):
+305:        raise RuntimeError(f"{symbol}: Binance symbol not found")
+310:        raise RuntimeError(f"{symbol}: not currently TRADING")
+321:        raise RuntimeError(f"{symbol}: LOT_SIZE unavailable")
+335:def floor_step(value, step):
+337:        raise ValueError("Invalid Binance step size")
+350:def load_credentials():
+379:        raise RuntimeError("Binance credentials unavailable")
+384:def signed_account():
+388:        "timestamp": int(time.time() * 1000),
+420:    except HTTPError as exc:
+421:        body = exc.read().decode(errors="replace")
+422:        raise RuntimeError(f"Binance account HTTP {exc.code}: {body}")
+425:def quote_balance(asset):
+428:    for balance in account.get("balances", []):
+429:        if balance.get("asset") == asset:
+430:            return Decimal(balance.get("free", "0"))
+439:def calculate_position_size(symbol, entry, sl):
+444:    available = quote_balance(quote)
+447:        raise RuntimeError(
+448:            f"{symbol}: no available {quote} balance"
+451:    risk_distance = Decimal(str(abs(entry - sl)))
+453:    if risk_distance <= 0:
+454:        raise RuntimeError(f"{symbol}: invalid stop distance")
+456:    risk_capital = available * RISK_PER_TRADE
+458:    raw_qty = risk_capital / risk_distance
+460:    # Never exceed what the available quote balance can buy.
+461:    balance_qty = available / Decimal(str(entry))
+463:    raw_qty = min(raw_qty, balance_qty)
+471:        raise RuntimeError(
+472:            f"{symbol}: calculated quantity below Binance minimum"
+475:    notional = qty * Decimal(str(entry))
+478:        raise RuntimeError(
+486:        "quantity": float(qty),
+487:        "quantity_decimal": format(qty, "f"),
+489:        "available_quote_balance": format(available, "f"),
+490:        "risk_capital": format(risk_capital, "f"),
+491:        "risk_per_trade": float(RISK_PER_TRADE),
+503:def construct(candidate, market):
+508:        or candidate.get("fresh_direction")
+512:    confidence = number(
+513:        candidate.get("confidence"),
+514:        number(candidate.get("phase6_confidence"), 0),
+518:        raise RuntimeError(
+522:    if confidence is None or confidence < MIN_CONFIDENCE:
+523:        raise RuntimeError(
+524:            f"{symbol}: confidence below {MIN_CONFIDENCE}"
+527:    fresh_direction = market["fresh_direction"]
+529:    if fresh_direction == "NEUTRAL":
+530:        raise RuntimeError(
+531:            f"{symbol}: fresh market direction is NEUTRAL"
+534:    if direction != fresh_direction:
+535:        raise RuntimeError(
+537:            f"conflicts with fresh direction {fresh_direction}"
+541:    entry = market["price"]
+545:    if extension > MAX_ENTRY_EXTENSION_ATR:
+546:        raise RuntimeError(
+548:            f"{extension:.2f} ATR exceeds "
+549:            f"{MAX_ENTRY_EXTENSION_ATR:.2f} ATR"
+552:    # Optional analytical/reference price from Phase 5.
+554:        candidate.get("price"),
+555:        number(candidate.get("entry")),
+562:            abs(entry - reference) / atr_value
+565:        if reference_drift > MAX_REFERENCE_DRIFT_ATR:
+566:            raise RuntimeError(
+567:                f"{symbol}: fresh price drift "
+568:                f"{reference_drift:.2f} ATR exceeds "
+569:                f"{MAX_REFERENCE_DRIFT_ATR:.2f} ATR"
+572:    risk_distance = atr_value * SL_ATR_MULTIPLIER
+575:        sl = entry - risk_distance
+576:        tp1 = entry + (
+577:            risk_distance * TP1_R_MULTIPLIER
+579:        tp2 = entry + (
+580:            risk_distance * TP2_R_MULTIPLIER
+583:        sl = entry + risk_distance
+584:        tp1 = entry - (
+585:            risk_distance * TP1_R_MULTIPLIER
+587:        tp2 = entry - (
+588:            risk_distance * TP2_R_MULTIPLIER
+591:    risk = abs(entry - sl)
+592:    reward = abs(tp2 - entry)
+594:    if risk <= 0:
+595:        raise RuntimeError(f"{symbol}: zero risk")
+597:    rr = reward / risk
+599:    if rr < MIN_RR:
+600:        raise RuntimeError(
+601:            f"{symbol}: R:R {rr:.2f} below {MIN_RR:.2f}"
+604:    sizing = calculate_position_size(
+606:        entry,
+607:        sl,
+618:        "fresh_market": market,
+620:        # Executable construction.
+621:        "entry": entry,
+622:        "sl": sl,
+623:        "tp1": tp1,
+624:        "tp2": tp2,
+626:        "risk_distance": risk,
+627:        "reward_distance": reward,
+628:        "rr": rr,
+630:        "position_size": sizing,
+632:        "confidence": confidence,
+633:        "reference_price": reference,
+636:        "fresh_data_verified": True,
+637:        "construction_method": "FRESH_PRICE_ATR",
+638:        "entry_source": "FRESH_BINANCE_5M",
+639:        "sl_source": "FRESH_ATR",
+640:        "tp1_source": "RISK_MULTIPLE",
+641:        "tp2_source": "RISK_MULTIPLE",
+642:        "rr_source": "ACTUAL_ENTRY_SL_TP2",
+646:        "timestamp_utc": now(),
+654:def run_once():
+657:    constructed = []
+681:            market = fresh_market(symbol)
+683:            trade = construct(
+688:            constructed.append(trade)
+696:                "timestamp_utc": now(),
+699:    constructed.sort(
+701:            x.get("confidence", 0),
+702:            x.get("rr", 0),
+711:        "timestamp_utc": now(),
+714:        "constructed": len(constructed),
+717:        "constructed_candidates": constructed,
+726:            "entry": "PHASE_6",
+727:            "sl": "PHASE_6",
+728:            "tp1": "PHASE_6",
+729:            "tp2": "PHASE_6",
+730:            "rr": "PHASE_6",
+731:            "position_size": "PHASE_6",
+755:    print(f"Trade-ready                    : {len(constructed)}")
+760:        constructed,
+767:            f"CONF:{item['confidence']:>6.2f} "
+768:            f"ENTRY:{item['entry']} "
+769:            f"SL:{item['sl']} "
+770:            f"TP1:{item['tp1']} "
+771:            f"TP2:{item['tp2']} "
+772:            f"R:R:{item['rr']:.2f} "
+773:            f"QTY:{item['position_size']['quantity_decimal']}"
+
+============================================================
+PHASE 7 — CURRENT IMPLEMENTATION
+============================================================
+34:def now():
+38:def save(path, data):
+43:def load():
+45:        raise FileNotFoundError(
+52:def validate(candidate):
+73:        rr = float(candidate.get("rr", 0))
+75:        rr = 0
+81:    if rr < MIN_RR:
+87:        "entry",
+88:        "sl",
+89:        "tp1",
+90:        "tp2",
+122:    sizing = candidate.get("position_size")
+128:            if float(sizing.get("quantity", 0)) <= 0:
+134:        entry = levels["entry"]
+135:        sl = levels["sl"]
+136:        tp1 = levels["tp1"]
+137:        tp2 = levels["tp2"]
+141:                sl < entry < tp1 <= tp2
+149:                tp2 <= tp1 < entry < sl
+155:        risk = abs(entry - sl)
+156:        reward = abs(tp2 - entry)
+158:        if risk <= 0:
+162:            actual_rr = reward / risk
+164:            if abs(actual_rr - rr) > 1e-9:
+169:            if actual_rr < MIN_RR:
+189:        "validated_utc": now(),
+193:def run_once():
+228:        result = validate(candidate)
+238:            x.get("rr", 0),
+259:            "minimum_rr": MIN_RR,
+261:            "position_size_required": True,
+265:        "execution_boundary": {
+266:            "execution_authorized": False,
+267:            "order_submission": False,
+269:            "live_execution": False,
+298:            f"ENTRY:{item['entry']} "
+299:            f"SL:{item['sl']} "
+300:            f"TP1:{item['tp1']} "
+301:            f"TP2:{item['tp2']} "
+302:            f"R:R:{item['rr']:.2f} "
+303:            f"QTY:{item['position_size']['quantity_decimal']}"
+
+============================================================
+PHASE 8 — CURRENT IMPLEMENTATION
+============================================================
+10:- reconstruct Entry/SL/TP
+12:- change position size
+28:PHASE8_STATE = STATE / "phase8_execution_lifecycle.json"
+41:def now():
+45:def save(path, data):
+50:def main():
+66:    execution_enabled = (
+82:        "execution_enabled": execution_enabled,
+84:        "execution_boundary": {
+85:            "execution_authorized": EXECUTION_AUTHORIZED,
+86:            "order_submission": ORDER_SUBMISSION,
+88:            "live_execution": LIVE_EXECUTION,
+97:        "orders_submitted": 0,
+98:        "status": (
+114:        f"Execution enabled       : {execution_enabled}"
+117:        "Orders submitted        : 0"
+
+============================================================
+ACCOUNT / BINANCE CAPABILITIES
+============================================================
+account_binding.py:10:    Establish and verify the account-binding security layer.
+account_binding.py:16:    - creates an account-binding record
+account_binding.py:18:    - stores only a safe account fingerprint
+account_binding.py:25:    - submits orders
+account_binding.py:28:    - enables withdrawals
+account_binding.py:29:    - transmits trading orders
+account_binding.py:88:ACCOUNT_BINDING_FILE = STATE_DIR / "account_binding.json"
+account_binding.py:89:REPORT_FILE = REPORT_DIR / "phase2_account_binding_report.json"
+account_binding.py:105:def now_utc():
+account_binding.py:109:def ensure_directories():
+account_binding.py:114:def save_json(path: Path, data: dict):
+account_binding.py:119:def load_json(path: Path):
+account_binding.py:130:def print_status(label, value, good=True):
+account_binding.py:143:def get_machine_id():
+account_binding.py:147:    This is NOT an account credential.
+account_binding.py:175:def account_fingerprint(account_identifier: str):
+account_binding.py:177:    Convert an account identifier into a one-way fingerprint.
+account_binding.py:182:    normalized = account_identifier.strip()
+account_binding.py:196:def create_binding_record():
+account_binding.py:215:    account_identifier = input(
+account_binding.py:216:        "Enter intended Binance account identifier/name "
+account_binding.py:220:    if not account_identifier:
+account_binding.py:222:            f"{RED}No account identifier supplied.{RESET}"
+account_binding.py:226:    fingerprint = account_fingerprint(
+account_binding.py:227:        account_identifier
+account_binding.py:243:        "account_fingerprint": fingerprint,
+account_binding.py:250:            "order_submission": ORDER_SUBMISSION,
+account_binding.py:251:            "withdrawals": WITHDRAWALS,
+account_binding.py:280:def validate_binding():
+account_binding.py:312:    checks["account_fingerprint"] = bool(
+account_binding.py:313:        record.get("account_fingerprint")
+account_binding.py:331:    checks["orders_disabled"] = (
+account_binding.py:332:        execution.get("order_submission")
+account_binding.py:336:    checks["withdrawals_disabled"] = (
+account_binding.py:337:        execution.get("withdrawals")
+account_binding.py:378:def health_score(checks):
+account_binding.py:398:def write_report(checks, score):
+account_binding.py:407:        "account_binding": {
+account_binding.py:422:            "order_submission": False,
+account_binding.py:423:            "withdrawals": False,
+account_binding.py:451:def run():
+account_binding.py:488:            "Existing account binding detected."
+account_binding.py:528:        "account_fingerprint":
+account_binding.py:537:        "orders_disabled":
+account_binding.py:540:        "withdrawals_disabled":
+account_binding.py:569:        elif key == "orders_disabled":
+account_binding.py:572:        elif key == "withdrawals_disabled":
+phase3_account_verify.py:14:    - verifies the actual Binance account
+phase3_account_verify.py:16:    - checks withdrawal permission
+phase3_account_verify.py:18:    - NEVER submits an order
+phase3_account_verify.py:19:    - NEVER cancels an order
+phase3_account_verify.py:21:    - NEVER enables withdrawals
+phase3_account_verify.py:51:ACCOUNT_ENDPOINT = "/api/v3/account"
+phase3_account_verify.py:57:REPORT_FILE = REPORT_DIR / "phase3_account_verification.json"
+phase3_account_verify.py:79:def now_utc():
+phase3_account_verify.py:83:def ensure_directories():
+phase3_account_verify.py:88:def sha256_short(value: str):
+phase3_account_verify.py:94:def print_status(label, value, good=True):
+phase3_account_verify.py:106:def get_credentials():
+phase3_account_verify.py:151:def signed_account_request(api_key, api_secret):
+phase3_account_verify.py:189:def sanitize_account(data):
+phase3_account_verify.py:192:    Keep only safe account metadata.
+phase3_account_verify.py:194:    Balances and private account details are not saved.
+phase3_account_verify.py:198:        "account_type": data.get("accountType"),
+phase3_account_verify.py:199:        "can_trade": data.get("canTrade"),
+phase3_account_verify.py:200:        "can_withdraw": data.get("canWithdraw"),
+phase3_account_verify.py:214:def save_report(result):
+phase3_account_verify.py:216:    STATE_FILE = STATE_DIR / "phase3_account_verification.json"
+phase3_account_verify.py:242:def main():
+phase3_account_verify.py:326:        response = signed_account_request(
+phase3_account_verify.py:394:            "  - insufficient API permissions"
+phase3_account_verify.py:404:        account = response.json()
+phase3_account_verify.py:416:    safe = sanitize_account(account)
+phase3_account_verify.py:419:    can_withdraw = safe.get("can_withdraw")
+phase3_account_verify.py:429:        + str(safe.get("account_type"))
+phase3_account_verify.py:437:        "Binance account",
+phase3_account_verify.py:444:        str(safe.get("account_type")),
+phase3_account_verify.py:458:    # Binance's canWithdraw/canDeposit fields are account-level
+phase3_account_verify.py:463:    # Withdrawal, deposit, and transfer operations are forbidden
+phase3_account_verify.py:482:        "Binance withdrawal flag",
+phase3_account_verify.py:483:        "TRUE" if can_withdraw else "FALSE",
+phase3_account_verify.py:488:        "CryptoMasterX1 withdrawals",
+phase3_account_verify.py:506:        "CryptoMasterX1 transfers",
+phase3_account_verify.py:517:        "account_identity": True,
+phase3_account_verify.py:520:        # Binance account flags are informational only.
+phase3_account_verify.py:521:        "withdrawal_policy_forbidden":
+phase3_account_verify.py:527:        "transfer_policy_forbidden":
+phase3_account_verify.py:531:        "order_submission_disabled": True,
+phase3_account_verify.py:559:            "account_type": safe.get("account_type"),
+phase3_account_verify.py:560:            "account_fingerprint": identity_fingerprint,
+phase3_account_verify.py:563:        "binance_account_capabilities": {
+phase3_account_verify.py:565:            "can_withdraw": can_withdraw,
+phase3_account_verify.py:571:            "withdrawals": False,
+phase3_account_verify.py:573:            "transfers": False,
+phase3_account_verify.py:582:            "order_submission": False,
+
+============================================================
+CONSOLIDATED BUILDER
+============================================================
+20:- Phase 6 refreshes Binance before constructing executable levels.
+38:files["phase6_trade_intelligence.py"] = r'''#!/usr/bin/env python3
+59:PHASE5_STATE = STATE / "phase5_market_intelligence.json"
+60:PHASE6_STATE = STATE / "phase6_trade_intelligence.json"
+61:PHASE6_REPORT = REPORTS / "phase6_trade_intelligence_report.json"
+96:def now():
+100:def save(path, data):
+105:def load(path):
+111:def number(value, default=None):
+124:def binance_get(path, params=None):
+148:def candles(symbol, interval="5m", limit=120):
+178:def ema(values, period):
+185:    for price in values[period:]:
+186:        value = ((price - value) * multiplier) + value
+191:def atr(rows, period=14):
+219:def extract_candidates(obj):
+230:    def walk(value):
+270:def digest_phase5():
+287:def fresh_market(symbol):
+291:        raise RuntimeError(f"{symbol}: insufficient fresh candles")
+300:    fresh_atr = atr(closed, ATR_PERIOD)
+302:    if fast is None or slow is None or fresh_atr is None:
+303:        raise RuntimeError(f"{symbol}: fresh indicator calculation failed")
+305:    current_price = rows[-1]["close"]
+307:    if current_price > fast > slow:
+309:    elif current_price < fast < slow:
+314:    extension = abs(current_price - fast) / fresh_atr
+318:        "price": current_price,
+321:        "atr": fresh_atr,
+322:        "fresh_direction": direction,
+325:        "fresh_checked_utc": now(),
+333:def exchange_info(symbol):
+372:def floor_step(value, step):
+387:def load_credentials():
+421:def signed_account():
+425:        "timestamp": int(time.time() * 1000),
+462:def quote_balance(asset):
+476:def calculate_position_size(symbol, entry, sl):
+540:def construct(candidate, market):
+545:        or candidate.get("fresh_direction")
+551:        number(candidate.get("phase6_confidence"), 0),
+564:    fresh_direction = market["fresh_direction"]
+566:    if fresh_direction == "NEUTRAL":
+568:            f"{symbol}: fresh market direction is NEUTRAL"
+571:    if direction != fresh_direction:
+574:            f"conflicts with fresh direction {fresh_direction}"
+578:    entry = market["price"]
+589:    # Optional analytical/reference price from Phase 5.
+591:        candidate.get("price"),
+604:                f"{symbol}: fresh price drift "
+641:    sizing = calculate_position_size(
+652:        "phase5_intelligence": candidate,
+655:        "fresh_market": market,
+657:        # Executable construction.
+667:        "position_size": sizing,
+670:        "reference_price": reference,
+673:        "fresh_data_verified": True,
+674:        "construction_method": "FRESH_PRICE_ATR",
+683:        "timestamp_utc": now(),
+691:def run_once():
+692:    phase5_state, candidates = digest_phase5()
+694:    constructed = []
+718:            market = fresh_market(symbol)
+720:            trade = construct(
+725:            constructed.append(trade)
+733:                "timestamp_utc": now(),
+736:    constructed.sort(
+748:        "timestamp_utc": now(),
+750:        "phase5_records_digest": len(candidates),
+751:        "constructed": len(constructed),
+754:        "constructed_candidates": constructed,
+758:            "phase5_state": str(PHASE5_STATE),
+759:            "phase5_completely_digested": True,
+768:            "position_size": "PHASE_6",
+773:            "order_submission": False,
+792:    print(f"Trade-ready                    : {len(constructed)}")
+797:        constructed,
+810:            f"QTY:{item['position_size']['quantity_decimal']}"
+834:files["phase7_final_validation.py"] = r'''#!/usr/bin/env python3
+849:PHASE6_STATE = STATE / "phase6_trade_intelligence.json"
+850:PHASE7_STATE = STATE / "phase7_final_validation.json"
+851:PHASE7_REPORT = REPORTS / "phase7_final_validation_report.json"
+867:def now():
+871:def save(path, data):
+876:def load():
+885:def validate(candidate):
+949:    if candidate.get("fresh_data_verified") is not True:
+952:    if candidate.get("fresh_market") is None:
+955:    sizing = candidate.get("position_size")
+1026:def run_once():
+1030:        "constructed_candidates",
+1080:        "timestamp_utc": now(),
+1082:        "phase6_candidates": len(candidates),
+1093:            "fresh_data_required": True,
+1094:            "position_size_required": True,
+1100:            "order_submission": False,
+1136:            f"QTY:{item['position_size']['quantity_decimal']}"
+1158:files["phase8_execution_lifecycle_v8.py"] = r'''#!/usr/bin/env python3
+1167:- reconstruct Entry/SL/TP
+1184:PHASE7_STATE = STATE / "phase7_final_validation.json"
+1185:PHASE8_STATE = STATE / "phase8_execution_lifecycle.json"
+1198:def now():
+1202:def save(path, data):
+1207:def main():
+1235:        "timestamp_utc": now(),
+1237:        "phase7_qualified_input": len(qualified),
+1243:            "order_submission": ORDER_SUBMISSION,
+1254:        "orders_submitted": 0,
+1274:        "Orders submitted        : 0"
+1319:def run(script):
+1337:def main():
+1339:    if not (ROOT / "state/phase5_market_intelligence.json").exists():
+1349:    run("phase6_trade_intelligence.py")
+1352:    run("phase7_final_validation.py")
+1354:    # Locked execution/lifecycle boundary.
+1355:    run("phase8_execution_lifecycle_v8.py")
+1403:1. Refreshes Binance market data.
+1404:2. Reconciles Phase 5 direction with fresh direction.
+1405:3. Rejects stale/conflicting setups.
+1407:5. Constructs fresh Entry.
+1408:6. Constructs SL from fresh ATR.
+1430:- freshness
+1437:- price structure
+1451:- order transmission
+1453:- position lifecycle
+1454:- SL/TP lifecycle
+
+============================================================
+PIPELINE CONTRACT
+============================================================
+43:PHASES = {
+68:            "execution security state",
+111:            "fresh market data",
+136:            "refresh live market data",
+137:            "verify direction against fresh data",
+138:            "prevent stale-entry execution",
+149:            "use stale Phase 5/6 prices as current price",
+158:            "validate entry",
+163:            "validate freshness",
+165:            "validate risk limits",
+179:            "verify execution authorization",
+186:            "handle execution failures",
+190:            "override Phase 7 risk decisions",
+192:            "bypass execution locks",
+203:class TradeCandidate:
+216:    # Phase 6 fresh market state
+217:    fresh_market: Dict[str, Any] = field(default_factory=dict)
+220:    entry: Optional[float] = None
+221:    sl: Optional[float] = None
+222:    tp1: Optional[float] = None
+223:    tp2: Optional[float] = None
+226:    risk_distance: Optional[float] = None
+227:    reward_distance: Optional[float] = None
+228:    rr: Optional[float] = None
+229:    position_size: Optional[float] = None
+240:    fresh_data_required: bool = True
+241:    fresh_data_verified: bool = False
+252:            "timestamp": datetime.now(timezone.utc).isoformat(),
+254:            "phase_name": PHASES[phase]["name"],
+273:        raise RuntimeError(f"PIPELINE CONTRACT FAILURE: {message}")
+276:def validate_phase4(candidate: TradeCandidate):
+289:def validate_phase5(candidate: TradeCandidate):
+302:def validate_phase6(candidate: TradeCandidate):
+305:        candidate.fresh_market,
+306:        f"{candidate.symbol}: fresh market data missing"
+310:        candidate.fresh_data_verified,
+311:        f"{candidate.symbol}: fresh market data not verified"
+315:        candidate.entry is not None,
+320:        candidate.sl is not None,
+325:        candidate.tp1 is not None,
+330:        candidate.tp2 is not None,
+335:        candidate.rr is not None and candidate.rr > 0,
+340:        candidate.position_size is not None
+341:        and candidate.position_size > 0,
+346:def validate_phase7(candidate: TradeCandidate):
+348:    validate_phase6(candidate)
+355:    entry = candidate.entry
+356:    sl = candidate.sl
+357:    tp1 = candidate.tp1
+358:    tp2 = candidate.tp2
+361:        require(sl < entry, f"{candidate.symbol}: LONG SL must be below Entry")
+362:        require(tp1 > entry, f"{candidate.symbol}: LONG TP1 must be above Entry")
+363:        require(tp2 > tp1, f"{candidate.symbol}: LONG TP2 must exceed TP1")
+366:        require(sl > entry, f"{candidate.symbol}: SHORT SL must be above Entry")
+367:        require(tp1 < entry, f"{candidate.symbol}: SHORT TP1 must be below Entry")
+368:        require(tp2 < tp1, f"{candidate.symbol}: SHORT TP2 must exceed TP1 in direction")
+370:    risk = abs(entry - sl)
+371:    reward = abs(tp2 - entry)
+373:    require(risk > 0, f"{candidate.symbol}: zero risk distance")
+375:    calculated_rr = reward / risk
+379:        abs(calculated_rr - candidate.rr) < 1e-9,
+384:def validate_phase8(candidate: TradeCandidate):
+411:def phase4(candidate: TradeCandidate):
+412:    validate_phase4(candidate)
+421:def phase5(candidate: TradeCandidate):
+427:    validate_phase5(candidate)
+438:def phase6(candidate: TradeCandidate):
+442:    This is where Phase 5 intelligence and fresh market data
+446:    This contract simply defines the correct responsibility.
+449:    validate_phase5(candidate)
+454:        candidate.fresh_market,
+455:        f"{candidate.symbol}: fresh market refresh required"
+458:    candidate.fresh_data_verified = True
+462:    # entry
+463:    # sl
+464:    # tp1
+465:    # tp2
+466:    # rr
+467:    # position_size
+471:    validate_phase6(candidate)
+476:        "Phase 5 intelligence + fresh market data converted into "
+483:def phase7(candidate: TradeCandidate):
+488:    validate_phase7(candidate)
+501:def phase8(candidate: TradeCandidate):
+505:    This phase can prepare execution without transmitting.
+508:    executable = validate_phase8(candidate)
+514:            "Trade is valid, but global execution authorization remains locked."
+521:        "Trade passed execution authorization."
+538:    for number, phase in PHASES.items():
+
+============================================================
+EXECUTION LOCKS — COMPLETE PROJECT SEARCH
+============================================================
+./phase1_scanner.py:56:LIVE_EXECUTION = False
+./phase1_scanner.py:57:ORDER_SUBMISSION_ENABLED = False
+./phase1_scanner.py:163:            "live_execution": LIVE_EXECUTION,
+./phase1_scanner.py:164:            "order_submission_enabled": ORDER_SUBMISSION_ENABLED,
+./phase1_scanner.py:253:    live = execution.get("live_execution") is False
+./phase1_scanner.py:254:    orders = execution.get("order_submission_enabled") is False
+./account_binding.py:28:    - enables withdrawals
+./account_binding.py:34:    LIVE_EXECUTION        = FALSE
+./account_binding.py:35:    BOT_ARMED             = FALSE
+./account_binding.py:36:    ORDER_SUBMISSION      = FALSE
+./account_binding.py:37:    WITHDRAWALS           = FALSE
+./account_binding.py:39:    EXECUTION_AUTHORIZED  = FALSE
+./account_binding.py:70:LIVE_EXECUTION = False
+./account_binding.py:71:BOT_ARMED = False
+./account_binding.py:72:ORDER_SUBMISSION = False
+./account_binding.py:73:WITHDRAWALS = False
+./account_binding.py:75:EXECUTION_AUTHORIZED = False
+./account_binding.py:248:            "live_execution": LIVE_EXECUTION,
+./account_binding.py:249:            "bot_armed": BOT_ARMED,
+./account_binding.py:250:            "order_submission": ORDER_SUBMISSION,
+./account_binding.py:251:            "withdrawals": WITHDRAWALS,
+./account_binding.py:253:            "execution_authorized": EXECUTION_AUTHORIZED,
+./account_binding.py:321:    checks["live_execution_locked"] = (
+./account_binding.py:322:        execution.get("live_execution")
+./account_binding.py:327:        execution.get("bot_armed")
+./account_binding.py:332:        execution.get("order_submission")
+./account_binding.py:336:    checks["withdrawals_disabled"] = (
+./account_binding.py:337:        execution.get("withdrawals")
+./account_binding.py:347:        execution.get("execution_authorized")
+./account_binding.py:420:            "live_execution": False,
+./account_binding.py:421:            "bot_armed": False,
+./account_binding.py:422:            "order_submission": False,
+./account_binding.py:423:            "withdrawals": False,
+./account_binding.py:425:            "execution_authorized": False,
+./account_binding.py:531:        "live_execution_locked":
+./account_binding.py:540:        "withdrawals_disabled":
+./account_binding.py:541:            "Withdrawals",
+./account_binding.py:563:        if key == "live_execution_locked":
+./account_binding.py:572:        elif key == "withdrawals_disabled":
+./account_binding.py:651:        f"WITHDRAWALS           : "
+./phase3_account_verify.py:21:    - NEVER enables withdrawals
+./phase3_account_verify.py:60:EXECUTION_AUTHORIZED = False
+./phase3_account_verify.py:61:ORDER_SUBMISSION = False
+./phase3_account_verify.py:62:BOT_ARMED = False
+./phase3_account_verify.py:63:LIVE_EXECUTION = False
+./phase3_account_verify.py:275:        EXECUTION_AUTHORIZED is False,
+./phase3_account_verify.py:281:        ORDER_SUBMISSION is False,
+./phase3_account_verify.py:287:        BOT_ARMED is False,
+./phase3_account_verify.py:293:        LIVE_EXECUTION is False,
+./phase3_account_verify.py:467:    CRYPTOMASTER_WITHDRAWALS = False
+./phase3_account_verify.py:488:        "CryptoMasterX1 withdrawals",
+./phase3_account_verify.py:490:        CRYPTOMASTER_WITHDRAWALS is False
+./phase3_account_verify.py:522:            CRYPTOMASTER_WITHDRAWALS is False,
+./phase3_account_verify.py:531:        "order_submission_disabled": True,
+./phase3_account_verify.py:571:            "withdrawals": False,
+./phase3_account_verify.py:581:            "execution_authorized": False,
+./phase3_account_verify.py:582:            "order_submission": False,
+./phase3_account_verify.py:583:            "bot_armed": False,
+./phase3_account_verify.py:584:            "live_execution": False,
+./phase5_market_intelligence.py:723:            "execution_authorized": False,
+./phase5_market_intelligence.py:724:            "order_submission": False,
+./phase5_market_intelligence.py:725:            "bot_armed": False,
+./phase5_market_intelligence.py:726:            "live_execution": False,
+./phase5_market_intelligence.py:727:            "withdrawals": False,
+./phase5_market_intelligence.py:903:                    "execution_authorized": False,
+./phase5_market_intelligence.py:904:                    "order_submission": False,
+./phase5_market_intelligence.py:905:                    "bot_armed": False,
+./phase5_market_intelligence.py:906:                    "live_execution": False,
+./phase5_market_intelligence.py:907:                    "withdrawals": False,
+./phase6_trade_quality.py:279:            "execution_authorized": False,
+./phase6_trade_quality.py:280:            "order_submission": False,
+./phase6_trade_quality.py:281:            "bot_armed": False,
+./phase6_trade_quality.py:282:            "live_execution": False,
+./phase6_trade_quality.py:283:            "withdrawals": False,
+./position_sizing.py:108:EXECUTION_AUTHORIZED = False
+./position_sizing.py:109:ORDER_SUBMISSION = False
+./position_sizing.py:110:BOT_ARMED = False
+./position_sizing.py:111:LIVE_EXECUTION = False
+./position_sizing.py:113:WITHDRAWALS = False
+./position_sizing.py:728:        f"Execution authorized  : {EXECUTION_AUTHORIZED}"
+./position_sizing.py:731:        f"Order submission      : {ORDER_SUBMISSION}"
+./position_sizing.py:734:        f"Bot armed             : {BOT_ARMED}"
+./position_sizing.py:737:        f"Live execution        : {LIVE_EXECUTION}"
+./position_sizing.py:744:    if EXECUTION_AUTHORIZED:
+./position_sizing.py:749:    if ORDER_SUBMISSION:
+./position_sizing.py:754:    if BOT_ARMED:
+./position_sizing.py:759:    if LIVE_EXECUTION:
+./position_sizing.py:892:            "execution_authorized": False,
+./position_sizing.py:893:            "order_submission": False,
+./position_sizing.py:894:            "bot_armed": False,
+./position_sizing.py:895:            "live_execution": False,
+./position_sizing.py:896:            "withdrawals": False,
+./phase7_entry_intelligence.py:60:EXECUTION_AUTHORIZED = False
+./phase7_entry_intelligence.py:61:ORDER_SUBMISSION = False
+./phase7_entry_intelligence.py:62:BOT_ARMED = False
+./phase7_entry_intelligence.py:63:LIVE_EXECUTION = False
+./phase7_entry_intelligence.py:65:WITHDRAWALS = False
+./phase7_entry_intelligence.py:695:            "execution_authorized": False,
+./phase7_entry_intelligence.py:696:            "order_submission": False,
+./phase7_entry_intelligence.py:697:            "bot_armed": False,
+./phase7_entry_intelligence.py:698:            "live_execution": False,
+./phase7_entry_intelligence.py:699:            "withdrawals": False,
+./phase7_entry_intelligence.py:820:        "Withdrawals        : FORBIDDEN"
+./phase7_entry_intelligence.py:890:                    "execution_authorized": False,
+./phase7_entry_intelligence.py:891:                    "order_submission": False,
+./phase7_entry_intelligence.py:892:                    "bot_armed": False,
+./phase7_entry_intelligence.py:893:                    "live_execution": False,
+./phase7_entry_intelligence.py:894:                    "withdrawals": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:723:            "execution_authorized": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:724:            "order_submission": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:725:            "bot_armed": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:726:            "live_execution": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:727:            "withdrawals": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:903:                    "execution_authorized": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:904:                    "order_submission": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:905:                    "bot_armed": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:906:                    "live_execution": False,
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:907:                    "withdrawals": False,
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:285:            "execution_authorized": False,
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:286:            "order_submission": False,
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:287:            "bot_armed": False,
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:288:            "live_execution": False,
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:289:            "withdrawals": False,
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:20:EXECUTION_AUTHORIZED = False
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:21:ORDER_SUBMISSION = False
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:22:BOT_ARMED = False
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:23:LIVE_EXECUTION = False
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:190:            "execution_authorized": False,
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:191:            "order_submission": False,
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:192:            "bot_armed": False,
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:193:            "live_execution": False,
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:194:            "withdrawals": False,
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:20:EXECUTION_AUTHORIZED = False
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:21:ORDER_SUBMISSION = False
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:22:BOT_ARMED = False
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:23:LIVE_EXECUTION = False
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:218:            "execution_authorized": False,
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:219:            "order_submission": False,
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:220:            "bot_armed": False,
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:221:            "live_execution": False,
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:222:            "withdrawals": False,
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:21:EXECUTION_AUTHORIZED = False
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:22:ORDER_SUBMISSION = False
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:23:BOT_ARMED = False
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:24:LIVE_EXECUTION = False
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:294:            "execution_authorized": False,
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:295:            "order_submission": False,
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:296:            "bot_armed": False,
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:297:            "live_execution": False,
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:298:            "withdrawals": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:723:            "execution_authorized": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:724:            "order_submission": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:725:            "bot_armed": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:726:            "live_execution": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:727:            "withdrawals": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:903:                    "execution_authorized": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:904:                    "order_submission": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:905:                    "bot_armed": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:906:                    "live_execution": False,
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:907:                    "withdrawals": False,
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:279:            "execution_authorized": False,
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:280:            "order_submission": False,
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:281:            "bot_armed": False,
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:282:            "live_execution": False,
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:283:            "withdrawals": False,
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:20:EXECUTION_AUTHORIZED = False
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:21:ORDER_SUBMISSION = False
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:22:BOT_ARMED = False
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:23:LIVE_EXECUTION = False
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:215:            "execution_authorized": False,
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:216:            "order_submission": False,
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:217:            "bot_armed": False,
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:218:            "live_execution": False,
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:219:            "withdrawals": False,
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:21:EXECUTION_AUTHORIZED = False
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:22:ORDER_SUBMISSION = False
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:23:BOT_ARMED = False
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:24:LIVE_EXECUTION = False
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:294:            "execution_authorized": False,
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:295:            "order_submission": False,
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:296:            "bot_armed": False,
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:297:            "live_execution": False,
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:298:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:723:            "execution_authorized": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:724:            "order_submission": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:725:            "bot_armed": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:726:            "live_execution": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:727:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:903:                    "execution_authorized": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:904:                    "order_submission": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:905:                    "bot_armed": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:906:                    "live_execution": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:907:                    "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:48:EXECUTION_AUTHORIZED = False
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:49:ORDER_SUBMISSION = False
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:50:BOT_ARMED = False
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:51:LIVE_EXECUTION = False
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:54:WITHDRAWALS = False
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:735:            "execution_authorized": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:736:            "order_submission": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:737:            "bot_armed": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:738:            "live_execution": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:740:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:780:    print("Withdrawals        : FORBIDDEN")
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:23:EXECUTION_AUTHORIZED = False
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:24:ORDER_SUBMISSION = False
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:25:BOT_ARMED = False
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:26:LIVE_EXECUTION = False
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:29:WITHDRAWALS = False
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:266:            "execution_authorized": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:267:            "order_submission": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:268:            "bot_armed": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:269:            "live_execution": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:271:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:310:    print("Withdrawals        : FORBIDDEN")
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:14:- enable withdrawals
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:30:EXECUTION_AUTHORIZED = False
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:31:ORDER_SUBMISSION = False
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:32:BOT_ARMED = False
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:33:LIVE_EXECUTION = False
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:36:WITHDRAWALS = False
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:67:        EXECUTION_AUTHORIZED
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:68:        and ORDER_SUBMISSION
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:69:        and BOT_ARMED
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:70:        and LIVE_EXECUTION
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:85:            "execution_authorized": EXECUTION_AUTHORIZED,
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:86:            "order_submission": ORDER_SUBMISSION,
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:87:            "bot_armed": BOT_ARMED,
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:88:            "live_execution": LIVE_EXECUTION,
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:90:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:123:        "Withdrawals             : FORBIDDEN"
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:30:    "LIVE_EXECUTION": False,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:31:    "BOT_ARMED": False,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:32:    "ORDER_SUBMISSION": False,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:33:    "WITHDRAWALS": False,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:35:    "EXECUTION_AUTHORIZED": False,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:191:            "enable withdrawals",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:393:        SAFETY["LIVE_EXECUTION"]
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:394:        and SAFETY["BOT_ARMED"]
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:395:        and SAFETY["ORDER_SUBMISSION"]
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:396:        and SAFETY["EXECUTION_AUTHORIZED"]
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:520:        "EXECUTION_AUTHORIZED",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:580:    print("WITHDRAWALS: FORBIDDEN")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:24:- Withdrawals remain forbidden.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:85:EXECUTION_AUTHORIZED = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:86:ORDER_SUBMISSION = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:87:BOT_ARMED = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:88:LIVE_EXECUTION = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:91:WITHDRAWALS = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:772:            "execution_authorized": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:773:            "order_submission": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:774:            "bot_armed": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:775:            "live_execution": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:777:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:817:    print("Withdrawals        : FORBIDDEN")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:856:EXECUTION_AUTHORIZED = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:857:ORDER_SUBMISSION = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:858:BOT_ARMED = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:859:LIVE_EXECUTION = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:862:WITHDRAWALS = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1099:            "execution_authorized": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1100:            "order_submission": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1101:            "bot_armed": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1102:            "live_execution": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1104:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1143:    print("Withdrawals        : FORBIDDEN")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1171:- enable withdrawals
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1187:EXECUTION_AUTHORIZED = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1188:ORDER_SUBMISSION = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1189:BOT_ARMED = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1190:LIVE_EXECUTION = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1193:WITHDRAWALS = False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1224:        EXECUTION_AUTHORIZED
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1225:        and ORDER_SUBMISSION
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1226:        and BOT_ARMED
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1227:        and LIVE_EXECUTION
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1242:            "execution_authorized": EXECUTION_AUTHORIZED,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1243:            "order_submission": ORDER_SUBMISSION,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1244:            "bot_armed": BOT_ARMED,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1245:            "live_execution": LIVE_EXECUTION,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1247:            "withdrawals": False,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1280:        "Withdrawals             : FORBIDDEN"
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1469:LIVE_EXECUTION=False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1470:BOT_ARMED=False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1471:ORDER_SUBMISSION=False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1472:EXECUTION_AUTHORIZED=False
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1474:WITHDRAWALS=False
+./build_staging/execution_safety_contract.py:15:EXECUTION_AUTHORIZED = False
+./build_staging/execution_safety_contract.py:16:BOT_ARMED = False
+./build_staging/execution_safety_contract.py:17:LIVE_EXECUTION = False
+./build_staging/execution_safety_contract.py:18:ORDER_SUBMISSION = False
+./build_staging/execution_safety_contract.py:19:WITHDRAWALS = False
+./build_staging/execution_safety_contract.py:24:        EXECUTION_AUTHORIZED
+./build_staging/execution_safety_contract.py:25:        and BOT_ARMED
+./build_staging/execution_safety_contract.py:26:        and LIVE_EXECUTION
+./build_staging/execution_safety_contract.py:27:        and ORDER_SUBMISSION
+./build_staging/execution_safety_contract.py:33:        "execution_authorized": EXECUTION_AUTHORIZED,
+./build_staging/execution_safety_contract.py:34:        "bot_armed": BOT_ARMED,
+./build_staging/execution_safety_contract.py:35:        "live_execution": LIVE_EXECUTION,
+./build_staging/execution_safety_contract.py:36:        "order_submission": ORDER_SUBMISSION,
+./build_staging/execution_safety_contract.py:37:        "withdrawals": WITHDRAWALS,
+./phase8_entry_validation.py:20:EXECUTION_AUTHORIZED = False
+./phase8_entry_validation.py:21:ORDER_SUBMISSION = False
+./phase8_entry_validation.py:22:BOT_ARMED = False
+./phase8_entry_validation.py:23:LIVE_EXECUTION = False
+./phase8_entry_validation.py:216:            "execution_authorized": False,
+./phase8_entry_validation.py:217:            "order_submission": False,
+./phase8_entry_validation.py:218:            "bot_armed": False,
+./phase8_entry_validation.py:219:            "live_execution": False,
+./phase8_entry_validation.py:220:            "withdrawals": False,
+./phase9_decision_gate.py:21:EXECUTION_AUTHORIZED = False
+./phase9_decision_gate.py:22:ORDER_SUBMISSION = False
+./phase9_decision_gate.py:23:BOT_ARMED = False
+./phase9_decision_gate.py:24:LIVE_EXECUTION = False
+./phase9_decision_gate.py:302:            "execution_authorized": False,
+./phase9_decision_gate.py:303:            "order_submission": False,
+./phase9_decision_gate.py:304:            "bot_armed": False,
+./phase9_decision_gate.py:305:            "live_execution": False,
+./phase9_decision_gate.py:306:            "withdrawals": False,
+./phase10_trade_lifecycle.py:26:EXECUTION_AUTHORIZED = False
+./phase10_trade_lifecycle.py:27:ORDER_SUBMISSION = False
+./phase10_trade_lifecycle.py:28:BOT_ARMED = False
+./phase10_trade_lifecycle.py:29:LIVE_EXECUTION = False
+./phase10_trade_lifecycle.py:358:            "execution_authorized": False,
+./phase10_trade_lifecycle.py:359:            "order_submission": False,
+./phase10_trade_lifecycle.py:360:            "bot_armed": False,
+./phase10_trade_lifecycle.py:361:            "live_execution": False,
+./phase10_trade_lifecycle.py:363:            "withdrawals": False,
+./phase10_trade_lifecycle.py:452:    print(f"Execution boundary: {'UNLOCKED' if EXECUTION_AUTHORIZED else 'LOCKED'}")
+./phase10_trade_lifecycle.py:453:    print(f"Order submission   : {'ENABLED' if ORDER_SUBMISSION else 'DISABLED'}")
+./phase10_trade_lifecycle.py:454:    print(f"Bot armed          : {'YES' if BOT_ARMED else 'NO'}")
+./phase10_trade_lifecycle.py:455:    print(f"Live execution     : {str(LIVE_EXECUTION).upper()}")
+./phase11_full_system_verification.py:20:EXECUTION_AUTHORIZED = False
+./phase11_full_system_verification.py:21:ORDER_SUBMISSION = False
+./phase11_full_system_verification.py:22:BOT_ARMED = False
+./phase11_full_system_verification.py:23:LIVE_EXECUTION = False
+./phase11_full_system_verification.py:447:                "execution_authorized"
+./phase11_full_system_verification.py:450:                "order_submission"
+./phase11_full_system_verification.py:453:                "bot_armed"
+./phase11_full_system_verification.py:456:                "live_execution"
+./phase11_full_system_verification.py:708:            "execution_authorized": False,
+./phase11_full_system_verification.py:709:            "order_submission": False,
+./phase11_full_system_verification.py:710:            "bot_armed": False,
+./phase11_full_system_verification.py:711:            "live_execution": False,
+./phase11_full_system_verification.py:712:            "withdrawals": False,
+./backup_contract_final/phase6_trade_quality.py:279:            "execution_authorized": False,
+./backup_contract_final/phase6_trade_quality.py:280:            "order_submission": False,
+./backup_contract_final/phase6_trade_quality.py:281:            "bot_armed": False,
+./backup_contract_final/phase6_trade_quality.py:282:            "live_execution": False,
+./backup_contract_final/phase6_trade_quality.py:283:            "withdrawals": False,
+./backup_contract_final/phase7_entry_intelligence.py:60:EXECUTION_AUTHORIZED = False
+./backup_contract_final/phase7_entry_intelligence.py:61:ORDER_SUBMISSION = False
+./backup_contract_final/phase7_entry_intelligence.py:62:BOT_ARMED = False
+./backup_contract_final/phase7_entry_intelligence.py:63:LIVE_EXECUTION = False
+./backup_contract_final/phase7_entry_intelligence.py:65:WITHDRAWALS = False
+./backup_contract_final/phase7_entry_intelligence.py:695:            "execution_authorized": False,
+./backup_contract_final/phase7_entry_intelligence.py:696:            "order_submission": False,
+./backup_contract_final/phase7_entry_intelligence.py:697:            "bot_armed": False,
+./backup_contract_final/phase7_entry_intelligence.py:698:            "live_execution": False,
+./backup_contract_final/phase7_entry_intelligence.py:699:            "withdrawals": False,
+./backup_contract_final/phase7_entry_intelligence.py:820:        "Withdrawals        : FORBIDDEN"
+./backup_contract_final/phase7_entry_intelligence.py:890:                    "execution_authorized": False,
+./backup_contract_final/phase7_entry_intelligence.py:891:                    "order_submission": False,
+./backup_contract_final/phase7_entry_intelligence.py:892:                    "bot_armed": False,
+./backup_contract_final/phase7_entry_intelligence.py:893:                    "live_execution": False,
+./backup_contract_final/phase7_entry_intelligence.py:894:                    "withdrawals": False,
+./backup_contract_final/phase8_entry_validation.py:20:EXECUTION_AUTHORIZED = False
+./backup_contract_final/phase8_entry_validation.py:21:ORDER_SUBMISSION = False
+./backup_contract_final/phase8_entry_validation.py:22:BOT_ARMED = False
+./backup_contract_final/phase8_entry_validation.py:23:LIVE_EXECUTION = False
+./backup_contract_final/phase8_entry_validation.py:215:            "execution_authorized": False,
+./backup_contract_final/phase8_entry_validation.py:216:            "order_submission": False,
+./backup_contract_final/phase8_entry_validation.py:217:            "bot_armed": False,
+./backup_contract_final/phase8_entry_validation.py:218:            "live_execution": False,
+./backup_contract_final/phase8_entry_validation.py:219:            "withdrawals": False,
+./backup_contract_final/phase9_decision_gate.py:21:EXECUTION_AUTHORIZED = False
+./backup_contract_final/phase9_decision_gate.py:22:ORDER_SUBMISSION = False
+./backup_contract_final/phase9_decision_gate.py:23:BOT_ARMED = False
+./backup_contract_final/phase9_decision_gate.py:24:LIVE_EXECUTION = False
+./backup_contract_final/phase9_decision_gate.py:294:            "execution_authorized": False,
+./backup_contract_final/phase9_decision_gate.py:295:            "order_submission": False,
+./backup_contract_final/phase9_decision_gate.py:296:            "bot_armed": False,
+./backup_contract_final/phase9_decision_gate.py:297:            "live_execution": False,
+./backup_contract_final/phase9_decision_gate.py:298:            "withdrawals": False,
+./backup_contract_final/phase10_trade_lifecycle.py:26:EXECUTION_AUTHORIZED = False
+./backup_contract_final/phase10_trade_lifecycle.py:27:ORDER_SUBMISSION = False
+./backup_contract_final/phase10_trade_lifecycle.py:28:BOT_ARMED = False
+./backup_contract_final/phase10_trade_lifecycle.py:29:LIVE_EXECUTION = False
+./backup_contract_final/phase10_trade_lifecycle.py:358:            "execution_authorized": False,
+./backup_contract_final/phase10_trade_lifecycle.py:359:            "order_submission": False,
+./backup_contract_final/phase10_trade_lifecycle.py:360:            "bot_armed": False,
+./backup_contract_final/phase10_trade_lifecycle.py:361:            "live_execution": False,
+./backup_contract_final/phase10_trade_lifecycle.py:363:            "withdrawals": False,
+./backup_contract_final/phase10_trade_lifecycle.py:452:    print(f"Execution boundary: {'UNLOCKED' if EXECUTION_AUTHORIZED else 'LOCKED'}")
+./backup_contract_final/phase10_trade_lifecycle.py:453:    print(f"Order submission   : {'ENABLED' if ORDER_SUBMISSION else 'DISABLED'}")
+./backup_contract_final/phase10_trade_lifecycle.py:454:    print(f"Bot armed          : {'YES' if BOT_ARMED else 'NO'}")
+./backup_contract_final/phase10_trade_lifecycle.py:455:    print(f"Live execution     : {str(LIVE_EXECUTION).upper()}")
+./full_system_stability_scan.py:258:        boundary.get("execution_authorized") is False
+./full_system_stability_scan.py:259:        and boundary.get("order_submission") is False
+./full_system_stability_scan.py:260:        and boundary.get("bot_armed") is False
+./full_system_stability_scan.py:261:        and boundary.get("live_execution") is False
+./backup_pipeline_diagnostic/phase6_trade_quality.py:279:            "execution_authorized": False,
+./backup_pipeline_diagnostic/phase6_trade_quality.py:280:            "order_submission": False,
+./backup_pipeline_diagnostic/phase6_trade_quality.py:281:            "bot_armed": False,
+./backup_pipeline_diagnostic/phase6_trade_quality.py:282:            "live_execution": False,
+./backup_pipeline_diagnostic/phase6_trade_quality.py:283:            "withdrawals": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:60:EXECUTION_AUTHORIZED = False
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:61:ORDER_SUBMISSION = False
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:62:BOT_ARMED = False
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:63:LIVE_EXECUTION = False
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:65:WITHDRAWALS = False
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:695:            "execution_authorized": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:696:            "order_submission": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:697:            "bot_armed": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:698:            "live_execution": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:699:            "withdrawals": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:820:        "Withdrawals        : FORBIDDEN"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:890:                    "execution_authorized": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:891:                    "order_submission": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:892:                    "bot_armed": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:893:                    "live_execution": False,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:894:                    "withdrawals": False,
+./backup_pipeline_diagnostic/phase8_entry_validation.py:20:EXECUTION_AUTHORIZED = False
+./backup_pipeline_diagnostic/phase8_entry_validation.py:21:ORDER_SUBMISSION = False
+./backup_pipeline_diagnostic/phase8_entry_validation.py:22:BOT_ARMED = False
+./backup_pipeline_diagnostic/phase8_entry_validation.py:23:LIVE_EXECUTION = False
+./backup_pipeline_diagnostic/phase8_entry_validation.py:215:            "execution_authorized": False,
+./backup_pipeline_diagnostic/phase8_entry_validation.py:216:            "order_submission": False,
+./backup_pipeline_diagnostic/phase8_entry_validation.py:217:            "bot_armed": False,
+./backup_pipeline_diagnostic/phase8_entry_validation.py:218:            "live_execution": False,
+./backup_pipeline_diagnostic/phase8_entry_validation.py:219:            "withdrawals": False,
+./backup_pipeline_diagnostic/phase9_decision_gate.py:21:EXECUTION_AUTHORIZED = False
+./backup_pipeline_diagnostic/phase9_decision_gate.py:22:ORDER_SUBMISSION = False
+./backup_pipeline_diagnostic/phase9_decision_gate.py:23:BOT_ARMED = False
+./backup_pipeline_diagnostic/phase9_decision_gate.py:24:LIVE_EXECUTION = False
+./backup_pipeline_diagnostic/phase9_decision_gate.py:294:            "execution_authorized": False,
+./backup_pipeline_diagnostic/phase9_decision_gate.py:295:            "order_submission": False,
+./backup_pipeline_diagnostic/phase9_decision_gate.py:296:            "bot_armed": False,
+./backup_pipeline_diagnostic/phase9_decision_gate.py:297:            "live_execution": False,
+./backup_pipeline_diagnostic/phase9_decision_gate.py:298:            "withdrawals": False,
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:26:EXECUTION_AUTHORIZED = False
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:27:ORDER_SUBMISSION = False
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:28:BOT_ARMED = False
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:29:LIVE_EXECUTION = False
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:358:            "execution_authorized": False,
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:359:            "order_submission": False,
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:360:            "bot_armed": False,
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:361:            "live_execution": False,
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:363:            "withdrawals": False,
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:452:    print(f"Execution boundary: {'UNLOCKED' if EXECUTION_AUTHORIZED else 'LOCKED'}")
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:453:    print(f"Order submission   : {'ENABLED' if ORDER_SUBMISSION else 'DISABLED'}")
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:454:    print(f"Bot armed          : {'YES' if BOT_ARMED else 'NO'}")
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:455:    print(f"Live execution     : {str(LIVE_EXECUTION).upper()}")
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:279:            "execution_authorized": False,
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:280:            "order_submission": False,
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:281:            "bot_armed": False,
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:282:            "live_execution": False,
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:283:            "withdrawals": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:60:EXECUTION_AUTHORIZED = False
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:61:ORDER_SUBMISSION = False
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:62:BOT_ARMED = False
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:63:LIVE_EXECUTION = False
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:65:WITHDRAWALS = False
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:695:            "execution_authorized": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:696:            "order_submission": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:697:            "bot_armed": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:698:            "live_execution": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:699:            "withdrawals": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:820:        "Withdrawals        : FORBIDDEN"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:890:                    "execution_authorized": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:891:                    "order_submission": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:892:                    "bot_armed": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:893:                    "live_execution": False,
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:894:                    "withdrawals": False,
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:20:EXECUTION_AUTHORIZED = False
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:21:ORDER_SUBMISSION = False
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:22:BOT_ARMED = False
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:23:LIVE_EXECUTION = False
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:215:            "execution_authorized": False,
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:216:            "order_submission": False,
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:217:            "bot_armed": False,
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:218:            "live_execution": False,
+./backup_one_pass_pipeline_fix/phase8_entry_validation.py:219:            "withdrawals": False,
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:21:EXECUTION_AUTHORIZED = False
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:22:ORDER_SUBMISSION = False
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:23:BOT_ARMED = False
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:24:LIVE_EXECUTION = False
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:294:            "execution_authorized": False,
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:295:            "order_submission": False,
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:296:            "bot_armed": False,
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:297:            "live_execution": False,
+./backup_one_pass_pipeline_fix/phase9_decision_gate.py:298:            "withdrawals": False,
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:26:EXECUTION_AUTHORIZED = False
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:27:ORDER_SUBMISSION = False
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:28:BOT_ARMED = False
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:29:LIVE_EXECUTION = False
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:358:            "execution_authorized": False,
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:359:            "order_submission": False,
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:360:            "bot_armed": False,
+./backup_one_pass_pipeline_fix/phase10_trade_lifecycle.py:361:            "live_execution": False,
+
+============================================================
+ORDER-SUBMISSION SEARCH
+============================================================
+./archive/obsolete_launchers/run_all_live.py:62:        from phase10_live_executor import load_phase9, place_order
+./archive/obsolete_launchers/run_all_live.py:65:            place_order(c)
+
+============================================================
+STALE / FRESH DATA SEARCH
+============================================================
+./phase1_scanner.py:299:        "timestamp_utc": utc_now(),
+./account_binding.py:405:        "timestamp_utc": now_utc(),
+./account_binding.py:550:            "API secret storage",
+./phase3_account_verify.py:153:    timestamp = int(time.time() * 1000)
+./phase3_account_verify.py:156:        "timestamp": timestamp,
+./phase3_account_verify.py:361:            message = error.get("msg")
+./phase3_account_verify.py:365:                f"Binance error {code}: {message}"
+./phase3_account_verify.py:391:            "  - timestamp/time synchronization issue"
+./phase3_account_verify.py:554:        "timestamp_utc": now_utc(),
+./phase4_market_discovery.py:17:        all24=requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=15).json()
+./phase4_market_discovery.py:25:tickers=get_24h(symbols)
+./phase4_market_discovery.py:27:for t in tickers:
+./phase4_market_discovery.py:47:  "timestamp": datetime.utcnow().isoformat()+"+00:00",
+./phase5_market_intelligence.py:19:REFRESH_SECONDS = 0
+./phase5_market_intelligence.py:20:MONITOR_REFRESH_SECONDS = 300
+./phase5_market_intelligence.py:93:            "User-Agent": "CryptoMasterX1/5.1",
+./phase5_market_intelligence.py:130:def fetch_klines(symbol, interval, limit):
+./phase5_market_intelligence.py:132:        "/api/v3/klines",
+./phase5_market_intelligence.py:311:    h1 = fetch_klines(
+./phase5_market_intelligence.py:317:    m15 = fetch_klines(
+./phase5_market_intelligence.py:323:    m5 = fetch_klines(
+./phase5_market_intelligence.py:677:        "timestamp_utc": now_utc(),
+./phase5_market_intelligence.py:898:                "timestamp_utc": now_utc(),
+./phase5_market_intelligence.py:924:            f"{REFRESH_SECONDS} seconds..."
+./phase5_market_intelligence.py:929:                REFRESH_SECONDS
+./phase6_trade_quality.py:13:REFRESH_SECONDS = 60
+./phase6_trade_quality.py:14:MONITOR_REFRESH_SECONDS = 300
+./phase6_trade_quality.py:251:        "timestamp_utc": now_utc(),
+./phase6_trade_quality.py:426:                "timestamp_utc": now_utc(),
+./phase6_trade_quality.py:438:                REFRESH_SECONDS
+./phase6_trade_quality.py:449:                f"{REFRESH_SECONDS} seconds...",
+./phase6_trade_quality.py:455:                    REFRESH_SECONDS
+./position_sizing.py:86:# Keep the risk percentage configurable.
+./position_sizing.py:208:        timestamp
+./position_sizing.py:236:        params["timestamp"] = int(time.time() * 1000)
+./position_sizing.py:250:            "User-Agent": "CryptoMasterX1-Spot-Sizing/1.1",
+./position_sizing.py:258:            "User-Agent": "CryptoMasterX1-Spot-Sizing/1.1",
+./position_sizing.py:854:        "timestamp_utc": now_utc(),
+./phase7_entry_intelligence.py:23:REFRESH_SECONDS = 60
+./phase7_entry_intelligence.py:39:# Stop distance is based on fresh ATR.
+./phase7_entry_intelligence.py:49:# Reject if fresh market price moved too far from
+./phase7_entry_intelligence.py:182:# FRESH BINANCE MARKET FEED
+./phase7_entry_intelligence.py:185:def fetch_klines(symbol):
+./phase7_entry_intelligence.py:195:        "https://api.binance.com/api/v3/klines?"
+./phase7_entry_intelligence.py:202:            "User-Agent": "CryptoMasterX1/7.1",
+./phase7_entry_intelligence.py:217:            f"No klines returned for {symbol}"
+./phase7_entry_intelligence.py:243:            f"Insufficient fresh candles for {symbol}"
+./phase7_entry_intelligence.py:250:# FRESH MARKET ANALYSIS USED ONLY BY PHASE 7
+./phase7_entry_intelligence.py:253:def analyze_fresh_market(symbol):
+./phase7_entry_intelligence.py:254:    candles = fetch_klines(symbol)
+./phase7_entry_intelligence.py:269:    current_price = candles[-1]["close"]
+./phase7_entry_intelligence.py:281:    fresh_atr = atr(
+./phase7_entry_intelligence.py:286:    if fresh_atr is None or fresh_atr <= 0:
+./phase7_entry_intelligence.py:308:    if current_price > fast_ema > slow_ema:
+./phase7_entry_intelligence.py:309:        fresh_direction = "LONG"
+./phase7_entry_intelligence.py:310:    elif current_price < fast_ema < slow_ema:
+./phase7_entry_intelligence.py:311:        fresh_direction = "SHORT"
+./phase7_entry_intelligence.py:313:        fresh_direction = "NEUTRAL"
+./phase7_entry_intelligence.py:316:        abs(current_price - fast_ema)
+./phase7_entry_intelligence.py:317:        / fresh_atr
+./phase7_entry_intelligence.py:322:        "price": current_price,
+./phase7_entry_intelligence.py:325:        "atr": fresh_atr,
+./phase7_entry_intelligence.py:328:        "fresh_direction": fresh_direction,
+./phase7_entry_intelligence.py:370:    fresh_direction = market["fresh_direction"]
+./phase7_entry_intelligence.py:372:    if fresh_direction == "NEUTRAL":
+./phase7_entry_intelligence.py:374:            "FRESH_MARKET_DIRECTION_NEUTRAL"
+./phase7_entry_intelligence.py:379:        != fresh_direction
+./phase7_entry_intelligence.py:382:            "DIRECTION_CHANGED_ON_FRESH_FEED"
+./phase7_entry_intelligence.py:397:    # current fresh market price and fresh ATR.
+./phase7_entry_intelligence.py:401:    fresh_atr = market["atr"]
+./phase7_entry_intelligence.py:404:        fresh_atr
+./phase7_entry_intelligence.py:512:            "method": "FRESH_PRICE_ATR_CONSTRUCTION",
+./phase7_entry_intelligence.py:513:            "entry_source": "FRESH_BINANCE_5M_PRICE",
+./phase7_entry_intelligence.py:514:            "sl_source": "FRESH_ATR",
+./phase7_entry_intelligence.py:520:        "fresh_market": market,
+./phase7_entry_intelligence.py:561:            f"PHASE 7 FRESH CONSTRUCTION "
+./phase7_entry_intelligence.py:568:            # Fresh Binance feed is mandatory.
+./phase7_entry_intelligence.py:569:            market = analyze_fresh_market(
+./phase7_entry_intelligence.py:592:                        f"FRESH_FEED_ERROR: {exc}"
+./phase7_entry_intelligence.py:636:        "timestamp_utc": now_utc(),
+./phase7_entry_intelligence.py:669:            "fresh_market_feed_required": True,
+./phase7_entry_intelligence.py:687:            "fresh_direction_required":
+./phase7_entry_intelligence.py:690:            "fresh_feed_required":
+./phase7_entry_intelligence.py:733:        f"Freshly evaluated       : "
+./phase7_entry_intelligence.py:788:        "Fresh market feed  : REQUIRED"
+./phase7_entry_intelligence.py:867:                f"{REFRESH_SECONDS} seconds...",
+./phase7_entry_intelligence.py:872:                REFRESH_SECONDS
+./phase7_entry_intelligence.py:921:                REFRESH_SECONDS
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:19:REFRESH_SECONDS = 0
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:20:MONITOR_REFRESH_SECONDS = 300
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:93:            "User-Agent": "CryptoMasterX1/5.1",
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:130:def fetch_klines(symbol, interval, limit):
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:132:        "/api/v3/klines",
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:311:    h1 = fetch_klines(
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:317:    m15 = fetch_klines(
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:323:    m5 = fetch_klines(
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:677:        "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:898:                "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:924:            f"{REFRESH_SECONDS} seconds..."
+./backup_pipeline_contract_20260825_135041/phase5_market_intelligence.py:929:                REFRESH_SECONDS
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:13:REFRESH_SECONDS = 60
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:14:MONITOR_REFRESH_SECONDS = 300
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:257:        "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:432:                "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:444:                REFRESH_SECONDS
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:455:                f"{REFRESH_SECONDS} seconds...",
+./backup_pipeline_contract_20260825_135041/phase6_trade_quality.py:461:                    REFRESH_SECONDS
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:18:REFRESH_SECONDS = 60
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:176:        "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:260:                f"\nNext Phase 7 scan in {REFRESH_SECONDS} seconds...",
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:267:            time.sleep(REFRESH_SECONDS)
+./backup_pipeline_contract_20260825_135041/phase7_entry_intelligence.py:299:            time.sleep(REFRESH_SECONDS)
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:18:REFRESH_SECONDS = 60
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:202:        "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:306:                f"\nNext Phase 8 scan in {REFRESH_SECONDS} seconds...",
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:313:            time.sleep(REFRESH_SECONDS)
+./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py:341:            time.sleep(REFRESH_SECONDS)
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:18:REFRESH_SECONDS = 60
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:264:        "timestamp_utc": now_utc(),
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:400:                f"{REFRESH_SECONDS} seconds...",
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:405:                REFRESH_SECONDS
+./backup_pipeline_contract_20260825_135041/phase9_decision_gate.py:436:                REFRESH_SECONDS
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:19:REFRESH_SECONDS = 0
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:20:MONITOR_REFRESH_SECONDS = 300
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:93:            "User-Agent": "CryptoMasterX1/5.1",
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:130:def fetch_klines(symbol, interval, limit):
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:132:        "/api/v3/klines",
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:311:    h1 = fetch_klines(
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:317:    m15 = fetch_klines(
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:323:    m5 = fetch_klines(
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:677:        "timestamp_utc": now_utc(),
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:898:                "timestamp_utc": now_utc(),
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:924:            f"{REFRESH_SECONDS} seconds..."
+./backup_contract_repair_20260825_135902/phase5_market_intelligence.py:929:                REFRESH_SECONDS
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:13:REFRESH_SECONDS = 60
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:14:MONITOR_REFRESH_SECONDS = 300
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:251:        "timestamp_utc": now_utc(),
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:426:                "timestamp_utc": now_utc(),
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:438:                REFRESH_SECONDS
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:449:                f"{REFRESH_SECONDS} seconds...",
+./backup_contract_repair_20260825_135902/phase6_trade_quality.py:455:                    REFRESH_SECONDS
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:18:REFRESH_SECONDS = 60
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:199:        "timestamp_utc": now_utc(),
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:303:                f"\nNext Phase 8 scan in {REFRESH_SECONDS} seconds...",
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:310:            time.sleep(REFRESH_SECONDS)
+./backup_contract_repair_20260825_135902/phase8_entry_validation.py:338:            time.sleep(REFRESH_SECONDS)
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:18:REFRESH_SECONDS = 60
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:264:        "timestamp_utc": now_utc(),
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:400:                f"{REFRESH_SECONDS} seconds...",
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:405:                REFRESH_SECONDS
+./backup_contract_repair_20260825_135902/phase9_decision_gate.py:436:                REFRESH_SECONDS
+./build_staging/pre_rearchitecture_20260826_125847/phase4_market_discovery.py:17:        all24=requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=15).json()
+./build_staging/pre_rearchitecture_20260826_125847/phase4_market_discovery.py:25:tickers=get_24h(symbols)
+./build_staging/pre_rearchitecture_20260826_125847/phase4_market_discovery.py:27:for t in tickers:
+./build_staging/pre_rearchitecture_20260826_125847/phase4_market_discovery.py:47:  "timestamp": datetime.utcnow().isoformat()+"+00:00",
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:19:REFRESH_SECONDS = 0
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:20:MONITOR_REFRESH_SECONDS = 300
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:93:            "User-Agent": "CryptoMasterX1/5.1",
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:130:def fetch_klines(symbol, interval, limit):
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:132:        "/api/v3/klines",
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:311:    h1 = fetch_klines(
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:317:    m15 = fetch_klines(
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:323:    m5 = fetch_klines(
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:677:        "timestamp_utc": now_utc(),
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:898:                "timestamp_utc": now_utc(),
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:924:            f"{REFRESH_SECONDS} seconds..."
+./build_staging/pre_rearchitecture_20260826_125847/phase5_market_intelligence.py:929:                REFRESH_SECONDS
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:97:        headers={"User-Agent": "CryptoMasterX1-Consolidated/6.0"},
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:113:        "/api/v3/klines",
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:247:# FRESH MARKET ANALYSIS
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:250:def fresh_market(symbol):
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:254:        raise RuntimeError(f"{symbol}: insufficient fresh candles")
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:263:    fresh_atr = atr(closed, ATR_PERIOD)
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:265:    if fast is None or slow is None or fresh_atr is None:
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:266:        raise RuntimeError(f"{symbol}: fresh indicator calculation failed")
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:268:    current_price = rows[-1]["close"]
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:270:    if current_price > fast > slow:
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:272:    elif current_price < fast < slow:
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:277:    extension = abs(current_price - fast) / fresh_atr
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:281:        "price": current_price,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:284:        "atr": fresh_atr,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:285:        "fresh_direction": direction,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:288:        "fresh_checked_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:388:        "timestamp": int(time.time() * 1000),
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:412:            "User-Agent": "CryptoMasterX1-Consolidated-Sizing/6.0",
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:508:        or candidate.get("fresh_direction")
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:527:    fresh_direction = market["fresh_direction"]
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:529:    if fresh_direction == "NEUTRAL":
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:531:            f"{symbol}: fresh market direction is NEUTRAL"
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:534:    if direction != fresh_direction:
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:537:            f"conflicts with fresh direction {fresh_direction}"
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:567:                f"{symbol}: fresh price drift "
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:617:        # Fresh market truth.
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:618:        "fresh_market": market,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:636:        "fresh_data_verified": True,
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:637:        "construction_method": "FRESH_PRICE_ATR",
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:638:        "entry_source": "FRESH_BINANCE_5M",
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:639:        "sl_source": "FRESH_ATR",
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:646:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:676:            f"DIGEST + REFRESH + CONSTRUCT {symbol}",
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:681:            market = fresh_market(symbol)
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:696:                "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:711:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/phase6_trade_intelligence.py:754:    print(f"Freshly evaluated              : {len(candidates)}")
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:115:    # Freshness must have been proven by Phase 6.
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:116:    if candidate.get("fresh_data_verified") is not True:
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:117:        reasons.append("FRESH_DATA_NOT_VERIFIED")
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:119:    if candidate.get("fresh_market") is None:
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:120:        reasons.append("FRESH_MARKET_MISSING")
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:247:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/phase7_final_validation.py:260:            "fresh_data_required": True,
+./build_staging/pre_rearchitecture_20260826_125847/phase8_execution_lifecycle_v8.py:78:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:12:- Fresh market data is required before executable trade construction.
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:111:            "fresh market data",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:131:        "name": "Trade Intelligence + Fresh Construction",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:136:            "refresh live market data",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:137:            "verify direction against fresh data",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:138:            "prevent stale-entry execution",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:149:            "use stale Phase 5/6 prices as current price",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:163:            "validate freshness",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:182:            "manage open positions",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:183:            "manage SL/TP lifecycle",
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:216:    # Phase 6 fresh market state
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:217:    fresh_market: Dict[str, Any] = field(default_factory=dict)
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:240:    fresh_data_required: bool = True
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:241:    fresh_data_verified: bool = False
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:252:            "timestamp": datetime.now(timezone.utc).isoformat(),
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:264:def require(condition: bool, message: str):
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:273:        raise RuntimeError(f"PIPELINE CONTRACT FAILURE: {message}")
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:305:        candidate.fresh_market,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:306:        f"{candidate.symbol}: fresh market data missing"
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:310:        candidate.fresh_data_verified,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:311:        f"{candidate.symbol}: fresh market data not verified"
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:442:    This is where Phase 5 intelligence and fresh market data
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:451:    # Fresh market data must be supplied by the implementation
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:454:        candidate.fresh_market,
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:455:        f"{candidate.symbol}: fresh market refresh required"
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:458:    candidate.fresh_data_verified = True
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:476:        "Phase 5 intelligence + fresh market data converted into "
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:570:        " -> 6 TRADE INTELLIGENCE + FRESH CONSTRUCTION"
+./build_staging/pre_rearchitecture_20260826_125847/pipeline_v8_contract.py:579:    print("STALE TRADE DATA: FORBIDDEN")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:13:6  Trade Intelligence + Fresh Construction
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:20:- Phase 6 refreshes Binance before constructing executable levels.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:134:        headers={"User-Agent": "CryptoMasterX1-Consolidated/6.0"},
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:150:        "/api/v3/klines",
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:284:# FRESH MARKET ANALYSIS
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:287:def fresh_market(symbol):
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:291:        raise RuntimeError(f"{symbol}: insufficient fresh candles")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:300:    fresh_atr = atr(closed, ATR_PERIOD)
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:302:    if fast is None or slow is None or fresh_atr is None:
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:303:        raise RuntimeError(f"{symbol}: fresh indicator calculation failed")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:305:    current_price = rows[-1]["close"]
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:307:    if current_price > fast > slow:
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:309:    elif current_price < fast < slow:
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:314:    extension = abs(current_price - fast) / fresh_atr
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:318:        "price": current_price,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:321:        "atr": fresh_atr,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:322:        "fresh_direction": direction,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:325:        "fresh_checked_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:425:        "timestamp": int(time.time() * 1000),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:449:            "User-Agent": "CryptoMasterX1-Consolidated-Sizing/6.0",
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:545:        or candidate.get("fresh_direction")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:564:    fresh_direction = market["fresh_direction"]
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:566:    if fresh_direction == "NEUTRAL":
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:568:            f"{symbol}: fresh market direction is NEUTRAL"
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:571:    if direction != fresh_direction:
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:574:            f"conflicts with fresh direction {fresh_direction}"
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:604:                f"{symbol}: fresh price drift "
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:654:        # Fresh market truth.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:655:        "fresh_market": market,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:673:        "fresh_data_verified": True,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:674:        "construction_method": "FRESH_PRICE_ATR",
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:675:        "entry_source": "FRESH_BINANCE_5M",
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:676:        "sl_source": "FRESH_ATR",
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:683:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:713:            f"DIGEST + REFRESH + CONSTRUCT {symbol}",
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:718:            market = fresh_market(symbol)
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:733:                "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:748:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:791:    print(f"Freshly evaluated              : {len(candidates)}")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:948:    # Freshness must have been proven by Phase 6.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:949:    if candidate.get("fresh_data_verified") is not True:
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:950:        reasons.append("FRESH_DATA_NOT_VERIFIED")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:952:    if candidate.get("fresh_market") is None:
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:953:        reasons.append("FRESH_MARKET_MISSING")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1080:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1093:            "fresh_data_required": True,
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1235:        "timestamp_utc": now(),
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1305:Phase 6 — Digest + Fresh Construction + Sizing
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1398:## Phase 6 — Trade Intelligence + Fresh Construction
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1403:1. Refreshes Binance market data.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1404:2. Reconciles Phase 5 direction with fresh direction.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1405:3. Rejects stale/conflicting setups.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1407:5. Constructs fresh Entry.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1408:6. Constructs SL from fresh ATR.
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1430:- freshness
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1512:print("  6  Trade Intelligence + Fresh Construction")
+./build_staging/pre_rearchitecture_20260826_125847/build_consolidated_v8.py:1518:print("  - Separate position-sizing stage")
+./build_staging/pre_rearchitecture_20260826_125847/run_consolidated_v8.py:12:Phase 6 — Digest + Fresh Construction + Sizing
+./phase8_entry_validation.py:18:REFRESH_SECONDS = 60
+./phase8_entry_validation.py:200:        "timestamp_utc": now_utc(),
+./phase8_entry_validation.py:304:                f"\nNext Phase 8 scan in {REFRESH_SECONDS} seconds...",
+./phase8_entry_validation.py:311:            time.sleep(REFRESH_SECONDS)
+./phase8_entry_validation.py:339:            time.sleep(REFRESH_SECONDS)
+./phase9_decision_gate.py:18:REFRESH_SECONDS = 60
+./phase9_decision_gate.py:265:        "timestamp_utc": now_utc(),
+./phase9_decision_gate.py:408:                f"{REFRESH_SECONDS} seconds...",
+./phase9_decision_gate.py:413:                REFRESH_SECONDS
+./phase9_decision_gate.py:444:                REFRESH_SECONDS
+./phase10_trade_lifecycle.py:19:REFRESH_SECONDS = 60
+./phase10_trade_lifecycle.py:20:BINANCE_URL = "https://api.binance.com/api/v3/ticker/price"
+./phase10_trade_lifecycle.py:85:                "User-Agent":
+./phase10_trade_lifecycle.py:138:        "timestamp_utc": now_utc(),
+./phase10_trade_lifecycle.py:324:        "timestamp_utc": now_utc(),
+./phase10_trade_lifecycle.py:493:                f"{REFRESH_SECONDS} seconds...",
+./phase10_trade_lifecycle.py:498:                REFRESH_SECONDS
+./phase10_trade_lifecycle.py:532:                REFRESH_SECONDS
+./phase11_full_system_verification.py:682:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase6_trade_quality.py:13:REFRESH_SECONDS = 60
+./backup_contract_final/phase6_trade_quality.py:14:MONITOR_REFRESH_SECONDS = 300
+./backup_contract_final/phase6_trade_quality.py:251:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase6_trade_quality.py:426:                "timestamp_utc": now_utc(),
+./backup_contract_final/phase6_trade_quality.py:438:                REFRESH_SECONDS
+./backup_contract_final/phase6_trade_quality.py:449:                f"{REFRESH_SECONDS} seconds...",
+./backup_contract_final/phase6_trade_quality.py:455:                    REFRESH_SECONDS
+./backup_contract_final/phase7_entry_intelligence.py:23:REFRESH_SECONDS = 60
+./backup_contract_final/phase7_entry_intelligence.py:39:# Stop distance is based on fresh ATR.
+./backup_contract_final/phase7_entry_intelligence.py:49:# Reject if fresh market price moved too far from
+./backup_contract_final/phase7_entry_intelligence.py:182:# FRESH BINANCE MARKET FEED
+./backup_contract_final/phase7_entry_intelligence.py:185:def fetch_klines(symbol):
+./backup_contract_final/phase7_entry_intelligence.py:195:        "https://api.binance.com/api/v3/klines?"
+./backup_contract_final/phase7_entry_intelligence.py:202:            "User-Agent": "CryptoMasterX1/7.1",
+./backup_contract_final/phase7_entry_intelligence.py:217:            f"No klines returned for {symbol}"
+./backup_contract_final/phase7_entry_intelligence.py:243:            f"Insufficient fresh candles for {symbol}"
+./backup_contract_final/phase7_entry_intelligence.py:250:# FRESH MARKET ANALYSIS USED ONLY BY PHASE 7
+./backup_contract_final/phase7_entry_intelligence.py:253:def analyze_fresh_market(symbol):
+./backup_contract_final/phase7_entry_intelligence.py:254:    candles = fetch_klines(symbol)
+./backup_contract_final/phase7_entry_intelligence.py:269:    current_price = candles[-1]["close"]
+./backup_contract_final/phase7_entry_intelligence.py:281:    fresh_atr = atr(
+./backup_contract_final/phase7_entry_intelligence.py:286:    if fresh_atr is None or fresh_atr <= 0:
+./backup_contract_final/phase7_entry_intelligence.py:308:    if current_price > fast_ema > slow_ema:
+./backup_contract_final/phase7_entry_intelligence.py:309:        fresh_direction = "LONG"
+./backup_contract_final/phase7_entry_intelligence.py:310:    elif current_price < fast_ema < slow_ema:
+./backup_contract_final/phase7_entry_intelligence.py:311:        fresh_direction = "SHORT"
+./backup_contract_final/phase7_entry_intelligence.py:313:        fresh_direction = "NEUTRAL"
+./backup_contract_final/phase7_entry_intelligence.py:316:        abs(current_price - fast_ema)
+./backup_contract_final/phase7_entry_intelligence.py:317:        / fresh_atr
+./backup_contract_final/phase7_entry_intelligence.py:322:        "price": current_price,
+./backup_contract_final/phase7_entry_intelligence.py:325:        "atr": fresh_atr,
+./backup_contract_final/phase7_entry_intelligence.py:328:        "fresh_direction": fresh_direction,
+./backup_contract_final/phase7_entry_intelligence.py:370:    fresh_direction = market["fresh_direction"]
+./backup_contract_final/phase7_entry_intelligence.py:372:    if fresh_direction == "NEUTRAL":
+./backup_contract_final/phase7_entry_intelligence.py:374:            "FRESH_MARKET_DIRECTION_NEUTRAL"
+./backup_contract_final/phase7_entry_intelligence.py:379:        != fresh_direction
+./backup_contract_final/phase7_entry_intelligence.py:382:            "DIRECTION_CHANGED_ON_FRESH_FEED"
+./backup_contract_final/phase7_entry_intelligence.py:397:    # current fresh market price and fresh ATR.
+./backup_contract_final/phase7_entry_intelligence.py:401:    fresh_atr = market["atr"]
+./backup_contract_final/phase7_entry_intelligence.py:404:        fresh_atr
+./backup_contract_final/phase7_entry_intelligence.py:512:            "method": "FRESH_PRICE_ATR_CONSTRUCTION",
+./backup_contract_final/phase7_entry_intelligence.py:513:            "entry_source": "FRESH_BINANCE_5M_PRICE",
+./backup_contract_final/phase7_entry_intelligence.py:514:            "sl_source": "FRESH_ATR",
+./backup_contract_final/phase7_entry_intelligence.py:520:        "fresh_market": market,
+./backup_contract_final/phase7_entry_intelligence.py:561:            f"PHASE 7 FRESH CONSTRUCTION "
+./backup_contract_final/phase7_entry_intelligence.py:568:            # Fresh Binance feed is mandatory.
+./backup_contract_final/phase7_entry_intelligence.py:569:            market = analyze_fresh_market(
+./backup_contract_final/phase7_entry_intelligence.py:592:                        f"FRESH_FEED_ERROR: {exc}"
+./backup_contract_final/phase7_entry_intelligence.py:636:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase7_entry_intelligence.py:669:            "fresh_market_feed_required": True,
+./backup_contract_final/phase7_entry_intelligence.py:687:            "fresh_direction_required":
+./backup_contract_final/phase7_entry_intelligence.py:690:            "fresh_feed_required":
+./backup_contract_final/phase7_entry_intelligence.py:733:        f"Freshly evaluated       : "
+./backup_contract_final/phase7_entry_intelligence.py:788:        "Fresh market feed  : REQUIRED"
+./backup_contract_final/phase7_entry_intelligence.py:867:                f"{REFRESH_SECONDS} seconds...",
+./backup_contract_final/phase7_entry_intelligence.py:872:                REFRESH_SECONDS
+./backup_contract_final/phase7_entry_intelligence.py:921:                REFRESH_SECONDS
+./backup_contract_final/phase8_entry_validation.py:18:REFRESH_SECONDS = 60
+./backup_contract_final/phase8_entry_validation.py:199:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase8_entry_validation.py:303:                f"\nNext Phase 8 scan in {REFRESH_SECONDS} seconds...",
+./backup_contract_final/phase8_entry_validation.py:310:            time.sleep(REFRESH_SECONDS)
+./backup_contract_final/phase8_entry_validation.py:338:            time.sleep(REFRESH_SECONDS)
+./backup_contract_final/phase9_decision_gate.py:18:REFRESH_SECONDS = 60
+./backup_contract_final/phase9_decision_gate.py:264:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase9_decision_gate.py:400:                f"{REFRESH_SECONDS} seconds...",
+./backup_contract_final/phase9_decision_gate.py:405:                REFRESH_SECONDS
+./backup_contract_final/phase9_decision_gate.py:436:                REFRESH_SECONDS
+./backup_contract_final/phase10_trade_lifecycle.py:19:REFRESH_SECONDS = 60
+./backup_contract_final/phase10_trade_lifecycle.py:20:BINANCE_URL = "https://api.binance.com/api/v3/ticker/price"
+./backup_contract_final/phase10_trade_lifecycle.py:85:                "User-Agent":
+./backup_contract_final/phase10_trade_lifecycle.py:138:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase10_trade_lifecycle.py:324:        "timestamp_utc": now_utc(),
+./backup_contract_final/phase10_trade_lifecycle.py:493:                f"{REFRESH_SECONDS} seconds...",
+./backup_contract_final/phase10_trade_lifecycle.py:498:                REFRESH_SECONDS
+./backup_contract_final/phase10_trade_lifecycle.py:532:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase6_trade_quality.py:13:REFRESH_SECONDS = 60
+./backup_pipeline_diagnostic/phase6_trade_quality.py:14:MONITOR_REFRESH_SECONDS = 300
+./backup_pipeline_diagnostic/phase6_trade_quality.py:251:        "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase6_trade_quality.py:426:                "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase6_trade_quality.py:438:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase6_trade_quality.py:449:                f"{REFRESH_SECONDS} seconds...",
+./backup_pipeline_diagnostic/phase6_trade_quality.py:455:                    REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:23:REFRESH_SECONDS = 60
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:39:# Stop distance is based on fresh ATR.
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:49:# Reject if fresh market price moved too far from
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:182:# FRESH BINANCE MARKET FEED
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:185:def fetch_klines(symbol):
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:195:        "https://api.binance.com/api/v3/klines?"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:202:            "User-Agent": "CryptoMasterX1/7.1",
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:217:            f"No klines returned for {symbol}"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:243:            f"Insufficient fresh candles for {symbol}"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:250:# FRESH MARKET ANALYSIS USED ONLY BY PHASE 7
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:253:def analyze_fresh_market(symbol):
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:254:    candles = fetch_klines(symbol)
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:269:    current_price = candles[-1]["close"]
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:281:    fresh_atr = atr(
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:286:    if fresh_atr is None or fresh_atr <= 0:
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:308:    if current_price > fast_ema > slow_ema:
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:309:        fresh_direction = "LONG"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:310:    elif current_price < fast_ema < slow_ema:
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:311:        fresh_direction = "SHORT"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:313:        fresh_direction = "NEUTRAL"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:316:        abs(current_price - fast_ema)
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:317:        / fresh_atr
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:322:        "price": current_price,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:325:        "atr": fresh_atr,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:328:        "fresh_direction": fresh_direction,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:370:    fresh_direction = market["fresh_direction"]
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:372:    if fresh_direction == "NEUTRAL":
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:374:            "FRESH_MARKET_DIRECTION_NEUTRAL"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:379:        != fresh_direction
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:382:            "DIRECTION_CHANGED_ON_FRESH_FEED"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:397:    # current fresh market price and fresh ATR.
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:401:    fresh_atr = market["atr"]
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:404:        fresh_atr
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:512:            "method": "FRESH_PRICE_ATR_CONSTRUCTION",
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:513:            "entry_source": "FRESH_BINANCE_5M_PRICE",
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:514:            "sl_source": "FRESH_ATR",
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:520:        "fresh_market": market,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:561:            f"PHASE 7 FRESH CONSTRUCTION "
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:568:            # Fresh Binance feed is mandatory.
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:569:            market = analyze_fresh_market(
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:592:                        f"FRESH_FEED_ERROR: {exc}"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:636:        "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:669:            "fresh_market_feed_required": True,
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:687:            "fresh_direction_required":
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:690:            "fresh_feed_required":
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:733:        f"Freshly evaluated       : "
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:788:        "Fresh market feed  : REQUIRED"
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:867:                f"{REFRESH_SECONDS} seconds...",
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:872:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase7_entry_intelligence.py:921:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase8_entry_validation.py:18:REFRESH_SECONDS = 60
+./backup_pipeline_diagnostic/phase8_entry_validation.py:199:        "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase8_entry_validation.py:303:                f"\nNext Phase 8 scan in {REFRESH_SECONDS} seconds...",
+./backup_pipeline_diagnostic/phase8_entry_validation.py:310:            time.sleep(REFRESH_SECONDS)
+./backup_pipeline_diagnostic/phase8_entry_validation.py:338:            time.sleep(REFRESH_SECONDS)
+./backup_pipeline_diagnostic/phase9_decision_gate.py:18:REFRESH_SECONDS = 60
+./backup_pipeline_diagnostic/phase9_decision_gate.py:264:        "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase9_decision_gate.py:400:                f"{REFRESH_SECONDS} seconds...",
+./backup_pipeline_diagnostic/phase9_decision_gate.py:405:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase9_decision_gate.py:436:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:19:REFRESH_SECONDS = 60
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:20:BINANCE_URL = "https://api.binance.com/api/v3/ticker/price"
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:85:                "User-Agent":
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:138:        "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:324:        "timestamp_utc": now_utc(),
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:493:                f"{REFRESH_SECONDS} seconds...",
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:498:                REFRESH_SECONDS
+./backup_pipeline_diagnostic/phase10_trade_lifecycle.py:532:                REFRESH_SECONDS
+./check_orders.py:8:    pa['timestamp']=int(time.time()*1000)
+./check_orders_simple.py:10:    qs=f"timestamp={ts}"
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:13:REFRESH_SECONDS = 60
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:14:MONITOR_REFRESH_SECONDS = 300
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:251:        "timestamp_utc": now_utc(),
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:426:                "timestamp_utc": now_utc(),
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:438:                REFRESH_SECONDS
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:449:                f"{REFRESH_SECONDS} seconds...",
+./backup_one_pass_pipeline_fix/phase6_trade_quality.py:455:                    REFRESH_SECONDS
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:23:REFRESH_SECONDS = 60
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:39:# Stop distance is based on fresh ATR.
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:49:# Reject if fresh market price moved too far from
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:182:# FRESH BINANCE MARKET FEED
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:185:def fetch_klines(symbol):
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:195:        "https://api.binance.com/api/v3/klines?"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:202:            "User-Agent": "CryptoMasterX1/7.1",
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:217:            f"No klines returned for {symbol}"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:243:            f"Insufficient fresh candles for {symbol}"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:250:# FRESH MARKET ANALYSIS USED ONLY BY PHASE 7
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:253:def analyze_fresh_market(symbol):
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:254:    candles = fetch_klines(symbol)
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:269:    current_price = candles[-1]["close"]
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:281:    fresh_atr = atr(
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:286:    if fresh_atr is None or fresh_atr <= 0:
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:308:    if current_price > fast_ema > slow_ema:
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:309:        fresh_direction = "LONG"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:310:    elif current_price < fast_ema < slow_ema:
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:311:        fresh_direction = "SHORT"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:313:        fresh_direction = "NEUTRAL"
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:316:        abs(current_price - fast_ema)
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:317:        / fresh_atr
+./backup_one_pass_pipeline_fix/phase7_entry_intelligence.py:322:        "price": current_price,

@@ -1,0 +1,1063 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/__pycache__/phase4_market_discovery.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  2           LOAD_CONST               0 ('\nCryptoMasterX1 — PHASE 4\nMARKET DISCOVERY\n\nOWNER:\n    Discovery of the fresh Binance Spot/USDT universe.\n\nRESPONSIBILITIES:\n    - Discover currently tradable Spot/USDT symbols\n    - Collect current 24h market statistics\n    - Apply liquidity / activity filters\n    - Classify bullish / bearish candidates\n    - Produce the qualified universe consumed by Phase 5\n\nPHASE 4 DOES NOT:\n    - detect BOS / CHoCH\n    - detect Order Blocks\n    - detect FVG\n    - construct entries\n    - construct SL / TP\n    - calculate position size\n    - submit orders\n    - withdraw funds\n')
+              STORE_NAME               0 (__doc__)
+
+ 27           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              1 (json)
+              STORE_NAME               1 (json)
+
+ 28           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              2 (datetime)
+              IMPORT_FROM              2 (datetime)
+              STORE_NAME               2 (datetime)
+              IMPORT_FROM              3 (timezone)
+              STORE_NAME               3 (timezone)
+              POP_TOP
+
+ 29           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('Path',))
+              IMPORT_NAME              4 (pathlib)
+              IMPORT_FROM              5 (Path)
+              STORE_NAME               5 (Path)
+              POP_TOP
+
+ 31           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              6 (requests)
+              STORE_NAME               6 (requests)
+
+ 34           LOAD_NAME                5 (Path)
+              PUSH_NULL
+              LOAD_NAME                7 (__file__)
+              CALL                     1
+              LOAD_ATTR               17 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               18 (parent)
+              STORE_NAME              10 (ROOT)
+
+ 35           LOAD_NAME               10 (ROOT)
+              LOAD_CONST               5 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              11 (STATE_DIR)
+
+ 36           LOAD_NAME               10 (ROOT)
+              LOAD_CONST               6 ('reports')
+              BINARY_OP               11 (/)
+              STORE_NAME              12 (REPORT_DIR)
+
+ 38           LOAD_NAME               11 (STATE_DIR)
+              LOAD_ATTR               27 (mkdir + NULL|self)
+              LOAD_CONST               7 (True)
+              LOAD_CONST               8 (('exist_ok',))
+              CALL_KW                  1
+              POP_TOP
+
+ 39           LOAD_NAME               12 (REPORT_DIR)
+              LOAD_ATTR               27 (mkdir + NULL|self)
+              LOAD_CONST               7 (True)
+              LOAD_CONST               8 (('exist_ok',))
+              CALL_KW                  1
+              POP_TOP
+
+ 41           LOAD_CONST               9 ('https://api.binance.com')
+              STORE_NAME              14 (BINANCE)
+
+ 43           LOAD_CONST              10 (15)
+              STORE_NAME              15 (TIMEOUT)
+
+ 45           LOAD_CONST              11 (5000000.0)
+              STORE_NAME              16 (MIN_QUOTE_VOLUME)
+
+ 46           LOAD_CONST              12 (10000)
+              STORE_NAME              17 (MIN_24H_TRADES)
+
+ 47           LOAD_CONST              13 (1.0)
+              STORE_NAME              18 (MIN_ABS_CHANGE_PERCENT)
+
+ 48           LOAD_CONST              14 (200)
+              STORE_NAME              19 (MAX_DISCOVERY_MARKETS)
+
+ 51           LOAD_CONST              15 (<code object now_utc at 0x7645631a50, file "phase4_market_discovery.py", line 51>)
+              MAKE_FUNCTION
+              STORE_NAME              20 (now_utc)
+
+ 55           LOAD_CONST              22 ((None,))
+              LOAD_CONST              16 (<code object get_json at 0x76455c1a70, file "phase4_market_discovery.py", line 55>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              21 (get_json)
+
+ 65           LOAD_CONST              17 (<code object get_all_usdt at 0xb400007795ef2950, file "phase4_market_discovery.py", line 65>)
+              MAKE_FUNCTION
+              STORE_NAME              22 (get_all_usdt)
+
+ 91           LOAD_CONST              18 (<code object get_24h at 0x764556f0f0, file "phase4_market_discovery.py", line 91>)
+              MAKE_FUNCTION
+              STORE_NAME              23 (get_24h)
+
+ 95           LOAD_CONST              19 (<code object qualify_ticker at 0xb400007795ef4570, file "phase4_market_discovery.py", line 95>)
+              MAKE_FUNCTION
+              STORE_NAME              24 (qualify_ticker)
+
+141           LOAD_CONST              20 (<code object main at 0xb4000077c5ebe550, file "phase4_market_discovery.py", line 141>)
+              MAKE_FUNCTION
+              STORE_NAME              25 (main)
+
+278           LOAD_NAME               26 (__name__)
+              LOAD_CONST              21 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+279           LOAD_NAME               25 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+278   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object now_utc at 0x7645631a50, file "phase4_market_discovery.py", line 51>:
+ 51           RESUME                   0
+
+ 52           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object get_json at 0x76455c1a70, file "phase4_market_discovery.py", line 55>:
+ 55           RESUME                   0
+
+ 56           LOAD_GLOBAL              0 (requests)
+              LOAD_ATTR                2 (get)
+              PUSH_NULL
+
+ 57           LOAD_FAST                0 (path)
+
+ 58           LOAD_FAST                1 (params)
+
+ 59           LOAD_GLOBAL              4 (TIMEOUT)
+
+ 56           LOAD_CONST               1 (('params', 'timeout'))
+              CALL_KW                  3
+              STORE_FAST               2 (response)
+
+ 61           LOAD_FAST                2 (response)
+              LOAD_ATTR                7 (raise_for_status + NULL|self)
+              CALL                     0
+              POP_TOP
+
+ 62           LOAD_FAST                2 (response)
+              LOAD_ATTR                9 (json + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object get_all_usdt at 0xb400007795ef2950, file "phase4_market_discovery.py", line 65>:
+ 65           RESUME                   0
+
+ 66           LOAD_GLOBAL              1 (get_json + NULL)
+              LOAD_GLOBAL              2 (BINANCE)
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('/api/v3/exchangeInfo')
+              BUILD_STRING             2
+              CALL                     1
+              STORE_FAST               0 (data)
+
+ 68           BUILD_LIST               0
+              STORE_FAST               1 (symbols)
+
+ 70           LOAD_FAST                0 (data)
+              LOAD_ATTR                5 (get + NULL|self)
+              LOAD_CONST               2 ('symbols')
+              BUILD_LIST               0
+              CALL                     2
+              GET_ITER
+      L1:     FOR_ITER               153 (to L7)
+              STORE_FAST               2 (item)
+
+ 71           LOAD_FAST                2 (item)
+              LOAD_ATTR                5 (get + NULL|self)
+              LOAD_CONST               3 ('symbol')
+              CALL                     1
+              STORE_FAST               3 (symbol)
+
+ 72           LOAD_FAST                2 (item)
+              LOAD_ATTR                5 (get + NULL|self)
+              LOAD_CONST               4 ('status')
+              CALL                     1
+              STORE_FAST               4 (status)
+
+ 73           LOAD_FAST                2 (item)
+              LOAD_ATTR                5 (get + NULL|self)
+              LOAD_CONST               5 ('quoteAsset')
+              CALL                     1
+              STORE_FAST               5 (quote_asset)
+
+ 74           LOAD_FAST                2 (item)
+              LOAD_ATTR                5 (get + NULL|self)
+              LOAD_CONST               6 ('permissions')
+              BUILD_LIST               0
+              CALL                     2
+              STORE_FAST               6 (permissions)
+
+ 77           LOAD_FAST                3 (symbol)
+              TO_BOOL
+              POP_JUMP_IF_TRUE         2 (to L2)
+              JUMP_BACKWARD           81 (to L1)
+
+ 78   L2:     LOAD_FAST                3 (symbol)
+              LOAD_ATTR                7 (endswith + NULL|self)
+              LOAD_CONST               7 ('USDT')
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_TRUE         2 (to L3)
+              JUMP_BACKWARD          105 (to L1)
+
+ 79   L3:     LOAD_FAST                4 (status)
+              LOAD_CONST               8 ('TRADING')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_TRUE         2 (to L4)
+              JUMP_BACKWARD          113 (to L1)
+
+ 80   L4:     LOAD_FAST                5 (quote_asset)
+              LOAD_CONST               7 ('USDT')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_TRUE         2 (to L5)
+              JUMP_BACKWARD          121 (to L1)
+
+ 83   L5:     LOAD_FAST                6 (permissions)
+              TO_BOOL
+              POP_JUMP_IF_FALSE        8 (to L6)
+              LOAD_CONST               9 ('SPOT')
+              LOAD_FAST                6 (permissions)
+              CONTAINS_OP              1
+              POP_JUMP_IF_FALSE        2 (to L6)
+
+ 84           JUMP_BACKWARD          136 (to L1)
+
+ 86   L6:     LOAD_FAST                1 (symbols)
+              LOAD_ATTR                9 (append + NULL|self)
+              LOAD_FAST                3 (symbol)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          155 (to L1)
+
+ 70   L7:     END_FOR
+              POP_TOP
+
+ 88           LOAD_GLOBAL             11 (sorted + NULL)
+              LOAD_GLOBAL             13 (set + NULL)
+              LOAD_FAST                1 (symbols)
+              CALL                     1
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object get_24h at 0x764556f0f0, file "phase4_market_discovery.py", line 91>:
+ 91           RESUME                   0
+
+ 92           LOAD_GLOBAL              1 (get_json + NULL)
+              LOAD_GLOBAL              2 (BINANCE)
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('/api/v3/ticker/24hr')
+              BUILD_STRING             2
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object qualify_ticker at 0xb400007795ef4570, file "phase4_market_discovery.py", line 95>:
+  95            RESUME                   0
+
+  96            NOP
+
+  97    L1:     LOAD_FAST                0 (ticker)
+                LOAD_CONST               1 ('symbol')
+                BINARY_SUBSCR
+                STORE_FAST               1 (symbol)
+
+  98            LOAD_GLOBAL              1 (float + NULL)
+                LOAD_FAST                0 (ticker)
+                LOAD_CONST               2 ('quoteVolume')
+                BINARY_SUBSCR
+                CALL                     1
+                STORE_FAST               2 (volume)
+
+  99            LOAD_GLOBAL              1 (float + NULL)
+                LOAD_FAST                0 (ticker)
+                LOAD_CONST               3 ('priceChangePercent')
+                BINARY_SUBSCR
+                CALL                     1
+                STORE_FAST               3 (change)
+
+ 100            LOAD_GLOBAL              3 (int + NULL)
+                LOAD_FAST                0 (ticker)
+                LOAD_CONST               4 ('count')
+                BINARY_SUBSCR
+                CALL                     1
+                STORE_FAST               4 (trades)
+
+ 101            LOAD_GLOBAL              1 (float + NULL)
+                LOAD_FAST                0 (ticker)
+                LOAD_CONST               5 ('lastPrice')
+                BINARY_SUBSCR
+                CALL                     1
+                STORE_FAST               5 (last_price)
+
+ 103            LOAD_FAST                2 (volume)
+                LOAD_GLOBAL              4 (MIN_QUOTE_VOLUME)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        1 (to L3)
+
+ 104    L2:     RETURN_CONST             0 (None)
+
+ 106    L3:     LOAD_FAST                4 (trades)
+                LOAD_GLOBAL              6 (MIN_24H_TRADES)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        1 (to L5)
+
+ 107    L4:     RETURN_CONST             0 (None)
+
+ 109    L5:     LOAD_GLOBAL              9 (abs + NULL)
+                LOAD_FAST                3 (change)
+                CALL                     1
+                LOAD_GLOBAL             10 (MIN_ABS_CHANGE_PERCENT)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        1 (to L7)
+
+ 110    L6:     RETURN_CONST             0 (None)
+
+ 112    L7:     LOAD_FAST                5 (last_price)
+                LOAD_CONST               6 (0)
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_FALSE        1 (to L9)
+
+ 113    L8:     RETURN_CONST             0 (None)
+
+ 117    L9:     LOAD_CONST               7 (60.0)
+                STORE_FAST               6 (quality)
+
+ 119            LOAD_FAST                6 (quality)
+                LOAD_GLOBAL             13 (min + NULL)
+                LOAD_GLOBAL              9 (abs + NULL)
+                LOAD_FAST                3 (change)
+                CALL                     1
+                LOAD_CONST               8 (2.0)
+                BINARY_OP                5 (*)
+                LOAD_CONST               9 (20.0)
+                CALL                     2
+                BINARY_OP               13 (+=)
+                STORE_FAST               6 (quality)
+
+ 120            LOAD_FAST                6 (quality)
+                LOAD_GLOBAL             13 (min + NULL)
+                LOAD_FAST                2 (volume)
+                LOAD_CONST              10 (50000000.0)
+                BINARY_OP               11 (/)
+                LOAD_CONST              11 (10.0)
+                BINARY_OP                5 (*)
+                LOAD_CONST              11 (10.0)
+                CALL                     2
+                BINARY_OP               13 (+=)
+                STORE_FAST               6 (quality)
+
+ 121            LOAD_FAST                6 (quality)
+                LOAD_GLOBAL             13 (min + NULL)
+                LOAD_FAST                4 (trades)
+                LOAD_CONST              12 (100000.0)
+                BINARY_OP               11 (/)
+                LOAD_CONST              11 (10.0)
+                BINARY_OP                5 (*)
+                LOAD_CONST              11 (10.0)
+                CALL                     2
+                BINARY_OP               13 (+=)
+                STORE_FAST               6 (quality)
+
+ 123            LOAD_GLOBAL             13 (min + NULL)
+                LOAD_CONST              13 (100.0)
+                LOAD_FAST                6 (quality)
+                CALL                     2
+                STORE_FAST               6 (quality)
+
+ 125            LOAD_FAST                3 (change)
+                LOAD_CONST               6 (0)
+                COMPARE_OP             148 (bool(>))
+                POP_JUMP_IF_FALSE        2 (to L10)
+                LOAD_CONST              14 ('BULL')
+                JUMP_FORWARD             1 (to L11)
+       L10:     LOAD_CONST              15 ('BEAR')
+       L11:     STORE_FAST               7 (side)
+
+ 128            LOAD_FAST                1 (symbol)
+
+ 129            LOAD_FAST                7 (side)
+
+ 130            LOAD_GLOBAL             15 (round + NULL)
+                LOAD_FAST                3 (change)
+                LOAD_CONST              16 (4)
+                CALL                     2
+
+ 131            LOAD_GLOBAL             15 (round + NULL)
+                LOAD_FAST                2 (volume)
+                LOAD_CONST              17 (2)
+                CALL                     2
+
+ 132            LOAD_FAST                4 (trades)
+
+ 133            LOAD_FAST                5 (last_price)
+
+ 134            LOAD_GLOBAL             15 (round + NULL)
+                LOAD_FAST                6 (quality)
+                LOAD_CONST              17 (2)
+                CALL                     2
+
+ 127            LOAD_CONST              18 (('symbol', 'side', 'priceChangePercent', 'quoteVolume24h', 'trades24h', 'lastPrice', 'quality'))
+                BUILD_CONST_KEY_MAP      7
+       L12:     RETURN_VALUE
+
+  --   L13:     PUSH_EXC_INFO
+
+ 137            LOAD_GLOBAL             16 (KeyError)
+                LOAD_GLOBAL             18 (TypeError)
+                LOAD_GLOBAL             20 (ValueError)
+                BUILD_TUPLE              3
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE        3 (to L15)
+                POP_TOP
+
+ 138   L14:     POP_EXCEPT
+                RETURN_CONST             0 (None)
+
+ 137   L15:     RERAISE                  0
+
+  --   L16:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L1 to L2 -> L13 [0]
+  L3 to L4 -> L13 [0]
+  L5 to L6 -> L13 [0]
+  L7 to L8 -> L13 [0]
+  L9 to L12 -> L13 [0]
+  L13 to L14 -> L16 [1] lasti
+  L15 to L16 -> L16 [1] lasti
+
+Disassembly of <code object main at 0xb4000077c5ebe550, file "phase4_market_discovery.py", line 141>:
+ 141            RESUME                   0
+
+ 142            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('======================================================================')
+                CALL                     1
+                POP_TOP
+
+ 143            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               2 ('CMX1 — PHASE 4 MARKET DISCOVERY')
+                CALL                     1
+                POP_TOP
+
+ 144            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               1 ('======================================================================')
+                CALL                     1
+                POP_TOP
+
+ 146            NOP
+
+ 147    L1:     LOAD_GLOBAL              3 (get_all_usdt + NULL)
+                CALL                     0
+                STORE_FAST               0 (eligible_symbols)
+
+ 148            LOAD_GLOBAL              5 (get_24h + NULL)
+                CALL                     0
+                STORE_FAST               1 (tickers)
+
+ 153    L2:     LOAD_GLOBAL             11 (set + NULL)
+                LOAD_FAST                0 (eligible_symbols)
+                CALL                     1
+                STORE_FAST               3 (eligible_set)
+
+ 155            BUILD_LIST               0
+                STORE_FAST               4 (qualified)
+
+ 157            LOAD_FAST                1 (tickers)
+                GET_ITER
+        L3:     FOR_ITER                59 (to L6)
+                STORE_FAST               5 (ticker)
+
+ 158            LOAD_FAST                5 (ticker)
+                LOAD_ATTR               13 (get + NULL|self)
+                LOAD_CONST               5 ('symbol')
+                CALL                     1
+                LOAD_FAST                3 (eligible_set)
+                CONTAINS_OP              1
+                POP_JUMP_IF_FALSE        2 (to L4)
+
+ 159            JUMP_BACKWARD           26 (to L3)
+
+ 161    L4:     LOAD_GLOBAL             15 (qualify_ticker + NULL)
+                LOAD_FAST                5 (ticker)
+                CALL                     1
+                STORE_FAST               6 (item)
+
+ 163            LOAD_FAST                6 (item)
+                POP_JUMP_IF_NOT_NONE     2 (to L5)
+                JUMP_BACKWARD           42 (to L3)
+
+ 164    L5:     LOAD_FAST                4 (qualified)
+                LOAD_ATTR               17 (append + NULL|self)
+                LOAD_FAST                6 (item)
+                CALL                     1
+                POP_TOP
+                JUMP_BACKWARD           61 (to L3)
+
+ 157    L6:     END_FOR
+                POP_TOP
+
+ 166            LOAD_FAST                4 (qualified)
+                LOAD_ATTR               19 (sort + NULL|self)
+
+ 167            LOAD_CONST               6 (<code object <lambda> at 0x76455c7630, file "phase4_market_discovery.py", line 167>)
+                MAKE_FUNCTION
+
+ 172            LOAD_CONST               7 (True)
+
+ 166            LOAD_CONST               8 (('key', 'reverse'))
+                CALL_KW                  2
+                POP_TOP
+
+ 175            LOAD_FAST                4 (qualified)
+                LOAD_CONST               0 (None)
+                LOAD_GLOBAL             20 (MAX_DISCOVERY_MARKETS)
+                BINARY_SLICE
+                STORE_FAST               4 (qualified)
+
+ 178            LOAD_FAST                4 (qualified)
+                GET_ITER
+
+ 177            LOAD_FAST_AND_CLEAR      6 (item)
+                SWAP                     2
+        L7:     BUILD_LIST               0
+                SWAP                     2
+
+ 178            GET_ITER
+        L8:     FOR_ITER                16 (to L11)
+                STORE_FAST               6 (item)
+
+ 179            LOAD_FAST                6 (item)
+                LOAD_CONST               9 ('side')
+                BINARY_SUBSCR
+                LOAD_CONST              10 ('BULL')
+                COMPARE_OP              88 (bool(==))
+
+ 178    L9:     POP_JUMP_IF_TRUE         2 (to L10)
+                JUMP_BACKWARD           14 (to L8)
+       L10:     LOAD_FAST                6 (item)
+                LIST_APPEND              2
+                JUMP_BACKWARD           18 (to L8)
+       L11:     END_FOR
+                POP_TOP
+
+ 177   L12:     STORE_FAST               7 (bulls)
+                STORE_FAST               6 (item)
+
+ 183            LOAD_FAST                4 (qualified)
+                GET_ITER
+
+ 182            LOAD_FAST_AND_CLEAR      6 (item)
+                SWAP                     2
+       L13:     BUILD_LIST               0
+                SWAP                     2
+
+ 183            GET_ITER
+       L14:     FOR_ITER                16 (to L17)
+                STORE_FAST               6 (item)
+
+ 184            LOAD_FAST                6 (item)
+                LOAD_CONST               9 ('side')
+                BINARY_SUBSCR
+                LOAD_CONST              11 ('BEAR')
+                COMPARE_OP              88 (bool(==))
+
+ 183   L15:     POP_JUMP_IF_TRUE         2 (to L16)
+                JUMP_BACKWARD           14 (to L14)
+       L16:     LOAD_FAST                6 (item)
+                LIST_APPEND              2
+                JUMP_BACKWARD           18 (to L14)
+       L17:     END_FOR
+                POP_TOP
+
+ 182   L18:     STORE_FAST               8 (bears)
+                STORE_FAST               6 (item)
+
+ 198            LOAD_FAST                4 (qualified)
+                GET_ITER
+
+ 188            LOAD_FAST_AND_CLEAR      6 (item)
+                SWAP                     2
+       L19:     BUILD_LIST               0
+                SWAP                     2
+
+ 198            GET_ITER
+       L20:     FOR_ITER                34 (to L21)
+                STORE_FAST               6 (item)
+
+ 190            LOAD_FAST                6 (item)
+                LOAD_CONST               5 ('symbol')
+                BINARY_SUBSCR
+
+ 191            LOAD_FAST                6 (item)
+                LOAD_CONST              12 ('priceChangePercent')
+                BINARY_SUBSCR
+
+ 192            LOAD_FAST                6 (item)
+                LOAD_CONST              13 ('quality')
+                BINARY_SUBSCR
+
+ 193            LOAD_FAST                6 (item)
+                LOAD_CONST              14 ('quoteVolume24h')
+                BINARY_SUBSCR
+
+ 194            LOAD_FAST                6 (item)
+                LOAD_CONST              15 ('trades24h')
+                BINARY_SUBSCR
+
+ 195            LOAD_FAST                6 (item)
+                LOAD_CONST              16 ('lastPrice')
+                BINARY_SUBSCR
+
+ 196            LOAD_FAST                6 (item)
+                LOAD_CONST               9 ('side')
+                BINARY_SUBSCR
+
+ 189            LOAD_CONST              17 (('symbol', 'priceChangePercent', 'quality', 'quoteVolume24h', 'trades24h', 'lastPrice', 'discovery_side'))
+                BUILD_CONST_KEY_MAP      7
+                LIST_APPEND              2
+                JUMP_BACKWARD           36 (to L20)
+
+ 198   L21:     END_FOR
+                POP_TOP
+
+ 188   L22:     STORE_FAST               9 (markets)
+                STORE_FAST               6 (item)
+
+ 202            LOAD_CONST              18 (4)
+
+ 203            LOAD_CONST              19 ('MARKET_DISCOVERY')
+
+ 204            LOAD_GLOBAL             23 (now_utc + NULL)
+                CALL                     0
+
+ 205            LOAD_CONST              20 ('BINANCE_SPOT_REST')
+
+ 207            LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                0 (eligible_symbols)
+                CALL                     1
+
+ 208            LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                4 (qualified)
+                CALL                     1
+
+ 211            LOAD_FAST                9 (markets)
+
+ 212            LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                9 (markets)
+                CALL                     1
+
+ 213            LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                0 (eligible_symbols)
+                CALL                     1
+
+ 210            LOAD_CONST              21 (('markets', 'qualified_markets', 'eligible_markets'))
+                BUILD_CONST_KEY_MAP      3
+
+ 216            LOAD_FAST                7 (bulls)
+
+ 217            LOAD_FAST                8 (bears)
+
+ 220            LOAD_GLOBAL             26 (MIN_QUOTE_VOLUME)
+
+ 221            LOAD_GLOBAL             28 (MIN_24H_TRADES)
+
+ 222            LOAD_GLOBAL             30 (MIN_ABS_CHANGE_PERCENT)
+
+ 223            LOAD_GLOBAL             20 (MAX_DISCOVERY_MARKETS)
+
+ 219            LOAD_CONST              22 (('min_quote_volume_24h', 'min_trades_24h', 'min_abs_price_change_percent', 'max_discovery_markets'))
+                BUILD_CONST_KEY_MAP      4
+
+ 227            LOAD_CONST              23 ('PHASE_4')
+
+ 228            LOAD_CONST              24 ('PHASE_5')
+
+ 229            LOAD_CONST              25 ('PHASE_6')
+
+ 230            LOAD_CONST              26 ('PHASE_7')
+
+ 231            LOAD_CONST              27 ('PHASE_8')
+
+ 232            LOAD_CONST              28 ('PHASE_9')
+
+ 233            LOAD_CONST              29 ('PHASE_10')
+
+ 226            LOAD_CONST              30 (('market_discovery', 'market_intelligence', 'trade_quality', 'entry_intelligence', 'entry_validation', 'decision_gate', 'execution_lifecycle'))
+                BUILD_CONST_KEY_MAP      7
+
+ 237            LOAD_CONST              31 (False)
+
+ 238            LOAD_CONST              31 (False)
+
+ 239            LOAD_CONST              31 (False)
+
+ 240            LOAD_CONST              31 (False)
+
+ 241            LOAD_CONST              31 (False)
+
+ 242            LOAD_CONST              32 ('LOCKED')
+
+ 236            LOAD_CONST              33 (('execution_authorized', 'live_execution', 'bot_armed', 'order_submission', 'withdrawals', 'transmission'))
+                BUILD_CONST_KEY_MAP      6
+
+ 201            LOAD_CONST              34 (('phase', 'phase_name', 'timestamp_utc', 'data_source', 'eligible_markets', 'qualified_markets', 'discovery', 'safe_bulls', 'safe_bears', 'filters', 'ownership', 'execution_boundary'))
+                BUILD_CONST_KEY_MAP     12
+                STORE_FAST              10 (output)
+
+ 246            LOAD_GLOBAL             32 (STATE_DIR)
+                LOAD_CONST              35 ('phase4_market_discovery.json')
+                BINARY_OP               11 (/)
+                STORE_FAST              11 (state_path)
+
+ 247            LOAD_FAST               11 (state_path)
+                LOAD_ATTR               35 (write_text + NULL|self)
+
+ 248            LOAD_GLOBAL             36 (json)
+                LOAD_ATTR               38 (dumps)
+                PUSH_NULL
+                LOAD_FAST               10 (output)
+                LOAD_CONST              36 (2)
+                LOAD_CONST              37 (('indent',))
+                CALL_KW                  2
+
+ 249            LOAD_CONST              38 ('utf-8')
+
+ 247            LOAD_CONST              39 (('encoding',))
+                CALL_KW                  2
+                POP_TOP
+
+ 252            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 253            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              40 ('Eligible Spot USDT markets : ')
+                LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                0 (eligible_symbols)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 254            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              41 ('Qualified markets          : ')
+                LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                4 (qualified)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 255            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              42 ('Bull candidates             : ')
+                LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                7 (bulls)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 256            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              43 ('Bear candidates             : ')
+                LOAD_GLOBAL             25 (len + NULL)
+                LOAD_FAST                8 (bears)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 257            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              44 ('State saved                 : ')
+                LOAD_FAST               11 (state_path)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 259            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 260            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              45 ('TOP BULLISH')
+                CALL                     1
+                POP_TOP
+
+ 261            LOAD_GLOBAL             41 (enumerate + NULL)
+                LOAD_FAST                7 (bulls)
+                LOAD_CONST               0 (None)
+                LOAD_CONST              46 (10)
+                BINARY_SLICE
+                LOAD_CONST               4 (1)
+                CALL                     2
+                GET_ITER
+       L23:     FOR_ITER                40 (to L24)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST  198 (index, item)
+
+ 262            LOAD_GLOBAL              1 (print + NULL)
+
+ 263            LOAD_FAST               12 (index)
+                LOAD_CONST              47 ('>2')
+                FORMAT_WITH_SPEC
+                LOAD_CONST              48 ('. ')
+                LOAD_FAST                6 (item)
+                LOAD_CONST               5 ('symbol')
+                BINARY_SUBSCR
+                LOAD_CONST              49 ('<14')
+                FORMAT_WITH_SPEC
+                LOAD_CONST              50 (' ')
+
+ 264            LOAD_FAST                6 (item)
+                LOAD_CONST              12 ('priceChangePercent')
+                BINARY_SUBSCR
+                LOAD_CONST              51 ('+7.2f')
+                FORMAT_WITH_SPEC
+                LOAD_CONST              52 ('% Q=')
+
+ 265            LOAD_FAST                6 (item)
+                LOAD_CONST              13 ('quality')
+                BINARY_SUBSCR
+                LOAD_CONST              53 ('.1f')
+                FORMAT_WITH_SPEC
+
+ 263            BUILD_STRING             7
+
+ 262            CALL                     1
+                POP_TOP
+                JUMP_BACKWARD           42 (to L23)
+
+ 261   L24:     END_FOR
+                POP_TOP
+
+ 268            LOAD_GLOBAL              1 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 269            LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST              54 ('TOP BEARISH')
+                CALL                     1
+                POP_TOP
+
+ 270            LOAD_GLOBAL             41 (enumerate + NULL)
+                LOAD_FAST                8 (bears)
+                LOAD_CONST               0 (None)
+                LOAD_CONST              46 (10)
+                BINARY_SLICE
+                LOAD_CONST               4 (1)
+                CALL                     2
+                GET_ITER
+       L25:     FOR_ITER                40 (to L26)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST  198 (index, item)
+
+ 271            LOAD_GLOBAL              1 (print + NULL)
+
+ 272            LOAD_FAST               12 (index)
+                LOAD_CONST              47 ('>2')
+                FORMAT_WITH_SPEC
+                LOAD_CONST              48 ('. ')
+                LOAD_FAST                6 (item)
+                LOAD_CONST               5 ('symbol')
+                BINARY_SUBSCR
+                LOAD_CONST              49 ('<14')
+                FORMAT_WITH_SPEC
+                LOAD_CONST              50 (' ')
+
+ 273            LOAD_FAST                6 (item)
+                LOAD_CONST              12 ('priceChangePercent')
+                BINARY_SUBSCR
+                LOAD_CONST              51 ('+7.2f')
+                FORMAT_WITH_SPEC
+                LOAD_CONST              52 ('% Q=')
+
+ 274            LOAD_FAST                6 (item)
+                LOAD_CONST              13 ('quality')
+                BINARY_SUBSCR
+                LOAD_CONST              53 ('.1f')
+                FORMAT_WITH_SPEC
+
+ 272            BUILD_STRING             7
+
+ 271            CALL                     1
+                POP_TOP
+                JUMP_BACKWARD           42 (to L25)
+
+ 270   L26:     END_FOR
+                POP_TOP
+                RETURN_CONST             0 (None)
+
+  --   L27:     PUSH_EXC_INFO
+
+ 149            LOAD_GLOBAL              6 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       30 (to L30)
+                STORE_FAST               2 (exc)
+
+ 150   L28:     LOAD_GLOBAL              1 (print + NULL)
+                LOAD_CONST               3 ('DISCOVERY ERROR: ')
+                LOAD_FAST                2 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 151            LOAD_GLOBAL              9 (SystemExit + NULL)
+                LOAD_CONST               4 (1)
+                CALL                     1
+                RAISE_VARARGS            1
+
+  --   L29:     LOAD_CONST               0 (None)
+                STORE_FAST               2 (exc)
+                DELETE_FAST              2 (exc)
+                RERAISE                  1
+
+ 149   L30:     RERAISE                  0
+
+  --   L31:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L32:     SWAP                     2
+                POP_TOP
+
+ 177            SWAP                     2
+                STORE_FAST               6 (item)
+                RERAISE                  0
+
+  --   L33:     SWAP                     2
+                POP_TOP
+
+ 182            SWAP                     2
+                STORE_FAST               6 (item)
+                RERAISE                  0
+
+  --   L34:     SWAP                     2
+                POP_TOP
+
+ 188            SWAP                     2
+                STORE_FAST               6 (item)
+                RERAISE                  0
+ExceptionTable:
+  L1 to L2 -> L27 [0]
+  L7 to L9 -> L32 [2]
+  L10 to L12 -> L32 [2]
+  L13 to L15 -> L33 [2]
+  L16 to L18 -> L33 [2]
+  L19 to L22 -> L34 [2]
+  L27 to L28 -> L31 [1] lasti
+  L28 to L29 -> L29 [1] lasti
+  L29 to L31 -> L31 [1] lasti
+
+Disassembly of <code object <lambda> at 0x76455c7630, file "phase4_market_discovery.py", line 167>:
+167           RESUME                   0
+
+168           LOAD_FAST                0 (x)
+              LOAD_CONST               1 ('quality')
+              BINARY_SUBSCR
+
+169           LOAD_FAST                0 (x)
+              LOAD_CONST               2 ('quoteVolume24h')
+              BINARY_SUBSCR
+
+170           LOAD_GLOBAL              1 (abs + NULL)
+              LOAD_FAST                0 (x)
+              LOAD_CONST               3 ('priceChangePercent')
+              BINARY_SUBSCR
+              CALL                     1
+
+167           BUILD_TUPLE              3
+              RETURN_VALUE
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1 — PHASE 4\nMARKET DISCOVERY\n\nOWNER:\n    Discovery of the fresh Binance Spot/USDT universe.\n\nRESPONSIBILITIES:\n    - Discover currently tradable Spot/USDT symbols\n    - Collect current 24h market statistics\n    - Apply liquidity / activity filters\n    - Classify bullish / bearish candidates\n    - Produce the qualified universe consumed by Phase 5\n\nPHASE 4 DOES NOT:\n    - detect BOS / CHoCH\n    - detect Order Blocks\n    - detect FVG\n    - construct entries\n    - construct SL / TP\n    - calculate position size\n    - submit orders\n    - withdraw funds\n'
+[1] 0
+[2] None
+[3] ('datetime', 'timezone')
+[4] ('Path',)
+[5] 'state'
+[6] 'reports'
+[7] True
+[8] ('exist_ok',)
+[9] 'https://api.binance.com'
+[10] 15
+[11] 5000000.0
+[12] 10000
+[13] 1.0
+[14] 200
+[15] <code object now_utc at 0x7645631a50, file "phase4_market_discovery.py", line 51>
+[16] <code object get_json at 0x76455c1a70, file "phase4_market_discovery.py", line 55>
+[17] <code object get_all_usdt at 0xb400007795ef2950, file "phase4_market_discovery.py", line 65>
+[18] <code object get_24h at 0x764556f0f0, file "phase4_market_discovery.py", line 91>
+[19] <code object qualify_ticker at 0xb400007795ef4570, file "phase4_market_discovery.py", line 95>
+[20] <code object main at 0xb4000077c5ebe550, file "phase4_market_discovery.py", line 141>
+[21] '__main__'
+[22] (None,)
+
+
+NAMES
+=====
+
+'__doc__'
+'json'
+'datetime'
+'timezone'
+'pathlib'
+'Path'
+'requests'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE_DIR'
+'REPORT_DIR'
+'mkdir'
+'BINANCE'
+'TIMEOUT'
+'MIN_QUOTE_VOLUME'
+'MIN_24H_TRADES'
+'MIN_ABS_CHANGE_PERCENT'
+'MAX_DISCOVERY_MARKETS'
+'now_utc'
+'get_json'
+'get_all_usdt'
+'get_24h'
+'qualify_ticker'
+'main'
+'__name__'

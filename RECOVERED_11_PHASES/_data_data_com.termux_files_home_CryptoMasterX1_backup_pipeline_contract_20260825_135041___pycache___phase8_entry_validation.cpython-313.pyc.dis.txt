@@ -1,0 +1,1376 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/backup_pipeline_contract_20260825_135041/__pycache__/phase8_entry_validation.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              0 (json)
+              STORE_NAME               0 (json)
+
+  2           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              1 (time)
+              STORE_NAME               1 (time)
+
+  3           LOAD_CONST               0 (0)
+              LOAD_CONST               2 (('Path',))
+              IMPORT_NAME              2 (pathlib)
+              IMPORT_FROM              3 (Path)
+              STORE_NAME               3 (Path)
+              POP_TOP
+
+  4           LOAD_CONST               0 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              4 (datetime)
+              IMPORT_FROM              4 (datetime)
+              STORE_NAME               4 (datetime)
+              IMPORT_FROM              5 (timezone)
+              STORE_NAME               5 (timezone)
+              POP_TOP
+
+  6           LOAD_CONST               4 ('CryptoMasterX1')
+              STORE_NAME               6 (PROJECT)
+
+  7           LOAD_CONST               5 ('PHASE_8')
+              STORE_NAME               7 (PHASE)
+
+  8           LOAD_CONST               6 ('8.0-CLEAN')
+              STORE_NAME               8 (VERSION)
+
+ 10           LOAD_NAME                3 (Path)
+              PUSH_NULL
+              LOAD_NAME                9 (__file__)
+              CALL                     1
+              LOAD_ATTR               21 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               22 (parent)
+              STORE_NAME              12 (BASE_DIR)
+
+ 11           LOAD_NAME               12 (BASE_DIR)
+              LOAD_CONST               7 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              13 (STATE_DIR)
+
+ 12           LOAD_NAME               12 (BASE_DIR)
+              LOAD_CONST               8 ('reports')
+              BINARY_OP               11 (/)
+              STORE_NAME              14 (REPORT_DIR)
+
+ 14           LOAD_NAME               13 (STATE_DIR)
+              LOAD_CONST               9 ('phase7_entry_intelligence.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              15 (PHASE7_STATE)
+
+ 15           LOAD_NAME               13 (STATE_DIR)
+              LOAD_CONST              10 ('phase8_entry_validation.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              16 (PHASE8_STATE)
+
+ 16           LOAD_NAME               14 (REPORT_DIR)
+              LOAD_CONST              11 ('phase8_entry_validation_report.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              17 (PHASE8_REPORT)
+
+ 18           LOAD_CONST              12 (60)
+              STORE_NAME              18 (REFRESH_SECONDS)
+
+ 20           LOAD_CONST              13 (False)
+              STORE_NAME              19 (EXECUTION_AUTHORIZED)
+
+ 21           LOAD_CONST              13 (False)
+              STORE_NAME              20 (ORDER_SUBMISSION)
+
+ 22           LOAD_CONST              13 (False)
+              STORE_NAME              21 (BOT_ARMED)
+
+ 23           LOAD_CONST              13 (False)
+              STORE_NAME              22 (LIVE_EXECUTION)
+
+ 26           LOAD_CONST              14 (<code object now_utc at 0x7645631a50, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 26>)
+              MAKE_FUNCTION
+              STORE_NAME              23 (now_utc)
+
+ 30           LOAD_CONST              15 (<code object save_json at 0x7645644f50, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 30>)
+              MAKE_FUNCTION
+              STORE_NAME              24 (save_json)
+
+ 35           LOAD_CONST              16 (<code object load_phase7 at 0x764562d1a0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 35>)
+              MAKE_FUNCTION
+              STORE_NAME              25 (load_phase7)
+
+ 52           LOAD_CONST              17 (<code object validate_entry at 0xb4000076c5ee6eb0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 52>)
+              MAKE_FUNCTION
+              STORE_NAME              26 (validate_entry)
+
+137           LOAD_CONST              18 (<code object scan at 0xb4000076d5f155b0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 137>)
+              MAKE_FUNCTION
+              STORE_NAME              27 (scan)
+
+197           LOAD_CONST              23 (('RUNNING',))
+              LOAD_CONST              19 (<code object build_state at 0x7645645370, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 197>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              28 (build_state)
+
+229           LOAD_CONST              20 (<code object display at 0xb4000076d5f05fe0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 229>)
+              MAKE_FUNCTION
+              STORE_NAME              29 (display)
+
+273           LOAD_CONST              21 (<code object main at 0xb4000076d5f10c60, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 273>)
+              MAKE_FUNCTION
+              STORE_NAME              30 (main)
+
+344           LOAD_NAME               31 (__name__)
+              LOAD_CONST              22 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+345           LOAD_NAME               30 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             1 (None)
+
+344   L1:     RETURN_CONST             1 (None)
+
+Disassembly of <code object now_utc at 0x7645631a50, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 26>:
+ 26           RESUME                   0
+
+ 27           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object save_json at 0x7645644f50, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 30>:
+ 30           RESUME                   0
+
+ 31           LOAD_FAST                0 (path)
+              LOAD_ATTR                0 (parent)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('parents', 'exist_ok'))
+              CALL_KW                  2
+              POP_TOP
+
+ 32           LOAD_FAST                0 (path)
+              LOAD_ATTR                5 (write_text + NULL|self)
+              LOAD_GLOBAL              6 (json)
+              LOAD_ATTR                8 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               3 (2)
+              LOAD_GLOBAL             10 (str)
+              LOAD_CONST               4 (('indent', 'default'))
+              CALL_KW                  3
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object load_phase7 at 0x764562d1a0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 35>:
+ 35           RESUME                   0
+
+ 36           LOAD_GLOBAL              0 (PHASE7_STATE)
+              LOAD_ATTR                3 (exists + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_TRUE        18 (to L1)
+
+ 37           LOAD_GLOBAL              5 (FileNotFoundError + NULL)
+
+ 38           LOAD_CONST               1 ('Phase 7 state not found: ')
+              LOAD_GLOBAL              0 (PHASE7_STATE)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+
+ 37           CALL                     1
+              RAISE_VARARGS            1
+
+ 41   L1:     LOAD_GLOBAL              6 (json)
+              LOAD_ATTR                8 (loads)
+              PUSH_NULL
+              LOAD_GLOBAL              0 (PHASE7_STATE)
+              LOAD_ATTR               11 (read_text + NULL|self)
+              CALL                     0
+              CALL                     1
+              STORE_FAST               0 (state)
+
+ 43           LOAD_FAST                0 (state)
+              LOAD_ATTR               13 (get + NULL|self)
+              LOAD_CONST               2 ('intelligence')
+              BUILD_MAP                0
+              CALL                     2
+              STORE_FAST               1 (intelligence)
+
+ 44           LOAD_FAST                1 (intelligence)
+              LOAD_ATTR               13 (get + NULL|self)
+              LOAD_CONST               3 ('ready')
+              BUILD_LIST               0
+              CALL                     2
+              STORE_FAST               2 (ready)
+
+ 46           LOAD_GLOBAL             15 (isinstance + NULL)
+              LOAD_FAST                2 (ready)
+              LOAD_GLOBAL             16 (list)
+              CALL                     2
+              TO_BOOL
+              POP_JUMP_IF_TRUE         2 (to L2)
+
+ 47           BUILD_LIST               0
+              STORE_FAST               2 (ready)
+
+ 49   L2:     LOAD_FAST                2 (ready)
+              RETURN_VALUE
+
+Disassembly of <code object validate_entry at 0xb4000076c5ee6eb0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 52>:
+  52            RESUME                   0
+
+  53            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               1 ('symbol')
+                CALL                     1
+                STORE_FAST               1 (symbol)
+
+  54            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               2 ('direction')
+                CALL                     1
+                STORE_FAST               2 (direction)
+
+  56            LOAD_GLOBAL              3 (float + NULL)
+
+  57            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+
+  58            LOAD_CONST               3 ('confidence')
+
+  59            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               4 ('phase6_confidence')
+                LOAD_CONST               5 (0)
+                CALL                     2
+
+  57            CALL                     2
+
+  56            CALL                     1
+                STORE_FAST               3 (confidence)
+
+  63            LOAD_GLOBAL              3 (float + NULL)
+
+  64            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+
+  65            LOAD_CONST               6 ('rr')
+
+  66            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               7 ('phase6_rr')
+                LOAD_CONST               5 (0)
+                CALL                     2
+
+  64            CALL                     2
+
+  63            CALL                     1
+                STORE_FAST               4 (rr)
+
+  70            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               8 ('entry')
+                CALL                     1
+                STORE_FAST               5 (entry)
+
+  71            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               9 ('sl')
+                CALL                     1
+                STORE_FAST               6 (sl)
+
+  72            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST              10 ('tp1')
+                CALL                     1
+                STORE_FAST               7 (tp1)
+
+  73            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST              11 ('tp2')
+                CALL                     1
+                STORE_FAST               8 (tp2)
+
+  75            BUILD_LIST               0
+                STORE_FAST               9 (reasons)
+
+  77            LOAD_FAST                1 (symbol)
+                TO_BOOL
+                POP_JUMP_IF_TRUE        17 (to L1)
+
+  78            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              12 ('MISSING_SYMBOL')
+                CALL                     1
+                POP_TOP
+
+  80    L1:     LOAD_FAST                2 (direction)
+                LOAD_CONST              13 (('LONG', 'SHORT'))
+                CONTAINS_OP              1
+                POP_JUMP_IF_FALSE       17 (to L2)
+
+  81            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              14 ('INVALID_DIRECTION')
+                CALL                     1
+                POP_TOP
+
+  83    L2:     LOAD_FAST                3 (confidence)
+                LOAD_CONST              15 (75)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE       17 (to L3)
+
+  84            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              16 ('CONFIDENCE_BELOW_GATE')
+                CALL                     1
+                POP_TOP
+
+  86    L3:     LOAD_FAST                4 (rr)
+                LOAD_CONST              17 (1.5)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE       17 (to L4)
+
+  87            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              18 ('RR_BELOW_GATE')
+                CALL                     1
+                POP_TOP
+
+  90    L4:     LOAD_FAST                5 (entry)
+
+  91            LOAD_FAST                6 (sl)
+
+  92            LOAD_FAST                7 (tp1)
+
+  93            LOAD_FAST                8 (tp2)
+
+  89            LOAD_CONST              19 (('entry', 'sl', 'tp1', 'tp2'))
+                BUILD_CONST_KEY_MAP      4
+                STORE_FAST              10 (numeric_levels)
+
+  96            LOAD_FAST               10 (numeric_levels)
+                LOAD_ATTR                7 (items + NULL|self)
+                CALL                     0
+                GET_ITER
+        L5:     FOR_ITER                96 (to L10)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST  188 (name, value)
+
+  97            LOAD_FAST               12 (value)
+                POP_JUMP_IF_NOT_NONE    36 (to L6)
+
+  98            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              20 ('MISSING_')
+                LOAD_FAST               11 (name)
+                LOAD_ATTR                9 (upper + NULL|self)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+                JUMP_BACKWARD           44 (to L5)
+
+ 100    L6:     NOP
+
+ 101    L7:     LOAD_GLOBAL              3 (float + NULL)
+                LOAD_FAST               12 (value)
+                CALL                     1
+                LOAD_CONST               5 (0)
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_FALSE       36 (to L9)
+
+ 102            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              21 ('INVALID_')
+                LOAD_FAST               11 (name)
+                LOAD_ATTR                9 (upper + NULL|self)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+        L8:     JUMP_BACKWARD           96 (to L5)
+
+ 101    L9:     JUMP_BACKWARD           98 (to L5)
+
+  96   L10:     END_FOR
+                POP_TOP
+
+ 106            LOAD_FAST                9 (reasons)
+                TO_BOOL
+                POP_JUMP_IF_TRUE       134 (to L17)
+
+ 107            LOAD_GLOBAL              3 (float + NULL)
+                LOAD_FAST                5 (entry)
+                CALL                     1
+                STORE_FAST              13 (entry_f)
+
+ 108            LOAD_GLOBAL              3 (float + NULL)
+                LOAD_FAST                6 (sl)
+                CALL                     1
+                STORE_FAST              14 (sl_f)
+
+ 109            LOAD_GLOBAL              3 (float + NULL)
+                LOAD_FAST                7 (tp1)
+                CALL                     1
+                STORE_FAST              15 (tp1_f)
+
+ 110            LOAD_GLOBAL              3 (float + NULL)
+                LOAD_FAST                8 (tp2)
+                CALL                     1
+                STORE_FAST              16 (tp2_f)
+
+ 112            LOAD_FAST                2 (direction)
+                LOAD_CONST              22 ('LONG')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       39 (to L14)
+
+ 113            LOAD_FAST_LOAD_FAST    237 (sl_f, entry_f)
+                SWAP                     2
+                COPY                     2
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE       13 (to L11)
+                LOAD_FAST               15 (tp1_f)
+                SWAP                     2
+                COPY                     2
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        6 (to L11)
+                LOAD_FAST               16 (tp2_f)
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_TRUE        19 (to L13)
+                JUMP_FORWARD             1 (to L12)
+       L11:     POP_TOP
+
+ 114   L12:     LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              23 ('INVALID_LONG_PRICE_STRUCTURE')
+                CALL                     1
+                POP_TOP
+
+  --   L13:     JUMP_FORWARD            45 (to L17)
+
+ 116   L14:     LOAD_FAST                2 (direction)
+                LOAD_CONST              24 ('SHORT')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       39 (to L17)
+
+ 117            LOAD_FAST               16 (tp2_f)
+                LOAD_FAST               15 (tp1_f)
+                SWAP                     2
+                COPY                     2
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_FALSE       13 (to L15)
+                LOAD_FAST               13 (entry_f)
+                SWAP                     2
+                COPY                     2
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        6 (to L15)
+                LOAD_FAST               14 (sl_f)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_TRUE        19 (to L17)
+                JUMP_FORWARD             1 (to L16)
+       L15:     POP_TOP
+
+ 118   L16:     LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              25 ('INVALID_SHORT_PRICE_STRUCTURE')
+                CALL                     1
+                POP_TOP
+
+ 120   L17:     LOAD_FAST                9 (reasons)
+                TO_BOOL
+                UNARY_NOT
+                STORE_FAST              17 (validated)
+
+ 123            LOAD_FAST                1 (symbol)
+
+ 124            LOAD_FAST                2 (direction)
+
+ 125            LOAD_FAST                3 (confidence)
+
+ 126            LOAD_FAST                4 (rr)
+
+ 127            LOAD_FAST                5 (entry)
+
+ 128            LOAD_FAST                6 (sl)
+
+ 129            LOAD_FAST                7 (tp1)
+
+ 130            LOAD_FAST                8 (tp2)
+
+ 131            LOAD_FAST               17 (validated)
+
+ 132            LOAD_FAST                9 (reasons)
+
+ 133            LOAD_CONST              26 ('PHASE_7')
+
+ 122            LOAD_CONST              27 (('symbol', 'direction', 'confidence', 'rr', 'entry', 'sl', 'tp1', 'tp2', 'validated', 'reasons', 'source_phase'))
+                BUILD_CONST_KEY_MAP     11
+                RETURN_VALUE
+
+  --   L18:     PUSH_EXC_INFO
+
+ 103            LOAD_GLOBAL             10 (TypeError)
+                LOAD_GLOBAL             12 (ValueError)
+                BUILD_TUPLE              2
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       39 (to L20)
+                POP_TOP
+
+ 104            LOAD_FAST                9 (reasons)
+                LOAD_ATTR                5 (append + NULL|self)
+                LOAD_CONST              21 ('INVALID_')
+                LOAD_FAST               11 (name)
+                LOAD_ATTR                9 (upper + NULL|self)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+       L19:     POP_EXCEPT
+                EXTENDED_ARG             1
+                JUMP_BACKWARD          316 (to L5)
+
+ 103   L20:     RERAISE                  0
+
+  --   L21:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L7 to L8 -> L18 [1]
+  L18 to L19 -> L21 [2] lasti
+  L20 to L21 -> L21 [2] lasti
+
+Disassembly of <code object scan at 0xb4000076d5f155b0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 137>:
+ 137            RESUME                   0
+
+ 138            LOAD_GLOBAL              1 (load_phase7 + NULL)
+                CALL                     0
+                STORE_FAST               0 (candidates)
+
+ 140            BUILD_LIST               0
+                STORE_FAST               1 (results)
+
+ 141            BUILD_LIST               0
+                STORE_FAST               2 (validated)
+
+ 142            BUILD_LIST               0
+                STORE_FAST               3 (rejected)
+
+ 144            LOAD_GLOBAL              2 (time)
+                LOAD_ATTR                2 (time)
+                PUSH_NULL
+                CALL                     0
+                STORE_FAST               4 (started)
+
+ 146            LOAD_GLOBAL              5 (print + NULL)
+
+ 147            LOAD_CONST               1 ('PHASE 8 STARTING — ')
+                LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                0 (candidates)
+                CALL                     1
+                FORMAT_SIMPLE
+                LOAD_CONST               2 (' PHASE 7 READY CANDIDATES')
+                BUILD_STRING             3
+
+ 148            LOAD_CONST               3 (True)
+
+ 146            LOAD_CONST               4 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 151            LOAD_GLOBAL              9 (enumerate + NULL)
+                LOAD_FAST                0 (candidates)
+                LOAD_CONST               5 (1)
+                LOAD_CONST               6 (('start',))
+                CALL_KW                  2
+                GET_ITER
+        L1:     FOR_ITER               126 (to L6)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST   86 (index, candidate)
+
+ 152            LOAD_FAST                6 (candidate)
+                LOAD_ATTR               11 (get + NULL|self)
+                LOAD_CONST               7 ('symbol')
+                LOAD_CONST               8 ('UNKNOWN')
+                CALL                     2
+                STORE_FAST               7 (symbol)
+
+ 154            LOAD_GLOBAL              5 (print + NULL)
+
+ 155            LOAD_CONST               9 ('PHASE 8 VALIDATING ')
+                LOAD_FAST                5 (index)
+                FORMAT_SIMPLE
+                LOAD_CONST              10 ('/')
+                LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                0 (candidates)
+                CALL                     1
+                FORMAT_SIMPLE
+                LOAD_CONST              11 (' ')
+                LOAD_FAST                7 (symbol)
+                FORMAT_SIMPLE
+                BUILD_STRING             6
+
+ 156            LOAD_CONST               3 (True)
+
+ 154            LOAD_CONST               4 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 159            NOP
+
+ 160    L2:     LOAD_GLOBAL             13 (validate_entry + NULL)
+                LOAD_FAST                6 (candidate)
+                CALL                     1
+                STORE_FAST               8 (result)
+
+ 161            LOAD_FAST                1 (results)
+                LOAD_ATTR               15 (append + NULL|self)
+                LOAD_FAST                8 (result)
+                CALL                     1
+                POP_TOP
+
+ 163            LOAD_FAST                8 (result)
+                LOAD_CONST              12 ('validated')
+                BINARY_SUBSCR
+                TO_BOOL
+                POP_JUMP_IF_FALSE       19 (to L4)
+
+ 164            LOAD_FAST                2 (validated)
+                LOAD_ATTR               15 (append + NULL|self)
+                LOAD_FAST                8 (result)
+                CALL                     1
+                POP_TOP
+        L3:     JUMP_BACKWARD          109 (to L1)
+
+ 166    L4:     LOAD_FAST                3 (rejected)
+                LOAD_ATTR               15 (append + NULL|self)
+                LOAD_FAST                8 (result)
+                CALL                     1
+                POP_TOP
+        L5:     JUMP_BACKWARD          128 (to L1)
+
+ 151    L6:     END_FOR
+                POP_TOP
+
+ 175            LOAD_FAST                2 (validated)
+                LOAD_ATTR               19 (sort + NULL|self)
+
+ 176            LOAD_CONST              16 (<code object <lambda> at 0x7645612670, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 176>)
+                MAKE_FUNCTION
+
+ 180            LOAD_CONST               3 (True)
+
+ 175            LOAD_CONST              17 (('key', 'reverse'))
+                CALL_KW                  2
+                POP_TOP
+
+ 183            LOAD_GLOBAL             21 (round + NULL)
+                LOAD_GLOBAL              2 (time)
+                LOAD_ATTR                2 (time)
+                PUSH_NULL
+                CALL                     0
+                LOAD_FAST                4 (started)
+                BINARY_OP               10 (-)
+                LOAD_CONST              18 (2)
+                CALL                     2
+                STORE_FAST              10 (elapsed)
+
+ 186            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                0 (candidates)
+                CALL                     1
+
+ 187            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                1 (results)
+                CALL                     1
+
+ 188            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                2 (validated)
+                CALL                     1
+
+ 189            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                3 (rejected)
+                CALL                     1
+
+ 190            LOAD_FAST               10 (elapsed)
+
+ 191            LOAD_FAST                2 (validated)
+
+ 192            LOAD_FAST                3 (rejected)
+
+ 193            LOAD_FAST                1 (results)
+
+ 185            LOAD_CONST              19 (('phase7_candidates', 'evaluated', 'validated', 'rejected', 'scan_seconds', 'validated_candidates', 'rejected_candidates', 'all_results'))
+                BUILD_CONST_KEY_MAP      8
+                RETURN_VALUE
+
+  --    L7:     PUSH_EXC_INFO
+
+ 168            LOAD_GLOBAL             16 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       37 (to L11)
+                STORE_FAST               9 (exc)
+
+ 169    L8:     LOAD_FAST                3 (rejected)
+                LOAD_ATTR               15 (append + NULL|self)
+
+ 170            LOAD_FAST                7 (symbol)
+
+ 171            LOAD_CONST              13 (False)
+
+ 172            LOAD_CONST              14 ('VALIDATION_ERROR: ')
+                LOAD_FAST                9 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                BUILD_LIST               1
+
+ 169            LOAD_CONST              15 (('symbol', 'validated', 'reasons'))
+                BUILD_CONST_KEY_MAP      3
+                CALL                     1
+                POP_TOP
+        L9:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               9 (exc)
+                DELETE_FAST              9 (exc)
+                EXTENDED_ARG             1
+                JUMP_BACKWARD          270 (to L1)
+
+  --   L10:     LOAD_CONST               0 (None)
+                STORE_FAST               9 (exc)
+                DELETE_FAST              9 (exc)
+                RERAISE                  1
+
+ 168   L11:     RERAISE                  0
+
+  --   L12:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L7 [1]
+  L4 to L5 -> L7 [1]
+  L7 to L8 -> L12 [2] lasti
+  L8 to L9 -> L10 [2] lasti
+  L10 to L12 -> L12 [2] lasti
+
+Disassembly of <code object <lambda> at 0x7645612670, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 176>:
+176           RESUME                   0
+
+177           LOAD_FAST                0 (x)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               1 ('confidence')
+              LOAD_CONST               2 (0)
+              CALL                     2
+
+178           LOAD_FAST                0 (x)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               3 ('rr')
+              LOAD_CONST               2 (0)
+              CALL                     2
+
+176           BUILD_TUPLE              2
+              RETURN_VALUE
+
+Disassembly of <code object build_state at 0x7645645370, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 197>:
+197           RESUME                   0
+
+199           LOAD_GLOBAL              0 (PROJECT)
+
+200           LOAD_GLOBAL              2 (PHASE)
+
+201           LOAD_GLOBAL              4 (VERSION)
+
+202           LOAD_GLOBAL              7 (now_utc + NULL)
+              CALL                     0
+
+203           LOAD_FAST                1 (cycle)
+
+204           LOAD_FAST                2 (status)
+
+207           LOAD_FAST                0 (result)
+              LOAD_CONST               1 ('phase7_candidates')
+              BINARY_SUBSCR
+
+208           LOAD_FAST                0 (result)
+              LOAD_CONST               2 ('evaluated')
+              BINARY_SUBSCR
+
+209           LOAD_FAST                0 (result)
+              LOAD_CONST               3 ('validated')
+              BINARY_SUBSCR
+
+210           LOAD_FAST                0 (result)
+              LOAD_CONST               4 ('rejected')
+              BINARY_SUBSCR
+
+211           LOAD_FAST                0 (result)
+              LOAD_CONST               5 ('scan_seconds')
+              BINARY_SUBSCR
+
+212           LOAD_FAST                0 (result)
+              LOAD_CONST               6 ('validated_candidates')
+              BINARY_SUBSCR
+
+213           LOAD_FAST                0 (result)
+              LOAD_CONST               7 ('rejected_candidates')
+              BINARY_SUBSCR
+
+214           LOAD_FAST                0 (result)
+              LOAD_CONST               8 ('all_results')
+              BINARY_SUBSCR
+
+206           LOAD_CONST               9 (('phase7_candidates', 'evaluated', 'validated', 'rejected', 'scan_seconds', 'validated_candidates', 'rejected_candidates', 'all_results'))
+              BUILD_CONST_KEY_MAP      8
+
+218           LOAD_CONST              10 (False)
+
+219           LOAD_CONST              10 (False)
+
+220           LOAD_CONST              10 (False)
+
+221           LOAD_CONST              10 (False)
+
+222           LOAD_CONST              10 (False)
+
+223           LOAD_CONST              10 (False)
+
+224           LOAD_CONST              10 (False)
+
+217           LOAD_CONST              11 (('execution_authorized', 'order_submission', 'bot_armed', 'live_execution', 'withdrawals', 'deposits', 'transfers'))
+              BUILD_CONST_KEY_MAP      7
+
+198           LOAD_CONST              12 (('project', 'phase', 'version', 'timestamp_utc', 'cycle', 'status', 'validation', 'execution_boundary'))
+              BUILD_CONST_KEY_MAP      8
+              RETURN_VALUE
+
+Disassembly of <code object display at 0xb4000076d5f05fe0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 229>:
+229           RESUME                   0
+
+230           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+231           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+232           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               2 ('CRYPTOMASTERX1 — PHASE 8 ENTRY VALIDATION')
+              CALL                     1
+              POP_TOP
+
+233           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+235           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               3 ('Cycle                    : ')
+              LOAD_FAST                1 (cycle)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+236           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               4 ('UTC                      : ')
+              LOAD_GLOBAL              3 (now_utc + NULL)
+              CALL                     0
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+237           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               5 ('Phase 7 ready input      : ')
+              LOAD_FAST                0 (result)
+              LOAD_CONST               6 ('phase7_candidates')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+238           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               7 ('Evaluated                : ')
+              LOAD_FAST                0 (result)
+              LOAD_CONST               8 ('evaluated')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+239           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               9 ('Validated                : ')
+              LOAD_FAST                0 (result)
+              LOAD_CONST              10 ('validated')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+240           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              11 ('Rejected                 : ')
+              LOAD_FAST                0 (result)
+              LOAD_CONST              12 ('rejected')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+242           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+243           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              13 ('VALIDATED CANDIDATES')
+              CALL                     1
+              POP_TOP
+
+244           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              14 ('------------------------------------------------------------------------------')
+              CALL                     1
+              POP_TOP
+
+246           LOAD_FAST                0 (result)
+              LOAD_CONST              15 ('validated_candidates')
+              BINARY_SUBSCR
+              TO_BOOL
+              POP_JUMP_IF_TRUE        12 (to L1)
+
+247           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              16 ('None')
+              CALL                     1
+              POP_TOP
+              JUMP_FORWARD            70 (to L4)
+
+249   L1:     LOAD_GLOBAL              5 (enumerate + NULL)
+
+250           LOAD_FAST                0 (result)
+              LOAD_CONST              15 ('validated_candidates')
+              BINARY_SUBSCR
+
+251           LOAD_CONST              17 (1)
+
+249           LOAD_CONST              18 (('start',))
+              CALL_KW                  2
+              GET_ITER
+      L2:     FOR_ITER                53 (to L3)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   35 (index, item)
+
+253           LOAD_GLOBAL              1 (print + NULL)
+
+254           LOAD_FAST                2 (index)
+              LOAD_CONST              19 ('2')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              20 ('. ')
+
+255           LOAD_FAST                3 (item)
+              LOAD_CONST              21 ('symbol')
+              BINARY_SUBSCR
+              LOAD_CONST              22 ('<16')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              23 (' ')
+
+256           LOAD_FAST                3 (item)
+              LOAD_CONST              24 ('direction')
+              BINARY_SUBSCR
+              LOAD_CONST              25 ('<6')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              26 (' CONF: ')
+
+257           LOAD_FAST                3 (item)
+              LOAD_CONST              27 ('confidence')
+              BINARY_SUBSCR
+              LOAD_CONST              28 ('.2f')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              29 (' R:R: ')
+
+258           LOAD_FAST                3 (item)
+              LOAD_CONST              30 ('rr')
+              BINARY_SUBSCR
+              LOAD_CONST              28 ('.2f')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              31 (' ENTRY: ')
+
+259           LOAD_FAST                3 (item)
+              LOAD_CONST              32 ('entry')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+
+254           BUILD_STRING            11
+
+253           CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           55 (to L2)
+
+249   L3:     END_FOR
+              POP_TOP
+
+262   L4:     LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+263           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+264           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              33 ('PHASE 8 ENTRY VALIDATION COMPLETE')
+              CALL                     1
+              POP_TOP
+
+265           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+267           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+268           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              34 ('Execution boundary: LOCKED')
+              CALL                     1
+              POP_TOP
+
+269           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              35 ('Order submission   : DISABLED')
+              CALL                     1
+              POP_TOP
+
+270           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              36 ('Bot armed          : NO')
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object main at 0xb4000076d5f10c60, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 273>:
+ 273            RESUME                   0
+
+ 274            LOAD_CONST               1 (0)
+                STORE_FAST               0 (cycle)
+
+ 276            LOAD_CONST               1 (0)
+                LOAD_CONST               0 (None)
+                IMPORT_NAME              0 (sys)
+                STORE_FAST               1 (sys)
+
+ 277            LOAD_CONST               2 ('--once')
+                LOAD_FAST                1 (sys)
+                LOAD_ATTR                2 (argv)
+                CONTAINS_OP              0
+                STORE_FAST               2 (once)
+
+ 278            NOP
+
+ 279    L1:     LOAD_FAST                0 (cycle)
+                LOAD_CONST               4 (1)
+                BINARY_OP               13 (+=)
+                STORE_FAST               0 (cycle)
+
+ 281            NOP
+
+ 282    L2:     LOAD_GLOBAL              5 (scan + NULL)
+                CALL                     0
+                STORE_FAST               3 (result)
+
+ 284            LOAD_GLOBAL              7 (build_state + NULL)
+
+ 285            LOAD_FAST                3 (result)
+
+ 286            LOAD_FAST                0 (cycle)
+
+ 287            LOAD_CONST               5 ('RUNNING')
+
+ 284            CALL                     3
+                STORE_FAST               4 (state)
+
+ 290            LOAD_GLOBAL              9 (save_json + NULL)
+
+ 291            LOAD_GLOBAL             10 (PHASE8_STATE)
+
+ 292            LOAD_FAST                4 (state)
+
+ 290            CALL                     2
+                POP_TOP
+
+ 295            LOAD_GLOBAL              9 (save_json + NULL)
+
+ 296            LOAD_GLOBAL             12 (PHASE8_REPORT)
+
+ 297            LOAD_FAST                4 (state)
+
+ 295            CALL                     2
+                POP_TOP
+
+ 300            LOAD_GLOBAL             15 (display + NULL)
+
+ 301            LOAD_FAST                3 (result)
+
+ 302            LOAD_FAST                0 (cycle)
+
+ 300            CALL                     2
+                POP_TOP
+
+ 305            LOAD_GLOBAL             17 (print + NULL)
+
+ 306            LOAD_CONST               6 ('\nNext Phase 8 scan in ')
+                LOAD_GLOBAL             18 (REFRESH_SECONDS)
+                FORMAT_SIMPLE
+                LOAD_CONST               7 (' seconds...')
+                BUILD_STRING             3
+
+ 307            LOAD_CONST               3 (True)
+
+ 305            LOAD_CONST               8 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 310            LOAD_CONST               1 (0)
+                LOAD_CONST               0 (None)
+                IMPORT_NAME              0 (sys)
+                STORE_FAST               1 (sys)
+
+ 311            LOAD_CONST               2 ('--once')
+                LOAD_FAST                1 (sys)
+                LOAD_ATTR                2 (argv)
+                CONTAINS_OP              0
+                POP_JUMP_IF_TRUE         7 (to L3)
+                LOAD_FAST                2 (once)
+                TO_BOOL
+                POP_JUMP_IF_FALSE       12 (to L5)
+
+ 312    L3:     LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST               9 ('ONCE MODE - EXIT')
+                CALL                     1
+                POP_TOP
+        L4:     RETURN_CONST             0 (None)
+
+ 313    L5:     LOAD_GLOBAL             20 (time)
+                LOAD_ATTR               22 (sleep)
+                PUSH_NULL
+                LOAD_GLOBAL             18 (REFRESH_SECONDS)
+                CALL                     1
+                POP_TOP
+
+ 278    L6:     JUMP_BACKWARD          158 (to L1)
+
+  --    L7:     PUSH_EXC_INFO
+
+ 315            LOAD_GLOBAL             24 (KeyboardInterrupt)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE      112 (to L10)
+                POP_TOP
+
+ 316            LOAD_GLOBAL             10 (PHASE8_STATE)
+                LOAD_ATTR               27 (exists + NULL|self)
+                CALL                     0
+                TO_BOOL
+                POP_JUMP_IF_FALSE       74 (to L8)
+
+ 317            LOAD_GLOBAL             28 (json)
+                LOAD_ATTR               30 (loads)
+                PUSH_NULL
+
+ 318            LOAD_GLOBAL             10 (PHASE8_STATE)
+                LOAD_ATTR               33 (read_text + NULL|self)
+                CALL                     0
+
+ 317            CALL                     1
+                STORE_FAST               5 (existing)
+
+ 321            LOAD_CONST              10 ('STOPPED')
+                LOAD_FAST                5 (existing)
+                LOAD_CONST              11 ('status')
+                STORE_SUBSCR
+
+ 322            LOAD_GLOBAL             35 (now_utc + NULL)
+                CALL                     0
+                LOAD_FAST                5 (existing)
+                LOAD_CONST              12 ('stopped_utc')
+                STORE_SUBSCR
+
+ 324            LOAD_GLOBAL              9 (save_json + NULL)
+
+ 325            LOAD_GLOBAL             10 (PHASE8_STATE)
+
+ 326            LOAD_FAST                5 (existing)
+
+ 324            CALL                     2
+                POP_TOP
+
+ 329    L8:     LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST              13 ('\nPHASE 8 STOPPED.')
+                LOAD_CONST               3 (True)
+                LOAD_CONST               8 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 330    L9:     POP_EXCEPT
+                RETURN_CONST             0 (None)
+
+ 332   L10:     LOAD_GLOBAL             36 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       92 (to L17)
+                STORE_FAST               6 (exc)
+
+ 333   L11:     LOAD_GLOBAL             17 (print + NULL)
+
+ 334            LOAD_CONST              14 ('PHASE 8 ERROR: ')
+                LOAD_FAST                6 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+
+ 335            LOAD_CONST               3 (True)
+
+ 333            LOAD_CONST               8 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 338            LOAD_CONST               1 (0)
+                LOAD_CONST               0 (None)
+                IMPORT_NAME              0 (sys)
+                STORE_FAST               1 (sys)
+
+ 339            LOAD_CONST               2 ('--once')
+                LOAD_FAST                1 (sys)
+                LOAD_ATTR                2 (argv)
+                CONTAINS_OP              0
+                POP_JUMP_IF_TRUE         7 (to L12)
+                LOAD_FAST                2 (once)
+                TO_BOOL
+                POP_JUMP_IF_FALSE       16 (to L14)
+
+ 340   L12:     LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST               9 ('ONCE MODE - EXIT')
+                CALL                     1
+                POP_TOP
+       L13:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               6 (exc)
+                DELETE_FAST              6 (exc)
+                RETURN_CONST             0 (None)
+
+ 341   L14:     LOAD_GLOBAL             20 (time)
+                LOAD_ATTR               22 (sleep)
+                PUSH_NULL
+                LOAD_GLOBAL             18 (REFRESH_SECONDS)
+                CALL                     1
+                POP_TOP
+       L15:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               6 (exc)
+                DELETE_FAST              6 (exc)
+                JUMP_BACKWARD_NO_INTERRUPT 219 (to L6)
+
+  --   L16:     LOAD_CONST               0 (None)
+                STORE_FAST               6 (exc)
+                DELETE_FAST              6 (exc)
+                RERAISE                  1
+
+ 332   L17:     RERAISE                  0
+
+  --   L18:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L4 -> L7 [0]
+  L5 to L6 -> L7 [0]
+  L7 to L9 -> L18 [1] lasti
+  L10 to L11 -> L18 [1] lasti
+  L11 to L13 -> L16 [1] lasti
+  L14 to L15 -> L16 [1] lasti
+  L16 to L18 -> L18 [1] lasti
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] 0
+[1] None
+[2] ('Path',)
+[3] ('datetime', 'timezone')
+[4] 'CryptoMasterX1'
+[5] 'PHASE_8'
+[6] '8.0-CLEAN'
+[7] 'state'
+[8] 'reports'
+[9] 'phase7_entry_intelligence.json'
+[10] 'phase8_entry_validation.json'
+[11] 'phase8_entry_validation_report.json'
+[12] 60
+[13] False
+[14] <code object now_utc at 0x7645631a50, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 26>
+[15] <code object save_json at 0x7645644f50, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 30>
+[16] <code object load_phase7 at 0x764562d1a0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 35>
+[17] <code object validate_entry at 0xb4000076c5ee6eb0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 52>
+[18] <code object scan at 0xb4000076d5f155b0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 137>
+[19] <code object build_state at 0x7645645370, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 197>
+[20] <code object display at 0xb4000076d5f05fe0, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 229>
+[21] <code object main at 0xb4000076d5f10c60, file "./backup_pipeline_contract_20260825_135041/phase8_entry_validation.py", line 273>
+[22] '__main__'
+[23] ('RUNNING',)
+
+
+NAMES
+=====
+
+'json'
+'time'
+'pathlib'
+'Path'
+'datetime'
+'timezone'
+'PROJECT'
+'PHASE'
+'VERSION'
+'__file__'
+'resolve'
+'parent'
+'BASE_DIR'
+'STATE_DIR'
+'REPORT_DIR'
+'PHASE7_STATE'
+'PHASE8_STATE'
+'PHASE8_REPORT'
+'REFRESH_SECONDS'
+'EXECUTION_AUTHORIZED'
+'ORDER_SUBMISSION'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'now_utc'
+'save_json'
+'load_phase7'
+'validate_entry'
+'scan'
+'build_state'
+'display'
+'main'
+'__name__'

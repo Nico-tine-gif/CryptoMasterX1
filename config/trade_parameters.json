@@ -1,0 +1,64 @@
+{
+  "risk_management": {
+    "risk_per_trade": 0.01,
+    "max_daily_loss": 0.03,
+    "max_open_positions": 3,
+    "max_position_size_pct": 0.25,
+    "min_risk_reward_ratio": 2.5,
+    "stop_loss_pct": 0.02,
+    "take_profit_pct": 0.05,
+    "trailing_stop_pct": 0.015
+  },
+  "entry_conditions": {
+    "rsi_oversold": 30,
+    "rsi_overbought": 70,
+    "rsi_ideal_entry": 35,
+    "min_volume_24h": 1000000,
+    "min_price": 0.01,
+    "max_spread_pct": 0.5,
+    "trend_alignment": true,
+    "sma_alignment": true
+  },
+  "technical_indicators": {
+    "rsi_period": 14,
+    "sma_fast": 20,
+    "sma_slow": 50,
+    "ema_period": 21,
+    "macd_fast": 12,
+    "macd_slow": 26,
+    "macd_signal": 9,
+    "bollinger_period": 20,
+    "bollinger_std": 2
+  },
+  "position_sizing": {
+    "method": "risk_based",
+    "account_balance": 21.1,
+    "min_position_usdt": 5.0,
+    "max_position_usdt": 15.0,
+    "lot_size_rounding": "step_size",
+    "use_available_balance": true
+  },
+  "order_types": {
+    "entry": "LIMIT",
+    "stop_loss": "STOP_LOSS_LIMIT",
+    "take_profit": "TAKE_PROFIT_LIMIT",
+    "time_in_force": "GTC"
+  },
+  "filters": {
+    "min_notional": 5.0,
+    "max_slippage_pct": 0.3,
+    "blacklist_coins": [
+      "USDC",
+      "BUSD",
+      "TUSD",
+      "DAI"
+    ],
+    "prefer_coins": [
+      "BTC",
+      "ETH",
+      "BNB",
+      "SOL",
+      "XRP"
+    ]
+  }
+}

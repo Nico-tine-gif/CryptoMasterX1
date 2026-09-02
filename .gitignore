@@ -1,0 +1,44 @@
+# Build artifacts
+.buildozer/
+bin/
+android/.gradle/
+android/app/build/
+android/build/
+*.apk
+*.aab
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.o
+
+# Local environments
+.env
+.env.*
+!.env.example
+venv/
+.venv/
+
+# Logs
+*.log
+reports/
+state/
+
+# Backups
+backups/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore

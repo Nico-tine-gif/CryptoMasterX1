@@ -1,0 +1,888 @@
+#!/usr/bin/env python3
+
+import json
+import math
+import time
+from pathlib import Path
+from datetime import datetime, timezone
+
+import requests
+
+
+PROJECT = "CryptoMasterX1"
+PHASE = "PHASE_5"
+VERSION = "5.1-CLEAN"
+
+BASE_URL = "https://api.binance.com"
+
+REFRESH_SECONDS = 60
+MONITOR_REFRESH_SECONDS = 300
+REQUEST_TIMEOUT = 8
+
+LIMIT_1H = 100
+LIMIT_15M = 100
+LIMIT_5M = 100
+
+MIN_CONFIDENCE = 75.0
+MIN_RR = 1.50
+
+MAX_5M_EXTENSION_ATR = 2.0
+RSI_OVERBOUGHT = 75.0
+RSI_OVERSOLD = 25.0
+
+SL_ATR_MULTIPLIER = 1.20
+TP1_ATR_MULTIPLIER = 1.80
+TP2_ATR_MULTIPLIER = 3.00
+
+ROOT = Path(__file__).resolve().parent
+STATE_DIR = ROOT / "state"
+REPORT_DIR = ROOT / "reports"
+
+PHASE4_STATE = STATE_DIR / "phase4_market_discovery.json"
+STATE_FILE = STATE_DIR / "phase5_market_intelligence.json"
+REPORT_FILE = REPORT_DIR / "phase5_market_intelligence_report.json"
+
+SESSION = requests.Session()
+
+MONITORED = {}
+
+
+def now_utc():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def ensure_directories():
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def save_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(
+        json.dumps(data, indent=2),
+        encoding="utf-8",
+    )
+    tmp.replace(path)
+
+
+def load_json(path):
+    if not path.exists():
+        return None
+
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def get_json(path, params=None):
+    import random
+    bases=["https://api.binance.com","https://api1.binance.com","https://api2.binance.com","https://api3.binance.com","https://data-api.binance.vision"]
+    random.shuffle(bases)
+    for base in bases:
+        try:
+            url = f"{base}{path}"
+            response = __import__('requests').get(url, params=params, timeout=10)
+            if response.status_code==200:
+                return response.json()
+        except Exception:
+            continue
+    # last try original
+    import requests
+    response = requests.get(f"https://api.binance.com{path}", params=params, timeout=15)
+    return response.json()
+
+    response = SESSION.get(
+        BASE_URL + path,
+        params=params,
+        timeout=REQUEST_TIMEOUT,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def fetch_klines(symbol, interval, limit):
+    data = get_json(
+        "/api/v3/klines",
+        {
+            "symbol": symbol,
+            "interval": interval,
+            "limit": limit,
+        },
+    )
+
+    candles = []
+
+    for row in data:
+        candles.append(
+            {
+                "open_time": int(row[0]),
+                "open": float(row[1]),
+                "high": float(row[2]),
+                "low": float(row[3]),
+                "close": float(row[4]),
+                "volume": float(row[5]),
+                "close_time": int(row[6]),
+            }
+        )
+
+    now_ms = int(time.time() * 1000)
+
+    return [
+        candle
+        for candle in candles
+        if candle["close_time"] <= now_ms
+    ]
+
+
+def closes(candles):
+    return [x["close"] for x in candles]
+
+
+def highs(candles):
+    return [x["high"] for x in candles]
+
+
+def lows(candles):
+    return [x["low"] for x in candles]
+
+
+def ema(values, period):
+    if len(values) < period:
+        return None
+
+    multiplier = 2.0 / (period + 1.0)
+    value = sum(values[:period]) / period
+
+    for price in values[period:]:
+        value = (
+            (price - value) * multiplier
+            + value
+        )
+
+    return value
+
+
+def rsi(values, period=14):
+    if len(values) <= period:
+        return None
+
+    gains = []
+    losses = []
+
+    for i in range(1, len(values)):
+        change = values[i] - values[i - 1]
+
+        gains.append(max(change, 0.0))
+        losses.append(max(-change, 0.0))
+
+    avg_gain = sum(gains[:period]) / period
+    avg_loss = sum(losses[:period]) / period
+
+    for i in range(period, len(gains)):
+        avg_gain = (
+            (avg_gain * (period - 1))
+            + gains[i]
+        ) / period
+
+        avg_loss = (
+            (avg_loss * (period - 1))
+            + losses[i]
+        ) / period
+
+    if avg_loss == 0:
+        return 100.0
+
+    rs = avg_gain / avg_loss
+
+    return 100.0 - (100.0 / (1.0 + rs))
+
+
+def atr(candles, period=14):
+    if len(candles) <= period:
+        return None
+
+    trs = []
+
+    for i in range(1, len(candles)):
+        current = candles[i]
+        previous = candles[i - 1]
+
+        tr = max(
+            current["high"] - current["low"],
+            abs(current["high"] - previous["close"]),
+            abs(current["low"] - previous["close"]),
+        )
+
+        trs.append(tr)
+
+    if len(trs) < period:
+        return None
+
+    value = sum(trs[:period]) / period
+
+    for tr in trs[period:]:
+        value = (
+            (value * (period - 1))
+            + tr
+        ) / period
+
+    return value
+
+
+def safe_pct(a, b):
+    if a is None or b in (None, 0):
+        return None
+
+    return ((a - b) / b) * 100.0
+
+
+def trend_score(values):
+    e9 = ema(values, 9)
+    e20 = ema(values, 20)
+    e50 = ema(values, 50)
+
+    if None in (e9, e20, e50):
+        return 0, "NEUTRAL"
+
+    if e9 > e20 > e50:
+        return 1, "BULL"
+
+    if e9 < e20 < e50:
+        return -1, "BEAR"
+
+    return 0, "NEUTRAL"
+
+
+def momentum_score(values):
+    if len(values) < 20:
+        return 0
+
+    recent = values[-1]
+    previous = values[-6]
+
+    change = safe_pct(recent, previous)
+
+    if change is None:
+        return 0
+
+    if change >= 1.0:
+        return 2
+
+    if change >= 0.30:
+        return 1
+
+    if change <= -1.0:
+        return -2
+
+    if change <= -0.30:
+        return -1
+
+    return 0
+
+
+def analyze_symbol(symbol):
+    h1 = fetch_klines(
+        symbol,
+        "1h",
+        LIMIT_1H,
+    )
+
+    m15 = fetch_klines(
+        symbol,
+        "15m",
+        LIMIT_15M,
+    )
+
+    m5 = fetch_klines(
+        symbol,
+        "5m",
+        LIMIT_5M,
+    )
+
+    if (
+        len(h1) < 60
+        or len(m15) < 60
+        or len(m5) < 60
+    ):
+        return None
+
+    h1c = closes(h1)
+    m15c = closes(m15)
+    m5c = closes(m5)
+
+    h1_score, h1_trend = trend_score(h1c)
+    m15_score, m15_trend = trend_score(m15c)
+    m5_score, m5_trend = trend_score(m5c)
+
+    momentum = (
+        momentum_score(h1c)
+        + momentum_score(m15c)
+        + momentum_score(m5c)
+    )
+
+    total = (
+        h1_score * 3
+        + m15_score * 2
+        + m5_score * 2
+        + momentum
+    )
+
+    if total > 0:
+        direction = "LONG"
+    elif total < 0:
+        direction = "SHORT"
+    else:
+        direction = "NONE"
+
+    current = m5c[-1]
+
+    atr5 = atr(m5)
+
+    if atr5 is None or atr5 <= 0:
+        return None
+
+    rsi5 = rsi(m5c)
+
+    if rsi5 is None:
+        return None
+
+    extension = abs(
+        current - ema(m5c, 20)
+    ) / atr5
+
+    confidence = min(
+        99.0,
+        max(
+            0.0,
+            50.0 + abs(total) * 4.0,
+        ),
+    )
+
+    if direction == "LONG":
+        entry = current
+        sl = entry - (
+            atr5 * SL_ATR_MULTIPLIER
+        )
+        tp1 = entry + (
+            atr5 * TP1_ATR_MULTIPLIER
+        )
+        tp2 = entry + (
+            atr5 * TP2_ATR_MULTIPLIER
+        )
+
+    elif direction == "SHORT":
+        entry = current
+        sl = entry + (
+            atr5 * SL_ATR_MULTIPLIER
+        )
+        tp1 = entry - (
+            atr5 * TP1_ATR_MULTIPLIER
+        )
+        tp2 = entry - (
+            atr5 * TP2_ATR_MULTIPLIER
+        )
+
+    else:
+        entry = current
+        sl = None
+        tp1 = None
+        tp2 = None
+
+    if direction == "LONG":
+        risk = entry - sl
+        reward = tp2 - entry
+
+    elif direction == "SHORT":
+        risk = sl - entry
+        reward = entry - tp2
+
+    else:
+        risk = 0.0
+        reward = 0.0
+
+    rr = (
+        reward / risk
+        if risk > 0
+        else 0.0
+    )
+
+    rsi_protection = (
+        (
+            direction == "LONG"
+            and rsi5 < RSI_OVERBOUGHT
+        )
+        or
+        (
+            direction == "SHORT"
+            and rsi5 > RSI_OVERSOLD
+        )
+    )
+
+    anti_chase = (
+        extension <= MAX_5M_EXTENSION_ATR
+    )
+
+    qualified = (
+        direction in ("LONG", "SHORT")
+        and confidence >= MIN_CONFIDENCE
+        and rr >= MIN_RR
+        and rsi_protection
+        and anti_chase
+    )
+
+    return {
+        "symbol": symbol,
+        "direction": direction,
+        "qualified": qualified,
+        "confidence": round(confidence, 2),
+        "rr": round(rr, 2),
+        "entry": round(entry, 12),
+        "sl": round(sl, 12) if sl else None,
+        "tp1": round(tp1, 12) if tp1 else None,
+        "tp2": round(tp2, 12) if tp2 else None,
+        "rsi_5m": round(rsi5, 2),
+        "atr_5m": round(atr5, 12),
+        "extension_atr": round(extension, 3),
+        "h1_trend": h1_trend,
+        "m15_trend": m15_trend,
+        "m5_trend": m5_trend,
+        "checked_utc": now_utc(),
+    }
+
+
+def get_phase4_universe():
+    state = load_json(PHASE4_STATE)
+
+    if not state:
+        raise RuntimeError(
+            "Phase 4 state file not found."
+        )
+
+    discovery = state.get(
+        "discovery",
+        {},
+    )
+
+    markets = discovery.get(
+        "markets",
+        [],
+    )
+
+    if not isinstance(markets, list):
+        raise RuntimeError(
+            "Phase 4 complete market universe is invalid."
+        )
+
+    symbols = []
+
+    for market in markets:
+        if not isinstance(market, dict):
+            continue
+
+        symbol = market.get("symbol")
+
+        if (
+            symbol
+            and symbol not in symbols
+        ):
+            symbols.append(symbol)
+
+    expected = discovery.get(
+        "qualified_markets",
+        len(symbols),
+    )
+
+    if len(symbols) != expected:
+        raise RuntimeError(
+            "Phase 4 universe integrity failure: "
+            f"expected {expected}, received {len(symbols)}"
+        )
+
+    return symbols
+
+
+def update_monitor(symbol, result):
+    record = MONITORED.get(
+        symbol,
+        {
+            "cycles_seen": 0,
+            "qualified_cycles": 0,
+            "failed_cycles": 0,
+            "last_result": None,
+            "last_seen_utc": None,
+        },
+    )
+
+    record["cycles_seen"] += 1
+    record["last_seen_utc"] = now_utc()
+
+    if result is None:
+        record["failed_cycles"] += 1
+    else:
+        record["last_result"] = result
+
+
+    MONITORED[symbol] = record
+ 
+
+
+def scan():
+    symbols = get_phase4_universe()
+
+    results = []
+ 
+    failures = 0
+    started = time.time()
+
+    print(
+        f"PHASE 5 STARTING — {len(symbols)} MARKETS",
+        flush=True,
+    )
+
+    for index, symbol in enumerate(symbols, start=1):
+        print(
+            f"PHASE 5 ANALYZING {index}/{len(symbols)} {symbol}",
+            flush=True,
+        )
+
+        try:
+            result = analyze_symbol(symbol)
+
+            if result is not None:
+                results.append(result)
+
+        except requests.RequestException as exc:
+            failures += 1
+            print(
+                f"DATA FAILURE — {symbol}: {exc}",
+                flush=True,
+            )
+
+        except Exception as exc:
+            failures += 1
+            print(
+                f"ANALYSIS FAILURE — {symbol}: {exc}",
+                flush=True,
+            )
+
+    elapsed = round(time.time() - started, 2)
+
+    print(
+        f"PHASE 5 COMPLETE — "
+        f"{len(symbols)}/{len(symbols)} processed "
+        f"in {elapsed}s",
+        flush=True,
+    )
+
+    return {
+        "phase4_universe": len(symbols),
+        "markets_processed": len(symbols),
+        "successful_analysis": len(results),
+        "data_failures": failures,
+        "qualified_candidates": len(results),
+        "long_candidates": sum(
+            1 for x in results if x.get("direction") == "LONG"
+        ),
+        "short_candidates": sum(
+            1 for x in results if x.get("direction") == "SHORT"
+        ),
+        "scan_seconds": elapsed,
+        "longs": [
+            x for x in results
+            if x.get("direction") == "LONG"
+        ],
+        "shorts": [
+            x for x in results
+            if x.get("direction") == "SHORT"
+        ],
+        "all_qualified": results,
+        "all_markets": results,
+    }
+
+
+def build_state(
+    result,
+    cycle,
+    status="RUNNING",
+):
+    return {
+        "project": PROJECT,
+        "phase": PHASE,
+        "version": VERSION,
+        "timestamp_utc": now_utc(),
+        "cycle": cycle,
+        "status": status,
+
+        "intelligence": {
+            "phase4_universe":
+                result["phase4_universe"],
+
+            "markets_processed":
+                result["markets_processed"],
+
+            "successful_analysis":
+                result["successful_analysis"],
+
+            "data_failures":
+                result["data_failures"],
+
+            "qualified_candidates":
+                result["qualified_candidates"],
+
+            "long_candidates":
+                result["long_candidates"],
+
+            "short_candidates":
+                result["short_candidates"],
+
+            "scan_seconds":
+                result["scan_seconds"],
+
+            "longs":
+                result["longs"],
+
+            "shorts":
+                result["shorts"],
+
+            "all_qualified":
+                result["all_qualified"],
+
+            "all_markets":
+                result["all_markets"],
+
+            "monitoring":
+                result.get("monitoring", {}),
+        },
+
+        "execution_boundary": {
+            "execution_authorized": False,
+            "order_submission": False,
+            "bot_armed": False,
+            "live_execution": False,
+            "withdrawals": False,
+            "deposits": False,
+            "transfers": False,
+        },
+    }
+
+
+
+def display(
+    result,
+    cycle,
+):
+    print()
+    print("=" * 78)
+    print(
+        "CRYPTOMASTERX1 — PHASE 5 MARKET INTELLIGENCE"
+    )
+    print("=" * 78)
+
+    print(
+        f"Cycle                 : {cycle}"
+    )
+
+    print(
+        f"UTC                   : {now_utc()}"
+    )
+
+    print(
+        f"Phase 4 universe      : "
+        f"{result['phase4_universe']}"
+    )
+
+    print(
+        f"Markets processed     : "
+        f"{result['markets_processed']}"
+    )
+
+    print(
+        f"Successful analysis   : "
+        f"{result['successful_analysis']}"
+    )
+
+    print(
+        f"Data failures         : "
+        f"{result['data_failures']}"
+    )
+
+    print(
+        f"Qualified candidates  : "
+        f"{result['qualified_candidates']}"
+    )
+
+    print(
+        f"Scan seconds          : "
+        f"{result['scan_seconds']}"
+    )
+
+    print()
+    print("QUALIFIED LONG CANDIDATES")
+    print("-" * 78)
+
+    if result["longs"]:
+        for rank, item in enumerate(
+            result["longs"],
+            start=1,
+        ):
+            print(
+                f"{rank:>2}. "
+                f"{item['symbol']:<16} "
+                f"CONF:{item['confidence']:>5.1f}% "
+                f"RR:{item['rr']:>4.2f} "
+                f"RSI:{item['rsi_5m']:>6.2f}"
+            )
+    else:
+        print("None")
+
+    print()
+    print("QUALIFIED SHORT CANDIDATES")
+    print("-" * 78)
+
+    if result["shorts"]:
+        for rank, item in enumerate(
+            result["shorts"],
+            start=1,
+        ):
+            print(
+                f"{rank:>2}. "
+                f"{item['symbol']:<16} "
+                f"CONF:{item['confidence']:>5.1f}% "
+                f"RR:{item['rr']:>4.2f} "
+                f"RSI:{item['rsi_5m']:>6.2f}"
+            )
+    else:
+        print("None")
+
+    print()
+    print(
+        f"5-minute monitoring universe : "
+        f"{len(MONITORED)}"
+    )
+
+    print(
+        "Phase 5 continuously monitors the Phase 4 universe."
+    )
+
+    print(
+        f"State  : {STATE_FILE}"
+    )
+
+    print(
+        f"Report : {REPORT_FILE}"
+    )
+
+    print("=" * 78)
+
+
+def main():
+    ensure_directories()
+
+    cycle = 0
+
+    import sys
+    once = '--once' in sys.argv
+    import sys
+    once = '--once' in sys.argv
+    while True:
+        cycle += 1
+
+        try:
+            result = scan()
+
+            state = build_state(
+                result,
+                cycle,
+                "RUNNING",
+            )
+
+            save_json(
+                STATE_FILE,
+                state,
+            )
+
+            save_json(
+                REPORT_FILE,
+                state,
+            )
+
+            display(
+                result,
+                cycle,
+            )
+
+        except KeyboardInterrupt:
+            existing = (
+                load_json(STATE_FILE)
+                or {}
+            )
+
+            existing["status"] = "STOPPED"
+            existing["stopped_utc"] = now_utc()
+
+            save_json(
+                STATE_FILE,
+                existing,
+            )
+
+            break
+
+        except Exception as exc:
+            error_state = {
+                "project": PROJECT,
+                "phase": PHASE,
+                "version": VERSION,
+                "timestamp_utc": now_utc(),
+                "cycle": cycle,
+                "status": "ERROR",
+                "error": str(exc),
+                "execution_boundary": {
+                    "execution_authorized": False,
+                    "order_submission": False,
+                    "bot_armed": False,
+                    "live_execution": False,
+                    "withdrawals": False,
+                    "deposits": False,
+                    "transfers": False,
+                },
+            }
+
+            save_json(
+                STATE_FILE,
+                error_state,
+            )
+
+        print(
+            f"\nNext intelligence scan in "
+            f"{REFRESH_SECONDS} seconds..."
+        )
+
+        try:
+            time.sleep(
+                REFRESH_SECONDS
+            )
+
+        except KeyboardInterrupt:
+            existing = (
+                load_json(STATE_FILE)
+                or {}
+            )
+
+            existing["status"] = "STOPPED"
+            existing["stopped_utc"] = now_utc()
+
+            save_json(
+                STATE_FILE,
+                existing,
+            )
+
+            break
+
+# ============================================================
+# ENTRY POINT
+# ============================================================
+
+if __name__ == "__main__":
+    main()

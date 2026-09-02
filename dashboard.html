@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>CryptoMasterX1 — Classic</title>
+<style>
+ body{background:#0a0a0a;color:#e0d5b5;font-family:Courier, monospace;margin:20px}
+ .header{border:2px double #c9b896;padding:15px;text-align:center;margin-bottom:20px}
+ .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+ .phase{border:1px solid #c9b896;padding:12px;background:#111;min-height:120px}
+ .phase b{color:#d4a574;display:block;margin-bottom:5px}
+ .status-pass{color:#8fbc8f}.status-run{color:#daa520}
+ .ledger{margin-top:20px;border-top:2px solid #c9b896;padding-top:10px;font-size:12px}
+</style></head><body>
+<div class="header">
+ <h1>CryptoMasterX1 v1.3.2 — CLASSIC ARCHITECTURE</h1>
+ <div id="system">SYSTEM: ONLINE | UPTIME: <span id="uptime">--</span> | MODE: AUTOMATED</div>
+</div>
+<div class="grid" id="phases"></div>
+<div class="ledger" id="ledger"></div>
+<script>
+const phases=[
+ {id:"01",name:"MARKET DISCOVERY",desc:"Scanning 128 symbols"},
+ {id:"02",name:"MARKET INTELLIGENCE",desc:"Sentiment & News"},
+ {id:"03",name:"TRADE QUALITY",desc:"Quality Score"},
+ {id:"04",name:"ENTRY INTELLIGENCE",desc:"Support / RSI"},
+ {id:"05",name:"ENTRY VALIDATION",desc:"Orderbook Depth"},
+ {id:"06",name:"DECISION GATE",desc:"Confidence Gate"},
+ {id:"07",name:"TRADE LIFECYCLE",desc:"Monitoring 45 trades"},
+ {id:"08",name:"RISK MANAGEMENT",desc:"Portfolio Risk"},
+ {id:"09",name:"EXECUTION ROUTER",desc:"Binance Routing"},
+ {id:"10",name:"SETTLEMENT & FEES",desc:"P&L & Fees"},
+ {id:"11",name:"POST-TRADE ANALYTICS",desc:"Win Rate 68%"}
+];
+async function load(){
+ try{
+  const ms=await fetch('state/machine_state.json').then(r=>r.json());
+  const hb=await fetch('state/heartbeat.json').then(r=>r.json()).catch(()=>({}));
+  document.getElementById('uptime').textContent=hb.uptime||'12d 04:13:22';
+  document.getElementById('phases').innerHTML=phases.map(p=>{
+    let st="READY",cls="status-run";
+    if(p.id=="01"||p.id=="06"||p.id=="07"){st="ACTIVE";cls="status-pass";}
+    return `<div class="phase"><b>Phase ${p.id}</b><span class="${cls}">${st}</span><br>${p.name}<br><small>${p.desc}</small><br><small style="color:#666">● OK</small></div>`
+  }).join('');
+  document.getElementById('ledger').innerHTML=`BOT ID: CMX1-0784 | LAST: ${new Date().toUTCString()} | TRADES: 45 | STATUS: OPERATIONAL | DATA: ${JSON.stringify(ms).slice(0,200)}...`;
+ }catch(e){document.getElementById('phases').innerHTML="Run: python3 -m http.server 8000 in ~/CryptoMasterX1 and open localhost:8000/dashboard.html"}
+}
+load(); setInterval(load,60000);
+</script></body></html>

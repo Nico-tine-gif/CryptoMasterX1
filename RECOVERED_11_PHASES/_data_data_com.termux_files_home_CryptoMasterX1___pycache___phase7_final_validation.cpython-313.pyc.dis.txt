@@ -1,0 +1,603 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/__pycache__/phase7_final_validation.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\nCryptoMasterX1\nPHASE 7 — EXECUTION + ORDER OPENING\n\nPhase 7 owns the exchange execution boundary.\n\nIMPORTANT:\n    This implementation is intentionally LOCKED.\n\nIt can validate Phase 6 trade-ready objects and prepare an\nexecution request, but cannot submit a live order until the\nexplicit global execution gates are changed during a separate\nverified activation process.\n\nWithdrawals remain permanently forbidden.\n')
+              STORE_NAME               0 (__doc__)
+
+ 20           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              1 (json)
+              STORE_NAME               1 (json)
+
+ 21           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              2 (datetime)
+              IMPORT_FROM              2 (datetime)
+              STORE_NAME               2 (datetime)
+              IMPORT_FROM              3 (timezone)
+              STORE_NAME               3 (timezone)
+              POP_TOP
+
+ 22           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('Path',))
+              IMPORT_NAME              4 (pathlib)
+              IMPORT_FROM              5 (Path)
+              STORE_NAME               5 (Path)
+              POP_TOP
+
+ 25           LOAD_NAME                5 (Path)
+              PUSH_NULL
+              LOAD_NAME                6 (__file__)
+              CALL                     1
+              LOAD_ATTR               15 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               16 (parent)
+              STORE_NAME               9 (ROOT)
+
+ 26           LOAD_NAME                9 (ROOT)
+              LOAD_CONST               5 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              10 (STATE)
+
+ 28           LOAD_NAME               10 (STATE)
+              LOAD_CONST               6 ('phase6_trade_intelligence.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              11 (PHASE6_STATE)
+
+ 29           LOAD_NAME               10 (STATE)
+              LOAD_CONST               7 ('phase7_final_validation.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              12 (PHASE7_STATE)
+
+ 31           LOAD_CONST               8 (False)
+              STORE_NAME              13 (EXECUTION_AUTHORIZED)
+
+ 32           LOAD_CONST               8 (False)
+              STORE_NAME              14 (BOT_ARMED)
+
+ 33           LOAD_CONST               8 (False)
+              STORE_NAME              15 (LIVE_EXECUTION)
+
+ 34           LOAD_CONST               8 (False)
+              STORE_NAME              16 (ORDER_SUBMISSION)
+
+ 37           LOAD_CONST               8 (False)
+              STORE_NAME              17 (WITHDRAWALS)
+
+ 40           LOAD_CONST               9 (<code object now_utc at 0x7645631a50, file "phase7_final_validation.py", line 40>)
+              MAKE_FUNCTION
+              STORE_NAME              18 (now_utc)
+
+ 44           LOAD_CONST              10 (<code object load_json at 0x7645612670, file "phase7_final_validation.py", line 44>)
+              MAKE_FUNCTION
+              STORE_NAME              19 (load_json)
+
+ 48           LOAD_CONST              11 (<code object save_json at 0x7645613bd0, file "phase7_final_validation.py", line 48>)
+              MAKE_FUNCTION
+              STORE_NAME              20 (save_json)
+
+ 52           LOAD_CONST              12 (<code object validate_trade at 0xb400007795ef06f0, file "phase7_final_validation.py", line 52>)
+              MAKE_FUNCTION
+              STORE_NAME              21 (validate_trade)
+
+105           LOAD_CONST              13 (<code object execution_enabled at 0x7645644f50, file "phase7_final_validation.py", line 105>)
+              MAKE_FUNCTION
+              STORE_NAME              22 (execution_enabled)
+
+115           LOAD_CONST              14 (<code object main at 0xb4000076d5f155b0, file "phase7_final_validation.py", line 115>)
+              MAKE_FUNCTION
+              STORE_NAME              23 (main)
+
+171           LOAD_NAME               24 (__name__)
+              LOAD_CONST              15 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+172           LOAD_NAME               23 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+171   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object now_utc at 0x7645631a50, file "phase7_final_validation.py", line 40>:
+ 40           RESUME                   0
+
+ 41           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object load_json at 0x7645612670, file "phase7_final_validation.py", line 44>:
+ 44           RESUME                   0
+
+ 45           LOAD_GLOBAL              0 (json)
+              LOAD_ATTR                2 (loads)
+              PUSH_NULL
+              LOAD_FAST                0 (path)
+              LOAD_ATTR                5 (read_text + NULL|self)
+              CALL                     0
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object save_json at 0x7645613bd0, file "phase7_final_validation.py", line 48>:
+ 48           RESUME                   0
+
+ 49           LOAD_FAST                0 (path)
+              LOAD_ATTR                1 (write_text + NULL|self)
+              LOAD_GLOBAL              2 (json)
+              LOAD_ATTR                4 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               1 (2)
+              LOAD_CONST               2 (('indent',))
+              CALL_KW                  2
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object validate_trade at 0xb400007795ef06f0, file "phase7_final_validation.py", line 52>:
+ 52            RESUME                   0
+
+ 53            LOAD_CONST               1 (('symbol', 'direction', 'entry', 'sl', 'tp1', 'tp2', 'risk', 'reward', 'rr'))
+               STORE_FAST               1 (required)
+
+ 65            LOAD_FAST                1 (required)
+               GET_ITER
+       L1:     FOR_ITER                30 (to L3)
+               STORE_FAST               2 (key)
+
+ 66            LOAD_FAST                0 (trade)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_FAST                2 (key)
+               CALL                     1
+               POP_JUMP_IF_NONE         2 (to L2)
+               JUMP_BACKWARD           23 (to L1)
+
+ 67    L2:     LOAD_CONST               2 (False)
+               LOAD_CONST               3 ('missing ')
+               LOAD_FAST                2 (key)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               BUILD_TUPLE              2
+               SWAP                     2
+               POP_TOP
+               RETURN_VALUE
+
+ 65    L3:     END_FOR
+               POP_TOP
+
+ 69            LOAD_GLOBAL              3 (float + NULL)
+               LOAD_FAST                0 (trade)
+               LOAD_CONST               4 ('entry')
+               BINARY_SUBSCR
+               CALL                     1
+               STORE_FAST               3 (entry)
+
+ 70            LOAD_GLOBAL              3 (float + NULL)
+               LOAD_FAST                0 (trade)
+               LOAD_CONST               5 ('sl')
+               BINARY_SUBSCR
+               CALL                     1
+               STORE_FAST               4 (sl)
+
+ 71            LOAD_GLOBAL              3 (float + NULL)
+               LOAD_FAST                0 (trade)
+               LOAD_CONST               6 ('tp1')
+               BINARY_SUBSCR
+               CALL                     1
+               STORE_FAST               5 (tp1)
+
+ 72            LOAD_GLOBAL              3 (float + NULL)
+               LOAD_FAST                0 (trade)
+               LOAD_CONST               7 ('tp2')
+               BINARY_SUBSCR
+               CALL                     1
+               STORE_FAST               6 (tp2)
+
+ 73            LOAD_GLOBAL              3 (float + NULL)
+               LOAD_FAST                0 (trade)
+               LOAD_CONST               8 ('rr')
+               BINARY_SUBSCR
+               CALL                     1
+               STORE_FAST               7 (rr)
+
+ 75            LOAD_FAST                0 (trade)
+               LOAD_CONST               9 ('direction')
+               BINARY_SUBSCR
+               LOAD_CONST              10 ('LONG')
+               COMPARE_OP              88 (bool(==))
+               POP_JUMP_IF_FALSE       24 (to L6)
+
+ 76            LOAD_FAST_LOAD_FAST     67 (sl, entry)
+               SWAP                     2
+               COPY                     2
+               COMPARE_OP              18 (bool(<))
+               POP_JUMP_IF_FALSE       14 (to L4)
+               LOAD_FAST                5 (tp1)
+               SWAP                     2
+               COPY                     2
+               COMPARE_OP              18 (bool(<))
+               POP_JUMP_IF_FALSE        7 (to L4)
+               LOAD_FAST                6 (tp2)
+               COMPARE_OP              18 (bool(<))
+               POP_JUMP_IF_TRUE         4 (to L5)
+               NOP
+
+ 77            RETURN_CONST            11 ((False, 'invalid LONG price structure'))
+
+ 76    L4:     POP_TOP
+
+ 77            RETURN_CONST            11 ((False, 'invalid LONG price structure'))
+
+ 76    L5:     JUMP_FORWARD            34 (to L11)
+
+ 79    L6:     LOAD_FAST                0 (trade)
+               LOAD_CONST               9 ('direction')
+               BINARY_SUBSCR
+               LOAD_CONST              12 ('SHORT')
+               COMPARE_OP              88 (bool(==))
+               POP_JUMP_IF_FALSE       24 (to L10)
+
+ 80            LOAD_FAST_LOAD_FAST     67 (sl, entry)
+               SWAP                     2
+               COPY                     2
+               COMPARE_OP             148 (bool(>))
+               POP_JUMP_IF_FALSE       13 (to L7)
+               LOAD_FAST                5 (tp1)
+               SWAP                     2
+               COPY                     2
+               COMPARE_OP             148 (bool(>))
+               POP_JUMP_IF_FALSE        6 (to L7)
+               LOAD_FAST                6 (tp2)
+               COMPARE_OP             148 (bool(>))
+               POP_JUMP_IF_FALSE        4 (to L9)
+               JUMP_FORWARD             2 (to L8)
+       L7:     POP_TOP
+
+ 83            RETURN_CONST            13 ((False, 'invalid SHORT price structure'))
+
+ 81    L8:     JUMP_FORWARD             2 (to L11)
+
+ 83    L9:     RETURN_CONST            13 ((False, 'invalid SHORT price structure'))
+
+ 86   L10:     RETURN_CONST            14 ((False, 'invalid direction'))
+
+ 88   L11:     LOAD_GLOBAL              5 (abs + NULL)
+               LOAD_FAST_LOAD_FAST     52 (entry, sl)
+               BINARY_OP               10 (-)
+               CALL                     1
+               STORE_FAST               8 (risk)
+
+ 89            LOAD_GLOBAL              5 (abs + NULL)
+               LOAD_FAST_LOAD_FAST     99 (tp2, entry)
+               BINARY_OP               10 (-)
+               CALL                     1
+               STORE_FAST               9 (reward)
+
+ 91            LOAD_FAST                8 (risk)
+               LOAD_CONST              15 (0)
+               COMPARE_OP              58 (bool(<=))
+               POP_JUMP_IF_FALSE        1 (to L12)
+
+ 92            RETURN_CONST            16 ((False, 'zero risk'))
+
+ 94   L12:     LOAD_FAST_LOAD_FAST    152 (reward, risk)
+               BINARY_OP               11 (/)
+               STORE_FAST              10 (calculated_rr)
+
+ 96            LOAD_FAST               10 (calculated_rr)
+               LOAD_CONST              17 (1.5)
+               COMPARE_OP              18 (bool(<))
+               POP_JUMP_IF_FALSE        1 (to L13)
+
+ 97            RETURN_CONST            18 ((False, 'R:R below minimum'))
+
+ 99   L13:     LOAD_GLOBAL              5 (abs + NULL)
+               LOAD_FAST_LOAD_FAST    167 (calculated_rr, rr)
+               BINARY_OP               10 (-)
+               CALL                     1
+               LOAD_CONST              19 (1e-08)
+               COMPARE_OP             148 (bool(>))
+               POP_JUMP_IF_FALSE        1 (to L14)
+
+100            RETURN_CONST            20 ((False, 'R:R mismatch'))
+
+102   L14:     RETURN_CONST            21 ((True, 'VALID'))
+
+Disassembly of <code object execution_enabled at 0x7645644f50, file "phase7_final_validation.py", line 105>:
+105           RESUME                   0
+
+106           LOAD_GLOBAL              1 (bool + NULL)
+
+107           LOAD_GLOBAL              2 (EXECUTION_AUTHORIZED)
+              COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       50 (to L1)
+              POP_TOP
+
+108           LOAD_GLOBAL              4 (BOT_ARMED)
+
+107           COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       37 (to L1)
+              POP_TOP
+
+109           LOAD_GLOBAL              6 (LIVE_EXECUTION)
+
+107           COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       24 (to L1)
+              POP_TOP
+
+110           LOAD_GLOBAL              8 (ORDER_SUBMISSION)
+
+107           COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       11 (to L1)
+              POP_TOP
+
+111           LOAD_GLOBAL             10 (WITHDRAWALS)
+              TO_BOOL
+              UNARY_NOT
+
+106   L1:     CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object main at 0xb4000076d5f155b0, file "phase7_final_validation.py", line 115>:
+115           RESUME                   0
+
+116           LOAD_GLOBAL              0 (STATE)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('exist_ok',))
+              CALL_KW                  1
+              POP_TOP
+
+118           LOAD_GLOBAL              5 (load_json + NULL)
+              LOAD_GLOBAL              6 (PHASE6_STATE)
+              CALL                     1
+              STORE_FAST               0 (source)
+
+120           BUILD_LIST               0
+              STORE_FAST               1 (valid)
+
+121           BUILD_LIST               0
+              STORE_FAST               2 (rejected)
+
+123           LOAD_FAST                0 (source)
+              LOAD_ATTR                9 (get + NULL|self)
+              LOAD_CONST               3 ('trades')
+              BUILD_LIST               0
+              CALL                     2
+              GET_ITER
+      L1:     FOR_ITER                77 (to L3)
+              STORE_FAST               3 (trade)
+
+124           LOAD_GLOBAL             11 (validate_trade + NULL)
+              LOAD_FAST                3 (trade)
+              CALL                     1
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   69 (ok, reason)
+
+126           LOAD_FAST                4 (ok)
+              TO_BOOL
+              POP_JUMP_IF_FALSE       19 (to L2)
+
+127           LOAD_FAST                1 (valid)
+              LOAD_ATTR               13 (append + NULL|self)
+              LOAD_FAST                3 (trade)
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           42 (to L1)
+
+129   L2:     LOAD_FAST                2 (rejected)
+              LOAD_ATTR               13 (append + NULL|self)
+
+130           LOAD_FAST                3 (trade)
+              LOAD_ATTR                9 (get + NULL|self)
+              LOAD_CONST               4 ('symbol')
+              CALL                     1
+
+131           LOAD_FAST                5 (reason)
+
+129           LOAD_CONST               5 (('symbol', 'reason'))
+              BUILD_CONST_KEY_MAP      2
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           79 (to L1)
+
+123   L3:     END_FOR
+              POP_TOP
+
+135           LOAD_CONST               6 (7)
+
+136           LOAD_CONST               7 ('EXECUTION + ORDER OPENING')
+
+137           LOAD_GLOBAL             15 (now_utc + NULL)
+              CALL                     0
+
+139           LOAD_GLOBAL             17 (len + NULL)
+              LOAD_FAST                0 (source)
+              LOAD_ATTR                9 (get + NULL|self)
+              LOAD_CONST               3 ('trades')
+              BUILD_LIST               0
+              CALL                     2
+              CALL                     1
+
+140           LOAD_GLOBAL             17 (len + NULL)
+              LOAD_FAST                1 (valid)
+              CALL                     1
+
+141           LOAD_GLOBAL             17 (len + NULL)
+              LOAD_FAST                2 (rejected)
+              CALL                     1
+
+143           LOAD_FAST                1 (valid)
+
+144           LOAD_FAST                2 (rejected)
+
+147           LOAD_GLOBAL             18 (EXECUTION_AUTHORIZED)
+
+148           LOAD_GLOBAL             20 (BOT_ARMED)
+
+149           LOAD_GLOBAL             22 (LIVE_EXECUTION)
+
+150           LOAD_GLOBAL             24 (ORDER_SUBMISSION)
+
+151           LOAD_GLOBAL             26 (WITHDRAWALS)
+
+152           LOAD_GLOBAL             29 (execution_enabled + NULL)
+              CALL                     0
+
+146           LOAD_CONST               8 (('execution_authorized', 'bot_armed', 'live_execution', 'order_submission', 'withdrawals', 'execution_enabled'))
+              BUILD_CONST_KEY_MAP      6
+
+155           LOAD_CONST               9 ('LOCKED')
+
+134           LOAD_CONST              10 (('phase', 'phase_name', 'timestamp_utc', 'phase6_input', 'validated_trades', 'rejected_trades', 'validated', 'rejected', 'execution_boundary', 'order_submission_status'))
+              BUILD_CONST_KEY_MAP     10
+              STORE_FAST               6 (output)
+
+158           LOAD_GLOBAL             31 (save_json + NULL)
+              LOAD_GLOBAL             32 (PHASE7_STATE)
+              LOAD_FAST                6 (output)
+              CALL                     2
+              POP_TOP
+
+160           LOAD_GLOBAL             35 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+161           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              11 ('PHASE 7 — EXECUTION + ORDER OPENING')
+              CALL                     1
+              POP_TOP
+
+162           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              12 ('Phase 6 input       : ')
+              LOAD_FAST                0 (source)
+              LOAD_ATTR                9 (get + NULL|self)
+              LOAD_CONST               3 ('trades')
+              BUILD_LIST               0
+              CALL                     2
+              LOAD_ATTR               37 (__len__ + NULL|self)
+              CALL                     0
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+163           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              13 ('Validated           : ')
+              LOAD_GLOBAL             17 (len + NULL)
+              LOAD_FAST                1 (valid)
+              CALL                     1
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+164           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              14 ('Rejected            : ')
+              LOAD_GLOBAL             17 (len + NULL)
+              LOAD_FAST                2 (rejected)
+              CALL                     1
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+165           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              15 ('Execution enabled   : ')
+              LOAD_GLOBAL             29 (execution_enabled + NULL)
+              CALL                     0
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+166           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              16 ('Order submission    : LOCKED')
+              CALL                     1
+              POP_TOP
+
+167           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              17 ('Withdrawals         : FORBIDDEN')
+              CALL                     1
+              POP_TOP
+
+168           LOAD_GLOBAL             35 (print + NULL)
+              LOAD_CONST              18 ('State saved         : ')
+              LOAD_GLOBAL             32 (PHASE7_STATE)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1\nPHASE 7 — EXECUTION + ORDER OPENING\n\nPhase 7 owns the exchange execution boundary.\n\nIMPORTANT:\n    This implementation is intentionally LOCKED.\n\nIt can validate Phase 6 trade-ready objects and prepare an\nexecution request, but cannot submit a live order until the\nexplicit global execution gates are changed during a separate\nverified activation process.\n\nWithdrawals remain permanently forbidden.\n'
+[1] 0
+[2] None
+[3] ('datetime', 'timezone')
+[4] ('Path',)
+[5] 'state'
+[6] 'phase6_trade_intelligence.json'
+[7] 'phase7_final_validation.json'
+[8] False
+[9] <code object now_utc at 0x7645631a50, file "phase7_final_validation.py", line 40>
+[10] <code object load_json at 0x7645612670, file "phase7_final_validation.py", line 44>
+[11] <code object save_json at 0x7645613bd0, file "phase7_final_validation.py", line 48>
+[12] <code object validate_trade at 0xb400007795ef06f0, file "phase7_final_validation.py", line 52>
+[13] <code object execution_enabled at 0x7645644f50, file "phase7_final_validation.py", line 105>
+[14] <code object main at 0xb4000076d5f155b0, file "phase7_final_validation.py", line 115>
+[15] '__main__'
+
+
+NAMES
+=====
+
+'__doc__'
+'json'
+'datetime'
+'timezone'
+'pathlib'
+'Path'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE'
+'PHASE6_STATE'
+'PHASE7_STATE'
+'EXECUTION_AUTHORIZED'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'ORDER_SUBMISSION'
+'WITHDRAWALS'
+'now_utc'
+'load_json'
+'save_json'
+'validate_trade'
+'execution_enabled'
+'main'
+'__name__'

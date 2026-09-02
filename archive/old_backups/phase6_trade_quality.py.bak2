@@ -1,0 +1,476 @@
+#!/usr/bin/env python3
+
+import json
+import time
+from pathlib import Path
+from datetime import datetime, timezone
+
+
+PROJECT = "CryptoMasterX1"
+PHASE = "PHASE_6"
+VERSION = "6.0-CLEAN"
+
+REFRESH_SECONDS = 60
+MONITOR_REFRESH_SECONDS = 300
+
+MIN_CONFIDENCE = 75.0
+MIN_RR = 1.50
+
+ROOT = Path(__file__).resolve().parent
+STATE_DIR = ROOT / "state"
+REPORT_DIR = ROOT / "reports"
+
+PHASE5_STATE = STATE_DIR / "phase5_market_intelligence.json"
+STATE_FILE = STATE_DIR / "phase6_trade_quality.json"
+REPORT_FILE = REPORT_DIR / "phase6_trade_quality_report.json"
+
+
+def now_utc():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def load_json(path):
+    if not path.exists():
+        return None
+
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def save_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    temp = path.with_suffix(path.suffix + ".tmp")
+
+    with temp.open("w", encoding="utf-8") as f:
+        json.dump(
+            data,
+            f,
+            indent=2,
+            ensure_ascii=False,
+        )
+
+    temp.replace(path)
+
+
+def ensure_directories():
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def get_phase5_candidates():
+    state = load_json(PHASE5_STATE)
+
+    if not state:
+        raise RuntimeError(
+            "Phase 5 state file not found."
+        )
+
+    intelligence = state.get(
+        "intelligence",
+        {},
+    )
+
+    longs = intelligence.get(
+        "longs",
+        [],
+    )
+
+    shorts = intelligence.get(
+        "shorts",
+        [],
+    )
+
+    if not isinstance(longs, list):
+        raise RuntimeError(
+            "Phase 5 long-candidate data is invalid."
+        )
+
+    if not isinstance(shorts, list):
+        raise RuntimeError(
+            "Phase 5 short-candidate data is invalid."
+        )
+
+    candidates = []
+
+    for item in longs + shorts:
+        if isinstance(item, dict):
+            candidates.append(item)
+
+    return candidates
+
+
+def number(value, default=0.0):
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def evaluate_candidate(item):
+    symbol = item.get(
+        "symbol",
+        "UNKNOWN",
+    )
+
+    confidence = number(
+        item.get("confidence")
+    )
+
+    rr = number(
+        item.get("rr")
+    )
+
+    direction = item.get(
+        "direction",
+        "",
+    )
+
+    reasons = []
+
+    if confidence < MIN_CONFIDENCE:
+        reasons.append(
+            f"confidence {confidence:.2f} < {MIN_CONFIDENCE:.2f}"
+        )
+
+    if rr < MIN_RR:
+        reasons.append(
+            f"R:R {rr:.2f} < {MIN_RR:.2f}"
+        )
+
+    if direction not in (
+        "LONG",
+        "SHORT",
+    ):
+        reasons.append(
+            "invalid direction"
+        )
+
+    approved = not reasons
+
+    result = dict(item)
+
+    result["phase6_decision"] = (
+        "APPROVED"
+        if approved
+        else "REJECTED"
+    )
+
+    result["phase6_confidence"] = confidence
+    result["phase6_rr"] = rr
+    result["phase6_reasons"] = reasons
+
+    return result
+
+
+def scan():
+    candidates = get_phase5_candidates()
+
+    approved = []
+    rejected = []
+
+    print(
+        f"PHASE 6 STARTING — "
+        f"{len(candidates)} PHASE 5 CANDIDATES",
+        flush=True,
+    )
+
+    for index, item in enumerate(
+        candidates,
+        start=1,
+    ):
+        symbol = item.get(
+            "symbol",
+            "UNKNOWN",
+        )
+
+        print(
+            f"PHASE 6 EVALUATING "
+            f"{index}/{len(candidates)} "
+            f"{symbol}",
+            flush=True,
+        )
+
+        try:
+            result = evaluate_candidate(
+                item
+            )
+
+            if result["phase6_decision"] == "APPROVED":
+                approved.append(result)
+            else:
+                rejected.append(result)
+
+        except Exception as exc:
+            rejected.append(
+                {
+                    "symbol": symbol,
+                    "phase6_decision": "REJECTED",
+                    "phase6_reasons": [
+                        f"phase6 error: {exc}"
+                    ],
+                }
+            )
+
+    approved.sort(
+        key=lambda x: (
+            number(
+                x.get("confidence")
+            ),
+            number(
+                x.get("rr")
+            ),
+        ),
+        reverse=True,
+    )
+
+    longs = [
+        x for x in approved
+        if x.get("direction") == "LONG"
+    ]
+
+    shorts = [
+        x for x in approved
+        if x.get("direction") == "SHORT"
+    ]
+
+    return {
+        "phase5_candidates": len(candidates),
+        "approved_candidates": len(approved),
+        "rejected_candidates": len(rejected),
+        "long_candidates": len(longs),
+        "short_candidates": len(shorts),
+        "approved": approved,
+        "rejected": rejected,
+    }
+
+
+def build_state(
+    result,
+    cycle,
+    status="RUNNING",
+):
+    return {
+        "project": PROJECT,
+        "phase": PHASE,
+        "version": VERSION,
+        "timestamp_utc": now_utc(),
+        "cycle": cycle,
+        "status": status,
+
+        "quality": {
+            "phase5_candidates":
+                result["phase5_candidates"],
+
+            "approved_candidates":
+                result["approved_candidates"],
+
+            "rejected_candidates":
+                result["rejected_candidates"],
+
+            "long_candidates":
+                result["long_candidates"],
+
+            "short_candidates":
+                result["short_candidates"],
+
+            "approved":
+                result["approved"],
+
+            "rejected":
+                result["rejected"],
+        },
+
+        "execution_boundary": {
+            "execution_authorized": False,
+            "order_submission": False,
+            "bot_armed": False,
+            "live_execution": False,
+            "withdrawals": False,
+            "deposits": False,
+            "transfers": False,
+        },
+    }
+
+
+def display(result, cycle):
+    print()
+    print("=" * 78)
+    print(
+        "CRYPTOMASTERX1 — PHASE 6 TRADE QUALITY"
+    )
+    print("=" * 78)
+
+    print(
+        f"Cycle                    : {cycle}"
+    )
+
+    print(
+        f"UTC                      : {now_utc()}"
+    )
+
+    print(
+        f"Phase 5 candidates       : "
+        f"{result['phase5_candidates']}"
+    )
+
+    print(
+        f"Approved                 : "
+        f"{result['approved_candidates']}"
+    )
+
+    print(
+        f"Rejected                 : "
+        f"{result['rejected_candidates']}"
+    )
+
+    print(
+        f"Approved LONG            : "
+        f"{result['long_candidates']}"
+    )
+
+    print(
+        f"Approved SHORT           : "
+        f"{result['short_candidates']}"
+    )
+
+    print()
+    print("APPROVED TRADE-QUALITY CANDIDATES")
+    print("-" * 78)
+
+    if not result["approved"]:
+        print("None")
+
+    for rank, item in enumerate(
+        result["approved"],
+        start=1,
+    ):
+        print(
+            f"{rank:>2}. "
+            f"{item.get('symbol', 'UNKNOWN'):<16} "
+            f"{item.get('direction', ''):<6} "
+            f"CONF:{number(item.get('confidence')):>6.2f} "
+            f"R:R:{number(item.get('rr')):>5.2f}"
+        )
+
+    print()
+    print("=" * 78)
+    print(
+        "PHASE 6 QUALITY DECISION COMPLETE"
+    )
+    print("=" * 78)
+
+
+def main():
+    ensure_directories()
+
+    cycle = 0
+
+    while True:
+        cycle += 1
+
+        try:
+            result = scan()
+
+            state = build_state(
+                result,
+                cycle,
+                "RUNNING",
+            )
+
+            save_json(
+                STATE_FILE,
+                state,
+            )
+
+            save_json(
+                REPORT_FILE,
+                state,
+            )
+
+            display(
+                result,
+                cycle,
+            )
+
+        except KeyboardInterrupt:
+            existing = (
+                load_json(STATE_FILE)
+                or {}
+            )
+
+            existing["status"] = "STOPPED"
+            existing["stopped_utc"] = now_utc()
+
+            save_json(
+                STATE_FILE,
+                existing,
+            )
+
+            print(
+                "\nPHASE 6 STOPPED."
+            )
+
+            break
+
+        except Exception as exc:
+            print(
+                f"\nPHASE 6 ERROR: {exc}",
+                flush=True,
+            )
+
+            error_state = {
+                "project": PROJECT,
+                "phase": PHASE,
+                "version": VERSION,
+                "timestamp_utc": now_utc(),
+                "cycle": cycle,
+                "status": "ERROR",
+                "error": str(exc),
+            }
+
+            save_json(
+                STATE_FILE,
+                error_state,
+            )
+
+            time.sleep(
+                REFRESH_SECONDS
+            )
+
+        else:
+            print()
+            print(
+                f"Next Phase 6 scan in "
+                f"{REFRESH_SECONDS} seconds...",
+                flush=True,
+            )
+
+            try:
+                time.sleep(
+                    REFRESH_SECONDS
+                )
+
+            except KeyboardInterrupt:
+                existing = (
+                    load_json(STATE_FILE)
+                    or {}
+                )
+
+                existing["status"] = "STOPPED"
+                existing["stopped_utc"] = now_utc()
+
+                save_json(
+                    STATE_FILE,
+                    existing,
+                )
+
+                print(
+                    "\nPHASE 6 STOPPED."
+                )
+
+                break
+
+
+if __name__ == "__main__":
+    main()

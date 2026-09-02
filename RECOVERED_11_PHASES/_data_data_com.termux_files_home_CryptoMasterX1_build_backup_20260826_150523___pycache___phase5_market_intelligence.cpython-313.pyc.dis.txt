@@ -1,0 +1,1618 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/build_backup_20260826_150523/__pycache__/phase5_market_intelligence.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\nCryptoMasterX1\nPHASE 5 — TRADE INTELLIGENCE + DETECTORS\n\nOWNER:\n    Market intelligence only.\n\nPHASE 5 MUST NOT:\n    - construct Entry\n    - construct SL\n    - construct TP1/TP2\n    - calculate position size\n    - submit orders\n\nIt consumes the Phase 4 discovered universe and refreshes\nBinance market data before intelligence analysis.\n')
+              STORE_NAME               0 (__doc__)
+
+ 21           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              1 (json)
+              STORE_NAME               1 (json)
+
+ 22           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              2 (math)
+              STORE_NAME               2 (math)
+
+ 23           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              3 (sys)
+              STORE_NAME               3 (sys)
+
+ 24           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              4 (time)
+              STORE_NAME               4 (time)
+
+ 25           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              5 (datetime)
+              IMPORT_FROM              5 (datetime)
+              STORE_NAME               5 (datetime)
+              IMPORT_FROM              6 (timezone)
+              STORE_NAME               6 (timezone)
+              POP_TOP
+
+ 26           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('Path',))
+              IMPORT_NAME              7 (pathlib)
+              IMPORT_FROM              8 (Path)
+              STORE_NAME               8 (Path)
+              POP_TOP
+
+ 28           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              9 (requests)
+              STORE_NAME               9 (requests)
+
+ 31           LOAD_NAME                8 (Path)
+              PUSH_NULL
+              LOAD_NAME               10 (__file__)
+              CALL                     1
+              LOAD_ATTR               23 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               24 (parent)
+              STORE_NAME              13 (ROOT)
+
+ 32           LOAD_NAME               13 (ROOT)
+              LOAD_CONST               5 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              14 (STATE)
+
+ 33           LOAD_NAME               13 (ROOT)
+              LOAD_CONST               6 ('reports')
+              BINARY_OP               11 (/)
+              STORE_NAME              15 (REPORTS)
+
+ 35           LOAD_NAME               14 (STATE)
+              LOAD_CONST               7 ('phase4_market_discovery.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              16 (PHASE4_STATE)
+
+ 36           LOAD_NAME               14 (STATE)
+              LOAD_CONST               8 ('phase5_market_intelligence.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              17 (PHASE5_STATE)
+
+ 38           LOAD_CONST               9 ('https://api.binance.com')
+              STORE_NAME              18 (BINANCE)
+
+ 40           LOAD_CONST              10 (75.0)
+              STORE_NAME              19 (MIN_CONFIDENCE)
+
+ 41           LOAD_CONST              10 (75.0)
+              STORE_NAME              20 (RSI_OVERBOUGHT)
+
+ 42           LOAD_CONST              11 (25.0)
+              STORE_NAME              21 (RSI_OVERSOLD)
+
+ 43           LOAD_CONST              12 (2.0)
+              STORE_NAME              22 (MAX_5M_EXTENSION_ATR)
+
+ 45           LOAD_CONST              13 (15)
+              STORE_NAME              23 (TIMEOUT)
+
+ 48           LOAD_CONST              14 (<code object now_utc at 0x7645631a50, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 48>)
+              MAKE_FUNCTION
+              STORE_NAME              24 (now_utc)
+
+ 52           LOAD_CONST              31 ((None,))
+              LOAD_CONST              15 (<code object get_json at 0x76455c1bb0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 52>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              25 (get_json)
+
+ 58           LOAD_CONST              16 (<code object load_json at 0x7645644f50, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 58>)
+              MAKE_FUNCTION
+              STORE_NAME              26 (load_json)
+
+ 64           LOAD_CONST              17 (<code object save_json at 0x7645613e10, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 64>)
+              MAKE_FUNCTION
+              STORE_NAME              27 (save_json)
+
+ 68           LOAD_CONST              32 ((120,))
+              LOAD_CONST              18 (<code object fetch_klines at 0x76455c7630, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 68>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              28 (fetch_klines)
+
+ 75           LOAD_CONST              19 (<code object closes at 0x7645613cf0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 75>)
+              MAKE_FUNCTION
+              STORE_NAME              29 (closes)
+
+ 79           LOAD_CONST              20 (<code object highs at 0x76453ac030, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 79>)
+              MAKE_FUNCTION
+              STORE_NAME              30 (highs)
+
+ 83           LOAD_CONST              21 (<code object lows at 0x76453ac150, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 83>)
+              MAKE_FUNCTION
+              STORE_NAME              31 (lows)
+
+ 87           LOAD_CONST              22 (<code object ema at 0x76455eea30, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 87>)
+              MAKE_FUNCTION
+              STORE_NAME              32 (ema)
+
+100           LOAD_CONST              33 ((14,))
+              LOAD_CONST              23 (<code object rsi at 0xb400007795ef4bb0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 100>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              33 (rsi)
+
+126           LOAD_CONST              33 ((14,))
+              LOAD_CONST              24 (<code object atr at 0xb400007765eb01f0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 126>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              34 (atr)
+
+148           LOAD_CONST              25 (<code object trend_score at 0x764562d390, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 148>)
+              MAKE_FUNCTION
+              STORE_NAME              35 (trend_score)
+
+179           LOAD_CONST              26 (<code object momentum_score at 0x7645645370, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 179>)
+              MAKE_FUNCTION
+              STORE_NAME              36 (momentum_score)
+
+194           LOAD_CONST              27 (<code object analyze_symbol at 0xb4000076c5ee5b60, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 194>)
+              MAKE_FUNCTION
+              STORE_NAME              37 (analyze_symbol)
+
+299           LOAD_CONST              28 (<code object get_phase4_symbols at 0xb400007795eef110, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 299>)
+              MAKE_FUNCTION
+              STORE_NAME              38 (get_phase4_symbols)
+
+324           LOAD_CONST              29 (<code object main at 0xb4000076d5f05fe0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 324>)
+              MAKE_FUNCTION
+              STORE_NAME              39 (main)
+
+390           LOAD_NAME               40 (__name__)
+              LOAD_CONST              30 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+391           LOAD_NAME               39 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+390   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object now_utc at 0x7645631a50, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 48>:
+ 48           RESUME                   0
+
+ 49           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object get_json at 0x76455c1bb0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 52>:
+ 52           RESUME                   0
+
+ 53           LOAD_GLOBAL              0 (requests)
+              LOAD_ATTR                2 (get)
+              PUSH_NULL
+              LOAD_FAST_LOAD_FAST      1 (path, params)
+              LOAD_GLOBAL              4 (TIMEOUT)
+              LOAD_CONST               1 (('params', 'timeout'))
+              CALL_KW                  3
+              STORE_FAST               2 (r)
+
+ 54           LOAD_FAST                2 (r)
+              LOAD_ATTR                7 (raise_for_status + NULL|self)
+              CALL                     0
+              POP_TOP
+
+ 55           LOAD_FAST                2 (r)
+              LOAD_ATTR                9 (json + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object load_json at 0x7645644f50, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 58>:
+ 58           RESUME                   0
+
+ 59           LOAD_FAST                0 (path)
+              LOAD_ATTR                1 (exists + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_TRUE        11 (to L1)
+
+ 60           LOAD_GLOBAL              3 (FileNotFoundError + NULL)
+              LOAD_FAST                0 (path)
+              CALL                     1
+              RAISE_VARARGS            1
+
+ 61   L1:     LOAD_GLOBAL              4 (json)
+              LOAD_ATTR                6 (loads)
+              PUSH_NULL
+              LOAD_FAST                0 (path)
+              LOAD_ATTR                9 (read_text + NULL|self)
+              CALL                     0
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object save_json at 0x7645613e10, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 64>:
+ 64           RESUME                   0
+
+ 65           LOAD_FAST                0 (path)
+              LOAD_ATTR                1 (write_text + NULL|self)
+              LOAD_GLOBAL              2 (json)
+              LOAD_ATTR                4 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               1 (2)
+              LOAD_CONST               2 (('indent',))
+              CALL_KW                  2
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object fetch_klines at 0x76455c7630, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 68>:
+ 68           RESUME                   0
+
+ 69           LOAD_GLOBAL              1 (get_json + NULL)
+
+ 70           LOAD_GLOBAL              2 (BINANCE)
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('/api/v3/klines')
+              BUILD_STRING             2
+
+ 71           LOAD_FAST_LOAD_FAST      1 (symbol, interval)
+              LOAD_FAST                2 (limit)
+              LOAD_CONST               2 (('symbol', 'interval', 'limit'))
+              BUILD_CONST_KEY_MAP      3
+
+ 69           CALL                     2
+              RETURN_VALUE
+
+Disassembly of <code object closes at 0x7645613cf0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 75>:
+  75           RESUME                   0
+
+  76           LOAD_FAST                0 (c)
+               GET_ITER
+               LOAD_FAST_AND_CLEAR      1 (x)
+               SWAP                     2
+       L1:     BUILD_LIST               0
+               SWAP                     2
+               GET_ITER
+       L2:     FOR_ITER                17 (to L3)
+               STORE_FAST               1 (x)
+               LOAD_GLOBAL              1 (float + NULL)
+               LOAD_FAST                1 (x)
+               LOAD_CONST               1 (4)
+               BINARY_SUBSCR
+               CALL                     1
+               LIST_APPEND              2
+               JUMP_BACKWARD           19 (to L2)
+       L3:     END_FOR
+               POP_TOP
+       L4:     SWAP                     2
+               STORE_FAST               1 (x)
+               RETURN_VALUE
+
+  --   L5:     SWAP                     2
+               POP_TOP
+
+  76           SWAP                     2
+               STORE_FAST               1 (x)
+               RERAISE                  0
+ExceptionTable:
+  L1 to L4 -> L5 [2]
+
+Disassembly of <code object highs at 0x76453ac030, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 79>:
+  79           RESUME                   0
+
+  80           LOAD_FAST                0 (c)
+               GET_ITER
+               LOAD_FAST_AND_CLEAR      1 (x)
+               SWAP                     2
+       L1:     BUILD_LIST               0
+               SWAP                     2
+               GET_ITER
+       L2:     FOR_ITER                17 (to L3)
+               STORE_FAST               1 (x)
+               LOAD_GLOBAL              1 (float + NULL)
+               LOAD_FAST                1 (x)
+               LOAD_CONST               1 (2)
+               BINARY_SUBSCR
+               CALL                     1
+               LIST_APPEND              2
+               JUMP_BACKWARD           19 (to L2)
+       L3:     END_FOR
+               POP_TOP
+       L4:     SWAP                     2
+               STORE_FAST               1 (x)
+               RETURN_VALUE
+
+  --   L5:     SWAP                     2
+               POP_TOP
+
+  80           SWAP                     2
+               STORE_FAST               1 (x)
+               RERAISE                  0
+ExceptionTable:
+  L1 to L4 -> L5 [2]
+
+Disassembly of <code object lows at 0x76453ac150, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 83>:
+  83           RESUME                   0
+
+  84           LOAD_FAST                0 (c)
+               GET_ITER
+               LOAD_FAST_AND_CLEAR      1 (x)
+               SWAP                     2
+       L1:     BUILD_LIST               0
+               SWAP                     2
+               GET_ITER
+       L2:     FOR_ITER                17 (to L3)
+               STORE_FAST               1 (x)
+               LOAD_GLOBAL              1 (float + NULL)
+               LOAD_FAST                1 (x)
+               LOAD_CONST               1 (3)
+               BINARY_SUBSCR
+               CALL                     1
+               LIST_APPEND              2
+               JUMP_BACKWARD           19 (to L2)
+       L3:     END_FOR
+               POP_TOP
+       L4:     SWAP                     2
+               STORE_FAST               1 (x)
+               RETURN_VALUE
+
+  --   L5:     SWAP                     2
+               POP_TOP
+
+  84           SWAP                     2
+               STORE_FAST               1 (x)
+               RERAISE                  0
+ExceptionTable:
+  L1 to L4 -> L5 [2]
+
+Disassembly of <code object ema at 0x76455eea30, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 87>:
+ 87           RESUME                   0
+
+ 88           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (values)
+              CALL                     1
+              LOAD_FAST                1 (period)
+              COMPARE_OP              18 (bool(<))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+ 89           RETURN_CONST             0 (None)
+
+ 91   L1:     LOAD_GLOBAL              3 (sum + NULL)
+              LOAD_FAST                0 (values)
+              LOAD_CONST               0 (None)
+              LOAD_FAST                1 (period)
+              BINARY_SLICE
+              CALL                     1
+              LOAD_FAST                1 (period)
+              BINARY_OP               11 (/)
+              STORE_FAST               2 (value)
+
+ 92           LOAD_CONST               1 (2)
+              LOAD_FAST                1 (period)
+              LOAD_CONST               2 (1)
+              BINARY_OP                0 (+)
+              BINARY_OP               11 (/)
+              STORE_FAST               3 (multiplier)
+
+ 94           LOAD_FAST_LOAD_FAST      1 (values, period)
+              LOAD_CONST               0 (None)
+              BINARY_SLICE
+              GET_ITER
+      L2:     FOR_ITER                13 (to L3)
+              STORE_FAST               4 (price)
+
+ 95           LOAD_FAST_LOAD_FAST     66 (price, value)
+              BINARY_OP               10 (-)
+              LOAD_FAST                3 (multiplier)
+              BINARY_OP                5 (*)
+              LOAD_FAST                2 (value)
+              BINARY_OP                0 (+)
+              STORE_FAST               2 (value)
+              JUMP_BACKWARD           15 (to L2)
+
+ 94   L3:     END_FOR
+              POP_TOP
+
+ 97           LOAD_FAST                2 (value)
+              RETURN_VALUE
+
+Disassembly of <code object rsi at 0xb400007795ef4bb0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 100>:
+100           RESUME                   0
+
+101           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (values)
+              CALL                     1
+              LOAD_FAST                1 (period)
+              COMPARE_OP              58 (bool(<=))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+102           RETURN_CONST             0 (None)
+
+104   L1:     BUILD_LIST               0
+              STORE_FAST               2 (gains)
+
+105           BUILD_LIST               0
+              STORE_FAST               3 (losses)
+
+107           LOAD_GLOBAL              3 (range + NULL)
+              LOAD_CONST               1 (1)
+              LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (values)
+              CALL                     1
+              CALL                     2
+              GET_ITER
+      L2:     FOR_ITER                70 (to L3)
+              STORE_FAST               4 (i)
+
+108           LOAD_FAST_LOAD_FAST      4 (values, i)
+              BINARY_SUBSCR
+              LOAD_FAST_LOAD_FAST      4 (values, i)
+              LOAD_CONST               1 (1)
+              BINARY_OP               10 (-)
+              BINARY_SUBSCR
+              BINARY_OP               10 (-)
+              STORE_FAST               5 (delta)
+
+109           LOAD_FAST                2 (gains)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_GLOBAL              7 (max + NULL)
+              LOAD_FAST                5 (delta)
+              LOAD_CONST               2 (0)
+              CALL                     2
+              CALL                     1
+              POP_TOP
+
+110           LOAD_FAST                3 (losses)
+              LOAD_ATTR                5 (append + NULL|self)
+              LOAD_GLOBAL              7 (max + NULL)
+              LOAD_FAST                5 (delta)
+              UNARY_NEGATIVE
+              LOAD_CONST               2 (0)
+              CALL                     2
+              CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           72 (to L2)
+
+107   L3:     END_FOR
+              POP_TOP
+
+112           LOAD_GLOBAL              9 (sum + NULL)
+              LOAD_FAST                2 (gains)
+              LOAD_CONST               0 (None)
+              LOAD_FAST                1 (period)
+              BINARY_SLICE
+              CALL                     1
+              LOAD_FAST                1 (period)
+              BINARY_OP               11 (/)
+              STORE_FAST               6 (avg_gain)
+
+113           LOAD_GLOBAL              9 (sum + NULL)
+              LOAD_FAST                3 (losses)
+              LOAD_CONST               0 (None)
+              LOAD_FAST                1 (period)
+              BINARY_SLICE
+              CALL                     1
+              LOAD_FAST                1 (period)
+              BINARY_OP               11 (/)
+              STORE_FAST               7 (avg_loss)
+
+115           LOAD_GLOBAL              3 (range + NULL)
+              LOAD_FAST                1 (period)
+              LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                2 (gains)
+              CALL                     1
+              CALL                     2
+              GET_ITER
+      L4:     FOR_ITER                33 (to L5)
+              STORE_FAST               4 (i)
+
+116           LOAD_FAST_LOAD_FAST     97 (avg_gain, period)
+              LOAD_CONST               1 (1)
+              BINARY_OP               10 (-)
+              BINARY_OP                5 (*)
+              LOAD_FAST_LOAD_FAST     36 (gains, i)
+              BINARY_SUBSCR
+              BINARY_OP                0 (+)
+              LOAD_FAST                1 (period)
+              BINARY_OP               11 (/)
+              STORE_FAST               6 (avg_gain)
+
+117           LOAD_FAST_LOAD_FAST    113 (avg_loss, period)
+              LOAD_CONST               1 (1)
+              BINARY_OP               10 (-)
+              BINARY_OP                5 (*)
+              LOAD_FAST_LOAD_FAST     52 (losses, i)
+              BINARY_SUBSCR
+              BINARY_OP                0 (+)
+              LOAD_FAST                1 (period)
+              BINARY_OP               11 (/)
+              STORE_FAST               7 (avg_loss)
+              JUMP_BACKWARD           35 (to L4)
+
+115   L5:     END_FOR
+              POP_TOP
+
+119           LOAD_FAST                7 (avg_loss)
+              LOAD_CONST               2 (0)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L6)
+
+120           RETURN_CONST             3 (100.0)
+
+122   L6:     LOAD_FAST_LOAD_FAST    103 (avg_gain, avg_loss)
+              BINARY_OP               11 (/)
+              STORE_FAST               8 (rs)
+
+123           LOAD_CONST               4 (100)
+              LOAD_CONST               4 (100)
+              LOAD_CONST               1 (1)
+              LOAD_FAST                8 (rs)
+              BINARY_OP                0 (+)
+              BINARY_OP               11 (/)
+              BINARY_OP               10 (-)
+              RETURN_VALUE
+
+Disassembly of <code object atr at 0xb400007765eb01f0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 126>:
+126           RESUME                   0
+
+127           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (candles)
+              CALL                     1
+              LOAD_FAST                1 (period)
+              COMPARE_OP              58 (bool(<=))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+128           RETURN_CONST             0 (None)
+
+130   L1:     BUILD_LIST               0
+              STORE_FAST               2 (trs)
+
+132           LOAD_GLOBAL              3 (range + NULL)
+              LOAD_CONST               1 (1)
+              LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (candles)
+              CALL                     1
+              CALL                     2
+              GET_ITER
+      L2:     FOR_ITER               106 (to L3)
+              STORE_FAST               3 (i)
+
+133           LOAD_GLOBAL              5 (float + NULL)
+              LOAD_FAST_LOAD_FAST      3 (candles, i)
+              BINARY_SUBSCR
+              LOAD_CONST               2 (2)
+              BINARY_SUBSCR
+              CALL                     1
+              STORE_FAST               4 (high)
+
+134           LOAD_GLOBAL              5 (float + NULL)
+              LOAD_FAST_LOAD_FAST      3 (candles, i)
+              BINARY_SUBSCR
+              LOAD_CONST               3 (3)
+              BINARY_SUBSCR
+              CALL                     1
+              STORE_FAST               5 (low)
+
+135           LOAD_GLOBAL              5 (float + NULL)
+              LOAD_FAST_LOAD_FAST      3 (candles, i)
+              LOAD_CONST               1 (1)
+              BINARY_OP               10 (-)
+              BINARY_SUBSCR
+              LOAD_CONST               4 (4)
+              BINARY_SUBSCR
+              CALL                     1
+              STORE_FAST               6 (previous_close)
+
+137           LOAD_FAST                2 (trs)
+              LOAD_ATTR                7 (append + NULL|self)
+
+138           LOAD_GLOBAL              9 (max + NULL)
+
+139           LOAD_FAST_LOAD_FAST     69 (high, low)
+              BINARY_OP               10 (-)
+
+140           LOAD_GLOBAL             11 (abs + NULL)
+              LOAD_FAST_LOAD_FAST     70 (high, previous_close)
+              BINARY_OP               10 (-)
+              CALL                     1
+
+141           LOAD_GLOBAL             11 (abs + NULL)
+              LOAD_FAST_LOAD_FAST     86 (low, previous_close)
+              BINARY_OP               10 (-)
+              CALL                     1
+
+138           CALL                     3
+
+137           CALL                     1
+              POP_TOP
+              JUMP_BACKWARD          108 (to L2)
+
+132   L3:     END_FOR
+              POP_TOP
+
+145           LOAD_GLOBAL             13 (sum + NULL)
+              LOAD_FAST_LOAD_FAST     33 (trs, period)
+              UNARY_NEGATIVE
+              LOAD_CONST               0 (None)
+              BINARY_SLICE
+              CALL                     1
+              LOAD_FAST                1 (period)
+              BINARY_OP               11 (/)
+              RETURN_VALUE
+
+Disassembly of <code object trend_score at 0x764562d390, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 148>:
+148           RESUME                   0
+
+149           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (values)
+              CALL                     1
+              LOAD_CONST               1 (50)
+              COMPARE_OP              18 (bool(<))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+150           RETURN_CONST             2 (0.0)
+
+152   L1:     LOAD_GLOBAL              3 (ema + NULL)
+              LOAD_FAST                0 (values)
+              LOAD_CONST               3 (9)
+              CALL                     2
+              STORE_FAST               1 (e9)
+
+153           LOAD_GLOBAL              3 (ema + NULL)
+              LOAD_FAST                0 (values)
+              LOAD_CONST               4 (20)
+              CALL                     2
+              STORE_FAST               2 (e20)
+
+154           LOAD_GLOBAL              3 (ema + NULL)
+              LOAD_FAST                0 (values)
+              LOAD_CONST               1 (50)
+              CALL                     2
+              STORE_FAST               3 (e50)
+
+156           LOAD_GLOBAL              5 (all + NULL)
+              LOAD_CONST               5 (<code object <genexpr> at 0x764556f0f0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 156>)
+              MAKE_FUNCTION
+              LOAD_FAST_LOAD_FAST     18 (e9, e20)
+              LOAD_FAST                3 (e50)
+              BUILD_TUPLE              3
+              GET_ITER
+              CALL                     0
+              CALL                     1
+              TO_BOOL
+              POP_JUMP_IF_TRUE         1 (to L2)
+
+157           RETURN_CONST             2 (0.0)
+
+159   L2:     LOAD_CONST               6 (0)
+              STORE_FAST               4 (score)
+
+161           LOAD_FAST_LOAD_FAST     18 (e9, e20)
+              COMPARE_OP             148 (bool(>))
+              POP_JUMP_IF_FALSE        6 (to L3)
+
+162           LOAD_FAST                4 (score)
+              LOAD_CONST               7 (1)
+              BINARY_OP               13 (+=)
+              STORE_FAST               4 (score)
+              JUMP_FORWARD             5 (to L4)
+
+164   L3:     LOAD_FAST                4 (score)
+              LOAD_CONST               7 (1)
+              BINARY_OP               23 (-=)
+              STORE_FAST               4 (score)
+
+166   L4:     LOAD_FAST_LOAD_FAST     35 (e20, e50)
+              COMPARE_OP             148 (bool(>))
+              POP_JUMP_IF_FALSE        6 (to L5)
+
+167           LOAD_FAST                4 (score)
+              LOAD_CONST               7 (1)
+              BINARY_OP               13 (+=)
+              STORE_FAST               4 (score)
+              JUMP_FORWARD             5 (to L6)
+
+169   L5:     LOAD_FAST                4 (score)
+              LOAD_CONST               7 (1)
+              BINARY_OP               23 (-=)
+              STORE_FAST               4 (score)
+
+171   L6:     LOAD_FAST                0 (values)
+              LOAD_CONST               8 (-1)
+              BINARY_SUBSCR
+              LOAD_FAST                2 (e20)
+              COMPARE_OP             148 (bool(>))
+              POP_JUMP_IF_FALSE       10 (to L7)
+
+172           LOAD_FAST                4 (score)
+              LOAD_CONST               7 (1)
+              BINARY_OP               13 (+=)
+              STORE_FAST               4 (score)
+
+176           LOAD_FAST                4 (score)
+              LOAD_CONST               9 (3.0)
+              BINARY_OP               11 (/)
+              RETURN_VALUE
+
+174   L7:     LOAD_FAST                4 (score)
+              LOAD_CONST               7 (1)
+              BINARY_OP               23 (-=)
+              STORE_FAST               4 (score)
+
+176           LOAD_FAST                4 (score)
+              LOAD_CONST               9 (3.0)
+              BINARY_OP               11 (/)
+              RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x764556f0f0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 156>:
+ 156           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+               GET_ITER
+       L2:     FOR_ITER                 8 (to L3)
+               STORE_FAST_LOAD_FAST    17 (x, x)
+               LOAD_CONST               0 (None)
+               IS_OP                    1
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           10 (to L2)
+       L3:     END_FOR
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+  --   L4:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L4 -> L4 [0] lasti
+
+Disassembly of <code object momentum_score at 0x7645645370, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 179>:
+179           RESUME                   0
+
+180           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (values)
+              CALL                     1
+              LOAD_CONST               1 (20)
+              COMPARE_OP              18 (bool(<))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+181           RETURN_CONST             2 (0.0)
+
+183   L1:     LOAD_FAST                0 (values)
+              LOAD_CONST               3 (-1)
+              BINARY_SUBSCR
+              STORE_FAST               1 (recent)
+
+184           LOAD_FAST                0 (values)
+              LOAD_CONST               4 (-6)
+              BINARY_SUBSCR
+              STORE_FAST               2 (previous)
+
+186           LOAD_FAST                2 (previous)
+              LOAD_CONST               5 (0)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L2)
+
+187           RETURN_CONST             2 (0.0)
+
+189   L2:     LOAD_FAST_LOAD_FAST     18 (recent, previous)
+              BINARY_OP               10 (-)
+              LOAD_FAST                2 (previous)
+              BINARY_OP               11 (/)
+              LOAD_CONST               6 (100)
+              BINARY_OP                5 (*)
+              STORE_FAST               3 (pct)
+
+191           LOAD_GLOBAL              3 (max + NULL)
+              LOAD_CONST               7 (-1.0)
+              LOAD_GLOBAL              5 (min + NULL)
+              LOAD_CONST               8 (1.0)
+              LOAD_FAST                3 (pct)
+              LOAD_CONST               9 (5.0)
+              BINARY_OP               11 (/)
+              CALL                     2
+              CALL                     2
+              RETURN_VALUE
+
+Disassembly of <code object analyze_symbol at 0xb4000076c5ee5b60, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 194>:
+194            RESUME                   0
+
+201            LOAD_GLOBAL              1 (fetch_klines + NULL)
+               LOAD_FAST                0 (symbol)
+               LOAD_CONST               1 ('1h')
+               LOAD_CONST               2 (120)
+               CALL                     3
+               STORE_FAST               1 (h1)
+
+202            LOAD_GLOBAL              1 (fetch_klines + NULL)
+               LOAD_FAST                0 (symbol)
+               LOAD_CONST               3 ('15m')
+               LOAD_CONST               2 (120)
+               CALL                     3
+               STORE_FAST               2 (m15)
+
+203            LOAD_GLOBAL              1 (fetch_klines + NULL)
+               LOAD_FAST                0 (symbol)
+               LOAD_CONST               4 ('5m')
+               LOAD_CONST               2 (120)
+               CALL                     3
+               STORE_FAST               3 (m5)
+
+205            LOAD_GLOBAL              3 (closes + NULL)
+               LOAD_FAST                1 (h1)
+               CALL                     1
+               STORE_FAST               4 (h1c)
+
+206            LOAD_GLOBAL              3 (closes + NULL)
+               LOAD_FAST                2 (m15)
+               CALL                     1
+               STORE_FAST               5 (m15c)
+
+207            LOAD_GLOBAL              3 (closes + NULL)
+               LOAD_FAST                3 (m5)
+               CALL                     1
+               STORE_FAST               6 (m5c)
+
+209            LOAD_FAST                6 (m5c)
+               LOAD_CONST               5 (-1)
+               BINARY_SUBSCR
+               STORE_FAST               7 (current_price)
+
+211            LOAD_GLOBAL              5 (trend_score + NULL)
+               LOAD_FAST                4 (h1c)
+               CALL                     1
+               STORE_FAST               8 (h1_trend)
+
+212            LOAD_GLOBAL              5 (trend_score + NULL)
+               LOAD_FAST                5 (m15c)
+               CALL                     1
+               STORE_FAST               9 (m15_trend)
+
+213            LOAD_GLOBAL              5 (trend_score + NULL)
+               LOAD_FAST                6 (m5c)
+               CALL                     1
+               STORE_FAST              10 (m5_trend)
+
+216            LOAD_GLOBAL              7 (momentum_score + NULL)
+               LOAD_FAST                4 (h1c)
+               CALL                     1
+
+217            LOAD_GLOBAL              7 (momentum_score + NULL)
+               LOAD_FAST                5 (m15c)
+               CALL                     1
+
+216            BINARY_OP                0 (+)
+
+218            LOAD_GLOBAL              7 (momentum_score + NULL)
+               LOAD_FAST                6 (m5c)
+               CALL                     1
+
+216            BINARY_OP                0 (+)
+
+219            LOAD_CONST               6 (3)
+
+215            BINARY_OP               11 (/)
+               STORE_FAST              11 (momentum)
+
+221            LOAD_GLOBAL              9 (rsi + NULL)
+               LOAD_FAST                6 (m5c)
+               CALL                     1
+               STORE_FAST              12 (rsi5)
+
+222            LOAD_GLOBAL             11 (atr + NULL)
+               LOAD_FAST                3 (m5)
+               CALL                     1
+               STORE_FAST              13 (atr5)
+
+224            LOAD_FAST               13 (atr5)
+               POP_JUMP_IF_NONE         6 (to L1)
+               LOAD_FAST               13 (atr5)
+               LOAD_CONST               8 (0)
+               COMPARE_OP              58 (bool(<=))
+               POP_JUMP_IF_FALSE        1 (to L2)
+
+225    L1:     RETURN_CONST             7 (None)
+
+228    L2:     LOAD_FAST                8 (h1_trend)
+               LOAD_CONST               9 (0.4)
+               BINARY_OP                5 (*)
+
+229            LOAD_FAST                9 (m15_trend)
+               LOAD_CONST              10 (0.35)
+               BINARY_OP                5 (*)
+
+228            BINARY_OP                0 (+)
+
+230            LOAD_FAST               10 (m5_trend)
+               LOAD_CONST              11 (0.25)
+               BINARY_OP                5 (*)
+
+228            BINARY_OP                0 (+)
+
+227            STORE_FAST              14 (direction_score)
+
+233            LOAD_FAST               14 (direction_score)
+               LOAD_CONST              12 (0.15)
+               COMPARE_OP             148 (bool(>))
+               POP_JUMP_IF_FALSE        3 (to L3)
+
+234            LOAD_CONST              13 ('LONG')
+               STORE_FAST              15 (direction)
+               JUMP_FORWARD            11 (to L5)
+
+235    L3:     LOAD_FAST               14 (direction_score)
+               LOAD_CONST              14 (-0.15)
+               COMPARE_OP              18 (bool(<))
+               POP_JUMP_IF_FALSE        3 (to L4)
+
+236            LOAD_CONST              15 ('SHORT')
+               STORE_FAST              15 (direction)
+               JUMP_FORWARD             2 (to L5)
+
+238    L4:     LOAD_CONST              16 ('NEUTRAL')
+               STORE_FAST              15 (direction)
+
+240    L5:     LOAD_CONST              17 (50.0)
+               LOAD_GLOBAL             13 (abs + NULL)
+               LOAD_FAST               14 (direction_score)
+               CALL                     1
+               LOAD_CONST              18 (35.0)
+               BINARY_OP                5 (*)
+               BINARY_OP                0 (+)
+               STORE_FAST              16 (confidence)
+
+241            LOAD_FAST               16 (confidence)
+               LOAD_GLOBAL             13 (abs + NULL)
+               LOAD_FAST               11 (momentum)
+               CALL                     1
+               LOAD_CONST              19 (15.0)
+               BINARY_OP                5 (*)
+               BINARY_OP               13 (+=)
+               STORE_FAST              16 (confidence)
+
+243            LOAD_FAST               12 (rsi5)
+               POP_JUMP_IF_NONE        42 (to L7)
+
+244            LOAD_FAST               15 (direction)
+               LOAD_CONST              13 ('LONG')
+               COMPARE_OP              88 (bool(==))
+               POP_JUMP_IF_FALSE       15 (to L6)
+               LOAD_FAST               12 (rsi5)
+               LOAD_GLOBAL             14 (RSI_OVERBOUGHT)
+               COMPARE_OP             188 (bool(>=))
+               POP_JUMP_IF_FALSE        5 (to L6)
+
+245            LOAD_FAST               16 (confidence)
+               LOAD_CONST              20 (10)
+               BINARY_OP               23 (-=)
+               STORE_FAST              16 (confidence)
+
+246    L6:     LOAD_FAST               15 (direction)
+               LOAD_CONST              15 ('SHORT')
+               COMPARE_OP              88 (bool(==))
+               POP_JUMP_IF_FALSE       15 (to L7)
+               LOAD_FAST               12 (rsi5)
+               LOAD_GLOBAL             16 (RSI_OVERSOLD)
+               COMPARE_OP              58 (bool(<=))
+               POP_JUMP_IF_FALSE        5 (to L7)
+
+247            LOAD_FAST               16 (confidence)
+               LOAD_CONST              20 (10)
+               BINARY_OP               23 (-=)
+               STORE_FAST              16 (confidence)
+
+249    L7:     LOAD_GLOBAL             19 (max + NULL)
+               LOAD_CONST              21 (0.0)
+               LOAD_GLOBAL             21 (min + NULL)
+               LOAD_CONST              22 (100.0)
+               LOAD_FAST               16 (confidence)
+               CALL                     2
+               CALL                     2
+               STORE_FAST              16 (confidence)
+
+251            LOAD_GLOBAL             13 (abs + NULL)
+               LOAD_FAST                6 (m5c)
+               LOAD_CONST               5 (-1)
+               BINARY_SUBSCR
+               LOAD_FAST                6 (m5c)
+               LOAD_CONST              23 (-6)
+               BINARY_SUBSCR
+               BINARY_OP               10 (-)
+               CALL                     1
+               STORE_FAST              17 (extension)
+
+253            LOAD_FAST               17 (extension)
+               LOAD_FAST               13 (atr5)
+               LOAD_GLOBAL             22 (MAX_5M_EXTENSION_ATR)
+               BINARY_OP                5 (*)
+               COMPARE_OP              42 (<=)
+               STORE_FAST              18 (anti_chase)
+
+256            LOAD_FAST               15 (direction)
+               LOAD_CONST              24 (('LONG', 'SHORT'))
+               CONTAINS_OP              0
+               COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE       18 (to L8)
+               POP_TOP
+
+257            LOAD_FAST               16 (confidence)
+               LOAD_GLOBAL             24 (MIN_CONFIDENCE)
+               COMPARE_OP             172 (>=)
+
+256            COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L8)
+               POP_TOP
+
+258            LOAD_FAST               18 (anti_chase)
+
+255    L8:     STORE_FAST              19 (qualified)
+
+261            BUILD_MAP                0
+
+262            LOAD_CONST              25 ('symbol')
+               LOAD_FAST                0 (symbol)
+
+261            MAP_ADD                  1
+
+263            LOAD_CONST              26 ('timestamp_utc')
+               LOAD_GLOBAL             27 (now_utc + NULL)
+               CALL                     0
+
+261            MAP_ADD                  1
+
+264            LOAD_CONST              27 ('data_source')
+               LOAD_CONST              28 ('BINANCE_SPOT_REST')
+
+261            MAP_ADD                  1
+
+265            LOAD_CONST              29 ('data_fresh')
+               LOAD_CONST              30 (True)
+
+261            MAP_ADD                  1
+
+267            LOAD_CONST              31 ('direction')
+               LOAD_FAST               15 (direction)
+
+261            MAP_ADD                  1
+
+269            LOAD_CONST              32 ('h1_trend')
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST                8 (h1_trend)
+               LOAD_CONST              33 (4)
+               CALL                     2
+
+261            MAP_ADD                  1
+
+270            LOAD_CONST              34 ('m15_trend')
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST                9 (m15_trend)
+               LOAD_CONST              33 (4)
+               CALL                     2
+
+261            MAP_ADD                  1
+
+271            LOAD_CONST              35 ('m5_trend')
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST               10 (m5_trend)
+               LOAD_CONST              33 (4)
+               CALL                     2
+
+261            MAP_ADD                  1
+
+273            LOAD_CONST              36 ('momentum')
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST               11 (momentum)
+               LOAD_CONST              33 (4)
+               CALL                     2
+
+261            MAP_ADD                  1
+
+274            LOAD_CONST              37 ('rsi_5m')
+               LOAD_FAST               12 (rsi5)
+               POP_JUMP_IF_NONE        12 (to L9)
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST               12 (rsi5)
+               LOAD_CONST              33 (4)
+               CALL                     2
+               JUMP_FORWARD             1 (to L10)
+       L9:     LOAD_CONST               7 (None)
+
+261   L10:     MAP_ADD                  1
+
+275            LOAD_CONST              38 ('atr_5m')
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST               13 (atr5)
+               LOAD_CONST              39 (12)
+               CALL                     2
+
+261            MAP_ADD                  1
+
+277            LOAD_CONST              40 ('current_price')
+               LOAD_FAST                7 (current_price)
+
+261            MAP_ADD                  1
+
+279            LOAD_CONST              41 ('extension')
+               LOAD_FAST               17 (extension)
+
+261            MAP_ADD                  1
+
+280            LOAD_CONST              42 ('anti_chase')
+               LOAD_FAST               18 (anti_chase)
+
+261            MAP_ADD                  1
+
+282            LOAD_CONST              43 ('confidence')
+               LOAD_GLOBAL             29 (round + NULL)
+               LOAD_FAST               16 (confidence)
+               LOAD_CONST              44 (2)
+               CALL                     2
+
+261            MAP_ADD                  1
+
+283            LOAD_CONST              45 ('qualified')
+               LOAD_FAST               19 (qualified)
+
+261            MAP_ADD                  1
+
+285            LOAD_CONST              46 ('phase5_owner')
+               LOAD_CONST              47 ('TRADE_INTELLIGENCE_DETECTORS')
+
+261            MAP_ADD                  1
+
+288            LOAD_CONST               7 (None)
+
+289            LOAD_CONST               7 (None)
+
+290            LOAD_CONST               7 (None)
+
+291            LOAD_CONST               7 (None)
+
+292            LOAD_CONST               7 (None)
+
+293            LOAD_CONST               7 (None)
+
+294            LOAD_CONST               7 (None)
+
+295            LOAD_CONST               7 (None)
+
+261            LOAD_CONST              48 (('entry', 'sl', 'tp1', 'tp2', 'risk', 'reward', 'rr', 'position_size'))
+               BUILD_CONST_KEY_MAP      8
+               DICT_UPDATE              1
+               RETURN_VALUE
+
+Disassembly of <code object get_phase4_symbols at 0xb400007795eef110, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 299>:
+299            RESUME                   0
+
+300            LOAD_GLOBAL              1 (load_json + NULL)
+               LOAD_GLOBAL              2 (PHASE4_STATE)
+               CALL                     1
+               STORE_FAST               0 (data)
+
+302            BUILD_LIST               0
+               STORE_FAST               1 (symbols)
+
+304            LOAD_FAST                0 (data)
+               LOAD_ATTR                5 (get + NULL|self)
+               LOAD_CONST               1 ('discovery')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               2 (discovery)
+
+305            LOAD_FAST                2 (discovery)
+               LOAD_ATTR                5 (get + NULL|self)
+               LOAD_CONST               2 ('markets')
+               BUILD_LIST               0
+               CALL                     2
+               STORE_FAST               3 (markets)
+
+307            LOAD_FAST                3 (markets)
+               GET_ITER
+       L1:     FOR_ITER                76 (to L5)
+               STORE_FAST               4 (item)
+
+308            LOAD_GLOBAL              7 (isinstance + NULL)
+               LOAD_FAST                4 (item)
+               LOAD_GLOBAL              8 (dict)
+               CALL                     2
+               TO_BOOL
+               POP_JUMP_IF_TRUE         2 (to L2)
+               JUMP_BACKWARD           26 (to L1)
+
+309    L2:     LOAD_FAST                4 (item)
+               LOAD_ATTR                5 (get + NULL|self)
+               LOAD_CONST               3 ('symbol')
+               CALL                     1
+               STORE_FAST               5 (symbol)
+
+310            LOAD_FAST                5 (symbol)
+               TO_BOOL
+               POP_JUMP_IF_TRUE         2 (to L3)
+               JUMP_BACKWARD           52 (to L1)
+       L3:     LOAD_FAST_LOAD_FAST     81 (symbol, symbols)
+               CONTAINS_OP              1
+               POP_JUMP_IF_TRUE         2 (to L4)
+               JUMP_BACKWARD           59 (to L1)
+
+311    L4:     LOAD_FAST                1 (symbols)
+               LOAD_ATTR               11 (append + NULL|self)
+               LOAD_FAST                5 (symbol)
+               CALL                     1
+               POP_TOP
+               JUMP_BACKWARD           78 (to L1)
+
+307    L5:     END_FOR
+               POP_TOP
+
+313            LOAD_CONST               4 (('safe_bulls', 'safe_bears'))
+               GET_ITER
+       L6:     FOR_ITER               108 (to L13)
+               STORE_FAST               6 (key)
+
+314            LOAD_FAST                0 (data)
+               LOAD_ATTR                5 (get + NULL|self)
+               LOAD_FAST                6 (key)
+               BUILD_LIST               0
+               CALL                     2
+               GET_ITER
+       L7:     FOR_ITER                83 (to L12)
+               STORE_FAST               4 (item)
+
+315            LOAD_GLOBAL              7 (isinstance + NULL)
+               LOAD_FAST                4 (item)
+               LOAD_GLOBAL              8 (dict)
+               CALL                     2
+               TO_BOOL
+               POP_JUMP_IF_TRUE         2 (to L8)
+               JUMP_BACKWARD           26 (to L7)
+
+316    L8:     LOAD_FAST                4 (item)
+               LOAD_ATTR                5 (get + NULL|self)
+               LOAD_CONST               3 ('symbol')
+               CALL                     1
+               STORE_FAST               5 (symbol)
+
+317            LOAD_FAST                5 (symbol)
+               TO_BOOL
+               POP_JUMP_IF_TRUE         2 (to L9)
+               JUMP_BACKWARD           52 (to L7)
+       L9:     LOAD_FAST_LOAD_FAST     81 (symbol, symbols)
+               CONTAINS_OP              1
+               POP_JUMP_IF_TRUE         2 (to L10)
+               JUMP_BACKWARD           59 (to L7)
+
+318   L10:     LOAD_FAST_LOAD_FAST     81 (symbol, symbols)
+               CONTAINS_OP              1
+               POP_JUMP_IF_TRUE         2 (to L11)
+               JUMP_BACKWARD           66 (to L7)
+
+319   L11:     LOAD_FAST                1 (symbols)
+               LOAD_ATTR               11 (append + NULL|self)
+               LOAD_FAST                5 (symbol)
+               CALL                     1
+               POP_TOP
+               JUMP_BACKWARD           85 (to L7)
+
+314   L12:     END_FOR
+               POP_TOP
+               JUMP_BACKWARD          110 (to L6)
+
+313   L13:     END_FOR
+               POP_TOP
+
+321            LOAD_FAST                1 (symbols)
+               RETURN_VALUE
+
+Disassembly of <code object main at 0xb4000076d5f05fe0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 324>:
+ 324            RESUME                   0
+
+ 325            LOAD_GLOBAL              0 (STATE)
+                LOAD_ATTR                3 (mkdir + NULL|self)
+                LOAD_CONST               1 (True)
+                LOAD_CONST               2 (('exist_ok',))
+                CALL_KW                  1
+                POP_TOP
+
+ 326            LOAD_GLOBAL              4 (REPORTS)
+                LOAD_ATTR                3 (mkdir + NULL|self)
+                LOAD_CONST               1 (True)
+                LOAD_CONST               2 (('exist_ok',))
+                CALL_KW                  1
+                POP_TOP
+
+ 328            LOAD_GLOBAL              7 (get_phase4_symbols + NULL)
+                CALL                     0
+                STORE_FAST               0 (symbols)
+
+ 330            BUILD_LIST               0
+                STORE_FAST               1 (results)
+
+ 331            BUILD_LIST               0
+                STORE_FAST               2 (qualified)
+
+ 333            LOAD_FAST                0 (symbols)
+                GET_ITER
+        L1:     FOR_ITER                66 (to L7)
+                STORE_FAST               3 (symbol)
+
+ 334            NOP
+
+ 335    L2:     LOAD_GLOBAL              9 (analyze_symbol + NULL)
+                LOAD_FAST                3 (symbol)
+                CALL                     1
+                STORE_FAST               4 (result)
+
+ 337            LOAD_FAST                4 (result)
+                POP_JUMP_IF_NOT_NONE     2 (to L4)
+
+ 338    L3:     JUMP_BACKWARD           20 (to L1)
+
+ 340    L4:     LOAD_FAST                1 (results)
+                LOAD_ATTR               11 (append + NULL|self)
+                LOAD_FAST                4 (result)
+                CALL                     1
+                POP_TOP
+
+ 342            LOAD_FAST                4 (result)
+                LOAD_CONST               3 ('qualified')
+                BINARY_SUBSCR
+                TO_BOOL
+                POP_JUMP_IF_FALSE       19 (to L6)
+
+ 343            LOAD_FAST                2 (qualified)
+                LOAD_ATTR               11 (append + NULL|self)
+                LOAD_FAST                4 (result)
+                CALL                     1
+                POP_TOP
+        L5:     JUMP_BACKWARD           66 (to L1)
+
+ 342    L6:     JUMP_BACKWARD           68 (to L1)
+
+ 333    L7:     END_FOR
+                POP_TOP
+
+ 349            LOAD_CONST               7 (5)
+
+ 350            LOAD_CONST               8 ('TRADE INTELLIGENCE + DETECTORS')
+
+ 351            LOAD_GLOBAL             17 (now_utc + NULL)
+                CALL                     0
+
+ 352            LOAD_CONST               9 (4)
+
+ 353            LOAD_GLOBAL             19 (len + NULL)
+                LOAD_FAST                0 (symbols)
+                CALL                     1
+
+ 354            LOAD_GLOBAL             19 (len + NULL)
+                LOAD_FAST                1 (results)
+                CALL                     1
+
+ 355            LOAD_GLOBAL             19 (len + NULL)
+                LOAD_FAST                2 (qualified)
+                CALL                     1
+
+ 356            LOAD_FAST                1 (results)
+
+ 357            LOAD_FAST                2 (qualified)
+
+ 360            LOAD_CONST              10 ('PHASE_4')
+
+ 361            LOAD_CONST              11 ('PHASE_5')
+
+ 362            LOAD_CONST              12 ('PHASE_6')
+
+ 363            LOAD_CONST              13 ('PHASE_7')
+
+ 364            LOAD_CONST              14 ('PHASE_8')
+
+ 359            LOAD_CONST              15 (('market_discovery', 'intelligence_detectors', 'trade_construction', 'execution', 'lifecycle'))
+                BUILD_CONST_KEY_MAP      5
+
+ 367            BUILD_LIST               0
+                LOAD_CONST              16 (('entry', 'sl', 'tp1', 'tp2', 'risk', 'reward', 'rr', 'position_size', 'order_submission'))
+                LIST_EXTEND              1
+
+ 348            LOAD_CONST              17 (('phase', 'phase_name', 'timestamp_utc', 'source_phase', 'symbols_received', 'symbols_analyzed', 'qualified_candidates', 'results', 'qualified', 'ownership', 'forbidden_in_phase5'))
+                BUILD_CONST_KEY_MAP     11
+                STORE_FAST               6 (output)
+
+ 380            LOAD_GLOBAL             21 (save_json + NULL)
+                LOAD_GLOBAL             22 (PHASE5_STATE)
+                LOAD_FAST                6 (output)
+                CALL                     2
+                POP_TOP
+
+ 382            LOAD_GLOBAL             15 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 383            LOAD_GLOBAL             15 (print + NULL)
+                LOAD_CONST              18 ('PHASE 5 — TRADE INTELLIGENCE + DETECTORS')
+                CALL                     1
+                POP_TOP
+
+ 384            LOAD_GLOBAL             15 (print + NULL)
+                LOAD_CONST              19 ('Phase 4 symbols received : ')
+                LOAD_GLOBAL             19 (len + NULL)
+                LOAD_FAST                0 (symbols)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 385            LOAD_GLOBAL             15 (print + NULL)
+                LOAD_CONST              20 ('Symbols analyzed         : ')
+                LOAD_GLOBAL             19 (len + NULL)
+                LOAD_FAST                1 (results)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 386            LOAD_GLOBAL             15 (print + NULL)
+                LOAD_CONST              21 ('Qualified setups         : ')
+                LOAD_GLOBAL             19 (len + NULL)
+                LOAD_FAST                2 (qualified)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 387            LOAD_GLOBAL             15 (print + NULL)
+                LOAD_CONST              22 ('State saved              : ')
+                LOAD_GLOBAL             22 (PHASE5_STATE)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+                RETURN_CONST             0 (None)
+
+  --    L8:     PUSH_EXC_INFO
+
+ 345            LOAD_GLOBAL             12 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       28 (to L12)
+                STORE_FAST               5 (exc)
+
+ 346    L9:     LOAD_GLOBAL             15 (print + NULL)
+                LOAD_CONST               4 ('INTELLIGENCE ERROR ')
+                LOAD_FAST                3 (symbol)
+                FORMAT_SIMPLE
+                LOAD_CONST               5 (': ')
+                LOAD_FAST                5 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             4
+                LOAD_CONST               1 (True)
+                LOAD_CONST               6 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+       L10:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               5 (exc)
+                DELETE_FAST              5 (exc)
+                EXTENDED_ARG             1
+                JUMP_BACKWARD          285 (to L1)
+
+  --   L11:     LOAD_CONST               0 (None)
+                STORE_FAST               5 (exc)
+                DELETE_FAST              5 (exc)
+                RERAISE                  1
+
+ 345   L12:     RERAISE                  0
+
+  --   L13:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L8 [1]
+  L4 to L5 -> L8 [1]
+  L8 to L9 -> L13 [2] lasti
+  L9 to L10 -> L11 [2] lasti
+  L11 to L13 -> L13 [2] lasti
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1\nPHASE 5 — TRADE INTELLIGENCE + DETECTORS\n\nOWNER:\n    Market intelligence only.\n\nPHASE 5 MUST NOT:\n    - construct Entry\n    - construct SL\n    - construct TP1/TP2\n    - calculate position size\n    - submit orders\n\nIt consumes the Phase 4 discovered universe and refreshes\nBinance market data before intelligence analysis.\n'
+[1] 0
+[2] None
+[3] ('datetime', 'timezone')
+[4] ('Path',)
+[5] 'state'
+[6] 'reports'
+[7] 'phase4_market_discovery.json'
+[8] 'phase5_market_intelligence.json'
+[9] 'https://api.binance.com'
+[10] 75.0
+[11] 25.0
+[12] 2.0
+[13] 15
+[14] <code object now_utc at 0x7645631a50, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 48>
+[15] <code object get_json at 0x76455c1bb0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 52>
+[16] <code object load_json at 0x7645644f50, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 58>
+[17] <code object save_json at 0x7645613e10, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 64>
+[18] <code object fetch_klines at 0x76455c7630, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 68>
+[19] <code object closes at 0x7645613cf0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 75>
+[20] <code object highs at 0x76453ac030, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 79>
+[21] <code object lows at 0x76453ac150, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 83>
+[22] <code object ema at 0x76455eea30, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 87>
+[23] <code object rsi at 0xb400007795ef4bb0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 100>
+[24] <code object atr at 0xb400007765eb01f0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 126>
+[25] <code object trend_score at 0x764562d390, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 148>
+[26] <code object momentum_score at 0x7645645370, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 179>
+[27] <code object analyze_symbol at 0xb4000076c5ee5b60, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 194>
+[28] <code object get_phase4_symbols at 0xb400007795eef110, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 299>
+[29] <code object main at 0xb4000076d5f05fe0, file "./build_backup_20260826_150523/phase5_market_intelligence.py", line 324>
+[30] '__main__'
+[31] (None,)
+[32] (120,)
+[33] (14,)
+
+
+NAMES
+=====
+
+'__doc__'
+'json'
+'math'
+'sys'
+'time'
+'datetime'
+'timezone'
+'pathlib'
+'Path'
+'requests'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE'
+'REPORTS'
+'PHASE4_STATE'
+'PHASE5_STATE'
+'BINANCE'
+'MIN_CONFIDENCE'
+'RSI_OVERBOUGHT'
+'RSI_OVERSOLD'
+'MAX_5M_EXTENSION_ATR'
+'TIMEOUT'
+'now_utc'
+'get_json'
+'load_json'
+'save_json'
+'fetch_klines'
+'closes'
+'highs'
+'lows'
+'ema'
+'rsi'
+'atr'
+'trend_score'
+'momentum_score'
+'analyze_symbol'
+'get_phase4_symbols'
+'main'
+'__name__'

@@ -1,0 +1,1564 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/__pycache__/phase10_pre_execution_gate.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  2           LOAD_CONST               0 ('\nCryptoMasterX1 — PHASE 10\nPRE-EXECUTION SYSTEM GATE\n\nPurpose:\n    Verify the Phase 7 -> Phase 8 -> Phase 9 handoff.\n\nPhase 10 DOES NOT:\n    - construct trades\n    - modify Entry\n    - modify SL\n    - modify TP1\n    - modify TP2\n    - recalculate trade levels\n    - submit orders\n    - arm the bot\n    - authorize live execution\n    - enable withdrawals\n\nPhase ownership:\n    Phase 7  = Trade Construction\n    Phase 8  = Final Validation\n    Phase 9  = Execution + Lifecycle\n    Phase 10 = Pre-Execution System Gate\n\nSAFETY:\n    Execution remains LOCKED.\n')
+              STORE_NAME               0 (__doc__)
+
+ 31           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (('annotations',))
+              IMPORT_NAME              1 (__future__)
+              IMPORT_FROM              2 (annotations)
+              STORE_NAME               2 (annotations)
+              POP_TOP
+
+ 33           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              3 (argparse)
+              STORE_NAME               3 (argparse)
+
+ 34           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              4 (json)
+              STORE_NAME               4 (json)
+
+ 35           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('datetime', 'timezone'))
+              IMPORT_NAME              5 (datetime)
+              IMPORT_FROM              5 (datetime)
+              STORE_NAME               5 (datetime)
+              IMPORT_FROM              6 (timezone)
+              STORE_NAME               6 (timezone)
+              POP_TOP
+
+ 36           LOAD_CONST               1 (0)
+              LOAD_CONST               5 (('Path',))
+              IMPORT_NAME              7 (pathlib)
+              IMPORT_FROM              8 (Path)
+              STORE_NAME               8 (Path)
+              POP_TOP
+
+ 39           LOAD_NAME                8 (Path)
+              PUSH_NULL
+              LOAD_NAME                9 (__file__)
+              CALL                     1
+              LOAD_ATTR               21 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               22 (parent)
+              STORE_NAME              12 (ROOT)
+
+ 41           LOAD_NAME               12 (ROOT)
+              LOAD_CONST               6 ('state')
+              BINARY_OP               11 (/)
+              LOAD_CONST               7 ('phase8_final_validation.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              13 (PHASE8_STATE)
+
+ 42           LOAD_NAME               12 (ROOT)
+              LOAD_CONST               6 ('state')
+              BINARY_OP               11 (/)
+              LOAD_CONST               8 ('phase9_execution_lifecycle.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              14 (PHASE9_STATE)
+
+ 43           LOAD_NAME               12 (ROOT)
+              LOAD_CONST               6 ('state')
+              BINARY_OP               11 (/)
+              LOAD_CONST               9 ('phase10_pre_execution_gate.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              15 (OUTPUT_STATE)
+
+ 50           LOAD_CONST              10 (False)
+              STORE_NAME              16 (EXECUTION_AUTHORIZED)
+
+ 51           LOAD_CONST              10 (False)
+              STORE_NAME              17 (ORDER_SUBMISSION)
+
+ 52           LOAD_CONST              10 (False)
+              STORE_NAME              18 (BOT_ARMED)
+
+ 53           LOAD_CONST              10 (False)
+              STORE_NAME              19 (LIVE_EXECUTION)
+
+ 54           LOAD_CONST              10 (False)
+              STORE_NAME              20 (WITHDRAWALS)
+
+ 56           LOAD_CONST              11 ('LOCKED')
+              STORE_NAME              21 (EXECUTION_BOUNDARY)
+
+ 59           LOAD_CONST              21 (('return', 'str'))
+              LOAD_CONST              12 (<code object utc_now at 0x7645631b80, file "phase10_pre_execution_gate.py", line 59>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              22 (utc_now)
+
+ 63           LOAD_CONST              22 (('path', 'Path', 'return', 'dict'))
+              LOAD_CONST              13 (<code object load_json at 0x76455da0b0, file "phase10_pre_execution_gate.py", line 63>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              23 (load_json)
+
+ 71           LOAD_CONST              23 (('state', 'dict', 'return', 'tuple[bool, list[str]]'))
+              LOAD_CONST              14 (<code object validate_phase8 at 0xb4000076c5ee5b60, file "phase10_pre_execution_gate.py", line 71>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              24 (validate_phase8)
+
+120           LOAD_CONST              24 (('state', 'dict', 'phase8_count', 'int', 'return', 'tuple[bool, list[str]]'))
+              LOAD_CONST              15 (<code object validate_phase9 at 0xb4000077c5ec1670, file "phase10_pre_execution_gate.py", line 120>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              25 (validate_phase9)
+
+205           NOP
+
+206           NOP
+
+205           NOP
+
+207           NOP
+
+205           NOP
+
+208           NOP
+
+205           LOAD_CONST              25 (('phase8', 'dict', 'phase9', 'dict', 'return', 'tuple[bool, list[str]]'))
+              LOAD_CONST              16 (<code object compare_phase8_phase9 at 0xb400007765eb0690, file "phase10_pre_execution_gate.py", line 205>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              26 (compare_phase8_phase9)
+
+239           NOP
+
+240           NOP
+
+239           NOP
+
+241           NOP
+
+239           NOP
+
+242           NOP
+
+239           NOP
+
+243           NOP
+
+239           NOP
+
+244           NOP
+
+239           LOAD_CONST              26 (('phase8_count', 'int', 'phase9_count', 'int', 'checks', 'dict', 'errors', 'list[str]', 'return', 'None'))
+              LOAD_CONST              17 (<code object save_state at 0xb400007765ead850, file "phase10_pre_execution_gate.py", line 239>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              27 (save_state)
+
+296           LOAD_CONST              27 (('return', 'int'))
+              LOAD_CONST              18 (<code object run_once at 0xb4000076c5ee4810, file "phase10_pre_execution_gate.py", line 296>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              28 (run_once)
+
+388           LOAD_CONST              27 (('return', 'int'))
+              LOAD_CONST              19 (<code object main at 0xb400007765eaf410, file "phase10_pre_execution_gate.py", line 388>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              29 (main)
+
+408           LOAD_NAME               30 (__name__)
+              LOAD_CONST              20 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       13 (to L1)
+
+409           LOAD_NAME               31 (SystemExit)
+              PUSH_NULL
+              LOAD_NAME               29 (main)
+              PUSH_NULL
+              CALL                     0
+              CALL                     1
+              RAISE_VARARGS            1
+
+408   L1:     RETURN_CONST             3 (None)
+
+Disassembly of <code object utc_now at 0x7645631b80, file "phase10_pre_execution_gate.py", line 59>:
+ 59           RESUME                   0
+
+ 60           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object load_json at 0x76455da0b0, file "phase10_pre_execution_gate.py", line 63>:
+  63           RESUME                   0
+
+  64           LOAD_FAST                0 (path)
+               LOAD_ATTR                1 (exists + NULL|self)
+               CALL                     0
+               TO_BOOL
+               POP_JUMP_IF_TRUE        14 (to L1)
+
+  65           LOAD_GLOBAL              3 (FileNotFoundError + NULL)
+               LOAD_CONST               1 ('Missing required state: ')
+               LOAD_FAST                0 (path)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               RAISE_VARARGS            1
+
+  67   L1:     LOAD_FAST                0 (path)
+               LOAD_ATTR                5 (open + NULL|self)
+               LOAD_CONST               2 ('r')
+               LOAD_CONST               3 ('utf-8')
+               LOAD_CONST               4 (('encoding',))
+               CALL_KW                  2
+               BEFORE_WITH
+       L2:     STORE_FAST               1 (f)
+
+  68           LOAD_GLOBAL              6 (json)
+               LOAD_ATTR                8 (load)
+               PUSH_NULL
+               LOAD_FAST                1 (f)
+               CALL                     1
+
+  67   L3:     SWAP                     2
+               LOAD_CONST               0 (None)
+               LOAD_CONST               0 (None)
+               LOAD_CONST               0 (None)
+               CALL                     2
+               POP_TOP
+               RETURN_VALUE
+       L4:     PUSH_EXC_INFO
+               WITH_EXCEPT_START
+               TO_BOOL
+               POP_JUMP_IF_TRUE         1 (to L5)
+               RERAISE                  2
+       L5:     POP_TOP
+       L6:     POP_EXCEPT
+               POP_TOP
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+  --   L7:     COPY                     3
+               POP_EXCEPT
+               RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L4 [1] lasti
+  L4 to L6 -> L7 [3] lasti
+
+Disassembly of <code object validate_phase8 at 0xb4000076c5ee5b60, file "phase10_pre_execution_gate.py", line 71>:
+ 71            RESUME                   0
+
+ 72            BUILD_LIST               0
+               STORE_FAST               1 (errors)
+
+ 74            LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               1 ('phase')
+               CALL                     1
+               LOAD_CONST               2 ('PHASE_8')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L1)
+
+ 75            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST               3 ('Phase 8 state identifier invalid')
+               CALL                     1
+               POP_TOP
+
+ 77    L1:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               4 ('status')
+               CALL                     1
+               LOAD_CONST               5 ('COMPLETE')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L2)
+
+ 78            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST               6 ('Phase 8 status is not COMPLETE')
+               CALL                     1
+               POP_TOP
+
+ 80    L2:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               7 ('validation')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               2 (validation)
+
+ 82            LOAD_FAST                2 (validation)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               8 ('validated_candidates')
+               BUILD_LIST               0
+               CALL                     2
+               STORE_FAST               3 (validated)
+
+ 84            LOAD_GLOBAL              5 (isinstance + NULL)
+               LOAD_FAST                3 (validated)
+               LOAD_GLOBAL              6 (list)
+               CALL                     2
+               TO_BOOL
+               POP_JUMP_IF_TRUE        21 (to L3)
+
+ 85            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST               9 ('Phase 8 validated_candidates is not a list')
+               CALL                     1
+               POP_TOP
+
+ 86            LOAD_CONST              10 (False)
+               LOAD_FAST                1 (errors)
+               BUILD_TUPLE              2
+               RETURN_VALUE
+
+ 88    L3:     LOAD_GLOBAL              9 (len + NULL)
+               LOAD_FAST                3 (validated)
+               CALL                     1
+               LOAD_CONST              11 (0)
+               COMPARE_OP              88 (bool(==))
+               POP_JUMP_IF_FALSE       17 (to L4)
+
+ 89            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              12 ('Phase 8 contains zero validated candidates')
+               CALL                     1
+               POP_TOP
+
+ 91    L4:     LOAD_FAST                2 (validation)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              13 ('validated')
+               CALL                     1
+               LOAD_GLOBAL              9 (len + NULL)
+               LOAD_FAST                3 (validated)
+               CALL                     1
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L5)
+
+ 92            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              14 ('Phase 8 validated count mismatch')
+               CALL                     1
+               POP_TOP
+
+ 94    L5:     LOAD_FAST                2 (validation)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              15 ('rejected')
+               CALL                     1
+               LOAD_GLOBAL              9 (len + NULL)
+               LOAD_FAST                2 (validation)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              16 ('rejected_candidates')
+               BUILD_LIST               0
+               CALL                     2
+               CALL                     1
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L6)
+
+ 95            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              17 ('Phase 8 rejected count mismatch')
+               CALL                     1
+               POP_TOP
+
+ 97    L6:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              18 ('validation_contract')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               4 (contract)
+
+ 99            LOAD_FAST                4 (contract)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              19 ('phase7_owns_trade_construction')
+               CALL                     1
+               LOAD_CONST              20 (True)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L7)
+
+100            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              21 ('Phase 7 trade-construction ownership missing')
+               CALL                     1
+               POP_TOP
+
+102    L7:     LOAD_FAST                4 (contract)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              22 ('phase8_reconstructs_trade')
+               CALL                     1
+               LOAD_CONST              10 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L8)
+
+103            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              23 ('Phase 8 reconstruction boundary violated')
+               CALL                     1
+               POP_TOP
+
+105    L8:     LOAD_FAST                4 (contract)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              24 ('phase8_changes_entry')
+               CALL                     1
+               LOAD_CONST              10 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L9)
+
+106            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              25 ('Phase 8 entry modification boundary violated')
+               CALL                     1
+               POP_TOP
+
+108    L9:     LOAD_FAST                4 (contract)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              26 ('phase8_changes_sl')
+               CALL                     1
+               LOAD_CONST              10 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L10)
+
+109            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              27 ('Phase 8 SL modification boundary violated')
+               CALL                     1
+               POP_TOP
+
+111   L10:     LOAD_FAST                4 (contract)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              28 ('phase8_changes_tp1')
+               CALL                     1
+               LOAD_CONST              10 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L11)
+
+112            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              29 ('Phase 8 TP1 modification boundary violated')
+               CALL                     1
+               POP_TOP
+
+114   L11:     LOAD_FAST                4 (contract)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              30 ('phase8_changes_tp2')
+               CALL                     1
+               LOAD_CONST              10 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L12)
+
+115            LOAD_FAST                1 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              31 ('Phase 8 TP2 modification boundary violated')
+               CALL                     1
+               POP_TOP
+
+117   L12:     LOAD_GLOBAL              9 (len + NULL)
+               LOAD_FAST                1 (errors)
+               CALL                     1
+               LOAD_CONST              11 (0)
+               COMPARE_OP              72 (==)
+               LOAD_FAST                1 (errors)
+               BUILD_TUPLE              2
+               RETURN_VALUE
+
+Disassembly of <code object validate_phase9 at 0xb4000077c5ec1670, file "phase10_pre_execution_gate.py", line 120>:
+120            RESUME                   0
+
+121            BUILD_LIST               0
+               STORE_FAST               2 (errors)
+
+123            LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               1 ('phase')
+               CALL                     1
+               LOAD_CONST               2 (9)
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L1)
+
+124            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST               3 ('Phase 9 identifier invalid')
+               CALL                     1
+               POP_TOP
+
+126    L1:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               4 ('name')
+               CALL                     1
+               LOAD_CONST               5 ('Execution + Lifecycle')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L2)
+
+127            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST               6 ('Phase 9 name invalid')
+               CALL                     1
+               POP_TOP
+
+129    L2:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               7 ('candidates')
+               BUILD_LIST               0
+               CALL                     2
+               STORE_FAST               3 (candidates)
+
+131            LOAD_GLOBAL              5 (len + NULL)
+               LOAD_FAST                3 (candidates)
+               CALL                     1
+               LOAD_FAST                1 (phase8_count)
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       32 (to L3)
+
+132            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+
+133            LOAD_CONST               8 ('Phase 9 candidate count mismatch: ')
+
+134            LOAD_GLOBAL              5 (len + NULL)
+               LOAD_FAST                3 (candidates)
+               CALL                     1
+               FORMAT_SIMPLE
+               LOAD_CONST               9 (' != ')
+               LOAD_FAST                1 (phase8_count)
+               FORMAT_SIMPLE
+
+133            BUILD_STRING             4
+
+132            CALL                     1
+               POP_TOP
+
+137    L3:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              10 ('input')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               4 (inp)
+
+139            LOAD_FAST                4 (inp)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST               1 ('phase')
+               CALL                     1
+               LOAD_CONST              11 (8)
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L4)
+
+140            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              12 ('Phase 9 input phase is not 8')
+               CALL                     1
+               POP_TOP
+
+142    L4:     LOAD_FAST                4 (inp)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              13 ('validated_candidates')
+               CALL                     1
+               LOAD_FAST                1 (phase8_count)
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L5)
+
+143            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              14 ('Phase 9 input validated count mismatch')
+               CALL                     1
+               POP_TOP
+
+145    L5:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              15 ('execution_boundary')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               5 (boundary)
+
+147            LOAD_FAST                5 (boundary)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              16 ('status')
+               CALL                     1
+               LOAD_CONST              17 ('LOCKED')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L6)
+
+148            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              18 ('Execution boundary is not LOCKED')
+               CALL                     1
+               POP_TOP
+
+150    L6:     LOAD_FAST                5 (boundary)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              19 ('execution_authorized')
+               CALL                     1
+               LOAD_CONST              20 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L7)
+
+151            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              21 ('Execution authorization is not FALSE')
+               CALL                     1
+               POP_TOP
+
+153    L7:     LOAD_FAST                5 (boundary)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              22 ('order_submission')
+               CALL                     1
+               LOAD_CONST              20 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L8)
+
+154            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              23 ('Order submission is not DISABLED')
+               CALL                     1
+               POP_TOP
+
+156    L8:     LOAD_FAST                5 (boundary)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              24 ('bot_armed')
+               CALL                     1
+               LOAD_CONST              20 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L9)
+
+157            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              25 ('Bot is armed')
+               CALL                     1
+               POP_TOP
+
+159    L9:     LOAD_FAST                5 (boundary)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              26 ('live_execution')
+               CALL                     1
+               LOAD_CONST              20 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L10)
+
+160            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              27 ('Live execution is not FALSE')
+               CALL                     1
+               POP_TOP
+
+162   L10:     LOAD_FAST                5 (boundary)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              28 ('withdrawals')
+               CALL                     1
+               LOAD_CONST              20 (False)
+               IS_OP                    1
+               POP_JUMP_IF_FALSE       17 (to L11)
+
+163            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              29 ('Withdrawals are not forbidden')
+               CALL                     1
+               POP_TOP
+
+165   L11:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              30 ('lifecycle')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               6 (lifecycle)
+
+167            LOAD_FAST                6 (lifecycle)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              31 ('orders_submitted')
+               CALL                     1
+               LOAD_CONST              32 (0)
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L12)
+
+168            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              33 ('Orders submitted is not zero')
+               CALL                     1
+               POP_TOP
+
+170   L12:     LOAD_FAST                6 (lifecycle)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              34 ('active_positions')
+               CALL                     1
+               BUILD_LIST               0
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L13)
+
+171            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              35 ('Active positions are not empty')
+               CALL                     1
+               POP_TOP
+
+173   L13:     LOAD_FAST                6 (lifecycle)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              36 ('fills')
+               CALL                     1
+               BUILD_LIST               0
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L14)
+
+174            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              37 ('Fills are not empty')
+               CALL                     1
+               POP_TOP
+
+176   L14:     LOAD_FAST                6 (lifecycle)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              38 ('partial_fills')
+               CALL                     1
+               BUILD_LIST               0
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L15)
+
+177            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              39 ('Partial fills are not empty')
+               CALL                     1
+               POP_TOP
+
+179   L15:     LOAD_FAST                6 (lifecycle)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              40 ('closed_positions')
+               CALL                     1
+               BUILD_LIST               0
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L16)
+
+180            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              41 ('Closed positions are not empty')
+               CALL                     1
+               POP_TOP
+
+182   L16:     LOAD_FAST                0 (state)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              42 ('ownership')
+               BUILD_MAP                0
+               CALL                     2
+               STORE_FAST               7 (ownership)
+
+184            LOAD_FAST                7 (ownership)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              43 ('trade_construction')
+               CALL                     1
+               LOAD_CONST              44 ('PHASE 7')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L17)
+
+185            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              45 ('Trade construction owner is incorrect')
+               CALL                     1
+               POP_TOP
+
+187   L17:     LOAD_FAST                7 (ownership)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              46 ('final_validation')
+               CALL                     1
+               LOAD_CONST              47 ('PHASE 8')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L18)
+
+188            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              48 ('Final validation owner is incorrect')
+               CALL                     1
+               POP_TOP
+
+190   L18:     LOAD_FAST                7 (ownership)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_CONST              49 ('execution')
+               CALL                     1
+               LOAD_CONST              50 ('PHASE 9')
+               COMPARE_OP             119 (bool(!=))
+               POP_JUMP_IF_FALSE       17 (to L19)
+
+191            LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              51 ('Execution owner is incorrect')
+               CALL                     1
+               POP_TOP
+
+193   L19:     LOAD_CONST              52 (('trade_reconstruction', 'entry_modification', 'sl_modification', 'tp_modification'))
+               GET_ITER
+      L20:     FOR_ITER                46 (to L22)
+               STORE_FAST               8 (key)
+
+199            LOAD_FAST                7 (ownership)
+               LOAD_ATTR                1 (get + NULL|self)
+               LOAD_FAST                8 (key)
+               CALL                     1
+               LOAD_CONST              20 (False)
+               IS_OP                    1
+               POP_JUMP_IF_TRUE         2 (to L21)
+               JUMP_BACKWARD           25 (to L20)
+
+200   L21:     LOAD_FAST                2 (errors)
+               LOAD_ATTR                3 (append + NULL|self)
+               LOAD_CONST              53 ('Phase 9 ')
+               LOAD_FAST                8 (key)
+               FORMAT_SIMPLE
+               LOAD_CONST              54 (' boundary violated')
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+               JUMP_BACKWARD           48 (to L20)
+
+193   L22:     END_FOR
+               POP_TOP
+
+202            LOAD_GLOBAL              5 (len + NULL)
+               LOAD_FAST                2 (errors)
+               CALL                     1
+               LOAD_CONST              32 (0)
+               COMPARE_OP              72 (==)
+               LOAD_FAST                2 (errors)
+               BUILD_TUPLE              2
+               RETURN_VALUE
+
+Disassembly of <code object compare_phase8_phase9 at 0xb400007765eb0690, file "phase10_pre_execution_gate.py", line 205>:
+205           RESUME                   0
+
+209           BUILD_LIST               0
+              STORE_FAST               2 (errors)
+
+211           LOAD_FAST                0 (phase8)
+              LOAD_CONST               1 ('validation')
+              BINARY_SUBSCR
+              LOAD_CONST               2 ('validated_candidates')
+              BINARY_SUBSCR
+              STORE_FAST               3 (p8)
+
+212           LOAD_FAST                1 (phase9)
+              LOAD_CONST               3 ('candidates')
+              BINARY_SUBSCR
+              STORE_FAST               4 (p9)
+
+214           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                3 (p8)
+              CALL                     1
+              LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                4 (p9)
+              CALL                     1
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE        5 (to L1)
+
+215           LOAD_CONST               4 (False)
+              LOAD_CONST               5 ('Phase 8/Phase 9 candidate count mismatch')
+              BUILD_LIST               1
+              BUILD_TUPLE              2
+              RETURN_VALUE
+
+217   L1:     LOAD_CONST               6 (('symbol', 'direction', 'entry', 'sl', 'tp1', 'tp2', 'rr', 'confidence'))
+              STORE_FAST               5 (fields)
+
+228           LOAD_GLOBAL              3 (enumerate + NULL)
+              LOAD_GLOBAL              5 (zip + NULL)
+              LOAD_FAST_LOAD_FAST     52 (p8, p9)
+              CALL                     2
+              LOAD_CONST               7 (1)
+              CALL                     2
+              GET_ITER
+      L2:     FOR_ITER                96 (to L6)
+              UNPACK_SEQUENCE          2
+              STORE_FAST               6 (index)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST  120 (a, b)
+
+229           LOAD_FAST                5 (fields)
+              GET_ITER
+      L3:     FOR_ITER                82 (to L5)
+              STORE_FAST               9 (field)
+
+230           LOAD_FAST                7 (a)
+              LOAD_ATTR                7 (get + NULL|self)
+              LOAD_FAST                9 (field)
+              CALL                     1
+              LOAD_FAST                8 (b)
+              LOAD_ATTR                7 (get + NULL|self)
+              LOAD_FAST                9 (field)
+              CALL                     1
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_TRUE         2 (to L4)
+              JUMP_BACKWARD           41 (to L3)
+
+231   L4:     LOAD_FAST                2 (errors)
+              LOAD_ATTR                9 (append + NULL|self)
+
+232           LOAD_CONST               8 ('Candidate ')
+              LOAD_FAST                6 (index)
+              FORMAT_SIMPLE
+              LOAD_CONST               9 (' ')
+              LOAD_FAST                7 (a)
+              LOAD_ATTR                7 (get + NULL|self)
+              LOAD_CONST              10 ('symbol')
+              CALL                     1
+              FORMAT_SIMPLE
+              LOAD_CONST              11 (' field changed: ')
+
+233           LOAD_FAST                9 (field)
+              FORMAT_SIMPLE
+
+232           BUILD_STRING             6
+
+231           CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           84 (to L3)
+
+229   L5:     END_FOR
+              POP_TOP
+              JUMP_BACKWARD           98 (to L2)
+
+228   L6:     END_FOR
+              POP_TOP
+
+236           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                2 (errors)
+              CALL                     1
+              LOAD_CONST              12 (0)
+              COMPARE_OP              72 (==)
+              LOAD_FAST                2 (errors)
+              BUILD_TUPLE              2
+              RETURN_VALUE
+
+Disassembly of <code object save_state at 0xb400007765ead850, file "phase10_pre_execution_gate.py", line 239>:
+ 239           RESUME                   0
+
+ 246           LOAD_GLOBAL              0 (OUTPUT_STATE)
+               LOAD_ATTR                2 (parent)
+               LOAD_ATTR                5 (mkdir + NULL|self)
+               LOAD_CONST               1 (True)
+               LOAD_CONST               1 (True)
+               LOAD_CONST               2 (('parents', 'exist_ok'))
+               CALL_KW                  2
+               POP_TOP
+
+ 249           LOAD_CONST               3 ('CryptoMasterX1')
+
+ 250           LOAD_CONST               4 ('PHASE_10')
+
+ 251           LOAD_CONST               5 ('10.0-PRE-EXECUTION-GATE')
+
+ 252           LOAD_GLOBAL              7 (utc_now + NULL)
+               CALL                     0
+
+ 253           LOAD_CONST               6 (1)
+
+ 255           LOAD_FAST                3 (errors)
+               TO_BOOL
+               POP_JUMP_IF_TRUE         2 (to L1)
+               LOAD_CONST               7 ('PASS')
+               JUMP_FORWARD             1 (to L2)
+       L1:     LOAD_CONST               8 ('FAIL')
+
+ 258   L2:     LOAD_CONST               9 ('TRADE CONSTRUCTION')
+
+ 259           LOAD_CONST              10 ('FINAL VALIDATION')
+
+ 260           LOAD_CONST              11 ('EXECUTION + LIFECYCLE')
+
+ 261           LOAD_CONST              12 ('PRE-EXECUTION SYSTEM GATE')
+
+ 257           LOAD_CONST              13 (('phase7', 'phase8', 'phase9', 'phase10'))
+               BUILD_CONST_KEY_MAP      4
+
+ 265           LOAD_FAST                0 (phase8_count)
+
+ 266           LOAD_FAST                1 (phase9_count)
+
+ 264           LOAD_CONST              14 (('phase8_validated', 'phase9_lifecycle_ready'))
+               BUILD_CONST_KEY_MAP      2
+
+ 269           LOAD_FAST                2 (checks)
+
+ 271           LOAD_FAST                3 (errors)
+
+ 274           LOAD_GLOBAL              8 (EXECUTION_BOUNDARY)
+
+ 275           LOAD_GLOBAL             10 (EXECUTION_AUTHORIZED)
+
+ 276           LOAD_GLOBAL             12 (ORDER_SUBMISSION)
+
+ 277           LOAD_GLOBAL             14 (BOT_ARMED)
+
+ 278           LOAD_GLOBAL             16 (LIVE_EXECUTION)
+
+ 279           LOAD_GLOBAL             18 (WITHDRAWALS)
+
+ 273           LOAD_CONST              15 (('status', 'execution_authorized', 'order_submission', 'bot_armed', 'live_execution', 'withdrawals'))
+               BUILD_CONST_KEY_MAP      6
+
+ 283           LOAD_CONST              16 ('PHASE 7')
+
+ 284           LOAD_CONST              17 ('PHASE 8')
+
+ 285           LOAD_CONST              18 ('PHASE 9')
+
+ 286           LOAD_CONST              19 ('PHASE 10')
+
+ 287           LOAD_CONST              20 (False)
+
+ 288           LOAD_CONST              20 (False)
+
+ 282           LOAD_CONST              21 (('trade_construction', 'final_validation', 'execution_lifecycle', 'pre_execution_gate', 'trade_reconstruction', 'trade_modification'))
+               BUILD_CONST_KEY_MAP      6
+
+ 248           LOAD_CONST              22 (('project', 'phase', 'version', 'timestamp_utc', 'cycle', 'status', 'pipeline', 'counts', 'checks', 'errors', 'execution_boundary', 'ownership'))
+               BUILD_CONST_KEY_MAP     12
+               STORE_FAST               4 (state)
+
+ 292           LOAD_GLOBAL              0 (OUTPUT_STATE)
+               LOAD_ATTR               21 (open + NULL|self)
+               LOAD_CONST              23 ('w')
+               LOAD_CONST              24 ('utf-8')
+               LOAD_CONST              25 (('encoding',))
+               CALL_KW                  2
+               BEFORE_WITH
+       L3:     STORE_FAST               5 (f)
+
+ 293           LOAD_GLOBAL             22 (json)
+               LOAD_ATTR               24 (dump)
+               PUSH_NULL
+               LOAD_FAST_LOAD_FAST     69 (state, f)
+               LOAD_CONST              26 (2)
+               LOAD_CONST              27 (('indent',))
+               CALL_KW                  3
+               POP_TOP
+
+ 292   L4:     LOAD_CONST               0 (None)
+               LOAD_CONST               0 (None)
+               LOAD_CONST               0 (None)
+               CALL                     2
+               POP_TOP
+               RETURN_CONST             0 (None)
+       L5:     PUSH_EXC_INFO
+               WITH_EXCEPT_START
+               TO_BOOL
+               POP_JUMP_IF_TRUE         1 (to L6)
+               RERAISE                  2
+       L6:     POP_TOP
+       L7:     POP_EXCEPT
+               POP_TOP
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+  --   L8:     COPY                     3
+               POP_EXCEPT
+               RERAISE                  1
+ExceptionTable:
+  L3 to L4 -> L5 [1] lasti
+  L5 to L7 -> L8 [3] lasti
+
+Disassembly of <code object run_once at 0xb4000076c5ee4810, file "phase10_pre_execution_gate.py", line 296>:
+296            RESUME                   0
+
+297            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST               1 ('==============================================================================')
+               CALL                     1
+               POP_TOP
+
+298            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST               2 ('CRYPTOMASTERX1 — PHASE 10 PRE-EXECUTION SYSTEM GATE')
+               CALL                     1
+               POP_TOP
+
+299            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST               1 ('==============================================================================')
+               CALL                     1
+               POP_TOP
+
+301            LOAD_GLOBAL              3 (load_json + NULL)
+               LOAD_GLOBAL              4 (PHASE8_STATE)
+               CALL                     1
+               STORE_FAST               0 (phase8)
+
+302            LOAD_GLOBAL              3 (load_json + NULL)
+               LOAD_GLOBAL              6 (PHASE9_STATE)
+               CALL                     1
+               STORE_FAST               1 (phase9)
+
+304            BUILD_LIST               0
+               STORE_FAST               2 (errors)
+
+305            BUILD_MAP                0
+               STORE_FAST               3 (checks)
+
+307            LOAD_GLOBAL              9 (validate_phase8 + NULL)
+               LOAD_FAST                0 (phase8)
+               CALL                     1
+               UNPACK_SEQUENCE          2
+               STORE_FAST_STORE_FAST   69 (ok8, err8)
+
+308            LOAD_FAST_LOAD_FAST     67 (ok8, checks)
+               LOAD_CONST               3 ('phase8_integrity')
+               STORE_SUBSCR
+
+309            LOAD_FAST                2 (errors)
+               LOAD_ATTR               11 (extend + NULL|self)
+               LOAD_FAST                5 (err8)
+               CALL                     1
+               POP_TOP
+
+311            LOAD_GLOBAL             13 (len + NULL)
+
+312            LOAD_FAST                0 (phase8)
+               LOAD_ATTR               15 (get + NULL|self)
+               LOAD_CONST               4 ('validation')
+               BUILD_MAP                0
+               CALL                     2
+               LOAD_ATTR               15 (get + NULL|self)
+               LOAD_CONST               5 ('validated_candidates')
+               BUILD_LIST               0
+               CALL                     2
+
+311            CALL                     1
+               STORE_FAST               6 (phase8_count)
+
+315            LOAD_GLOBAL             17 (validate_phase9 + NULL)
+               LOAD_FAST_LOAD_FAST     22 (phase9, phase8_count)
+               CALL                     2
+               UNPACK_SEQUENCE          2
+               STORE_FAST_STORE_FAST  120 (ok9, err9)
+
+316            LOAD_FAST_LOAD_FAST    115 (ok9, checks)
+               LOAD_CONST               6 ('phase9_integrity')
+               STORE_SUBSCR
+
+317            LOAD_FAST                2 (errors)
+               LOAD_ATTR               11 (extend + NULL|self)
+               LOAD_FAST                8 (err9)
+               CALL                     1
+               POP_TOP
+
+319            LOAD_GLOBAL             13 (len + NULL)
+               LOAD_FAST                1 (phase9)
+               LOAD_ATTR               15 (get + NULL|self)
+               LOAD_CONST               7 ('candidates')
+               BUILD_LIST               0
+               CALL                     2
+               CALL                     1
+               STORE_FAST               9 (phase9_count)
+
+321            LOAD_FAST                4 (ok8)
+               TO_BOOL
+               POP_JUMP_IF_FALSE       22 (to L1)
+               LOAD_FAST                7 (ok9)
+               TO_BOOL
+               POP_JUMP_IF_FALSE       15 (to L1)
+
+322            LOAD_GLOBAL             19 (compare_phase8_phase9 + NULL)
+
+323            LOAD_FAST                0 (phase8)
+
+324            LOAD_FAST                1 (phase9)
+
+322            CALL                     2
+               UNPACK_SEQUENCE          2
+               STORE_FAST_STORE_FAST  171 (ok_handoff, err_handoff)
+               JUMP_FORWARD             5 (to L2)
+
+327    L1:     LOAD_CONST               8 (False)
+               STORE_FAST              10 (ok_handoff)
+
+328            LOAD_CONST               9 ('Handoff comparison skipped because upstream check failed')
+               BUILD_LIST               1
+               STORE_FAST              11 (err_handoff)
+
+330    L2:     LOAD_FAST_LOAD_FAST    163 (ok_handoff, checks)
+               LOAD_CONST              10 ('phase8_to_phase9_immutable_handoff')
+               STORE_SUBSCR
+
+331            LOAD_FAST                2 (errors)
+               LOAD_ATTR               11 (extend + NULL|self)
+               LOAD_FAST               11 (err_handoff)
+               CALL                     1
+               POP_TOP
+
+334            LOAD_GLOBAL             20 (EXECUTION_BOUNDARY)
+               LOAD_CONST              11 ('LOCKED')
+               COMPARE_OP              72 (==)
+               COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE       68 (to L3)
+               POP_TOP
+
+335            LOAD_GLOBAL             22 (EXECUTION_AUTHORIZED)
+               LOAD_CONST               8 (False)
+               IS_OP                    0
+
+334            COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE       53 (to L3)
+               POP_TOP
+
+336            LOAD_GLOBAL             24 (ORDER_SUBMISSION)
+               LOAD_CONST               8 (False)
+               IS_OP                    0
+
+334            COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE       38 (to L3)
+               POP_TOP
+
+337            LOAD_GLOBAL             26 (BOT_ARMED)
+               LOAD_CONST               8 (False)
+               IS_OP                    0
+
+334            COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE       23 (to L3)
+               POP_TOP
+
+338            LOAD_GLOBAL             28 (LIVE_EXECUTION)
+               LOAD_CONST               8 (False)
+               IS_OP                    0
+
+334            COPY                     1
+               TO_BOOL
+               POP_JUMP_IF_FALSE        8 (to L3)
+               POP_TOP
+
+339            LOAD_GLOBAL             30 (WITHDRAWALS)
+               LOAD_CONST               8 (False)
+               IS_OP                    0
+
+333    L3:     LOAD_FAST                3 (checks)
+               LOAD_CONST              12 ('execution_locked')
+               STORE_SUBSCR
+
+342            LOAD_FAST                3 (checks)
+               LOAD_CONST              12 ('execution_locked')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_TRUE        17 (to L4)
+
+343            LOAD_FAST                2 (errors)
+               LOAD_ATTR               33 (append + NULL|self)
+               LOAD_CONST              13 ('HARD EXECUTION SAFETY CHECK FAILED')
+               CALL                     1
+               POP_TOP
+
+345    L4:     LOAD_FAST                2 (errors)
+               TO_BOOL
+               UNARY_NOT
+               STORE_FAST              12 (passed)
+
+347            LOAD_GLOBAL             35 (save_state + NULL)
+
+348            LOAD_FAST                6 (phase8_count)
+
+349            LOAD_FAST                9 (phase9_count)
+
+350            LOAD_FAST                3 (checks)
+
+351            LOAD_FAST                2 (errors)
+
+347            CALL                     4
+               POP_TOP
+
+354            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              14 ('Phase 8 validated        : ')
+               LOAD_FAST                6 (phase8_count)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+355            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              15 ('Phase 9 lifecycle-ready  : ')
+               LOAD_FAST                9 (phase9_count)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+356            LOAD_GLOBAL              1 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+358            LOAD_FAST                3 (checks)
+               LOAD_ATTR               37 (items + NULL|self)
+               CALL                     0
+               GET_ITER
+       L5:     FOR_ITER                31 (to L8)
+               UNPACK_SEQUENCE          2
+               STORE_FAST_STORE_FAST  222 (name, result)
+
+359            LOAD_GLOBAL              1 (print + NULL)
+
+360            LOAD_FAST               13 (name)
+               LOAD_CONST              16 ('<40')
+               FORMAT_WITH_SPEC
+               LOAD_CONST              17 (': ')
+
+361            LOAD_FAST               14 (result)
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L6)
+               LOAD_CONST              18 ('PASS')
+               JUMP_FORWARD             1 (to L7)
+       L6:     LOAD_CONST              19 ('FAIL')
+       L7:     FORMAT_SIMPLE
+
+360            BUILD_STRING             3
+
+359            CALL                     1
+               POP_TOP
+               JUMP_BACKWARD           33 (to L5)
+
+358    L8:     END_FOR
+               POP_TOP
+
+364            LOAD_GLOBAL              1 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+365            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              20 ('------------------------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+367            LOAD_FAST               12 (passed)
+               TO_BOOL
+               POP_JUMP_IF_FALSE       12 (to L9)
+
+368            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              21 ('PHASE 10 STATUS          : PASS')
+               CALL                     1
+               POP_TOP
+               JUMP_FORWARD            32 (to L12)
+
+370    L9:     LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              22 ('PHASE 10 STATUS          : FAIL')
+               CALL                     1
+               POP_TOP
+
+372            LOAD_FAST                2 (errors)
+               GET_ITER
+      L10:     FOR_ITER                15 (to L11)
+               STORE_FAST              15 (error)
+
+373            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              23 ('ERROR:')
+               LOAD_FAST               15 (error)
+               CALL                     2
+               POP_TOP
+               JUMP_BACKWARD           17 (to L10)
+
+372   L11:     END_FOR
+               POP_TOP
+
+375   L12:     LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              20 ('------------------------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+377            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              24 ('Execution boundary       : LOCKED')
+               CALL                     1
+               POP_TOP
+
+378            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              25 ('Execution authorized     : FALSE')
+               CALL                     1
+               POP_TOP
+
+379            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              26 ('Order submission         : DISABLED')
+               CALL                     1
+               POP_TOP
+
+380            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              27 ('Bot armed                : NO')
+               CALL                     1
+               POP_TOP
+
+381            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              28 ('Live execution           : FALSE')
+               CALL                     1
+               POP_TOP
+
+382            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST              29 ('Withdrawals              : FORBIDDEN')
+               CALL                     1
+               POP_TOP
+
+383            LOAD_GLOBAL              1 (print + NULL)
+               LOAD_CONST               1 ('==============================================================================')
+               CALL                     1
+               POP_TOP
+
+385            LOAD_FAST               12 (passed)
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L13)
+               LOAD_CONST              30 (0)
+               RETURN_VALUE
+      L13:     LOAD_CONST              31 (1)
+               RETURN_VALUE
+
+Disassembly of <code object main at 0xb400007765eaf410, file "phase10_pre_execution_gate.py", line 388>:
+ 388           RESUME                   0
+
+ 389           LOAD_GLOBAL              0 (argparse)
+               LOAD_ATTR                2 (ArgumentParser)
+               PUSH_NULL
+               CALL                     0
+               STORE_FAST               0 (parser)
+
+ 390           LOAD_FAST                0 (parser)
+               LOAD_ATTR                5 (add_argument + NULL|self)
+               LOAD_CONST               1 ('--once')
+               LOAD_CONST               2 ('store_true')
+               LOAD_CONST               3 (('action',))
+               CALL_KW                  2
+               POP_TOP
+
+ 391           LOAD_FAST                0 (parser)
+               LOAD_ATTR                7 (parse_args + NULL|self)
+               CALL                     0
+               STORE_FAST               1 (args)
+
+ 393           LOAD_FAST                1 (args)
+               LOAD_ATTR                8 (once)
+               TO_BOOL
+               POP_JUMP_IF_TRUE        12 (to L1)
+
+ 394           LOAD_GLOBAL             11 (print + NULL)
+               LOAD_CONST               4 ('Use: python -u phase10_pre_execution_gate.py --once')
+               CALL                     1
+               POP_TOP
+
+ 395           RETURN_CONST             5 (0)
+
+ 397   L1:     NOP
+
+ 398   L2:     LOAD_GLOBAL             13 (run_once + NULL)
+               CALL                     0
+       L3:     RETURN_VALUE
+
+  --   L4:     PUSH_EXC_INFO
+
+ 399           LOAD_GLOBAL             14 (Exception)
+               CHECK_EXC_MATCH
+               POP_JUMP_IF_FALSE       51 (to L8)
+               STORE_FAST               2 (exc)
+
+ 400   L5:     LOAD_GLOBAL             11 (print + NULL)
+
+ 401           LOAD_CONST               6 ('PHASE 10 ERROR:')
+
+ 402           LOAD_GLOBAL             17 (type + NULL)
+               LOAD_FAST                2 (exc)
+               CALL                     1
+               LOAD_ATTR               18 (__name__)
+
+ 403           LOAD_GLOBAL             21 (str + NULL)
+               LOAD_FAST                2 (exc)
+               CALL                     1
+
+ 400           CALL                     3
+               POP_TOP
+
+ 405   L6:     POP_EXCEPT
+               LOAD_CONST               0 (None)
+               STORE_FAST               2 (exc)
+               DELETE_FAST              2 (exc)
+               RETURN_CONST             7 (1)
+
+  --   L7:     LOAD_CONST               0 (None)
+               STORE_FAST               2 (exc)
+               DELETE_FAST              2 (exc)
+               RERAISE                  1
+
+ 399   L8:     RERAISE                  0
+
+  --   L9:     COPY                     3
+               POP_EXCEPT
+               RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L4 [0]
+  L4 to L5 -> L9 [1] lasti
+  L5 to L6 -> L7 [1] lasti
+  L7 to L9 -> L9 [1] lasti
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1 — PHASE 10\nPRE-EXECUTION SYSTEM GATE\n\nPurpose:\n    Verify the Phase 7 -> Phase 8 -> Phase 9 handoff.\n\nPhase 10 DOES NOT:\n    - construct trades\n    - modify Entry\n    - modify SL\n    - modify TP1\n    - modify TP2\n    - recalculate trade levels\n    - submit orders\n    - arm the bot\n    - authorize live execution\n    - enable withdrawals\n\nPhase ownership:\n    Phase 7  = Trade Construction\n    Phase 8  = Final Validation\n    Phase 9  = Execution + Lifecycle\n    Phase 10 = Pre-Execution System Gate\n\nSAFETY:\n    Execution remains LOCKED.\n'
+[1] 0
+[2] ('annotations',)
+[3] None
+[4] ('datetime', 'timezone')
+[5] ('Path',)
+[6] 'state'
+[7] 'phase8_final_validation.json'
+[8] 'phase9_execution_lifecycle.json'
+[9] 'phase10_pre_execution_gate.json'
+[10] False
+[11] 'LOCKED'
+[12] <code object utc_now at 0x7645631b80, file "phase10_pre_execution_gate.py", line 59>
+[13] <code object load_json at 0x76455da0b0, file "phase10_pre_execution_gate.py", line 63>
+[14] <code object validate_phase8 at 0xb4000076c5ee5b60, file "phase10_pre_execution_gate.py", line 71>
+[15] <code object validate_phase9 at 0xb4000077c5ec1670, file "phase10_pre_execution_gate.py", line 120>
+[16] <code object compare_phase8_phase9 at 0xb400007765eb0690, file "phase10_pre_execution_gate.py", line 205>
+[17] <code object save_state at 0xb400007765ead850, file "phase10_pre_execution_gate.py", line 239>
+[18] <code object run_once at 0xb4000076c5ee4810, file "phase10_pre_execution_gate.py", line 296>
+[19] <code object main at 0xb400007765eaf410, file "phase10_pre_execution_gate.py", line 388>
+[20] '__main__'
+[21] ('return', 'str')
+[22] ('path', 'Path', 'return', 'dict')
+[23] ('state', 'dict', 'return', 'tuple[bool, list[str]]')
+[24] ('state', 'dict', 'phase8_count', 'int', 'return', 'tuple[bool, list[str]]')
+[25] ('phase8', 'dict', 'phase9', 'dict', 'return', 'tuple[bool, list[str]]')
+[26] ('phase8_count', 'int', 'phase9_count', 'int', 'checks', 'dict', 'errors', 'list[str]', 'return', 'None')
+[27] ('return', 'int')
+
+
+NAMES
+=====
+
+'__doc__'
+'__future__'
+'annotations'
+'argparse'
+'json'
+'datetime'
+'timezone'
+'pathlib'
+'Path'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'PHASE8_STATE'
+'PHASE9_STATE'
+'OUTPUT_STATE'
+'EXECUTION_AUTHORIZED'
+'ORDER_SUBMISSION'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'WITHDRAWALS'
+'EXECUTION_BOUNDARY'
+'utc_now'
+'load_json'
+'validate_phase8'
+'validate_phase9'
+'compare_phase8_phase9'
+'save_state'
+'run_once'
+'main'
+'__name__'
+'SystemExit'

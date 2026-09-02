@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+import subprocess, sys, time
+once = "--once" in sys.argv
+print("=== CONDUCTOR ONCE MODE - FIXED ALL ===")
+while True:
+    try:
+        print("\n>>> PHASE 4")
+        subprocess.run([sys.executable, "phase4_market_discovery.py"], timeout=120)
+        print(">>> PHASE 5 (64 markets - 600s timeout)")
+        subprocess.run([sys.executable, "phase5_market_intelligence.py", "--once"], timeout=600)
+        print(">>> PHASE 6 ONCE")
+        subprocess.run([sys.executable, "phase6_trade_quality.py","--once"], timeout=120)
+        print(">>> PHASE 7 ONCE")
+        subprocess.run([sys.executable, "phase7_entry_intelligence.py","--once"], timeout=120)
+        print(">>> PHASE 8 ONCE")
+        subprocess.run([sys.executable, "phase8_entry_validation.py","--once"], timeout=120)
+        print("\n=== CYCLE DONE - sleep 60 ===")
+        time.sleep(60)
+    except subprocess.TimeoutExpired as e:
+        print(f"TIMEOUT {e.cmd} after {e.timeout}s - retry")
+        time.sleep(5)
+    except Exception as e:
+        print(f"ERR {e}")
+        time.sleep(5)

@@ -1,0 +1,1500 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/__pycache__/phase9_decision_gate.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  1           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              0 (json)
+              STORE_NAME               0 (json)
+
+  2           LOAD_CONST               0 (0)
+              LOAD_CONST               1 (None)
+              IMPORT_NAME              1 (time)
+              STORE_NAME               1 (time)
+
+  3           LOAD_CONST               0 (0)
+              LOAD_CONST               2 (('Path',))
+              IMPORT_NAME              2 (pathlib)
+              IMPORT_FROM              3 (Path)
+              STORE_NAME               3 (Path)
+              POP_TOP
+
+  4           LOAD_CONST               0 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              4 (datetime)
+              IMPORT_FROM              4 (datetime)
+              STORE_NAME               4 (datetime)
+              IMPORT_FROM              5 (timezone)
+              STORE_NAME               5 (timezone)
+              POP_TOP
+
+  6           LOAD_CONST               4 ('CryptoMasterX1')
+              STORE_NAME               6 (PROJECT)
+
+  7           LOAD_CONST               5 ('PHASE_9')
+              STORE_NAME               7 (PHASE)
+
+  8           LOAD_CONST               6 ('9.0-CLEAN')
+              STORE_NAME               8 (VERSION)
+
+ 10           LOAD_NAME                3 (Path)
+              PUSH_NULL
+              LOAD_NAME                9 (__file__)
+              CALL                     1
+              LOAD_ATTR               21 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               22 (parent)
+              STORE_NAME              12 (BASE_DIR)
+
+ 11           LOAD_NAME               12 (BASE_DIR)
+              LOAD_CONST               7 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              13 (STATE_DIR)
+
+ 12           LOAD_NAME               12 (BASE_DIR)
+              LOAD_CONST               8 ('reports')
+              BINARY_OP               11 (/)
+              STORE_NAME              14 (REPORT_DIR)
+
+ 14           LOAD_NAME               13 (STATE_DIR)
+              LOAD_CONST               9 ('phase8_entry_validation.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              15 (PHASE8_STATE)
+
+ 15           LOAD_NAME               13 (STATE_DIR)
+              LOAD_CONST              10 ('phase9_decision_gate.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              16 (PHASE9_STATE)
+
+ 16           LOAD_NAME               14 (REPORT_DIR)
+              LOAD_CONST              11 ('phase9_decision_gate_report.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              17 (PHASE9_REPORT)
+
+ 18           LOAD_CONST              12 (60)
+              STORE_NAME              18 (REFRESH_SECONDS)
+
+ 21           LOAD_CONST              13 (False)
+              STORE_NAME              19 (EXECUTION_AUTHORIZED)
+
+ 22           LOAD_CONST              13 (False)
+              STORE_NAME              20 (ORDER_SUBMISSION)
+
+ 23           LOAD_CONST              13 (False)
+              STORE_NAME              21 (BOT_ARMED)
+
+ 24           LOAD_CONST              13 (False)
+              STORE_NAME              22 (LIVE_EXECUTION)
+
+ 27           LOAD_CONST              14 (<code object now_utc at 0x7645631f10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 27>)
+              MAKE_FUNCTION
+              STORE_NAME              23 (now_utc)
+
+ 31           LOAD_CONST              15 (<code object save_json at 0x7645644f50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 31>)
+              MAKE_FUNCTION
+              STORE_NAME              24 (save_json)
+
+ 38           LOAD_CONST              16 (<code object load_phase8 at 0x764562d1a0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 38>)
+              MAKE_FUNCTION
+              STORE_NAME              25 (load_phase8)
+
+ 59           LOAD_CONST              17 (<code object validate_candidate at 0xb4000076c5ee9550, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 59>)
+              MAKE_FUNCTION
+              STORE_NAME              26 (validate_candidate)
+
+178           LOAD_CONST              18 (<code object scan at 0xb4000076d5f155b0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 178>)
+              MAKE_FUNCTION
+              STORE_NAME              27 (scan)
+
+259           NOP
+
+256           LOAD_CONST              23 (('RUNNING',))
+              LOAD_CONST              19 (<code object build_state at 0x76455674b0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 256>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              28 (build_state)
+
+313           LOAD_CONST              20 (<code object display at 0xb4000076d5f05fe0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 313>)
+              MAKE_FUNCTION
+              STORE_NAME              29 (display)
+
+376           LOAD_CONST              21 (<code object main at 0xb4000076d5f10c60, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 376>)
+              MAKE_FUNCTION
+              STORE_NAME              30 (main)
+
+448           LOAD_NAME               31 (__name__)
+              LOAD_CONST              22 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+449           LOAD_NAME               30 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             1 (None)
+
+448   L1:     RETURN_CONST             1 (None)
+
+Disassembly of <code object now_utc at 0x7645631f10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 27>:
+ 27           RESUME                   0
+
+ 28           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object save_json at 0x7645644f50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 31>:
+ 31           RESUME                   0
+
+ 32           LOAD_FAST                0 (path)
+              LOAD_ATTR                0 (parent)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('parents', 'exist_ok'))
+              CALL_KW                  2
+              POP_TOP
+
+ 33           LOAD_FAST                0 (path)
+              LOAD_ATTR                5 (write_text + NULL|self)
+
+ 34           LOAD_GLOBAL              6 (json)
+              LOAD_ATTR                8 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               3 (2)
+              LOAD_GLOBAL             10 (str)
+              LOAD_CONST               4 (('indent', 'default'))
+              CALL_KW                  3
+
+ 33           CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object load_phase8 at 0x764562d1a0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 38>:
+ 38           RESUME                   0
+
+ 39           LOAD_GLOBAL              0 (PHASE8_STATE)
+              LOAD_ATTR                3 (exists + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_TRUE        18 (to L1)
+
+ 40           LOAD_GLOBAL              5 (FileNotFoundError + NULL)
+
+ 41           LOAD_CONST               1 ('Phase 8 state not found: ')
+              LOAD_GLOBAL              0 (PHASE8_STATE)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+
+ 40           CALL                     1
+              RAISE_VARARGS            1
+
+ 44   L1:     LOAD_GLOBAL              6 (json)
+              LOAD_ATTR                8 (loads)
+              PUSH_NULL
+              LOAD_GLOBAL              0 (PHASE8_STATE)
+              LOAD_ATTR               11 (read_text + NULL|self)
+              CALL                     0
+              CALL                     1
+              STORE_FAST               0 (state)
+
+ 46           LOAD_FAST                0 (state)
+              LOAD_ATTR               13 (get + NULL|self)
+              LOAD_CONST               2 ('validation')
+              BUILD_MAP                0
+              CALL                     2
+              STORE_FAST               1 (validation)
+
+ 48           LOAD_FAST                1 (validation)
+              LOAD_ATTR               13 (get + NULL|self)
+
+ 49           LOAD_CONST               3 ('validated_candidates')
+
+ 50           BUILD_LIST               0
+
+ 48           CALL                     2
+              STORE_FAST               2 (candidates)
+
+ 53           LOAD_GLOBAL             15 (isinstance + NULL)
+              LOAD_FAST                2 (candidates)
+              LOAD_GLOBAL             16 (list)
+              CALL                     2
+              TO_BOOL
+              POP_JUMP_IF_TRUE         2 (to L2)
+
+ 54           BUILD_LIST               0
+              STORE_FAST               2 (candidates)
+
+ 56   L2:     LOAD_FAST                2 (candidates)
+              RETURN_VALUE
+
+Disassembly of <code object validate_candidate at 0xb4000076c5ee9550, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 59>:
+  59            RESUME                   0
+
+  60            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               1 ('symbol')
+                CALL                     1
+                STORE_FAST               1 (symbol)
+
+  61            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               2 ('direction')
+                CALL                     1
+                STORE_FAST               2 (direction)
+
+  63            BUILD_LIST               0
+                STORE_FAST               3 (reasons)
+
+  65            NOP
+
+  66    L1:     LOAD_GLOBAL              3 (float + NULL)
+
+  67            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               3 ('confidence')
+                LOAD_CONST               4 (0)
+                CALL                     2
+
+  66            CALL                     1
+                STORE_FAST               4 (confidence)
+
+  73    L2:     NOP
+
+  74    L3:     LOAD_GLOBAL              3 (float + NULL)
+
+  75            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               6 ('rr')
+                LOAD_CONST               4 (0)
+                CALL                     2
+
+  74            CALL                     1
+                STORE_FAST               5 (rr)
+
+  81    L4:     LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               8 ('entry')
+                CALL                     1
+                STORE_FAST               6 (entry)
+
+  82            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST               9 ('sl')
+                CALL                     1
+                STORE_FAST               7 (sl)
+
+  83            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST              10 ('tp1')
+                CALL                     1
+                STORE_FAST               8 (tp1)
+
+  84            LOAD_FAST                0 (candidate)
+                LOAD_ATTR                1 (get + NULL|self)
+                LOAD_CONST              11 ('tp2')
+                CALL                     1
+                STORE_FAST               9 (tp2)
+
+  86            LOAD_FAST                1 (symbol)
+                TO_BOOL
+                POP_JUMP_IF_TRUE        17 (to L5)
+
+  87            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST              12 ('MISSING_SYMBOL')
+                CALL                     1
+                POP_TOP
+
+  89    L5:     LOAD_FAST                2 (direction)
+                LOAD_CONST              13 (('LONG', 'SHORT'))
+                CONTAINS_OP              1
+                POP_JUMP_IF_FALSE       17 (to L6)
+
+  90            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST              14 ('INVALID_DIRECTION')
+                CALL                     1
+                POP_TOP
+
+  92    L6:     LOAD_FAST                4 (confidence)
+                LOAD_CONST              15 (75)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE       17 (to L7)
+
+  93            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST              16 ('CONFIDENCE_BELOW_GATE')
+                CALL                     1
+                POP_TOP
+
+  95    L7:     LOAD_FAST                5 (rr)
+                LOAD_CONST              17 (1.5)
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE       17 (to L8)
+
+  96            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST              18 ('RR_BELOW_GATE')
+                CALL                     1
+                POP_TOP
+
+  99    L8:     LOAD_FAST                6 (entry)
+
+ 100            LOAD_FAST                7 (sl)
+
+ 101            LOAD_FAST                8 (tp1)
+
+ 102            LOAD_FAST                9 (tp2)
+
+  98            LOAD_CONST              19 (('entry', 'sl', 'tp1', 'tp2'))
+                BUILD_CONST_KEY_MAP      4
+                STORE_FAST              10 (levels)
+
+ 105            BUILD_MAP                0
+                STORE_FAST              11 (numeric)
+
+ 107            LOAD_FAST               10 (levels)
+                LOAD_ATTR               11 (items + NULL|self)
+                CALL                     0
+                GET_ITER
+        L9:     FOR_ITER               102 (to L15)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST  205 (name, value)
+
+ 108            LOAD_FAST               13 (value)
+                POP_JUMP_IF_NOT_NONE    36 (to L10)
+
+ 109            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST              20 ('MISSING_')
+                LOAD_FAST               12 (name)
+                LOAD_ATTR               13 (upper + NULL|self)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 110            JUMP_BACKWARD           44 (to L9)
+
+ 112   L10:     NOP
+
+ 113   L11:     LOAD_GLOBAL              3 (float + NULL)
+                LOAD_FAST               13 (value)
+                CALL                     1
+                STORE_FAST              14 (value_f)
+
+ 115            LOAD_FAST               14 (value_f)
+                LOAD_CONST               4 (0)
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_FALSE       36 (to L13)
+
+ 116            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+
+ 117            LOAD_CONST              21 ('INVALID_')
+                LOAD_FAST               12 (name)
+                LOAD_ATTR               13 (upper + NULL|self)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+
+ 116            CALL                     1
+                POP_TOP
+       L12:     JUMP_BACKWARD           98 (to L9)
+
+ 120   L13:     LOAD_FAST_LOAD_FAST    235 (value_f, numeric)
+                LOAD_FAST               12 (name)
+                STORE_SUBSCR
+       L14:     JUMP_BACKWARD          104 (to L9)
+
+ 107   L15:     END_FOR
+                POP_TOP
+
+ 127            LOAD_GLOBAL             15 (len + NULL)
+                LOAD_FAST               11 (numeric)
+                CALL                     1
+                LOAD_CONST              22 (4)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE      117 (to L22)
+                LOAD_FAST                2 (direction)
+                LOAD_CONST              13 (('LONG', 'SHORT'))
+                CONTAINS_OP              0
+                POP_JUMP_IF_FALSE      111 (to L22)
+
+ 128            LOAD_FAST               11 (numeric)
+                LOAD_CONST               8 ('entry')
+                BINARY_SUBSCR
+                STORE_FAST              15 (entry_f)
+
+ 129            LOAD_FAST               11 (numeric)
+                LOAD_CONST               9 ('sl')
+                BINARY_SUBSCR
+                STORE_FAST              16 (sl_f)
+
+ 130            LOAD_FAST               11 (numeric)
+                LOAD_CONST              10 ('tp1')
+                BINARY_SUBSCR
+                STORE_FAST              17 (tp1_f)
+
+ 131            LOAD_FAST               11 (numeric)
+                LOAD_CONST              11 ('tp2')
+                BINARY_SUBSCR
+                STORE_FAST              18 (tp2_f)
+
+ 133            LOAD_FAST                2 (direction)
+                LOAD_CONST              23 ('LONG')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       40 (to L19)
+
+ 135            LOAD_FAST               16 (sl_f)
+
+ 136            LOAD_FAST               15 (entry_f)
+
+ 135            SWAP                     2
+                COPY                     2
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE       13 (to L16)
+
+ 137            LOAD_FAST               17 (tp1_f)
+
+ 135            SWAP                     2
+                COPY                     2
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        6 (to L16)
+
+ 138            LOAD_FAST               18 (tp2_f)
+
+ 135            COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_TRUE        19 (to L18)
+                JUMP_FORWARD             1 (to L17)
+       L16:     POP_TOP
+
+ 140   L17:     LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+
+ 141            LOAD_CONST              24 ('INVALID_LONG_PRICE_STRUCTURE')
+
+ 140            CALL                     1
+                POP_TOP
+
+  --   L18:     JUMP_FORWARD            45 (to L22)
+
+ 144   L19:     LOAD_FAST                2 (direction)
+                LOAD_CONST              25 ('SHORT')
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_FALSE       39 (to L22)
+
+ 146            LOAD_FAST               18 (tp2_f)
+
+ 147            LOAD_FAST               17 (tp1_f)
+
+ 146            SWAP                     2
+                COPY                     2
+                COMPARE_OP              58 (bool(<=))
+                POP_JUMP_IF_FALSE       13 (to L20)
+
+ 148            LOAD_FAST               15 (entry_f)
+
+ 146            SWAP                     2
+                COPY                     2
+                COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_FALSE        6 (to L20)
+
+ 149            LOAD_FAST               16 (sl_f)
+
+ 146            COMPARE_OP              18 (bool(<))
+                POP_JUMP_IF_TRUE        19 (to L22)
+                JUMP_FORWARD             1 (to L21)
+       L20:     POP_TOP
+
+ 151   L21:     LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+
+ 152            LOAD_CONST              26 ('INVALID_SHORT_PRICE_STRUCTURE')
+
+ 151            CALL                     1
+                POP_TOP
+
+ 155   L22:     LOAD_GLOBAL             15 (len + NULL)
+                LOAD_FAST                3 (reasons)
+                CALL                     1
+                LOAD_CONST               4 (0)
+                COMPARE_OP              72 (==)
+                STORE_FAST              19 (approved)
+
+ 158            LOAD_FAST                1 (symbol)
+
+ 159            LOAD_FAST                2 (direction)
+
+ 160            LOAD_FAST                4 (confidence)
+
+ 161            LOAD_FAST                5 (rr)
+
+ 162            LOAD_FAST                6 (entry)
+
+ 163            LOAD_FAST                7 (sl)
+
+ 164            LOAD_FAST                8 (tp1)
+
+ 165            LOAD_FAST                9 (tp2)
+
+ 168            LOAD_FAST               19 (approved)
+                TO_BOOL
+                POP_JUMP_IF_FALSE        2 (to L23)
+
+ 167            LOAD_CONST              27 ('QUALIFIED')
+                JUMP_FORWARD             1 (to L24)
+
+ 169   L23:     LOAD_CONST              28 ('REJECTED')
+
+ 171   L24:     LOAD_FAST               19 (approved)
+
+ 172            LOAD_FAST                3 (reasons)
+
+ 173            LOAD_CONST              29 ('PHASE_8')
+
+ 174            LOAD_CONST              30 ('PHASE_7')
+
+ 157            LOAD_CONST              31 (('symbol', 'direction', 'confidence', 'rr', 'entry', 'sl', 'tp1', 'tp2', 'decision', 'qualified', 'reasons', 'source_phase', 'levels_owner'))
+                BUILD_CONST_KEY_MAP     13
+                RETURN_VALUE
+
+  --   L25:     PUSH_EXC_INFO
+
+  69            LOAD_GLOBAL              4 (TypeError)
+                LOAD_GLOBAL              6 (ValueError)
+                BUILD_TUPLE              2
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       23 (to L27)
+                POP_TOP
+
+  70            LOAD_CONST               4 (0)
+                STORE_FAST               4 (confidence)
+
+  71            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST               5 ('INVALID_CONFIDENCE')
+                CALL                     1
+                POP_TOP
+       L26:     POP_EXCEPT
+                EXTENDED_ARG             2
+                JUMP_BACKWARD_NO_INTERRUPT 529 (to L2)
+
+  69   L27:     RERAISE                  0
+
+  --   L28:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L29:     PUSH_EXC_INFO
+
+  77            LOAD_GLOBAL              4 (TypeError)
+                LOAD_GLOBAL              6 (ValueError)
+                BUILD_TUPLE              2
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       23 (to L31)
+                POP_TOP
+
+  78            LOAD_CONST               4 (0)
+                STORE_FAST               5 (rr)
+
+  79            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+                LOAD_CONST               7 ('INVALID_RR')
+                CALL                     1
+                POP_TOP
+       L30:     POP_EXCEPT
+                EXTENDED_ARG             2
+                JUMP_BACKWARD_NO_INTERRUPT 543 (to L4)
+
+  77   L31:     RERAISE                  0
+
+  --   L32:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L33:     PUSH_EXC_INFO
+
+ 122            LOAD_GLOBAL              4 (TypeError)
+                LOAD_GLOBAL              6 (ValueError)
+                BUILD_TUPLE              2
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       39 (to L35)
+                POP_TOP
+
+ 123            LOAD_FAST                3 (reasons)
+                LOAD_ATTR                9 (append + NULL|self)
+
+ 124            LOAD_CONST              21 ('INVALID_')
+                LOAD_FAST               12 (name)
+                LOAD_ATTR               13 (upper + NULL|self)
+                CALL                     0
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+
+ 123            CALL                     1
+                POP_TOP
+       L34:     POP_EXCEPT
+                EXTENDED_ARG             1
+                JUMP_BACKWARD          415 (to L9)
+
+ 122   L35:     RERAISE                  0
+
+  --   L36:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L1 to L2 -> L25 [0]
+  L3 to L4 -> L29 [0]
+  L11 to L12 -> L33 [1]
+  L13 to L14 -> L33 [1]
+  L25 to L26 -> L28 [1] lasti
+  L27 to L28 -> L28 [1] lasti
+  L29 to L30 -> L32 [1] lasti
+  L31 to L32 -> L32 [1] lasti
+  L33 to L34 -> L36 [2] lasti
+  L35 to L36 -> L36 [2] lasti
+
+Disassembly of <code object scan at 0xb4000076d5f155b0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 178>:
+ 178            RESUME                   0
+
+ 179            LOAD_GLOBAL              1 (load_phase8 + NULL)
+                CALL                     0
+                STORE_FAST               0 (candidates)
+
+ 181            BUILD_LIST               0
+                STORE_FAST               1 (results)
+
+ 182            BUILD_LIST               0
+                STORE_FAST               2 (qualified)
+
+ 183            BUILD_LIST               0
+                STORE_FAST               3 (rejected)
+
+ 185            LOAD_GLOBAL              2 (time)
+                LOAD_ATTR                2 (time)
+                PUSH_NULL
+                CALL                     0
+                STORE_FAST               4 (started)
+
+ 187            LOAD_GLOBAL              5 (print + NULL)
+
+ 188            LOAD_CONST               1 ('PHASE 9 STARTING — ')
+
+ 189            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                0 (candidates)
+                CALL                     1
+                FORMAT_SIMPLE
+                LOAD_CONST               2 (' PHASE 8 VALIDATED CANDIDATES')
+
+ 188            BUILD_STRING             3
+
+ 190            LOAD_CONST               3 (True)
+
+ 187            LOAD_CONST               4 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 193            LOAD_GLOBAL              9 (enumerate + NULL)
+
+ 194            LOAD_FAST                0 (candidates)
+
+ 195            LOAD_CONST               5 (1)
+
+ 193            LOAD_CONST               6 (('start',))
+                CALL_KW                  2
+                GET_ITER
+        L1:     FOR_ITER               126 (to L6)
+                UNPACK_SEQUENCE          2
+                STORE_FAST_STORE_FAST   86 (index, candidate)
+
+ 197            LOAD_FAST                6 (candidate)
+                LOAD_ATTR               11 (get + NULL|self)
+
+ 198            LOAD_CONST               7 ('symbol')
+
+ 199            LOAD_CONST               8 ('UNKNOWN')
+
+ 197            CALL                     2
+                STORE_FAST               7 (symbol)
+
+ 202            LOAD_GLOBAL              5 (print + NULL)
+
+ 203            LOAD_CONST               9 ('PHASE 9 DECISION ')
+                LOAD_FAST                5 (index)
+                FORMAT_SIMPLE
+                LOAD_CONST              10 ('/')
+
+ 204            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                0 (candidates)
+                CALL                     1
+                FORMAT_SIMPLE
+                LOAD_CONST              11 (' ')
+                LOAD_FAST                7 (symbol)
+                FORMAT_SIMPLE
+
+ 203            BUILD_STRING             6
+
+ 205            LOAD_CONST               3 (True)
+
+ 202            LOAD_CONST               4 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 208            NOP
+
+ 209    L2:     LOAD_GLOBAL             13 (validate_candidate + NULL)
+
+ 210            LOAD_FAST                6 (candidate)
+
+ 209            CALL                     1
+                STORE_FAST               8 (result)
+
+ 213            LOAD_FAST                1 (results)
+                LOAD_ATTR               15 (append + NULL|self)
+                LOAD_FAST                8 (result)
+                CALL                     1
+                POP_TOP
+
+ 215            LOAD_FAST                8 (result)
+                LOAD_CONST              12 ('qualified')
+                BINARY_SUBSCR
+                TO_BOOL
+                POP_JUMP_IF_FALSE       19 (to L4)
+
+ 216            LOAD_FAST                2 (qualified)
+                LOAD_ATTR               15 (append + NULL|self)
+                LOAD_FAST                8 (result)
+                CALL                     1
+                POP_TOP
+        L3:     JUMP_BACKWARD          109 (to L1)
+
+ 218    L4:     LOAD_FAST                3 (rejected)
+                LOAD_ATTR               15 (append + NULL|self)
+                LOAD_FAST                8 (result)
+                CALL                     1
+                POP_TOP
+        L5:     JUMP_BACKWARD          128 (to L1)
+
+ 193    L6:     END_FOR
+                POP_TOP
+
+ 231            LOAD_FAST                2 (qualified)
+                LOAD_ATTR               19 (sort + NULL|self)
+
+ 232            LOAD_CONST              18 (<code object <lambda> at 0x7645613e10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 232>)
+                MAKE_FUNCTION
+
+ 236            LOAD_CONST               3 (True)
+
+ 231            LOAD_CONST              19 (('key', 'reverse'))
+                CALL_KW                  2
+                POP_TOP
+
+ 239            LOAD_GLOBAL             21 (round + NULL)
+
+ 240            LOAD_GLOBAL              2 (time)
+                LOAD_ATTR                2 (time)
+                PUSH_NULL
+                CALL                     0
+                LOAD_FAST                4 (started)
+                BINARY_OP               10 (-)
+
+ 241            LOAD_CONST              20 (2)
+
+ 239            CALL                     2
+                STORE_FAST              10 (elapsed)
+
+ 245            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                0 (candidates)
+                CALL                     1
+
+ 246            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                1 (results)
+                CALL                     1
+
+ 247            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                2 (qualified)
+                CALL                     1
+
+ 248            LOAD_GLOBAL              7 (len + NULL)
+                LOAD_FAST                3 (rejected)
+                CALL                     1
+
+ 249            LOAD_FAST               10 (elapsed)
+
+ 250            LOAD_FAST                2 (qualified)
+
+ 251            LOAD_FAST                3 (rejected)
+
+ 252            LOAD_FAST                1 (results)
+
+ 244            LOAD_CONST              21 (('phase8_candidates', 'evaluated', 'qualified', 'rejected', 'scan_seconds', 'qualified_candidates', 'rejected_candidates', 'all_results'))
+                BUILD_CONST_KEY_MAP      8
+                RETURN_VALUE
+
+  --    L7:     PUSH_EXC_INFO
+
+ 220            LOAD_GLOBAL             16 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       39 (to L11)
+                STORE_FAST               9 (exc)
+
+ 221    L8:     LOAD_FAST                3 (rejected)
+                LOAD_ATTR               15 (append + NULL|self)
+
+ 222            LOAD_FAST                7 (symbol)
+
+ 223            LOAD_CONST              13 ('REJECTED')
+
+ 224            LOAD_CONST              14 (False)
+
+ 226            LOAD_CONST              15 ('DECISION_ERROR: ')
+                LOAD_FAST                9 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+
+ 225            BUILD_LIST               1
+
+ 228            LOAD_CONST              16 ('PHASE_8')
+
+ 221            LOAD_CONST              17 (('symbol', 'decision', 'qualified', 'reasons', 'source_phase'))
+                BUILD_CONST_KEY_MAP      5
+                CALL                     1
+                POP_TOP
+        L9:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               9 (exc)
+                DELETE_FAST              9 (exc)
+                EXTENDED_ARG             1
+                JUMP_BACKWARD          272 (to L1)
+
+  --   L10:     LOAD_CONST               0 (None)
+                STORE_FAST               9 (exc)
+                DELETE_FAST              9 (exc)
+                RERAISE                  1
+
+ 220   L11:     RERAISE                  0
+
+  --   L12:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L7 [1]
+  L4 to L5 -> L7 [1]
+  L7 to L8 -> L12 [2] lasti
+  L8 to L9 -> L10 [2] lasti
+  L10 to L12 -> L12 [2] lasti
+
+Disassembly of <code object <lambda> at 0x7645613e10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 232>:
+232           RESUME                   0
+
+233           LOAD_FAST                0 (x)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               1 ('confidence')
+              LOAD_CONST               2 (0)
+              CALL                     2
+
+234           LOAD_FAST                0 (x)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               3 ('rr')
+              LOAD_CONST               2 (0)
+              CALL                     2
+
+232           BUILD_TUPLE              2
+              RETURN_VALUE
+
+Disassembly of <code object build_state at 0x76455674b0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 256>:
+256           RESUME                   0
+
+262           LOAD_GLOBAL              0 (PROJECT)
+
+263           LOAD_GLOBAL              2 (PHASE)
+
+264           LOAD_GLOBAL              4 (VERSION)
+
+265           LOAD_GLOBAL              7 (now_utc + NULL)
+              CALL                     0
+
+266           LOAD_FAST                1 (cycle)
+
+267           LOAD_FAST                2 (status)
+
+271           LOAD_FAST                0 (result)
+              LOAD_CONST               1 ('phase8_candidates')
+              BINARY_SUBSCR
+
+273           LOAD_FAST                0 (result)
+              LOAD_CONST               2 ('evaluated')
+              BINARY_SUBSCR
+
+275           LOAD_FAST                0 (result)
+              LOAD_CONST               3 ('qualified')
+              BINARY_SUBSCR
+
+277           LOAD_FAST                0 (result)
+              LOAD_CONST               4 ('rejected')
+              BINARY_SUBSCR
+
+279           LOAD_FAST                0 (result)
+              LOAD_CONST               5 ('scan_seconds')
+              BINARY_SUBSCR
+
+281           LOAD_FAST                0 (result)
+              LOAD_CONST               6 ('qualified_candidates')
+              BINARY_SUBSCR
+
+283           LOAD_FAST                0 (result)
+              LOAD_CONST               7 ('rejected_candidates')
+              BINARY_SUBSCR
+
+285           LOAD_FAST                0 (result)
+              LOAD_CONST               8 ('all_results')
+              BINARY_SUBSCR
+
+269           LOAD_CONST               9 (('phase8_candidates', 'evaluated', 'qualified', 'rejected', 'scan_seconds', 'qualified_candidates', 'rejected_candidates', 'all_results'))
+              BUILD_CONST_KEY_MAP      8
+
+289           LOAD_CONST              10 (75.0)
+
+290           LOAD_CONST              11 (1.5)
+
+291           LOAD_CONST              12 (True)
+
+288           LOAD_CONST              13 (('minimum_confidence', 'minimum_rr', 'price_structure_required'))
+              BUILD_CONST_KEY_MAP      3
+
+295           LOAD_CONST              14 ('PHASE_7')
+
+296           BUILD_LIST               0
+              LOAD_CONST              15 (('entry', 'sl', 'tp1', 'tp2', 'rr'))
+              LIST_EXTEND              1
+
+297           LOAD_CONST              16 ('PHASE_8')
+
+298           LOAD_CONST               6 ('qualified_candidates')
+
+294           LOAD_CONST              17 (('levels_owner', 'level_fields', 'input_phase', 'output_container'))
+              BUILD_CONST_KEY_MAP      4
+
+302           LOAD_CONST              18 (False)
+
+303           LOAD_CONST              18 (False)
+
+304           LOAD_CONST              18 (False)
+
+305           LOAD_CONST              18 (False)
+
+306           LOAD_CONST              18 (False)
+
+307           LOAD_CONST              18 (False)
+
+308           LOAD_CONST              18 (False)
+
+301           LOAD_CONST              19 (('execution_authorized', 'order_submission', 'bot_armed', 'live_execution', 'withdrawals', 'deposits', 'transfers'))
+              BUILD_CONST_KEY_MAP      7
+
+261           LOAD_CONST              20 (('project', 'phase', 'version', 'timestamp_utc', 'cycle', 'status', 'decision_gate', 'gates', 'contract', 'execution_boundary'))
+              BUILD_CONST_KEY_MAP     10
+              RETURN_VALUE
+
+Disassembly of <code object display at 0xb4000076d5f05fe0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 313>:
+313           RESUME                   0
+
+314           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+315           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+316           LOAD_GLOBAL              1 (print + NULL)
+
+317           LOAD_CONST               2 ('CRYPTOMASTERX1 — PHASE 9 DECISION GATE')
+
+316           CALL                     1
+              POP_TOP
+
+320           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+322           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               3 ('Cycle                    : ')
+              LOAD_FAST                1 (cycle)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+323           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               4 ('UTC                      : ')
+              LOAD_GLOBAL              3 (now_utc + NULL)
+              CALL                     0
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+324           LOAD_GLOBAL              1 (print + NULL)
+
+325           LOAD_CONST               5 ('Phase 8 validated input : ')
+
+326           LOAD_FAST                0 (result)
+              LOAD_CONST               6 ('phase8_candidates')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+
+325           BUILD_STRING             2
+
+324           CALL                     1
+              POP_TOP
+
+328           LOAD_GLOBAL              1 (print + NULL)
+
+329           LOAD_CONST               7 ('Evaluated                : ')
+
+330           LOAD_FAST                0 (result)
+              LOAD_CONST               8 ('evaluated')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+
+329           BUILD_STRING             2
+
+328           CALL                     1
+              POP_TOP
+
+332           LOAD_GLOBAL              1 (print + NULL)
+
+333           LOAD_CONST               9 ('Qualified                : ')
+
+334           LOAD_FAST                0 (result)
+              LOAD_CONST              10 ('qualified')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+
+333           BUILD_STRING             2
+
+332           CALL                     1
+              POP_TOP
+
+336           LOAD_GLOBAL              1 (print + NULL)
+
+337           LOAD_CONST              11 ('Rejected                 : ')
+
+338           LOAD_FAST                0 (result)
+              LOAD_CONST              12 ('rejected')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+
+337           BUILD_STRING             2
+
+336           CALL                     1
+              POP_TOP
+
+341           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+342           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              13 ('QUALIFIED CANDIDATES')
+              CALL                     1
+              POP_TOP
+
+343           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              14 ('------------------------------------------------------------------------------')
+              CALL                     1
+              POP_TOP
+
+345           LOAD_FAST                0 (result)
+              LOAD_CONST              15 ('qualified_candidates')
+              BINARY_SUBSCR
+              TO_BOOL
+              POP_JUMP_IF_TRUE        12 (to L1)
+
+346           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              16 ('None')
+              CALL                     1
+              POP_TOP
+              JUMP_FORWARD            70 (to L4)
+
+348   L1:     LOAD_GLOBAL              5 (enumerate + NULL)
+
+349           LOAD_FAST                0 (result)
+              LOAD_CONST              15 ('qualified_candidates')
+              BINARY_SUBSCR
+
+350           LOAD_CONST              17 (1)
+
+348           LOAD_CONST              18 (('start',))
+              CALL_KW                  2
+              GET_ITER
+      L2:     FOR_ITER                53 (to L3)
+              UNPACK_SEQUENCE          2
+              STORE_FAST_STORE_FAST   35 (index, item)
+
+352           LOAD_GLOBAL              1 (print + NULL)
+
+353           LOAD_FAST                2 (index)
+              LOAD_CONST              19 ('2')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              20 ('. ')
+
+354           LOAD_FAST                3 (item)
+              LOAD_CONST              21 ('symbol')
+              BINARY_SUBSCR
+              LOAD_CONST              22 ('<16')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              23 (' ')
+
+355           LOAD_FAST                3 (item)
+              LOAD_CONST              24 ('direction')
+              BINARY_SUBSCR
+              LOAD_CONST              25 ('<6')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              26 (' CONF: ')
+
+357           LOAD_FAST                3 (item)
+              LOAD_CONST              27 ('confidence')
+              BINARY_SUBSCR
+              LOAD_CONST              28 ('.2f')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              29 (' R:R: ')
+
+359           LOAD_FAST                3 (item)
+              LOAD_CONST              30 ('rr')
+              BINARY_SUBSCR
+              LOAD_CONST              28 ('.2f')
+              FORMAT_WITH_SPEC
+              LOAD_CONST              31 (' DECISION: ')
+
+361           LOAD_FAST                3 (item)
+              LOAD_CONST              32 ('decision')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+
+353           BUILD_STRING            11
+
+352           CALL                     1
+              POP_TOP
+              JUMP_BACKWARD           55 (to L2)
+
+348   L3:     END_FOR
+              POP_TOP
+
+364   L4:     LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+365           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+366           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              33 ('PHASE 9 DECISION GATE COMPLETE')
+              CALL                     1
+              POP_TOP
+
+367           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+369           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+370           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              34 ('Execution boundary: LOCKED')
+              CALL                     1
+              POP_TOP
+
+371           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              35 ('Order submission   : DISABLED')
+              CALL                     1
+              POP_TOP
+
+372           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              36 ('Bot armed          : NO')
+              CALL                     1
+              POP_TOP
+
+373           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST              37 ('Live execution     : FALSE')
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object main at 0xb4000076d5f10c60, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 376>:
+ 376            RESUME                   0
+
+ 377            LOAD_CONST               1 (0)
+                STORE_FAST               0 (cycle)
+
+ 379            NOP
+
+ 380    L1:     LOAD_FAST                0 (cycle)
+                LOAD_CONST               3 (1)
+                BINARY_OP               13 (+=)
+                STORE_FAST               0 (cycle)
+
+ 382            NOP
+
+ 383    L2:     LOAD_GLOBAL              1 (scan + NULL)
+                CALL                     0
+                STORE_FAST               1 (result)
+
+ 385            LOAD_GLOBAL              3 (build_state + NULL)
+
+ 386            LOAD_FAST                1 (result)
+
+ 387            LOAD_FAST                0 (cycle)
+
+ 388            LOAD_CONST               4 ('RUNNING')
+
+ 385            CALL                     3
+                STORE_FAST               2 (state)
+
+ 391            LOAD_GLOBAL              5 (save_json + NULL)
+
+ 392            LOAD_GLOBAL              6 (PHASE9_STATE)
+
+ 393            LOAD_FAST                2 (state)
+
+ 391            CALL                     2
+                POP_TOP
+
+ 396            LOAD_GLOBAL              5 (save_json + NULL)
+
+ 397            LOAD_GLOBAL              8 (PHASE9_REPORT)
+
+ 398            LOAD_FAST                2 (state)
+
+ 396            CALL                     2
+                POP_TOP
+
+ 401            LOAD_GLOBAL             11 (display + NULL)
+
+ 402            LOAD_FAST                1 (result)
+
+ 403            LOAD_FAST                0 (cycle)
+
+ 401            CALL                     2
+                POP_TOP
+
+ 406            LOAD_GLOBAL             13 (print + NULL)
+
+ 407            LOAD_CONST               5 ('\nNext Phase 9 scan in ')
+
+ 408            LOAD_GLOBAL             14 (REFRESH_SECONDS)
+                FORMAT_SIMPLE
+                LOAD_CONST               6 (' seconds...')
+
+ 407            BUILD_STRING             3
+
+ 409            LOAD_CONST               2 (True)
+
+ 406            LOAD_CONST               7 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 412            LOAD_GLOBAL             16 (time)
+                LOAD_ATTR               18 (sleep)
+                PUSH_NULL
+
+ 413            LOAD_GLOBAL             14 (REFRESH_SECONDS)
+
+ 412            CALL                     1
+                POP_TOP
+
+ 379    L3:     JUMP_BACKWARD          119 (to L1)
+
+  --    L4:     PUSH_EXC_INFO
+
+ 416            LOAD_GLOBAL             20 (KeyboardInterrupt)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE      112 (to L7)
+                POP_TOP
+
+ 417            LOAD_GLOBAL              6 (PHASE9_STATE)
+                LOAD_ATTR               23 (exists + NULL|self)
+                CALL                     0
+                TO_BOOL
+                POP_JUMP_IF_FALSE       74 (to L5)
+
+ 418            LOAD_GLOBAL             24 (json)
+                LOAD_ATTR               26 (loads)
+                PUSH_NULL
+
+ 419            LOAD_GLOBAL              6 (PHASE9_STATE)
+                LOAD_ATTR               29 (read_text + NULL|self)
+                CALL                     0
+
+ 418            CALL                     1
+                STORE_FAST               3 (existing)
+
+ 422            LOAD_CONST               8 ('STOPPED')
+                LOAD_FAST                3 (existing)
+                LOAD_CONST               9 ('status')
+                STORE_SUBSCR
+
+ 423            LOAD_GLOBAL             31 (now_utc + NULL)
+                CALL                     0
+                LOAD_FAST                3 (existing)
+                LOAD_CONST              10 ('stopped_utc')
+                STORE_SUBSCR
+
+ 425            LOAD_GLOBAL              5 (save_json + NULL)
+
+ 426            LOAD_GLOBAL              6 (PHASE9_STATE)
+
+ 427            LOAD_FAST                3 (existing)
+
+ 425            CALL                     2
+                POP_TOP
+
+ 430    L5:     LOAD_GLOBAL             13 (print + NULL)
+
+ 431            LOAD_CONST              11 ('\nPHASE 9 STOPPED.')
+
+ 432            LOAD_CONST               2 (True)
+
+ 430            LOAD_CONST               7 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 435    L6:     POP_EXCEPT
+                RETURN_CONST             0 (None)
+
+ 437    L7:     LOAD_GLOBAL             32 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       49 (to L11)
+                STORE_FAST               4 (exc)
+
+ 438    L8:     LOAD_GLOBAL             13 (print + NULL)
+
+ 439            LOAD_CONST              12 ('PHASE 9 ERROR: ')
+                LOAD_FAST                4 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+
+ 440            LOAD_CONST               2 (True)
+
+ 438            LOAD_CONST               7 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+
+ 443            LOAD_GLOBAL             16 (time)
+                LOAD_ATTR               18 (sleep)
+                PUSH_NULL
+
+ 444            LOAD_GLOBAL             14 (REFRESH_SECONDS)
+
+ 443            CALL                     1
+                POP_TOP
+        L9:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               4 (exc)
+                DELETE_FAST              4 (exc)
+                JUMP_BACKWARD_NO_INTERRUPT 176 (to L3)
+
+  --   L10:     LOAD_CONST               0 (None)
+                STORE_FAST               4 (exc)
+                DELETE_FAST              4 (exc)
+                RERAISE                  1
+
+ 437   L11:     RERAISE                  0
+
+  --   L12:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L4 [0]
+  L4 to L6 -> L12 [1] lasti
+  L7 to L8 -> L12 [1] lasti
+  L8 to L9 -> L10 [1] lasti
+  L10 to L12 -> L12 [1] lasti
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] 0
+[1] None
+[2] ('Path',)
+[3] ('datetime', 'timezone')
+[4] 'CryptoMasterX1'
+[5] 'PHASE_9'
+[6] '9.0-CLEAN'
+[7] 'state'
+[8] 'reports'
+[9] 'phase8_entry_validation.json'
+[10] 'phase9_decision_gate.json'
+[11] 'phase9_decision_gate_report.json'
+[12] 60
+[13] False
+[14] <code object now_utc at 0x7645631f10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 27>
+[15] <code object save_json at 0x7645644f50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 31>
+[16] <code object load_phase8 at 0x764562d1a0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 38>
+[17] <code object validate_candidate at 0xb4000076c5ee9550, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 59>
+[18] <code object scan at 0xb4000076d5f155b0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 178>
+[19] <code object build_state at 0x76455674b0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 256>
+[20] <code object display at 0xb4000076d5f05fe0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 313>
+[21] <code object main at 0xb4000076d5f10c60, file "/data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py", line 376>
+[22] '__main__'
+[23] ('RUNNING',)
+
+
+NAMES
+=====
+
+'json'
+'time'
+'pathlib'
+'Path'
+'datetime'
+'timezone'
+'PROJECT'
+'PHASE'
+'VERSION'
+'__file__'
+'resolve'
+'parent'
+'BASE_DIR'
+'STATE_DIR'
+'REPORT_DIR'
+'PHASE8_STATE'
+'PHASE9_STATE'
+'PHASE9_REPORT'
+'REFRESH_SECONDS'
+'EXECUTION_AUTHORIZED'
+'ORDER_SUBMISSION'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'now_utc'
+'save_json'
+'load_phase8'
+'validate_candidate'
+'scan'
+'build_state'
+'display'
+'main'
+'__name__'

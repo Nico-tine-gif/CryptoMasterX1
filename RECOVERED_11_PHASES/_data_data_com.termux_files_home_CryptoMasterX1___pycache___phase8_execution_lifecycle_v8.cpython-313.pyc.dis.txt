@@ -1,0 +1,330 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/__pycache__/phase8_execution_lifecycle_v8.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\nCryptoMasterX1\nPHASE 8 — TRADE LIFECYCLE MANAGEMENT\n\nPhase 8 manages the lifecycle of trades that Phase 7 actually\nopens.\n\nIt does NOT reconstruct Entry/SL/TP.\nIt consumes the execution/lifecycle state.\n')
+              STORE_NAME               0 (__doc__)
+
+ 14           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              1 (json)
+              STORE_NAME               1 (json)
+
+ 15           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              2 (datetime)
+              IMPORT_FROM              2 (datetime)
+              STORE_NAME               2 (datetime)
+              IMPORT_FROM              3 (timezone)
+              STORE_NAME               3 (timezone)
+              POP_TOP
+
+ 16           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('Path',))
+              IMPORT_NAME              4 (pathlib)
+              IMPORT_FROM              5 (Path)
+              STORE_NAME               5 (Path)
+              POP_TOP
+
+ 19           LOAD_NAME                5 (Path)
+              PUSH_NULL
+              LOAD_NAME                6 (__file__)
+              CALL                     1
+              LOAD_ATTR               15 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               16 (parent)
+              STORE_NAME               9 (ROOT)
+
+ 20           LOAD_NAME                9 (ROOT)
+              LOAD_CONST               5 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              10 (STATE)
+
+ 22           LOAD_NAME               10 (STATE)
+              LOAD_CONST               6 ('phase7_final_validation.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              11 (PHASE7_STATE)
+
+ 23           LOAD_NAME               10 (STATE)
+              LOAD_CONST               7 ('phase8_execution_lifecycle.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              12 (PHASE8_STATE)
+
+ 25           LOAD_CONST               8 (False)
+              STORE_NAME              13 (EXECUTION_AUTHORIZED)
+
+ 26           LOAD_CONST               8 (False)
+              STORE_NAME              14 (BOT_ARMED)
+
+ 27           LOAD_CONST               8 (False)
+              STORE_NAME              15 (LIVE_EXECUTION)
+
+ 28           LOAD_CONST               8 (False)
+              STORE_NAME              16 (ORDER_SUBMISSION)
+
+ 29           LOAD_CONST               8 (False)
+              STORE_NAME              17 (WITHDRAWALS)
+
+ 32           LOAD_CONST               9 (<code object now_utc at 0x7645631f10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 32>)
+              MAKE_FUNCTION
+              STORE_NAME              18 (now_utc)
+
+ 36           LOAD_CONST              10 (<code object load_json at 0x76455c1bb0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 36>)
+              MAKE_FUNCTION
+              STORE_NAME              19 (load_json)
+
+ 42           LOAD_CONST              11 (<code object save_json at 0x7645613e10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 42>)
+              MAKE_FUNCTION
+              STORE_NAME              20 (save_json)
+
+ 46           LOAD_CONST              12 (<code object main at 0xb400007795ef06f0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 46>)
+              MAKE_FUNCTION
+              STORE_NAME              21 (main)
+
+ 96           LOAD_NAME               22 (__name__)
+              LOAD_CONST              13 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+ 97           LOAD_NAME               21 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+ 96   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object now_utc at 0x7645631f10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 32>:
+ 32           RESUME                   0
+
+ 33           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object load_json at 0x76455c1bb0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 36>:
+ 36           RESUME                   0
+
+ 37           LOAD_FAST                0 (path)
+              LOAD_ATTR                1 (exists + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_TRUE         2 (to L1)
+
+ 38           BUILD_MAP                0
+              RETURN_VALUE
+
+ 39   L1:     LOAD_GLOBAL              2 (json)
+              LOAD_ATTR                4 (loads)
+              PUSH_NULL
+              LOAD_FAST                0 (path)
+              LOAD_ATTR                7 (read_text + NULL|self)
+              CALL                     0
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object save_json at 0x7645613e10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 42>:
+ 42           RESUME                   0
+
+ 43           LOAD_FAST                0 (path)
+              LOAD_ATTR                1 (write_text + NULL|self)
+              LOAD_GLOBAL              2 (json)
+              LOAD_ATTR                4 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               1 (2)
+              LOAD_CONST               2 (('indent',))
+              CALL_KW                  2
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object main at 0xb400007795ef06f0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 46>:
+ 46           RESUME                   0
+
+ 47           LOAD_GLOBAL              0 (STATE)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('exist_ok',))
+              CALL_KW                  1
+              POP_TOP
+
+ 49           LOAD_GLOBAL              5 (load_json + NULL)
+              LOAD_GLOBAL              6 (PHASE7_STATE)
+              CALL                     1
+              STORE_FAST               0 (phase7)
+
+ 52           LOAD_CONST               3 (8)
+
+ 53           LOAD_CONST               4 ('TRADE LIFECYCLE MANAGEMENT')
+
+ 54           LOAD_GLOBAL              9 (now_utc + NULL)
+              CALL                     0
+
+ 56           LOAD_GLOBAL             11 (len + NULL)
+              LOAD_FAST                0 (phase7)
+              LOAD_ATTR               13 (get + NULL|self)
+              LOAD_CONST               5 ('validated')
+              BUILD_LIST               0
+              CALL                     2
+              CALL                     1
+
+ 59           LOAD_GLOBAL             14 (EXECUTION_AUTHORIZED)
+
+ 60           LOAD_GLOBAL             16 (BOT_ARMED)
+
+ 61           LOAD_GLOBAL             18 (LIVE_EXECUTION)
+
+ 62           LOAD_GLOBAL             20 (ORDER_SUBMISSION)
+
+ 63           LOAD_GLOBAL             22 (WITHDRAWALS)
+
+ 58           LOAD_CONST               6 (('execution_authorized', 'bot_armed', 'live_execution', 'order_submission', 'withdrawals'))
+              BUILD_CONST_KEY_MAP      5
+
+ 66           LOAD_CONST               7 (0)
+
+ 67           BUILD_LIST               0
+
+ 68           BUILD_LIST               0
+
+ 69           BUILD_LIST               0
+
+ 70           BUILD_LIST               0
+
+ 71           BUILD_LIST               0
+
+ 74           LOAD_CONST               8 (False)
+
+ 75           LOAD_CONST               1 (True)
+
+ 76           LOAD_CONST               1 (True)
+
+ 77           LOAD_CONST               1 (True)
+
+ 78           LOAD_CONST               1 (True)
+
+ 79           LOAD_CONST               1 (True)
+
+ 80           LOAD_CONST               1 (True)
+
+ 73           LOAD_CONST               9 (('reconstruct_phase6_trade', 'manage_tp1', 'manage_tp2', 'manage_sl', 'monitor_fills', 'monitor_positions', 'reconcile_exchange_state'))
+              BUILD_CONST_KEY_MAP      7
+
+ 51           LOAD_CONST              10 (('phase', 'phase_name', 'timestamp_utc', 'phase7_input', 'execution_boundary', 'orders_submitted', 'active_positions', 'fills', 'partial_fills', 'closed_positions', 'lifecycle_events', 'phase8_rules'))
+              BUILD_CONST_KEY_MAP     12
+              STORE_FAST               1 (output)
+
+ 84           LOAD_GLOBAL             25 (save_json + NULL)
+              LOAD_GLOBAL             26 (PHASE8_STATE)
+              LOAD_FAST                1 (output)
+              CALL                     2
+              POP_TOP
+
+ 86           LOAD_GLOBAL             29 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 87           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              11 ('PHASE 8 — TRADE LIFECYCLE MANAGEMENT')
+              CALL                     1
+              POP_TOP
+
+ 88           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              12 ('Phase 7 input       : ')
+              LOAD_FAST                1 (output)
+              LOAD_CONST              13 ('phase7_input')
+              BINARY_SUBSCR
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+
+ 89           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              14 ('Orders submitted    : 0')
+              CALL                     1
+              POP_TOP
+
+ 90           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              15 ('Lifecycle status    : STANDBY')
+              CALL                     1
+              POP_TOP
+
+ 91           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              16 ('Phase 6 rebuilding  : FORBIDDEN')
+              CALL                     1
+              POP_TOP
+
+ 92           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              17 ('Withdrawals         : FORBIDDEN')
+              CALL                     1
+              POP_TOP
+
+ 93           LOAD_GLOBAL             29 (print + NULL)
+              LOAD_CONST              18 ('State saved         : ')
+              LOAD_GLOBAL             26 (PHASE8_STATE)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1\nPHASE 8 — TRADE LIFECYCLE MANAGEMENT\n\nPhase 8 manages the lifecycle of trades that Phase 7 actually\nopens.\n\nIt does NOT reconstruct Entry/SL/TP.\nIt consumes the execution/lifecycle state.\n'
+[1] 0
+[2] None
+[3] ('datetime', 'timezone')
+[4] ('Path',)
+[5] 'state'
+[6] 'phase7_final_validation.json'
+[7] 'phase8_execution_lifecycle.json'
+[8] False
+[9] <code object now_utc at 0x7645631f10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 32>
+[10] <code object load_json at 0x76455c1bb0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 36>
+[11] <code object save_json at 0x7645613e10, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 42>
+[12] <code object main at 0xb400007795ef06f0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py", line 46>
+[13] '__main__'
+
+
+NAMES
+=====
+
+'__doc__'
+'json'
+'datetime'
+'timezone'
+'pathlib'
+'Path'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE'
+'PHASE7_STATE'
+'PHASE8_STATE'
+'EXECUTION_AUTHORIZED'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'ORDER_SUBMISSION'
+'WITHDRAWALS'
+'now_utc'
+'load_json'
+'save_json'
+'main'
+'__name__'

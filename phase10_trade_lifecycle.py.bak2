@@ -1,0 +1,108 @@
+import os, json, time, traceback
+
+def round_step_size(quantity, step_size):
+    """Round quantity to valid step size"""
+    from decimal import Decimal, ROUND_DOWN
+    step = Decimal(str(step_size))
+    qty = Decimal(str(quantity))
+    return float((qty // step) * step)
+
+def get_symbol_filters(symbol):
+    """Get symbol filters from exchange info"""
+    try:
+        info = client.get_symbol_info(symbol)
+        for f in info['filters']:
+            if f['filterType'] == 'LOT_SIZE':
+                return {
+                    'stepSize': float(f['stepSize']),
+                    'minQty': float(f['minQty']),
+                    'maxQty': float(f['maxQty'])
+                }
+    except:
+        pass
+    return None
+
+from pathlib import Path
+from datetime import datetime, timezone
+
+BASE = Path.home() / "CryptoMasterX1"
+STATE_DIR = BASE / "state"
+PHASE7_STATE = STATE_DIR / "phase7_entry_intelligence.json"
+PHASE10_STATE = STATE_DIR / "phase10_trade_lifecycle.json"
+
+LIVE = os.getenv("ALLOW_LIVE","false").lower()=="true"
+PAPER = os.getenv("PAPER_MODE","true").lower()=="true"
+ORDERS = LIVE and not PAPER
+
+def get_client():
+    from binance.client import Client
+    d=json.loads((BASE / "state" / "account_binding.json").read_text())
+    return Client(d.get("api_key") or os.getenv("BINANCE_API_KEY"), d.get("api_secret") or os.getenv("BINANCE_API_SECRET"))
+
+def run(state=None):
+    print("=== PHASE 10.1 LIVE ONLY ===")
+    print(f"LIVE={LIVE} PAPER={PAPER} ORDERS={ORDERS}")
+    if not isinstance(state, dict): state={}
+    trades = state.get("phase7_trades") or []
+    if not trades:
+        try:
+            trades=json.loads((STATE_DIR / "phase7_entry_intelligence.json").read_text()).get("trades") or []
+        except: trades=[]
+    if not trades:
+        trades=json.loads((STATE_DIR / "phase6_trade_intelligence.json").read_text()).get("trades") or []
+
+    # LIVE ONLY: top 4 coins, 5.2 USDT each = 20.8 USDT
+    trades = trades[:4]
+    for t in trades:
+        t["position_size"]=5.2
+        t["size"]=5.2
+
+    client = get_client()
+    print(f"BINANCE CLIENT CONNECTED - WILL BUY {len(trades)} COINS LIVE")
+
+    lifecycle=[]; filled=[]
+    for t in trades:
+        sym=t["symbol"]; usdt=5.2
+        try:
+            price=float(client.get_symbol_ticker(symbol=sym)["price"])
+            qty=round(usdt/price, 6)
+            print(f" -> {sym} MARKET BUY qty={qty} price={price} USDT={usdt}")
+            
+try:
+    filters = get_symbol_filters(sym)
+except Exception as e:
+    print(f"Could not get filters for {sym}: {e}")
+    filters = None
+if filters:
+    qty = round_step_size(qty, filters['stepSize'])
+# Round quantity to valid LOT_SIZE
+try:
+    info = client.get_symbol_info(sym)
+    for f in info['filters']:
+        if f['filterType'] == 'LOT_SIZE':
+            from decimal import Decimal
+            step = Decimal(str(f['stepSize']))
+            qty_dec = Decimal(str(qty))
+            qty = float((qty_dec // step) * step)
+            break
+except Exception:
+    pass
+order=client.order_market_buy(symbol=sym, quantity=qty)
+            print(f"    *** FILLED *** OrderId={order['orderId']} ExecutedQty={order['executedQty']} Quote={order['cummulativeQuoteQty']}")
+            t["order_result"]=order
+            t["lifecycle_status"]="LIVE_FILLED"
+            filled.append(t)
+            time.sleep(0.7)
+        except Exception as e:
+            print(f"    *** FAILED {sym}: {e}")
+            traceback.print_exc()
+            t["lifecycle_status"]="FAILED"
+            t["error"]=str(e)
+        lifecycle.append(t)
+
+    PHASE10_STATE.write_text(json.dumps({"phase":"10.1","status":"LIVE_FILLED","live_filled_count":len(filled),"trades":lifecycle,"withdrawals":False,"timestamp_utc":datetime.now(timezone.utc).isoformat()}, indent=2))
+    state["executed"]=filled
+    print(f"\n=== LIVE COMPLETE: {len(filled)}/{len(trades)} FILLED ===")
+    return state
+
+def main(state=None): return run(state)

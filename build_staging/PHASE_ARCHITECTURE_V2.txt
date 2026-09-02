@@ -1,0 +1,87 @@
+CRYPTOMASTERX1 — CONSOLIDATED 8-PHASE ARCHITECTURE
+
+PHASE 1
+SYSTEM / MACHINE CORE
+
+PHASE 2
+ACCOUNT BINDING
+
+PHASE 3
+ACCOUNT + PERMISSION VERIFICATION
+
+PHASE 4
+MARKET SCANNING + DISCOVERY
+- Fresh market data
+- Tradable universe
+- Liquidity filters
+- Market quality filters
+- Bull/bear candidate discovery
+- Candidate handoff
+- NO trade construction
+
+PHASE 5
+TRADE INTELLIGENCE + DETECTORS
+- Consumes Phase 4 candidates only
+- Fresh market data
+- Multi-timeframe analysis
+- Regime
+- Structure
+- Momentum
+- Pullback
+- Reclaim
+- RSI
+- MACD
+- EMA
+- ATR
+- Support/resistance
+- Exhaustion
+- Liquidity
+- Anti-chase
+- Setup qualification
+- NO order submission
+
+PHASE 6
+TRADE VERIFICATION + FINAL CONSTRUCTION
+- Receives Phase 5 qualified setups
+- Refreshes market data
+- Revalidates current price
+- Revalidates direction
+- Revalidates setup
+- Constructs Entry
+- Constructs SL
+- Constructs TP1
+- Constructs TP2
+- Calculates risk
+- Calculates reward
+- Calculates R:R
+- Calculates position size
+- Final trade-ready object
+- NO order submission
+
+PHASE 7
+EXECUTION + ORDER OPENING
+- Receives Phase 6 trade-ready object
+- Final exchange-state check
+- Balance check
+- Symbol filter check
+- Quantity/step-size check
+- Minimum-notional check
+- Duplicate-order/position check
+- Execution authorization gates
+- Order submission
+- Order result
+- NO withdrawal capability
+
+PHASE 8
+TRADE LIFECYCLE MANAGEMENT
+- Position/order monitoring
+- Fill reconciliation
+- Partial fills
+- TP1
+- TP2
+- SL
+- Position closure
+- Failure handling
+- Lifecycle state
+- Trade records
+- NO reconstruction of Phase 6 trade

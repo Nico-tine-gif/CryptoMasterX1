@@ -1,0 +1,390 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/build_staging/actual_rebuild_backup_20260826_130307/__pycache__/phase8_execution_lifecycle_v8.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\nCryptoMasterX1 — Phase 8 Execution + Lifecycle\n\nThis phase consumes ONLY Phase 7 QUALIFIED candidates.\n\nIt does NOT:\n- redo market analysis\n- reconstruct Entry/SL/TP\n- change R:R\n- change position size\n- override Phase 7\n- enable withdrawals\n\nExecution remains locked until deliberately authorized\noutside this preparation pipeline.\n')
+              STORE_NAME               0 (__doc__)
+
+ 20           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              1 (json)
+              STORE_NAME               1 (json)
+
+ 21           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (('Path',))
+              IMPORT_NAME              2 (pathlib)
+              IMPORT_FROM              3 (Path)
+              STORE_NAME               3 (Path)
+              POP_TOP
+
+ 22           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('datetime', 'timezone'))
+              IMPORT_NAME              4 (datetime)
+              IMPORT_FROM              4 (datetime)
+              STORE_NAME               4 (datetime)
+              IMPORT_FROM              5 (timezone)
+              STORE_NAME               5 (timezone)
+              POP_TOP
+
+ 24           LOAD_NAME                3 (Path)
+              PUSH_NULL
+              LOAD_NAME                6 (__file__)
+              CALL                     1
+              LOAD_ATTR               15 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               16 (parent)
+              STORE_NAME               9 (ROOT)
+
+ 25           LOAD_NAME                9 (ROOT)
+              LOAD_CONST               5 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              10 (STATE)
+
+ 27           LOAD_NAME               10 (STATE)
+              LOAD_CONST               6 ('phase7_final_validation.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              11 (PHASE7_STATE)
+
+ 28           LOAD_NAME               10 (STATE)
+              LOAD_CONST               7 ('phase8_execution_lifecycle.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              12 (PHASE8_STATE)
+
+ 30           LOAD_CONST               8 (False)
+              STORE_NAME              13 (EXECUTION_AUTHORIZED)
+
+ 31           LOAD_CONST               8 (False)
+              STORE_NAME              14 (ORDER_SUBMISSION)
+
+ 32           LOAD_CONST               8 (False)
+              STORE_NAME              15 (BOT_ARMED)
+
+ 33           LOAD_CONST               8 (False)
+              STORE_NAME              16 (LIVE_EXECUTION)
+
+ 34           LOAD_CONST               9 (True)
+              STORE_NAME              17 (TRANSMISSION_LOCKED)
+
+ 36           LOAD_CONST               8 (False)
+              STORE_NAME              18 (WITHDRAWALS)
+
+ 37           LOAD_CONST               8 (False)
+              STORE_NAME              19 (DEPOSITS)
+
+ 38           LOAD_CONST               8 (False)
+              STORE_NAME              20 (TRANSFERS)
+
+ 41           LOAD_CONST              10 (<code object now at 0x7645631f10, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 41>)
+              MAKE_FUNCTION
+              STORE_NAME              21 (now)
+
+ 45           LOAD_CONST              11 (<code object save at 0x7645644f50, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 45>)
+              MAKE_FUNCTION
+              STORE_NAME              22 (save)
+
+ 50           LOAD_CONST              12 (<code object main at 0xb4000076d5f155b0, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 50>)
+              MAKE_FUNCTION
+              STORE_NAME              23 (main)
+
+128           LOAD_NAME               24 (__name__)
+              LOAD_CONST              13 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+129           LOAD_NAME               23 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+128   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object now at 0x7645631f10, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 41>:
+ 41           RESUME                   0
+
+ 42           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object save at 0x7645644f50, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 45>:
+ 45           RESUME                   0
+
+ 46           LOAD_FAST                0 (path)
+              LOAD_ATTR                0 (parent)
+              LOAD_ATTR                3 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('parents', 'exist_ok'))
+              CALL_KW                  2
+              POP_TOP
+
+ 47           LOAD_FAST                0 (path)
+              LOAD_ATTR                5 (write_text + NULL|self)
+              LOAD_GLOBAL              6 (json)
+              LOAD_ATTR                8 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               3 (2)
+              LOAD_GLOBAL             10 (str)
+              LOAD_CONST               4 (('indent', 'default'))
+              CALL_KW                  3
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object main at 0xb4000076d5f155b0, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 50>:
+ 50           RESUME                   0
+
+ 51           LOAD_GLOBAL              0 (PHASE7_STATE)
+              LOAD_ATTR                3 (exists + NULL|self)
+              CALL                     0
+              TO_BOOL
+              POP_JUMP_IF_TRUE        18 (to L1)
+
+ 52           LOAD_GLOBAL              5 (FileNotFoundError + NULL)
+
+ 53           LOAD_CONST               1 ('Phase 7 decision state missing: ')
+              LOAD_GLOBAL              0 (PHASE7_STATE)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+
+ 52           CALL                     1
+              RAISE_VARARGS            1
+
+ 56   L1:     LOAD_GLOBAL              6 (json)
+              LOAD_ATTR                8 (loads)
+              PUSH_NULL
+
+ 57           LOAD_GLOBAL              0 (PHASE7_STATE)
+              LOAD_ATTR               11 (read_text + NULL|self)
+              CALL                     0
+
+ 56           CALL                     1
+              STORE_FAST               0 (state)
+
+ 60           LOAD_FAST                0 (state)
+              LOAD_ATTR               13 (get + NULL|self)
+
+ 61           LOAD_CONST               2 ('qualified_candidates')
+
+ 62           BUILD_LIST               0
+
+ 60           CALL                     2
+              STORE_FAST               1 (qualified)
+
+ 67           LOAD_GLOBAL             14 (EXECUTION_AUTHORIZED)
+              COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       50 (to L2)
+              POP_TOP
+
+ 68           LOAD_GLOBAL             16 (ORDER_SUBMISSION)
+
+ 67           COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       37 (to L2)
+              POP_TOP
+
+ 69           LOAD_GLOBAL             18 (BOT_ARMED)
+
+ 67           COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       24 (to L2)
+              POP_TOP
+
+ 70           LOAD_GLOBAL             20 (LIVE_EXECUTION)
+
+ 67           COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       11 (to L2)
+              POP_TOP
+
+ 71           LOAD_GLOBAL             22 (TRANSMISSION_LOCKED)
+              TO_BOOL
+              UNARY_NOT
+
+ 66   L2:     STORE_FAST               2 (execution_enabled)
+
+ 75           LOAD_CONST               3 ('CryptoMasterX1')
+
+ 76           LOAD_CONST               4 ('PHASE_8')
+
+ 77           LOAD_CONST               5 ('8.0-CONSOLIDATED')
+
+ 78           LOAD_GLOBAL             25 (now + NULL)
+              CALL                     0
+
+ 80           LOAD_GLOBAL             27 (len + NULL)
+              LOAD_FAST                1 (qualified)
+              CALL                     1
+
+ 82           LOAD_FAST                2 (execution_enabled)
+
+ 85           LOAD_GLOBAL             14 (EXECUTION_AUTHORIZED)
+
+ 86           LOAD_GLOBAL             16 (ORDER_SUBMISSION)
+
+ 87           LOAD_GLOBAL             18 (BOT_ARMED)
+
+ 88           LOAD_GLOBAL             20 (LIVE_EXECUTION)
+
+ 89           LOAD_GLOBAL             22 (TRANSMISSION_LOCKED)
+
+ 90           LOAD_CONST               6 (False)
+
+ 91           LOAD_CONST               6 (False)
+
+ 92           LOAD_CONST               6 (False)
+
+ 84           LOAD_CONST               7 (('execution_authorized', 'order_submission', 'bot_armed', 'live_execution', 'transmission_locked', 'withdrawals', 'deposits', 'transfers'))
+              BUILD_CONST_KEY_MAP      8
+
+ 95           LOAD_FAST                1 (qualified)
+
+ 97           LOAD_CONST               8 (0)
+
+100           LOAD_FAST                1 (qualified)
+              TO_BOOL
+              POP_JUMP_IF_FALSE        2 (to L3)
+
+ 99           LOAD_CONST               9 ('READY_BUT_LOCKED')
+              JUMP_FORWARD             1 (to L4)
+
+101   L3:     LOAD_CONST              10 ('NO_QUALIFIED_TRADES')
+
+ 74   L4:     LOAD_CONST              11 (('project', 'phase', 'version', 'timestamp_utc', 'phase7_qualified_input', 'execution_enabled', 'execution_boundary', 'qualified_candidates', 'orders_submitted', 'status'))
+              BUILD_CONST_KEY_MAP     10
+              STORE_FAST               3 (result)
+
+105           LOAD_GLOBAL             29 (save + NULL)
+              LOAD_GLOBAL             30 (PHASE8_STATE)
+              LOAD_FAST                3 (result)
+              CALL                     2
+              POP_TOP
+
+107           LOAD_GLOBAL             33 (print + NULL)
+              LOAD_CONST              12 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+108           LOAD_GLOBAL             33 (print + NULL)
+              LOAD_CONST              13 ('CRYPTOMASTERX1 — PHASE 8 EXECUTION + LIFECYCLE')
+              CALL                     1
+              POP_TOP
+
+109           LOAD_GLOBAL             33 (print + NULL)
+              LOAD_CONST              12 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+
+110           LOAD_GLOBAL             33 (print + NULL)
+
+111           LOAD_CONST              14 ('Phase 7 qualified input : ')
+              LOAD_GLOBAL             27 (len + NULL)
+              LOAD_FAST                1 (qualified)
+              CALL                     1
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+
+110           CALL                     1
+              POP_TOP
+
+113           LOAD_GLOBAL             33 (print + NULL)
+
+114           LOAD_CONST              15 ('Execution enabled       : ')
+              LOAD_FAST                2 (execution_enabled)
+              FORMAT_SIMPLE
+              BUILD_STRING             2
+
+113           CALL                     1
+              POP_TOP
+
+116           LOAD_GLOBAL             33 (print + NULL)
+
+117           LOAD_CONST              16 ('Orders submitted        : 0')
+
+116           CALL                     1
+              POP_TOP
+
+119           LOAD_GLOBAL             33 (print + NULL)
+
+120           LOAD_CONST              17 ('Transmission            : LOCKED')
+
+119           CALL                     1
+              POP_TOP
+
+122           LOAD_GLOBAL             33 (print + NULL)
+
+123           LOAD_CONST              18 ('Withdrawals             : FORBIDDEN')
+
+122           CALL                     1
+              POP_TOP
+
+125           LOAD_GLOBAL             33 (print + NULL)
+              LOAD_CONST              12 ('==============================================================================')
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1 — Phase 8 Execution + Lifecycle\n\nThis phase consumes ONLY Phase 7 QUALIFIED candidates.\n\nIt does NOT:\n- redo market analysis\n- reconstruct Entry/SL/TP\n- change R:R\n- change position size\n- override Phase 7\n- enable withdrawals\n\nExecution remains locked until deliberately authorized\noutside this preparation pipeline.\n'
+[1] 0
+[2] None
+[3] ('Path',)
+[4] ('datetime', 'timezone')
+[5] 'state'
+[6] 'phase7_final_validation.json'
+[7] 'phase8_execution_lifecycle.json'
+[8] False
+[9] True
+[10] <code object now at 0x7645631f10, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 41>
+[11] <code object save at 0x7645644f50, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 45>
+[12] <code object main at 0xb4000076d5f155b0, file "./build_staging/actual_rebuild_backup_20260826_130307/phase8_execution_lifecycle_v8.py", line 50>
+[13] '__main__'
+
+
+NAMES
+=====
+
+'__doc__'
+'json'
+'pathlib'
+'Path'
+'datetime'
+'timezone'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE'
+'PHASE7_STATE'
+'PHASE8_STATE'
+'EXECUTION_AUTHORIZED'
+'ORDER_SUBMISSION'
+'BOT_ARMED'
+'LIVE_EXECUTION'
+'TRANSMISSION_LOCKED'
+'WITHDRAWALS'
+'DEPOSITS'
+'TRANSFERS'
+'now'
+'save'
+'main'
+'__name__'

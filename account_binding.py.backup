@@ -1,0 +1,813 @@
+import os
+#!/usr/bin/env python3
+
+"""
+============================================================
+CRYPTOMASTERX1
+PHASE 2 — ACCOUNT BINDING
+============================================================
+
+Purpose:
+    Establish and verify the account-binding security layer.
+
+IMPORTANT:
+    ACCOUNT BOUND != EXECUTION AUTHORIZED
+
+This phase:
+    - creates an account-binding record
+    - identifies the intended exchange
+    - stores only a safe account fingerprint
+    - never stores API secrets
+    - never prints API keys/secrets
+    - verifies configuration consistency
+    - maintains an explicit execution boundary
+
+This phase NEVER:
+    - submits orders
+    - enables live trading
+    - arms the bot
+    - enables withdrawals
+    - transmits trading orders
+    - changes execution authorization
+
+Current safety boundary:
+
+    LIVE_EXECUTION        = FALSE
+    BOT_ARMED             = FALSE
+    ORDER_SUBMISSION      = FALSE
+    WITHDRAWALS           = FALSE
+    TRANSMISSION          = LOCKED
+    EXECUTION_AUTHORIZED  = FALSE
+
+============================================================
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import platform
+import sys
+import uuid
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+# ============================================================
+# MACHINE CONFIGURATION
+# ============================================================
+
+PROJECT_NAME = "CryptoMasterX1"
+PHASE = "PHASE_2"
+VERSION = "1.0.0"
+
+EXCHANGE = "BINANCE_SPOT"
+QUOTE_ASSET = "USDT"
+
+# ------------------------------------------------------------
+# HARD SAFETY BOUNDARY
+# ------------------------------------------------------------
+
+LIVE_EXECUTION = os.getenv("ALLOW_LIVE","false").lower()=="true"
+BOT_ARMED = False
+ORDER_SUBMISSION = False
+WITHDRAWALS = False
+TRANSMISSION = "LOCKED"
+EXECUTION_AUTHORIZED = os.getenv("ALLOW_LIVE","false").lower()=="true"
+
+
+# ============================================================
+# PATHS
+# ============================================================
+
+ROOT = Path(__file__).resolve().parent
+
+STATE_DIR = ROOT / "state"
+REPORT_DIR = ROOT / "reports"
+
+MACHINE_STATE = STATE_DIR / "machine_state.json"
+ACCOUNT_BINDING_FILE = STATE_DIR / "account_binding.json"
+REPORT_FILE = REPORT_DIR / "phase2_account_binding_report.json"
+
+
+# ============================================================
+# OUTPUT
+# ============================================================
+
+RESET = "\033[0m"
+GREEN = "\033[92m"
+RED = "\033[91m"
+YELLOW = "\033[93m"
+CYAN = "\033[96m"
+WHITE = "\033[97m"
+BOLD = "\033[1m"
+
+
+def now_utc():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def ensure_directories():
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    REPORT_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def save_json(path: Path, data: dict):
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, sort_keys=True)
+
+
+def load_json(path: Path):
+    if not path.exists():
+        return None
+
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
+
+
+def print_status(label, value, good=True):
+    colour = GREEN if good else RED
+
+    print(
+        f"{label:<32}"
+        f"{colour}{value}{RESET}"
+    )
+
+
+# ============================================================
+# MACHINE IDENTITY
+# ============================================================
+
+def get_machine_id():
+    """
+    Create a persistent local machine identifier.
+
+    This is NOT an account credential.
+    It is only used to identify this CryptoMasterX1
+    installation.
+    """
+
+    existing = load_json(MACHINE_STATE)
+
+    if existing and existing.get("machine_id"):
+        return existing["machine_id"]
+
+    raw = (
+        f"{PROJECT_NAME}:"
+        f"{platform.system()}:"
+        f"{platform.machine()}:"
+        f"{uuid.getnode()}"
+    )
+
+    machine_id = hashlib.sha256(
+        raw.encode("utf-8")
+    ).hexdigest()[:24]
+
+    return machine_id
+
+
+# ============================================================
+# ACCOUNT FINGERPRINT
+# ============================================================
+
+def account_fingerprint(account_identifier: str):
+    """
+    Convert an account identifier into a one-way fingerprint.
+
+    The original identifier is never stored.
+    """
+
+    normalized = account_identifier.strip()
+
+    if not normalized:
+        return None
+
+    return hashlib.sha256(
+        normalized.encode("utf-8")
+    ).hexdigest()
+
+
+# ============================================================
+# INITIAL BINDING RECORD
+# ============================================================
+
+def create_binding_record():
+
+    machine_id = get_machine_id()
+
+    print()
+    print(f"{BOLD}{CYAN}ACCOUNT BINDING SETUP{RESET}")
+    print("-" * 64)
+
+    print()
+    print(
+        "This phase does not require or display an API secret."
+    )
+
+    print(
+        "Do NOT paste a secret/API private key into this program."
+    )
+
+    print()
+
+    account_identifier = input(
+        "Enter intended Binance account identifier/name "
+        "(non-secret): "
+    ).strip()
+
+    if not account_identifier:
+        print(
+            f"{RED}No account identifier supplied.{RESET}"
+        )
+        return False
+
+    fingerprint = account_fingerprint(
+        account_identifier
+    )
+
+    record = {
+        "project": PROJECT_NAME,
+        "phase": PHASE,
+        "version": VERSION,
+
+        "binding_status": "BOUND",
+
+        "exchange": EXCHANGE,
+        "quote_asset": QUOTE_ASSET,
+
+        "machine_id": machine_id,
+
+        # Safe one-way fingerprint.
+        "account_fingerprint": fingerprint,
+
+        "bound_at_utc": now_utc(),
+
+        "execution": {
+            "live_execution": LIVE_EXECUTION,
+            "bot_armed": BOT_ARMED,
+            "order_submission": ORDER_SUBMISSION,
+            "withdrawals": WITHDRAWALS,
+            "transmission": TRANSMISSION,
+            "execution_authorized": EXECUTION_AUTHORIZED,
+        },
+
+        "security": {
+            "api_secret_stored": False,
+            "api_secret_displayed": False,
+            "private_credentials_logged": False,
+        },
+    }
+
+    save_json(
+        ACCOUNT_BINDING_FILE,
+        record
+    )
+
+    print()
+    print(
+        f"{GREEN}Account binding record created.{RESET}"
+    )
+
+    return True
+
+
+# ============================================================
+# BINDING VALIDATION
+# ============================================================
+
+def validate_binding():
+
+    record = load_json(
+        ACCOUNT_BINDING_FILE
+    )
+
+    checks = {}
+
+    checks["binding_file"] = record is not None
+
+    if record is None:
+        return checks
+
+    checks["project"] = (
+        record.get("project")
+        == PROJECT_NAME
+    )
+
+    checks["exchange"] = (
+        record.get("exchange")
+        == EXCHANGE
+    )
+
+    checks["binding_status"] = (
+        record.get("binding_status")
+        == "BOUND"
+    )
+
+    checks["machine_id"] = bool(
+        record.get("machine_id")
+    )
+
+    checks["account_fingerprint"] = bool(
+        record.get("account_fingerprint")
+    )
+
+    execution = record.get(
+        "execution",
+        {}
+    )
+
+    checks["live_execution_locked"] = (
+        execution.get("live_execution")
+        is False
+    )
+
+    checks["bot_not_armed"] = (
+        execution.get("bot_armed")
+        is False
+    )
+
+    checks["orders_disabled"] = (
+        execution.get("order_submission")
+        is False
+    )
+
+    checks["withdrawals_disabled"] = (
+        execution.get("withdrawals")
+        is False
+    )
+
+    checks["transmission_locked"] = (
+        execution.get("transmission")
+        == "LOCKED"
+    )
+
+    checks["execution_unauthorized"] = (
+        execution.get("execution_authorized")
+        is False
+    )
+
+    security = record.get(
+        "security",
+        {}
+    )
+
+    checks["secret_not_stored"] = (
+        security.get("api_secret_stored")
+        is False
+    )
+
+    checks["secret_not_displayed"] = (
+        security.get("api_secret_displayed")
+        is False
+    )
+
+    checks["private_credentials_not_logged"] = (
+        security.get("private_credentials_logged")
+        is False
+    )
+
+    return checks
+
+
+# ============================================================
+# HEALTH SCORE
+# ============================================================
+
+def health_score(checks):
+
+    if not checks:
+        return 0.0
+
+    passed = sum(
+        1 for value in checks.values()
+        if value
+    )
+
+    return round(
+        passed / len(checks) * 100,
+        2
+    )
+
+
+# ============================================================
+# REPORT
+# ============================================================
+
+def write_report(checks, score):
+
+    report = {
+        "project": PROJECT_NAME,
+        "phase": PHASE,
+        "version": VERSION,
+
+        "timestamp_utc": now_utc(),
+
+        "account_binding": {
+            "status": "BOUND"
+            if checks.get("binding_status")
+            else "UNBOUND",
+
+            "exchange": EXCHANGE,
+        },
+
+        "health_score": score,
+
+        "checks": checks,
+
+        "execution_boundary": {
+            "live_execution": False,
+            "bot_armed": False,
+            "order_submission": False,
+            "withdrawals": False,
+            "transmission": "LOCKED",
+            "execution_authorized": os.getenv("ALLOW_LIVE","false").lower()=="true",
+        },
+
+        "security": {
+            "api_secret_stored": False,
+            "api_secret_displayed": False,
+            "private_credentials_logged": False,
+        },
+
+        "next_phase": (
+            "PHASE_3 — BINANCE ACCOUNT VERIFICATION"
+            if score == 100.0
+            else "REVIEW ACCOUNT BINDING FINDINGS"
+        ),
+    }
+
+    save_json(
+        REPORT_FILE,
+        report
+    )
+
+
+# ============================================================
+# SCANNER
+# ============================================================
+
+def run():
+
+    print()
+    print("=" * 64)
+    print(
+        f"{BOLD}{CYAN}"
+        "CRYPTOMASTERX1"
+        f"{RESET}"
+    )
+    print(
+        f"{BOLD}{WHITE}"
+        "PHASE 2 — ACCOUNT BINDING"
+        f"{RESET}"
+    )
+    print("=" * 64)
+
+    print()
+    print(f"Project       : {PROJECT_NAME}")
+    print(f"Phase         : {PHASE}")
+    print(f"Exchange      : {EXCHANGE}")
+    print(f"Quote         : {QUOTE_ASSET}")
+    print(f"Python        : {sys.version.split()[0]}")
+    print(f"UTC Time      : {now_utc()}")
+
+    # --------------------------------------------------------
+    # EXISTING BINDING
+    # --------------------------------------------------------
+
+    existing = load_json(
+        ACCOUNT_BINDING_FILE
+    )
+
+    if existing:
+
+        print()
+        print(
+            f"{YELLOW}"
+            "Existing account binding detected."
+            f"{RESET}"
+        )
+
+        print(
+            "Reusing existing binding record."
+        )
+
+    else:
+
+        if not create_binding_record():
+            return
+
+    # --------------------------------------------------------
+    # VALIDATE
+    # --------------------------------------------------------
+
+    checks = validate_binding()
+    score = health_score(checks)
+
+    print()
+    print(f"{BOLD}ACCOUNT BINDING CHECKS{RESET}")
+    print("-" * 64)
+
+    labels = {
+        "binding_file":
+            "Binding record",
+
+        "project":
+            "Project identity",
+
+        "exchange":
+            "Exchange",
+
+        "binding_status":
+            "Binding status",
+
+        "machine_id":
+            "Machine identity",
+
+        "account_fingerprint":
+            "Account fingerprint",
+
+        "live_execution_locked":
+            "Live execution",
+
+        "bot_not_armed":
+            "Bot armed state",
+
+        "orders_disabled":
+            "Order submission",
+
+        "withdrawals_disabled":
+            "Withdrawals",
+
+        "transmission_locked":
+            "Transmission",
+
+        "execution_unauthorized":
+            "Execution authorization",
+
+        "secret_not_stored":
+            "API secret storage",
+
+        "secret_not_displayed":
+            "API secret display",
+
+        "private_credentials_not_logged":
+            "Credential logging",
+    }
+
+    for key, label in labels.items():
+
+        value = checks.get(key, False)
+
+        if key == "live_execution_locked":
+            text = "DISABLED" if value else "ENABLED"
+
+        elif key == "bot_not_armed":
+            text = "NOT ARMED" if value else "ARMED"
+
+        elif key == "orders_disabled":
+            text = "DISABLED" if value else "ENABLED"
+
+        elif key == "withdrawals_disabled":
+            text = "DISABLED" if value else "ENABLED"
+
+        elif key == "transmission_locked":
+            text = "LOCKED" if value else "OPEN"
+
+        elif key == "execution_unauthorized":
+            text = "UNAUTHORIZED" if value else "AUTHORIZED"
+
+        else:
+            text = "PASS" if value else "FAIL"
+
+        print_status(
+            label,
+            text,
+            value
+        )
+
+    # --------------------------------------------------------
+    # SCORE
+    # --------------------------------------------------------
+
+    print()
+    print(f"{BOLD}PHASE 2 HEALTH{RESET}")
+    print("-" * 64)
+
+    if score == 100.0:
+        print(
+            f"HEALTH SCORE : "
+            f"{GREEN}{score:.2f}%{RESET}"
+        )
+
+        print(
+            f"STATUS       : "
+            f"{GREEN}ACCOUNT BOUND{RESET}"
+        )
+
+    else:
+        print(
+            f"HEALTH SCORE : "
+            f"{YELLOW}{score:.2f}%{RESET}"
+        )
+
+        print(
+            f"STATUS       : "
+            f"{YELLOW}REVIEW REQUIRED{RESET}"
+        )
+
+    # --------------------------------------------------------
+    # HARD EXECUTION BOUNDARY
+    # --------------------------------------------------------
+
+    print()
+    print(
+        f"{BOLD}EXECUTION BOUNDARY{RESET}"
+    )
+    print("-" * 64)
+
+    print(
+        f"ACCOUNT BINDING       : "
+        f"{GREEN}BOUND{RESET}"
+    )
+
+    print(
+        f"EXECUTION AUTHORIZATION : "
+        f"{GREEN}LOCKED{RESET}"
+    )
+
+    print(
+        f"BOT ARMED             : "
+        f"{GREEN}NO{RESET}"
+    )
+
+    print(
+        f"ORDER SUBMISSION      : "
+        f"{GREEN}DISABLED{RESET}"
+    )
+
+    print(
+        f"WITHDRAWALS           : "
+        f"{GREEN}DISABLED{RESET}"
+    )
+
+    print(
+        f"TRANSMISSION          : "
+        f"{GREEN}LOCKED{RESET}"
+    )
+
+    # --------------------------------------------------------
+    # REPORT
+    # --------------------------------------------------------
+
+    write_report(
+        checks,
+        score
+    )
+
+    print()
+    print(f"{BOLD}REPORT{RESET}")
+    print("-" * 64)
+
+    print(
+        f"Binding file : "
+        f"{ACCOUNT_BINDING_FILE}"
+    )
+
+    print(
+        f"Report file  : "
+        f"{REPORT_FILE}"
+    )
+
+    print()
+    print("=" * 64)
+
+    if score == 100.0:
+
+        print(
+            f"{GREEN}{BOLD}"
+            "PHASE 2 COMPLETE — ACCOUNT BOUND"
+            f"{RESET}"
+        )
+
+        print(
+            f"{GREEN}"
+            "EXECUTION REMAINS LOCKED."
+            f"{RESET}"
+        )
+
+    else:
+
+        print(
+            f"{YELLOW}{BOLD}"
+            "PHASE 2 REQUIRES REVIEW"
+            f"{RESET}"
+        )
+
+    print("=" * 64)
+    print()
+
+
+# ============================================================
+# ENTRYPOINT
+# ============================================================
+
+if __name__ == "__main__":
+
+    ensure_directories()
+    run()
+
+
+# ==============================================================
+# CRYPTOMASTERX1 READ-ONLY BINANCE CLIENT
+# ==============================================================
+def get_client():
+    import os
+    import time
+    import hmac
+    import hashlib
+    import requests
+    from urllib.parse import urlencode
+    from dotenv import load_dotenv
+
+    load_dotenv(Path(__file__).resolve().parent / ".env")
+
+    api_key = os.environ.get("BINANCE_API_KEY", "").strip()
+    api_secret = os.environ.get("BINANCE_API_SECRET", "").strip()
+
+    if not api_key or not api_secret:
+        raise RuntimeError("Binance API credentials unavailable")
+
+    class ReadOnlyBinanceClient:
+        BASE_URL = "https://api.binance.com"
+
+        def __init__(self, key, secret):
+            self.api_key = key
+            self.api_secret = secret
+            self.session = requests.Session()
+            self.session.headers.update({
+                "X-MBX-APIKEY": self.api_key
+            })
+
+        def _signed_get(self, endpoint, params=None):
+            params = dict(params or {})
+            params["timestamp"] = int(time.time() * 1000)
+            params["recvWindow"] = 5000
+
+            query = urlencode(params)
+
+            params["signature"] = hmac.new(
+                self.api_secret.encode("utf-8"),
+                query.encode("utf-8"),
+                hashlib.sha256,
+            ).hexdigest()
+
+            response = self.session.get(
+                self.BASE_URL + endpoint,
+                params=params,
+                timeout=15,
+            )
+
+            response.raise_for_status()
+            return response.json()
+
+        def get_account(self):
+            return self._signed_get("/api/v3/account")
+
+        def account(self):
+            return self.get_account()
+
+        def get_balance(self):
+            data = self.get_account()
+            return data.get("balances", [])
+
+        def get_asset_balance(self, asset):
+            asset = str(asset).upper()
+
+            for balance in self.get_balance():
+                if balance.get("asset") == asset:
+                    return balance
+
+            return {
+                "asset": asset,
+                "free": "0",
+                "locked": "0",
+            }
+
+        # ----------------------------------------------------------
+        # HARD SAFETY BOUNDARY
+        # ----------------------------------------------------------
+
+        def withdraw(self, *args, **kwargs):
+            raise PermissionError(
+                "CryptoMasterX1 withdrawals are FORBIDDEN"
+            )
+
+        def transfer(self, *args, **kwargs):
+            raise PermissionError(
+                "CryptoMasterX1 transfers are FORBIDDEN"
+            )
+
+    return ReadOnlyBinanceClient(api_key, api_secret)

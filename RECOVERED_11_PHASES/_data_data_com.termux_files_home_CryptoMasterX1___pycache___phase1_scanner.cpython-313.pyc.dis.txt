@@ -1,0 +1,1675 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/__pycache__/phase1_scanner.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\n============================================================\nCRYPTOMASTERX1\nPHASE 1 — MACHINE CORE / PERFORMANCE SCANNER\n============================================================\n\nPurpose:\n    Establish the first foundation of CryptoMasterX1.\n\nThis phase:\n    - identifies the machine\n    - creates the required directory structure\n    - maintains machine state\n    - records heartbeat\n    - checks core files\n    - checks Python environment\n    - checks execution lock state\n    - checks telemetry\n    - produces a machine health report\n\nSAFETY:\n    This phase NEVER:\n        - connects to Binance trading endpoints\n        - submits orders\n        - cancels orders\n        - changes execution authorization\n        - unlocks the machine\n        - trades\n        - uses real money\n\nExecution starts LOCKED.\n============================================================\n')
+              STORE_NAME               0 (__doc__)
+
+ 37           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (('annotations',))
+              IMPORT_NAME              1 (__future__)
+              IMPORT_FROM              2 (annotations)
+              STORE_NAME               2 (annotations)
+              POP_TOP
+
+ 39           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              3 (json)
+              STORE_NAME               3 (json)
+
+ 40           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              4 (platform)
+              STORE_NAME               4 (platform)
+
+ 41           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              5 (sys)
+              STORE_NAME               5 (sys)
+
+ 42           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (None)
+              IMPORT_NAME              6 (os)
+              STORE_NAME               6 (os)
+
+ 43           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('Path',))
+              IMPORT_NAME              7 (pathlib)
+              IMPORT_FROM              8 (Path)
+              STORE_NAME               8 (Path)
+              POP_TOP
+
+ 44           LOAD_CONST               1 (0)
+              LOAD_CONST               5 (('datetime', 'timezone'))
+              IMPORT_NAME              9 (datetime)
+              IMPORT_FROM              9 (datetime)
+              STORE_NAME               9 (datetime)
+              IMPORT_FROM             10 (timezone)
+              STORE_NAME              10 (timezone)
+              POP_TOP
+
+ 51           LOAD_CONST               6 ('CryptoMasterX1')
+              STORE_NAME              11 (PROJECT_NAME)
+
+ 52           LOAD_CONST               7 ('1.0.0')
+              STORE_NAME              12 (VERSION)
+
+ 53           LOAD_CONST               8 ('PHASE_1')
+              STORE_NAME              13 (PHASE)
+
+ 55           LOAD_CONST               9 (True)
+              STORE_NAME              14 (EXECUTION_LOCKED)
+
+ 56           LOAD_CONST              10 (False)
+              STORE_NAME              15 (LIVE_EXECUTION)
+
+ 57           LOAD_CONST              10 (False)
+              STORE_NAME              16 (ORDER_SUBMISSION_ENABLED)
+
+ 64           LOAD_NAME                8 (Path)
+              PUSH_NULL
+              LOAD_NAME               17 (__file__)
+              CALL                     1
+              LOAD_ATTR               37 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               38 (parent)
+              STORE_NAME              20 (ROOT)
+
+ 66           LOAD_NAME               20 (ROOT)
+              LOAD_CONST              11 ('data')
+              BINARY_OP               11 (/)
+              STORE_NAME              21 (DATA_DIR)
+
+ 67           LOAD_NAME               20 (ROOT)
+              LOAD_CONST              12 ('logs')
+              BINARY_OP               11 (/)
+              STORE_NAME              22 (LOG_DIR)
+
+ 68           LOAD_NAME               20 (ROOT)
+              LOAD_CONST              13 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              23 (STATE_DIR)
+
+ 69           LOAD_NAME               20 (ROOT)
+              LOAD_CONST              14 ('reports')
+              BINARY_OP               11 (/)
+              STORE_NAME              24 (REPORT_DIR)
+
+ 71           LOAD_NAME               23 (STATE_DIR)
+              LOAD_CONST              15 ('machine_state.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              25 (STATE_FILE)
+
+ 72           LOAD_NAME               23 (STATE_DIR)
+              LOAD_CONST              16 ('heartbeat.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              26 (HEARTBEAT_FILE)
+
+ 73           LOAD_NAME               24 (REPORT_DIR)
+              LOAD_CONST              17 ('phase1_report.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              27 (REPORT_FILE)
+
+ 80           LOAD_CONST              18 ('\x1b[0m')
+              STORE_NAME              28 (RESET)
+
+ 81           LOAD_CONST              19 ('\x1b[92m')
+              STORE_NAME              29 (GREEN)
+
+ 82           LOAD_CONST              20 ('\x1b[91m')
+              STORE_NAME              30 (RED)
+
+ 83           LOAD_CONST              21 ('\x1b[93m')
+              STORE_NAME              31 (YELLOW)
+
+ 84           LOAD_CONST              22 ('\x1b[96m')
+              STORE_NAME              32 (CYAN)
+
+ 85           LOAD_CONST              23 ('\x1b[97m')
+              STORE_NAME              33 (WHITE)
+
+ 86           LOAD_CONST              24 ('\x1b[1m')
+              STORE_NAME              34 (BOLD)
+
+ 93           LOAD_CONST              25 (<code object utc_now at 0x7645631b80, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 93>)
+              MAKE_FUNCTION
+              STORE_NAME              35 (utc_now)
+
+ 97           LOAD_CONST              26 (<code object mkdirs at 0x7645631a50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 97>)
+              MAKE_FUNCTION
+              STORE_NAME              36 (mkdirs)
+
+107           LOAD_CONST              42 (('path', 'Path', 'data', 'dict'))
+              LOAD_CONST              27 (<code object save_json at 0x764564a290, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 107>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              37 (save_json)
+
+119           LOAD_CONST              43 (('path', 'Path'))
+              LOAD_CONST              28 (<code object load_json at 0x764589f770, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 119>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   4 (annotations)
+              STORE_NAME              38 (load_json)
+
+130           LOAD_CONST              29 (<code object banner at 0x76455d9d70, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 130>)
+              MAKE_FUNCTION
+              STORE_NAME              39 (banner)
+
+139           LOAD_CONST              44 ((True,))
+              LOAD_CONST              30 (<code object status at 0x7645631cb0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 139>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              40 (status)
+
+152           LOAD_CONST              31 (<code object build_machine_state at 0xb400007795eee170, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 152>)
+              MAKE_FUNCTION
+              STORE_NAME              41 (build_machine_state)
+
+207           LOAD_CONST              32 (<code object write_heartbeat at 0x76455ee640, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 207>)
+              MAKE_FUNCTION
+              STORE_NAME              42 (write_heartbeat)
+
+226           LOAD_CONST              33 (<code object check_project at 0x7645394130, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 226>)
+              MAKE_FUNCTION
+              STORE_NAME              43 (check_project)
+
+231           LOAD_CONST              34 (<code object check_directories at 0x7645613bd0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 231>)
+              MAKE_FUNCTION
+              STORE_NAME              44 (check_directories)
+
+243           LOAD_CONST              35 (<code object check_python at 0x7645360300, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 243>)
+              MAKE_FUNCTION
+              STORE_NAME              45 (check_python)
+
+248           LOAD_CONST              36 (<code object check_execution_lock at 0x764564abf0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 248>)
+              MAKE_FUNCTION
+              STORE_NAME              46 (check_execution_lock)
+
+259           LOAD_CONST              37 (<code object check_telemetry at 0x7645612670, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 259>)
+              MAKE_FUNCTION
+              STORE_NAME              47 (check_telemetry)
+
+270           LOAD_CONST              38 (<code object calculate_health at 0x76455ee790, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 270>)
+              MAKE_FUNCTION
+              STORE_NAME              48 (calculate_health)
+
+292           LOAD_CONST              39 (<code object build_report at 0x7645644f50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 292>)
+              MAKE_FUNCTION
+              STORE_NAME              49 (build_report)
+
+327           LOAD_CONST              40 (<code object run_scanner at 0xb4000078b5ead560, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 327>)
+              MAKE_FUNCTION
+              STORE_NAME              50 (run_scanner)
+
+537           LOAD_NAME               51 (__name__)
+              LOAD_CONST              41 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       15 (to L1)
+
+538           LOAD_NAME               36 (mkdirs)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+
+539           LOAD_NAME               50 (run_scanner)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             3 (None)
+
+537   L1:     RETURN_CONST             3 (None)
+
+Disassembly of <code object utc_now at 0x7645631b80, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 93>:
+ 93           RESUME                   0
+
+ 94           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object mkdirs at 0x7645631a50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 97>:
+ 97           RESUME                   0
+
+ 99           LOAD_GLOBAL              0 (DATA_DIR)
+
+100           LOAD_GLOBAL              2 (LOG_DIR)
+
+101           LOAD_GLOBAL              4 (STATE_DIR)
+
+102           LOAD_GLOBAL              6 (REPORT_DIR)
+
+ 98           BUILD_TUPLE              4
+              GET_ITER
+      L1:     FOR_ITER                19 (to L2)
+              STORE_FAST               0 (directory)
+
+104           LOAD_FAST                0 (directory)
+              LOAD_ATTR                9 (mkdir + NULL|self)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               1 (True)
+              LOAD_CONST               2 (('parents', 'exist_ok'))
+              CALL_KW                  2
+              POP_TOP
+              JUMP_BACKWARD           21 (to L1)
+
+ 98   L2:     END_FOR
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object save_json at 0x764564a290, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 107>:
+ 107           RESUME                   0
+
+ 108           LOAD_FAST                0 (path)
+               LOAD_ATTR                0 (parent)
+               LOAD_ATTR                3 (mkdir + NULL|self)
+               LOAD_CONST               1 (True)
+               LOAD_CONST               1 (True)
+               LOAD_CONST               2 (('parents', 'exist_ok'))
+               CALL_KW                  2
+               POP_TOP
+
+ 110           LOAD_FAST                0 (path)
+               LOAD_ATTR                5 (open + NULL|self)
+               LOAD_CONST               3 ('w')
+               LOAD_CONST               4 ('utf-8')
+               LOAD_CONST               5 (('encoding',))
+               CALL_KW                  2
+               BEFORE_WITH
+       L1:     STORE_FAST               2 (f)
+
+ 111           LOAD_GLOBAL              6 (json)
+               LOAD_ATTR                8 (dump)
+               PUSH_NULL
+
+ 112           LOAD_FAST                1 (data)
+
+ 113           LOAD_FAST                2 (f)
+
+ 114           LOAD_CONST               6 (4)
+
+ 115           LOAD_CONST               1 (True)
+
+ 111           LOAD_CONST               7 (('indent', 'sort_keys'))
+               CALL_KW                  4
+               POP_TOP
+
+ 110   L2:     LOAD_CONST               0 (None)
+               LOAD_CONST               0 (None)
+               LOAD_CONST               0 (None)
+               CALL                     2
+               POP_TOP
+               RETURN_CONST             0 (None)
+       L3:     PUSH_EXC_INFO
+               WITH_EXCEPT_START
+               TO_BOOL
+               POP_JUMP_IF_TRUE         1 (to L4)
+               RERAISE                  2
+       L4:     POP_TOP
+       L5:     POP_EXCEPT
+               POP_TOP
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+  --   L6:     COPY                     3
+               POP_EXCEPT
+               RERAISE                  1
+ExceptionTable:
+  L1 to L2 -> L3 [1] lasti
+  L3 to L5 -> L6 [3] lasti
+
+Disassembly of <code object load_json at 0x764589f770, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 119>:
+ 119            RESUME                   0
+
+ 120            LOAD_FAST                0 (path)
+                LOAD_ATTR                1 (exists + NULL|self)
+                CALL                     0
+                TO_BOOL
+                POP_JUMP_IF_TRUE         1 (to L1)
+
+ 121            RETURN_CONST             0 (None)
+
+ 123    L1:     NOP
+
+ 124    L2:     LOAD_FAST                0 (path)
+                LOAD_ATTR                3 (open + NULL|self)
+                LOAD_CONST               1 ('r')
+                LOAD_CONST               2 ('utf-8')
+                LOAD_CONST               3 (('encoding',))
+                CALL_KW                  2
+                BEFORE_WITH
+        L3:     STORE_FAST               1 (f)
+
+ 125            LOAD_GLOBAL              4 (json)
+                LOAD_ATTR                6 (load)
+                PUSH_NULL
+                LOAD_FAST                1 (f)
+                CALL                     1
+
+ 124    L4:     SWAP                     2
+                LOAD_CONST               0 (None)
+                LOAD_CONST               0 (None)
+                LOAD_CONST               0 (None)
+                CALL                     2
+                POP_TOP
+        L5:     RETURN_VALUE
+        L6:     PUSH_EXC_INFO
+                WITH_EXCEPT_START
+                TO_BOOL
+                POP_JUMP_IF_TRUE         1 (to L7)
+                RERAISE                  2
+        L7:     POP_TOP
+        L8:     POP_EXCEPT
+                POP_TOP
+                POP_TOP
+        L9:     RETURN_CONST             0 (None)
+
+  --   L10:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+       L11:     PUSH_EXC_INFO
+
+ 126            LOAD_GLOBAL              8 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE        3 (to L13)
+                POP_TOP
+
+ 127   L12:     POP_EXCEPT
+                RETURN_CONST             0 (None)
+
+ 126   L13:     RERAISE                  0
+
+  --   L14:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L11 [0]
+  L3 to L4 -> L6 [1] lasti
+  L4 to L5 -> L11 [0]
+  L6 to L8 -> L10 [3] lasti
+  L8 to L9 -> L11 [0]
+  L10 to L11 -> L11 [0]
+  L11 to L12 -> L14 [1] lasti
+  L13 to L14 -> L14 [1] lasti
+
+Disassembly of <code object banner at 0x76455d9d70, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 130>:
+130           RESUME                   0
+
+131           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+132           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('================================================================')
+              CALL                     1
+              POP_TOP
+
+133           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_GLOBAL              2 (BOLD)
+              FORMAT_SIMPLE
+              LOAD_GLOBAL              4 (CYAN)
+              FORMAT_SIMPLE
+              LOAD_CONST               2 ('CRYPTOMASTERX1')
+              LOAD_GLOBAL              6 (RESET)
+              FORMAT_SIMPLE
+              BUILD_STRING             4
+              CALL                     1
+              POP_TOP
+
+134           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_GLOBAL              2 (BOLD)
+              FORMAT_SIMPLE
+              LOAD_GLOBAL              8 (WHITE)
+              FORMAT_SIMPLE
+              LOAD_CONST               3 ('PHASE 1 — MACHINE CORE / PERFORMANCE SCANNER')
+              LOAD_GLOBAL              6 (RESET)
+              FORMAT_SIMPLE
+              BUILD_STRING             4
+              CALL                     1
+              POP_TOP
+
+135           LOAD_GLOBAL              1 (print + NULL)
+              LOAD_CONST               1 ('================================================================')
+              CALL                     1
+              POP_TOP
+
+136           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object status at 0x7645631cb0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 139>:
+139           RESUME                   0
+
+140           LOAD_FAST                2 (ok)
+              TO_BOOL
+              POP_JUMP_IF_FALSE        6 (to L1)
+              LOAD_GLOBAL              0 (GREEN)
+              JUMP_FORWARD             5 (to L2)
+      L1:     LOAD_GLOBAL              2 (RED)
+      L2:     STORE_FAST               3 (colour)
+
+142           LOAD_GLOBAL              5 (print + NULL)
+
+143           LOAD_FAST                0 (label)
+              LOAD_CONST               1 ('<32')
+              FORMAT_WITH_SPEC
+              LOAD_CONST               2 (' ')
+
+144           LOAD_FAST                3 (colour)
+              FORMAT_SIMPLE
+              LOAD_FAST                1 (value)
+              FORMAT_SIMPLE
+              LOAD_GLOBAL              6 (RESET)
+              FORMAT_SIMPLE
+
+143           BUILD_STRING             5
+
+142           CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object build_machine_state at 0xb400007795eee170, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 152>:
+152           RESUME                   0
+
+155           LOAD_GLOBAL              0 (PROJECT_NAME)
+
+156           LOAD_GLOBAL              2 (VERSION)
+
+157           LOAD_GLOBAL              4 (PHASE)
+
+159           LOAD_GLOBAL              7 (utc_now + NULL)
+              CALL                     0
+
+162           LOAD_GLOBAL              8 (EXECUTION_LOCKED)
+
+163           LOAD_GLOBAL             10 (LIVE_EXECUTION)
+
+164           LOAD_GLOBAL             12 (ORDER_SUBMISSION_ENABLED)
+
+161           LOAD_CONST               1 (('locked', 'live_execution', 'order_submission_enabled'))
+              BUILD_CONST_KEY_MAP      3
+
+168           LOAD_GLOBAL             14 (platform)
+              LOAD_ATTR               16 (python_version)
+              PUSH_NULL
+              CALL                     0
+
+169           LOAD_GLOBAL             14 (platform)
+              LOAD_ATTR               14 (platform)
+              PUSH_NULL
+              CALL                     0
+
+170           LOAD_GLOBAL             14 (platform)
+              LOAD_ATTR               18 (system)
+              PUSH_NULL
+              CALL                     0
+
+171           LOAD_GLOBAL             14 (platform)
+              LOAD_ATTR               20 (machine)
+              PUSH_NULL
+              CALL                     0
+
+167           LOAD_CONST               2 (('python', 'platform', 'system', 'machine'))
+              BUILD_CONST_KEY_MAP      4
+
+174           BUILD_MAP                0
+
+175           LOAD_CONST               3 ('market_discovery')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+176           LOAD_CONST               5 ('safety_filter')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+177           LOAD_CONST               6 ('quality_momentum')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+178           LOAD_CONST               7 ('regime_1h')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+179           LOAD_CONST               8 ('structure_15m')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+180           LOAD_CONST               9 ('entry_5m')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+181           LOAD_CONST              10 ('exhaustion')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+182           LOAD_CONST              11 ('rsi_protection')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+183           LOAD_CONST              12 ('atr_extension')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+184           LOAD_CONST              13 ('pullback')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+185           LOAD_CONST              14 ('reclaim')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+186           LOAD_CONST              15 ('liquidity')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+187           LOAD_CONST              16 ('entry_quality')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+188           LOAD_CONST              17 ('confidence')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+189           LOAD_CONST              18 ('adaptive_sl_tp')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+190           LOAD_CONST              19 ('duplicate_protection')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+191           LOAD_CONST              20 ('execution')
+              LOAD_CONST               4 (False)
+
+174           MAP_ADD                  1
+
+192           LOAD_CONST              21 ('telemetry')
+              LOAD_CONST              22 (True)
+
+174           BUILD_MAP                1
+              DICT_UPDATE              1
+
+195           LOAD_CONST              23 ('INITIALIZED')
+
+154           LOAD_CONST              24 (('machine', 'version', 'phase', 'created_utc', 'execution', 'runtime', 'architecture', 'phase_status'))
+              BUILD_CONST_KEY_MAP      8
+              STORE_FAST               0 (state)
+
+198           LOAD_GLOBAL             23 (save_json + NULL)
+              LOAD_GLOBAL             24 (STATE_FILE)
+              LOAD_FAST                0 (state)
+              CALL                     2
+              POP_TOP
+
+200           LOAD_FAST                0 (state)
+              RETURN_VALUE
+
+Disassembly of <code object write_heartbeat at 0x76455ee640, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 207>:
+207           RESUME                   0
+
+210           LOAD_GLOBAL              0 (PROJECT_NAME)
+
+211           LOAD_GLOBAL              2 (PHASE)
+
+212           LOAD_GLOBAL              5 (utc_now + NULL)
+              CALL                     0
+
+213           LOAD_GLOBAL              6 (os)
+              LOAD_ATTR                8 (getpid)
+              PUSH_NULL
+              CALL                     0
+
+214           LOAD_CONST               1 ('ALIVE')
+
+209           LOAD_CONST               2 (('machine', 'phase', 'heartbeat_utc', 'process_id', 'status'))
+              BUILD_CONST_KEY_MAP      5
+              STORE_FAST               0 (heartbeat)
+
+217           LOAD_GLOBAL             11 (save_json + NULL)
+              LOAD_GLOBAL             12 (HEARTBEAT_FILE)
+              LOAD_FAST                0 (heartbeat)
+              CALL                     2
+              POP_TOP
+
+219           LOAD_FAST                0 (heartbeat)
+              RETURN_VALUE
+
+Disassembly of <code object check_project at 0x7645394130, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 226>:
+226           RESUME                   0
+
+228           LOAD_GLOBAL              0 (ROOT)
+              LOAD_ATTR                3 (exists + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object check_directories at 0x7645613bd0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 231>:
+231           RESUME                   0
+
+234           LOAD_GLOBAL              0 (DATA_DIR)
+
+235           LOAD_GLOBAL              2 (LOG_DIR)
+
+236           LOAD_GLOBAL              4 (STATE_DIR)
+
+237           LOAD_GLOBAL              6 (REPORT_DIR)
+
+233           BUILD_LIST               4
+              STORE_FAST               0 (required)
+
+240           LOAD_GLOBAL              9 (all + NULL)
+              LOAD_CONST               1 (<code object <genexpr> at 0x76456218a0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 240>)
+              MAKE_FUNCTION
+              LOAD_FAST                0 (required)
+              GET_ITER
+              CALL                     0
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x76456218a0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 240>:
+ 240           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+               GET_ITER
+       L2:     FOR_ITER                20 (to L3)
+               STORE_FAST_LOAD_FAST    17 (directory, directory)
+               LOAD_ATTR                1 (exists + NULL|self)
+               CALL                     0
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           22 (to L2)
+       L3:     END_FOR
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+  --   L4:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L4 -> L4 [0] lasti
+
+Disassembly of <code object check_python at 0x7645360300, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 243>:
+243           RESUME                   0
+
+245           LOAD_GLOBAL              0 (sys)
+              LOAD_ATTR                2 (version_info)
+              LOAD_CONST               1 ((3, 10))
+              COMPARE_OP             172 (>=)
+              RETURN_VALUE
+
+Disassembly of <code object check_execution_lock at 0x764564abf0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 248>:
+248           RESUME                   0
+
+250           LOAD_FAST                0 (state)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               1 ('execution')
+              BUILD_MAP                0
+              CALL                     2
+              STORE_FAST               1 (execution)
+
+252           LOAD_FAST                1 (execution)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               2 ('locked')
+              CALL                     1
+              LOAD_CONST               3 (True)
+              IS_OP                    0
+              STORE_FAST               2 (locked)
+
+253           LOAD_FAST                1 (execution)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               4 ('live_execution')
+              CALL                     1
+              LOAD_CONST               5 (False)
+              IS_OP                    0
+              STORE_FAST               3 (live)
+
+254           LOAD_FAST                1 (execution)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               6 ('order_submission_enabled')
+              CALL                     1
+              LOAD_CONST               5 (False)
+              IS_OP                    0
+              STORE_FAST               4 (orders)
+
+256           LOAD_FAST                2 (locked)
+              COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE       11 (to L1)
+              POP_TOP
+              LOAD_FAST                3 (live)
+              COPY                     1
+              TO_BOOL
+              POP_JUMP_IF_FALSE        2 (to L1)
+              POP_TOP
+              LOAD_FAST                4 (orders)
+      L1:     RETURN_VALUE
+
+Disassembly of <code object check_telemetry at 0x7645612670, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 259>:
+259           RESUME                   0
+
+261           LOAD_FAST                0 (state)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               1 ('architecture')
+              BUILD_MAP                0
+              CALL                     2
+              STORE_FAST               1 (architecture)
+
+263           LOAD_FAST                1 (architecture)
+              LOAD_ATTR                1 (get + NULL|self)
+              LOAD_CONST               2 ('telemetry')
+              CALL                     1
+              LOAD_CONST               3 (True)
+              IS_OP                    0
+              RETURN_VALUE
+
+Disassembly of <code object calculate_health at 0x76455ee790, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 270>:
+270           RESUME                   0
+
+272           LOAD_GLOBAL              1 (len + NULL)
+              LOAD_FAST                0 (checks)
+              CALL                     1
+              STORE_FAST               1 (total)
+
+274           LOAD_GLOBAL              3 (sum + NULL)
+              LOAD_CONST               1 (<code object <genexpr> at 0x7645394230, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 274>)
+              MAKE_FUNCTION
+
+275           LOAD_FAST                0 (checks)
+              LOAD_ATTR                5 (values + NULL|self)
+              CALL                     0
+              GET_ITER
+
+274           CALL                     0
+              CALL                     1
+              STORE_FAST               2 (passed)
+
+279           LOAD_FAST                1 (total)
+              LOAD_CONST               2 (0)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+280           RETURN_CONST             2 (0)
+
+282   L1:     LOAD_GLOBAL              7 (round + NULL)
+
+283           LOAD_FAST_LOAD_FAST     33 (passed, total)
+              BINARY_OP               11 (/)
+              LOAD_CONST               3 (100)
+              BINARY_OP                5 (*)
+
+284           LOAD_CONST               4 (2)
+
+282           CALL                     2
+              RETURN_VALUE
+
+Disassembly of <code object <genexpr> at 0x7645394230, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 274>:
+ 274           RETURN_GENERATOR
+               POP_TOP
+       L1:     RESUME                   0
+               LOAD_FAST                0 (.0)
+
+ 275           GET_ITER
+       L2:     FOR_ITER                16 (to L5)
+               STORE_FAST               1 (value)
+
+ 276           LOAD_FAST                1 (value)
+               TO_BOOL
+
+ 275   L3:     POP_JUMP_IF_TRUE         2 (to L4)
+               JUMP_BACKWARD           12 (to L2)
+       L4:     LOAD_CONST               0 (1)
+               YIELD_VALUE              0
+               RESUME                   5
+               POP_TOP
+               JUMP_BACKWARD           18 (to L2)
+       L5:     END_FOR
+               POP_TOP
+               RETURN_CONST             1 (None)
+
+  --   L6:     CALL_INTRINSIC_1         3 (INTRINSIC_STOPITERATION_ERROR)
+               RERAISE                  1
+ExceptionTable:
+  L1 to L3 -> L6 [0] lasti
+  L4 to L6 -> L6 [0] lasti
+
+Disassembly of <code object build_report at 0x7645644f50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 292>:
+292           RESUME                   0
+
+295           LOAD_GLOBAL              0 (PROJECT_NAME)
+
+296           LOAD_GLOBAL              2 (VERSION)
+
+297           LOAD_GLOBAL              4 (PHASE)
+
+299           LOAD_GLOBAL              7 (utc_now + NULL)
+              CALL                     0
+
+301           LOAD_FAST                2 (health)
+
+303           LOAD_FAST                1 (checks)
+
+305           LOAD_FAST                0 (state)
+              LOAD_CONST               1 ('execution')
+              BINARY_SUBSCR
+
+307           LOAD_FAST                0 (state)
+              LOAD_CONST               2 ('runtime')
+              BINARY_SUBSCR
+
+309           LOAD_FAST                0 (state)
+              LOAD_CONST               3 ('architecture')
+              BINARY_SUBSCR
+
+313           LOAD_FAST                2 (health)
+              LOAD_CONST               4 (90)
+              COMPARE_OP             188 (bool(>=))
+              POP_JUMP_IF_FALSE        2 (to L1)
+
+312           LOAD_CONST               5 ('PHASE_2 — MARKET DISCOVERY')
+              JUMP_FORWARD             1 (to L2)
+
+314   L1:     LOAD_CONST               6 ('REPAIR PHASE 1 BEFORE CONTINUING')
+
+294   L2:     LOAD_CONST               7 (('machine', 'version', 'phase', 'timestamp_utc', 'health_score', 'checks', 'execution', 'runtime', 'architecture', 'next_phase'))
+              BUILD_CONST_KEY_MAP     10
+              STORE_FAST               3 (report)
+
+318           LOAD_GLOBAL              9 (save_json + NULL)
+              LOAD_GLOBAL             10 (REPORT_FILE)
+              LOAD_FAST                3 (report)
+              CALL                     2
+              POP_TOP
+
+320           LOAD_FAST                3 (report)
+              RETURN_VALUE
+
+Disassembly of <code object run_scanner at 0xb4000078b5ead560, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 327>:
+327            RESUME                   0
+
+329            LOAD_GLOBAL              1 (banner + NULL)
+               CALL                     0
+               POP_TOP
+
+331            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+               LOAD_CONST               1 ('SYSTEM INFORMATION')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+
+332            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               2 ('----------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+334            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               3 ('Project       : ')
+               LOAD_GLOBAL              8 (PROJECT_NAME)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+335            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               4 ('Version       : ')
+               LOAD_GLOBAL             10 (VERSION)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+336            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               5 ('Phase         : ')
+               LOAD_GLOBAL             12 (PHASE)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+337            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               6 ('Root          : ')
+               LOAD_GLOBAL             14 (ROOT)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+338            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               7 ('Python        : ')
+               LOAD_GLOBAL             16 (platform)
+               LOAD_ATTR               18 (python_version)
+               PUSH_NULL
+               CALL                     0
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+339            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               8 ('Platform      : ')
+               LOAD_GLOBAL             16 (platform)
+               LOAD_ATTR               16 (platform)
+               PUSH_NULL
+               CALL                     0
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+340            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               9 ('UTC Time      : ')
+               LOAD_GLOBAL             21 (utc_now + NULL)
+               CALL                     0
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+341            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+347            LOAD_GLOBAL             23 (load_json + NULL)
+               LOAD_GLOBAL             24 (STATE_FILE)
+               CALL                     1
+               STORE_FAST               0 (state)
+
+349            LOAD_FAST                0 (state)
+               POP_JUMP_IF_NOT_NONE    10 (to L1)
+
+350            LOAD_GLOBAL             27 (build_machine_state + NULL)
+               CALL                     0
+               STORE_FAST               0 (state)
+
+352    L1:     LOAD_GLOBAL             29 (write_heartbeat + NULL)
+               CALL                     0
+               STORE_FAST               1 (heartbeat)
+
+358            BUILD_MAP                0
+               STORE_FAST               2 (checks)
+
+360            LOAD_GLOBAL             31 (check_project + NULL)
+               CALL                     0
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              10 ('project_root')
+               STORE_SUBSCR
+
+361            LOAD_GLOBAL             33 (check_directories + NULL)
+               CALL                     0
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              11 ('required_directories')
+               STORE_SUBSCR
+
+362            LOAD_GLOBAL             35 (check_python + NULL)
+               CALL                     0
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              12 ('python_runtime')
+               STORE_SUBSCR
+
+363            LOAD_GLOBAL             37 (check_execution_lock + NULL)
+               LOAD_FAST                0 (state)
+               CALL                     1
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              13 ('execution_lock')
+               STORE_SUBSCR
+
+364            LOAD_GLOBAL             39 (check_telemetry + NULL)
+               LOAD_FAST                0 (state)
+               CALL                     1
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              14 ('telemetry')
+               STORE_SUBSCR
+
+365            LOAD_GLOBAL             24 (STATE_FILE)
+               LOAD_ATTR               41 (exists + NULL|self)
+               CALL                     0
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              15 ('state_file')
+               STORE_SUBSCR
+
+366            LOAD_GLOBAL             42 (HEARTBEAT_FILE)
+               LOAD_ATTR               41 (exists + NULL|self)
+               CALL                     0
+               LOAD_FAST                2 (checks)
+               LOAD_CONST              16 ('heartbeat')
+               STORE_SUBSCR
+
+372            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+               LOAD_CONST              17 ('CORE HEALTH CHECKS')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+
+373            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               2 ('----------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+375            LOAD_GLOBAL             45 (status + NULL)
+
+376            LOAD_CONST              18 ('Project root')
+
+377            LOAD_FAST                2 (checks)
+               LOAD_CONST              10 ('project_root')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L2)
+               LOAD_CONST              19 ('PASS')
+               JUMP_FORWARD             1 (to L3)
+       L2:     LOAD_CONST              20 ('FAIL')
+
+378    L3:     LOAD_FAST                2 (checks)
+               LOAD_CONST              10 ('project_root')
+               BINARY_SUBSCR
+
+375            CALL                     3
+               POP_TOP
+
+381            LOAD_GLOBAL             45 (status + NULL)
+
+382            LOAD_CONST              21 ('Required directories')
+
+383            LOAD_FAST                2 (checks)
+               LOAD_CONST              11 ('required_directories')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L4)
+               LOAD_CONST              19 ('PASS')
+               JUMP_FORWARD             1 (to L5)
+       L4:     LOAD_CONST              20 ('FAIL')
+
+384    L5:     LOAD_FAST                2 (checks)
+               LOAD_CONST              11 ('required_directories')
+               BINARY_SUBSCR
+
+381            CALL                     3
+               POP_TOP
+
+387            LOAD_GLOBAL             45 (status + NULL)
+
+388            LOAD_CONST              22 ('Python runtime')
+
+389            LOAD_FAST                2 (checks)
+               LOAD_CONST              12 ('python_runtime')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L6)
+               LOAD_CONST              19 ('PASS')
+               JUMP_FORWARD             1 (to L7)
+       L6:     LOAD_CONST              20 ('FAIL')
+
+390    L7:     LOAD_FAST                2 (checks)
+               LOAD_CONST              12 ('python_runtime')
+               BINARY_SUBSCR
+
+387            CALL                     3
+               POP_TOP
+
+393            LOAD_GLOBAL             45 (status + NULL)
+
+394            LOAD_CONST              23 ('Execution LOCK')
+
+395            LOAD_FAST                2 (checks)
+               LOAD_CONST              13 ('execution_lock')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L8)
+               LOAD_CONST              24 ('LOCKED')
+               JUMP_FORWARD             1 (to L9)
+       L8:     LOAD_CONST              25 ('UNSAFE')
+
+396    L9:     LOAD_FAST                2 (checks)
+               LOAD_CONST              13 ('execution_lock')
+               BINARY_SUBSCR
+
+393            CALL                     3
+               POP_TOP
+
+399            LOAD_GLOBAL             45 (status + NULL)
+
+400            LOAD_CONST              26 ('Telemetry')
+
+401            LOAD_FAST                2 (checks)
+               LOAD_CONST              14 ('telemetry')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L10)
+               LOAD_CONST              27 ('ACTIVE')
+               JUMP_FORWARD             1 (to L11)
+      L10:     LOAD_CONST              28 ('MISSING')
+
+402   L11:     LOAD_FAST                2 (checks)
+               LOAD_CONST              14 ('telemetry')
+               BINARY_SUBSCR
+
+399            CALL                     3
+               POP_TOP
+
+405            LOAD_GLOBAL             45 (status + NULL)
+
+406            LOAD_CONST              29 ('State file')
+
+407            LOAD_FAST                2 (checks)
+               LOAD_CONST              15 ('state_file')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L12)
+               LOAD_CONST              19 ('PASS')
+               JUMP_FORWARD             1 (to L13)
+      L12:     LOAD_CONST              20 ('FAIL')
+
+408   L13:     LOAD_FAST                2 (checks)
+               LOAD_CONST              15 ('state_file')
+               BINARY_SUBSCR
+
+405            CALL                     3
+               POP_TOP
+
+411            LOAD_GLOBAL             45 (status + NULL)
+
+412            LOAD_CONST              30 ('Heartbeat')
+
+413            LOAD_FAST                2 (checks)
+               LOAD_CONST              16 ('heartbeat')
+               BINARY_SUBSCR
+               TO_BOOL
+               POP_JUMP_IF_FALSE        2 (to L14)
+               LOAD_CONST              31 ('ALIVE')
+               JUMP_FORWARD             1 (to L15)
+      L14:     LOAD_CONST              20 ('FAIL')
+
+414   L15:     LOAD_FAST                2 (checks)
+               LOAD_CONST              16 ('heartbeat')
+               BINARY_SUBSCR
+
+411            CALL                     3
+               POP_TOP
+
+421            LOAD_GLOBAL             47 (calculate_health + NULL)
+               LOAD_FAST                2 (checks)
+               CALL                     1
+               STORE_FAST               3 (health)
+
+423            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+424            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+               LOAD_CONST              32 ('MACHINE HEALTH')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+
+425            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               2 ('----------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+427            LOAD_FAST                3 (health)
+               LOAD_CONST              33 (90)
+               COMPARE_OP             188 (bool(>=))
+               POP_JUMP_IF_FALSE        9 (to L16)
+
+428            LOAD_GLOBAL             48 (GREEN)
+               STORE_FAST               4 (colour)
+
+429            LOAD_CONST              34 ('HEALTHY')
+               STORE_FAST               5 (state_text)
+               JUMP_FORWARD            23 (to L18)
+
+431   L16:     LOAD_FAST                3 (health)
+               LOAD_CONST              35 (70)
+               COMPARE_OP             188 (bool(>=))
+               POP_JUMP_IF_FALSE        9 (to L17)
+
+432            LOAD_GLOBAL             50 (YELLOW)
+               STORE_FAST               4 (colour)
+
+433            LOAD_CONST              36 ('DEGRADED')
+               STORE_FAST               5 (state_text)
+               JUMP_FORWARD             8 (to L18)
+
+436   L17:     LOAD_GLOBAL             52 (RED)
+               STORE_FAST               4 (colour)
+
+437            LOAD_CONST              37 ('CRITICAL')
+               STORE_FAST               5 (state_text)
+
+439   L18:     LOAD_GLOBAL              3 (print + NULL)
+
+440            LOAD_CONST              38 ('HEALTH SCORE : ')
+
+441            LOAD_FAST                4 (colour)
+               FORMAT_SIMPLE
+               LOAD_FAST                3 (health)
+               LOAD_CONST              39 ('.2f')
+               FORMAT_WITH_SPEC
+               LOAD_CONST              40 ('%')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+440            BUILD_STRING             5
+
+439            CALL                     1
+               POP_TOP
+
+444            LOAD_GLOBAL              3 (print + NULL)
+
+445            LOAD_CONST              41 ('STATUS       : ')
+
+446            LOAD_FAST                4 (colour)
+               FORMAT_SIMPLE
+               LOAD_FAST                5 (state_text)
+               FORMAT_SIMPLE
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+445            BUILD_STRING             4
+
+444            CALL                     1
+               POP_TOP
+
+453            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+454            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+               LOAD_CONST              42 ('EXECUTION BOUNDARY')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+
+455            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               2 ('----------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+457            LOAD_GLOBAL              3 (print + NULL)
+
+458            LOAD_CONST              43 ('EXECUTION LOCK       : ')
+
+459            LOAD_GLOBAL             48 (GREEN)
+               FORMAT_SIMPLE
+               LOAD_CONST              24 ('LOCKED')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+458            BUILD_STRING             4
+
+457            CALL                     1
+               POP_TOP
+
+462            LOAD_GLOBAL              3 (print + NULL)
+
+463            LOAD_CONST              44 ('LIVE EXECUTION       : ')
+
+464            LOAD_GLOBAL             48 (GREEN)
+               FORMAT_SIMPLE
+               LOAD_CONST              45 ('DISABLED')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+463            BUILD_STRING             4
+
+462            CALL                     1
+               POP_TOP
+
+467            LOAD_GLOBAL              3 (print + NULL)
+
+468            LOAD_CONST              46 ('ORDER SUBMISSION     : ')
+
+469            LOAD_GLOBAL             48 (GREEN)
+               FORMAT_SIMPLE
+               LOAD_CONST              45 ('DISABLED')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+468            BUILD_STRING             4
+
+467            CALL                     1
+               POP_TOP
+
+476            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+477            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+               LOAD_CONST              47 ('ARCHITECTURE STATUS')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+
+478            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               2 ('----------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+480            LOAD_FAST                0 (state)
+               LOAD_CONST              48 ('architecture')
+               BINARY_SUBSCR
+               LOAD_ATTR               55 (items + NULL|self)
+               CALL                     0
+               GET_ITER
+      L19:     FOR_ITER               100 (to L21)
+               UNPACK_SEQUENCE          2
+               STORE_FAST_STORE_FAST  103 (name, enabled)
+
+482            LOAD_FAST                6 (name)
+               LOAD_ATTR               57 (replace + NULL|self)
+               LOAD_CONST              49 ('_')
+               LOAD_CONST              50 (' ')
+               CALL                     2
+               LOAD_ATTR               59 (upper + NULL|self)
+               CALL                     0
+               STORE_FAST               8 (readable)
+
+484            LOAD_FAST                7 (enabled)
+               TO_BOOL
+               POP_JUMP_IF_FALSE       29 (to L20)
+
+485            LOAD_GLOBAL              3 (print + NULL)
+
+486            LOAD_FAST                8 (readable)
+               LOAD_CONST              51 ('<28')
+               FORMAT_WITH_SPEC
+
+487            LOAD_GLOBAL             48 (GREEN)
+               FORMAT_SIMPLE
+               LOAD_CONST              52 ('READY')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+486            BUILD_STRING             4
+
+485            CALL                     1
+               POP_TOP
+               JUMP_BACKWARD           73 (to L19)
+
+490   L20:     LOAD_GLOBAL              3 (print + NULL)
+
+491            LOAD_FAST                8 (readable)
+               LOAD_CONST              51 ('<28')
+               FORMAT_WITH_SPEC
+
+492            LOAD_GLOBAL             50 (YELLOW)
+               FORMAT_SIMPLE
+               LOAD_CONST              53 ('NOT BUILT')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+491            BUILD_STRING             4
+
+490            CALL                     1
+               POP_TOP
+               JUMP_BACKWARD          102 (to L19)
+
+480   L21:     END_FOR
+               POP_TOP
+
+499            LOAD_GLOBAL             61 (build_report + NULL)
+
+500            LOAD_FAST                0 (state)
+
+501            LOAD_FAST                2 (checks)
+
+502            LOAD_FAST                3 (health)
+
+499            CALL                     3
+               STORE_FAST               9 (report)
+
+505            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+506            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+               LOAD_CONST              54 ('PHASE 1 REPORT')
+               LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+               BUILD_STRING             3
+               CALL                     1
+               POP_TOP
+
+507            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST               2 ('----------------------------------------------------------------')
+               CALL                     1
+               POP_TOP
+
+509            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST              55 ('Report file : ')
+               LOAD_GLOBAL             62 (REPORT_FILE)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+510            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST              56 ('Heartbeat   : ')
+               LOAD_GLOBAL             42 (HEARTBEAT_FILE)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+511            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST              57 ('State file  : ')
+               LOAD_GLOBAL             24 (STATE_FILE)
+               FORMAT_SIMPLE
+               BUILD_STRING             2
+               CALL                     1
+               POP_TOP
+
+513            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+
+514            LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST              58 ('================================================================')
+               CALL                     1
+               POP_TOP
+
+516            LOAD_FAST                3 (health)
+               LOAD_CONST              33 (90)
+               COMPARE_OP             188 (bool(>=))
+               POP_JUMP_IF_FALSE       31 (to L22)
+
+517            LOAD_GLOBAL              3 (print + NULL)
+
+518            LOAD_GLOBAL             48 (GREEN)
+               FORMAT_SIMPLE
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+
+519            LOAD_CONST              59 ('PHASE 1 COMPLETE — FOUNDATION HEALTHY')
+
+520            LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+518            BUILD_STRING             4
+
+517            CALL                     1
+               POP_TOP
+               JUMP_FORWARD            30 (to L23)
+
+523   L22:     LOAD_GLOBAL              3 (print + NULL)
+
+524            LOAD_GLOBAL             50 (YELLOW)
+               FORMAT_SIMPLE
+               LOAD_GLOBAL              4 (BOLD)
+               FORMAT_SIMPLE
+
+525            LOAD_CONST              60 ('PHASE 1 COMPLETE — REVIEW FINDINGS')
+
+526            LOAD_GLOBAL              6 (RESET)
+               FORMAT_SIMPLE
+
+524            BUILD_STRING             4
+
+523            CALL                     1
+               POP_TOP
+
+529   L23:     LOAD_GLOBAL              3 (print + NULL)
+               LOAD_CONST              58 ('================================================================')
+               CALL                     1
+               POP_TOP
+
+530            LOAD_GLOBAL              3 (print + NULL)
+               CALL                     0
+               POP_TOP
+               RETURN_CONST             0 (None)
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\n============================================================\nCRYPTOMASTERX1\nPHASE 1 — MACHINE CORE / PERFORMANCE SCANNER\n============================================================\n\nPurpose:\n    Establish the first foundation of CryptoMasterX1.\n\nThis phase:\n    - identifies the machine\n    - creates the required directory structure\n    - maintains machine state\n    - records heartbeat\n    - checks core files\n    - checks Python environment\n    - checks execution lock state\n    - checks telemetry\n    - produces a machine health report\n\nSAFETY:\n    This phase NEVER:\n        - connects to Binance trading endpoints\n        - submits orders\n        - cancels orders\n        - changes execution authorization\n        - unlocks the machine\n        - trades\n        - uses real money\n\nExecution starts LOCKED.\n============================================================\n'
+[1] 0
+[2] ('annotations',)
+[3] None
+[4] ('Path',)
+[5] ('datetime', 'timezone')
+[6] 'CryptoMasterX1'
+[7] '1.0.0'
+[8] 'PHASE_1'
+[9] True
+[10] False
+[11] 'data'
+[12] 'logs'
+[13] 'state'
+[14] 'reports'
+[15] 'machine_state.json'
+[16] 'heartbeat.json'
+[17] 'phase1_report.json'
+[18] '\x1b[0m'
+[19] '\x1b[92m'
+[20] '\x1b[91m'
+[21] '\x1b[93m'
+[22] '\x1b[96m'
+[23] '\x1b[97m'
+[24] '\x1b[1m'
+[25] <code object utc_now at 0x7645631b80, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 93>
+[26] <code object mkdirs at 0x7645631a50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 97>
+[27] <code object save_json at 0x764564a290, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 107>
+[28] <code object load_json at 0x764589f770, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 119>
+[29] <code object banner at 0x76455d9d70, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 130>
+[30] <code object status at 0x7645631cb0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 139>
+[31] <code object build_machine_state at 0xb400007795eee170, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 152>
+[32] <code object write_heartbeat at 0x76455ee640, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 207>
+[33] <code object check_project at 0x7645394130, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 226>
+[34] <code object check_directories at 0x7645613bd0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 231>
+[35] <code object check_python at 0x7645360300, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 243>
+[36] <code object check_execution_lock at 0x764564abf0, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 248>
+[37] <code object check_telemetry at 0x7645612670, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 259>
+[38] <code object calculate_health at 0x76455ee790, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 270>
+[39] <code object build_report at 0x7645644f50, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 292>
+[40] <code object run_scanner at 0xb4000078b5ead560, file "/data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py", line 327>
+[41] '__main__'
+[42] ('path', 'Path', 'data', 'dict')
+[43] ('path', 'Path')
+[44] (True,)
+
+
+NAMES
+=====
+
+'__doc__'
+'__future__'
+'annotations'
+'json'
+'platform'
+'sys'
+'os'
+'pathlib'
+'Path'
+'datetime'
+'timezone'
+'PROJECT_NAME'
+'VERSION'
+'PHASE'
+'EXECUTION_LOCKED'
+'LIVE_EXECUTION'
+'ORDER_SUBMISSION_ENABLED'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'DATA_DIR'
+'LOG_DIR'
+'STATE_DIR'
+'REPORT_DIR'
+'STATE_FILE'
+'HEARTBEAT_FILE'
+'REPORT_FILE'
+'RESET'
+'GREEN'
+'RED'
+'YELLOW'
+'CYAN'
+'WHITE'
+'BOLD'
+'utc_now'
+'mkdirs'
+'save_json'
+'load_json'
+'banner'
+'status'
+'build_machine_state'
+'write_heartbeat'
+'check_project'
+'check_directories'
+'check_python'
+'check_execution_lock'
+'check_telemetry'
+'calculate_health'
+'build_report'
+'run_scanner'
+'__name__'

@@ -1,0 +1,740 @@
+# ============================================================
+# CryptoMasterX1 recovered bytecode listing
+# Source: /data/data/com.termux/files/home/CryptoMasterX1/build_staging/phase6_position_sizing_backup_20260826_132054/__pycache__/phase6_trade_intelligence.cpython-313.pyc
+# Python runtime: 3.13.13 (main, Apr 10 2026, 13:09:22) [Clang 21.0.0 (https://android.googlesource.com/toolchain/llvm-project 5e96669f0
+# IMPORTANT: This is DISASSEMBLED BYTECODE, not original .py.
+# ============================================================
+
+MODULE CODE OBJECT
+==================
+
+  0           RESUME                   0
+
+  3           LOAD_CONST               0 ('\nCryptoMasterX1\nPHASE 6 — TRADE VERIFICATION + FINAL CONSTRUCTION\n\nPhase 6 owns:\n    Entry\n    SL\n    TP1\n    TP2\n    risk\n    reward\n    R:R\n    position size\n\nPhase 6 refreshes Binance price data before construction.\n\nNO order submission.\n')
+              STORE_NAME               0 (__doc__)
+
+ 22           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              1 (json)
+              STORE_NAME               1 (json)
+
+ 23           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME              2 (math)
+              STORE_NAME               2 (math)
+
+ 24           LOAD_CONST               1 (0)
+              LOAD_CONST               3 (('datetime', 'timezone'))
+              IMPORT_NAME              3 (datetime)
+              IMPORT_FROM              3 (datetime)
+              STORE_NAME               3 (datetime)
+              IMPORT_FROM              4 (timezone)
+              STORE_NAME               4 (timezone)
+              POP_TOP
+
+ 25           LOAD_CONST               1 (0)
+              LOAD_CONST               4 (('Decimal', 'ROUND_DOWN'))
+              IMPORT_NAME              5 (decimal)
+              IMPORT_FROM              6 (Decimal)
+              STORE_NAME               6 (Decimal)
+              IMPORT_FROM              7 (ROUND_DOWN)
+              STORE_NAME               7 (ROUND_DOWN)
+              POP_TOP
+
+ 26           LOAD_CONST               1 (0)
+              LOAD_CONST               5 (('Path',))
+              IMPORT_NAME              8 (pathlib)
+              IMPORT_FROM              9 (Path)
+              STORE_NAME               9 (Path)
+              POP_TOP
+
+ 28           LOAD_CONST               1 (0)
+              LOAD_CONST               2 (None)
+              IMPORT_NAME             10 (requests)
+              STORE_NAME              10 (requests)
+
+ 31           LOAD_NAME                9 (Path)
+              PUSH_NULL
+              LOAD_NAME               11 (__file__)
+              CALL                     1
+              LOAD_ATTR               25 (resolve + NULL|self)
+              CALL                     0
+              LOAD_ATTR               26 (parent)
+              STORE_NAME              14 (ROOT)
+
+ 32           LOAD_NAME               14 (ROOT)
+              LOAD_CONST               6 ('state')
+              BINARY_OP               11 (/)
+              STORE_NAME              15 (STATE)
+
+ 34           LOAD_NAME               15 (STATE)
+              LOAD_CONST               7 ('phase5_market_intelligence.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              16 (PHASE5_STATE)
+
+ 35           LOAD_NAME               15 (STATE)
+              LOAD_CONST               8 ('phase6_trade_intelligence.json')
+              BINARY_OP               11 (/)
+              STORE_NAME              17 (PHASE6_STATE)
+
+ 37           LOAD_CONST               9 ('https://api.binance.com')
+              STORE_NAME              18 (BINANCE)
+
+ 39           LOAD_NAME                6 (Decimal)
+              PUSH_NULL
+              LOAD_CONST              10 ('1.20')
+              CALL                     1
+              STORE_NAME              19 (SL_ATR_MULTIPLIER)
+
+ 40           LOAD_NAME                6 (Decimal)
+              PUSH_NULL
+              LOAD_CONST              11 ('1.50')
+              CALL                     1
+              STORE_NAME              20 (TP1_R_MULTIPLIER)
+
+ 41           LOAD_NAME                6 (Decimal)
+              PUSH_NULL
+              LOAD_CONST              12 ('2.50')
+              CALL                     1
+              STORE_NAME              21 (TP2_R_MULTIPLIER)
+
+ 43           LOAD_NAME                6 (Decimal)
+              PUSH_NULL
+              LOAD_CONST              13 ('0.005')
+              CALL                     1
+              STORE_NAME              22 (RISK_PER_TRADE)
+
+ 44           LOAD_NAME                6 (Decimal)
+              PUSH_NULL
+              LOAD_CONST              11 ('1.50')
+              CALL                     1
+              STORE_NAME              23 (MIN_RR)
+
+ 46           LOAD_CONST              14 (15)
+              STORE_NAME              24 (TIMEOUT)
+
+ 49           LOAD_CONST              15 (<code object now_utc at 0x7645631cb0, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 49>)
+              MAKE_FUNCTION
+              STORE_NAME              25 (now_utc)
+
+ 53           LOAD_CONST              23 ((None,))
+              LOAD_CONST              16 (<code object get_json at 0x76455c1a70, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 53>)
+              MAKE_FUNCTION
+              SET_FUNCTION_ATTRIBUTE   1 (defaults)
+              STORE_NAME              26 (get_json)
+
+ 59           LOAD_CONST              17 (<code object load_json at 0x7645613cf0, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 59>)
+              MAKE_FUNCTION
+              STORE_NAME              27 (load_json)
+
+ 63           LOAD_CONST              18 (<code object save_json at 0x76453a0030, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 63>)
+              MAKE_FUNCTION
+              STORE_NAME              28 (save_json)
+
+ 67           LOAD_CONST              19 (<code object current_price at 0x7645631a50, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 67>)
+              MAKE_FUNCTION
+              STORE_NAME              29 (current_price)
+
+ 75           LOAD_CONST              20 (<code object build_trade at 0xb4000076d5f07e10, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 75>)
+              MAKE_FUNCTION
+              STORE_NAME              30 (build_trade)
+
+147           LOAD_CONST              21 (<code object main at 0xb4000076d5f10c60, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 147>)
+              MAKE_FUNCTION
+              STORE_NAME              31 (main)
+
+202           LOAD_NAME               32 (__name__)
+              LOAD_CONST              22 ('__main__')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE        8 (to L1)
+
+203           LOAD_NAME               31 (main)
+              PUSH_NULL
+              CALL                     0
+              POP_TOP
+              RETURN_CONST             2 (None)
+
+202   L1:     RETURN_CONST             2 (None)
+
+Disassembly of <code object now_utc at 0x7645631cb0, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 49>:
+ 49           RESUME                   0
+
+ 50           LOAD_GLOBAL              0 (datetime)
+              LOAD_ATTR                2 (now)
+              PUSH_NULL
+              LOAD_GLOBAL              4 (timezone)
+              LOAD_ATTR                6 (utc)
+              CALL                     1
+              LOAD_ATTR                9 (isoformat + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object get_json at 0x76455c1a70, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 53>:
+ 53           RESUME                   0
+
+ 54           LOAD_GLOBAL              0 (requests)
+              LOAD_ATTR                2 (get)
+              PUSH_NULL
+              LOAD_FAST_LOAD_FAST      1 (path, params)
+              LOAD_GLOBAL              4 (TIMEOUT)
+              LOAD_CONST               1 (('params', 'timeout'))
+              CALL_KW                  3
+              STORE_FAST               2 (r)
+
+ 55           LOAD_FAST                2 (r)
+              LOAD_ATTR                7 (raise_for_status + NULL|self)
+              CALL                     0
+              POP_TOP
+
+ 56           LOAD_FAST                2 (r)
+              LOAD_ATTR                9 (json + NULL|self)
+              CALL                     0
+              RETURN_VALUE
+
+Disassembly of <code object load_json at 0x7645613cf0, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 59>:
+ 59           RESUME                   0
+
+ 60           LOAD_GLOBAL              0 (json)
+              LOAD_ATTR                2 (loads)
+              PUSH_NULL
+              LOAD_FAST                0 (path)
+              LOAD_ATTR                5 (read_text + NULL|self)
+              CALL                     0
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object save_json at 0x76453a0030, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 63>:
+ 63           RESUME                   0
+
+ 64           LOAD_FAST                0 (path)
+              LOAD_ATTR                1 (write_text + NULL|self)
+              LOAD_GLOBAL              2 (json)
+              LOAD_ATTR                4 (dumps)
+              PUSH_NULL
+              LOAD_FAST                1 (data)
+              LOAD_CONST               1 (2)
+              LOAD_CONST               2 (('indent',))
+              CALL_KW                  2
+              CALL                     1
+              POP_TOP
+              RETURN_CONST             0 (None)
+
+Disassembly of <code object current_price at 0x7645631a50, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 67>:
+ 67           RESUME                   0
+
+ 68           LOAD_GLOBAL              1 (get_json + NULL)
+
+ 69           LOAD_GLOBAL              2 (BINANCE)
+              FORMAT_SIMPLE
+              LOAD_CONST               1 ('/api/v3/ticker/price')
+              BUILD_STRING             2
+
+ 70           LOAD_CONST               2 ('symbol')
+              LOAD_FAST                0 (symbol)
+              BUILD_MAP                1
+
+ 68           CALL                     2
+              STORE_FAST               1 (data)
+
+ 72           LOAD_GLOBAL              5 (Decimal + NULL)
+              LOAD_GLOBAL              7 (str + NULL)
+              LOAD_FAST                1 (data)
+              LOAD_CONST               3 ('price')
+              BINARY_SUBSCR
+              CALL                     1
+              CALL                     1
+              RETURN_VALUE
+
+Disassembly of <code object build_trade at 0xb4000076d5f07e10, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 75>:
+ 75           RESUME                   0
+
+ 76           LOAD_FAST                0 (candidate)
+              LOAD_CONST               1 ('symbol')
+              BINARY_SUBSCR
+              STORE_FAST               1 (symbol)
+
+ 77           LOAD_FAST                0 (candidate)
+              LOAD_CONST               2 ('direction')
+              BINARY_SUBSCR
+              STORE_FAST               2 (direction)
+
+ 79           LOAD_GLOBAL              1 (current_price + NULL)
+              LOAD_FAST                1 (symbol)
+              CALL                     1
+              STORE_FAST               3 (live_price)
+
+ 81           LOAD_GLOBAL              3 (Decimal + NULL)
+              LOAD_GLOBAL              5 (str + NULL)
+              LOAD_FAST                0 (candidate)
+              LOAD_CONST               3 ('atr_5m')
+              BINARY_SUBSCR
+              CALL                     1
+              CALL                     1
+              STORE_FAST               4 (atr_value)
+
+ 83           LOAD_FAST                4 (atr_value)
+              LOAD_CONST               4 (0)
+              COMPARE_OP              58 (bool(<=))
+              POP_JUMP_IF_FALSE        1 (to L1)
+
+ 84           RETURN_CONST             0 (None)
+
+ 86   L1:     LOAD_FAST                4 (atr_value)
+              LOAD_GLOBAL              6 (SL_ATR_MULTIPLIER)
+              BINARY_OP                5 (*)
+              STORE_FAST               5 (risk_distance)
+
+ 88           LOAD_FAST                2 (direction)
+              LOAD_CONST               5 ('LONG')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       29 (to L2)
+
+ 89           LOAD_FAST                3 (live_price)
+              STORE_FAST               6 (entry)
+
+ 90           LOAD_FAST_LOAD_FAST    101 (entry, risk_distance)
+              BINARY_OP               10 (-)
+              STORE_FAST               7 (sl)
+
+ 91           LOAD_FAST_LOAD_FAST    101 (entry, risk_distance)
+              LOAD_GLOBAL              8 (TP1_R_MULTIPLIER)
+              BINARY_OP                5 (*)
+              BINARY_OP                0 (+)
+              STORE_FAST               8 (tp1)
+
+ 92           LOAD_FAST_LOAD_FAST    101 (entry, risk_distance)
+              LOAD_GLOBAL             10 (TP2_R_MULTIPLIER)
+              BINARY_OP                5 (*)
+              BINARY_OP                0 (+)
+              STORE_FAST               9 (tp2)
+              JUMP_FORWARD            36 (to L4)
+
+ 94   L2:     LOAD_FAST                2 (direction)
+              LOAD_CONST               6 ('SHORT')
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       29 (to L3)
+
+ 95           LOAD_FAST                3 (live_price)
+              STORE_FAST               6 (entry)
+
+ 96           LOAD_FAST_LOAD_FAST    101 (entry, risk_distance)
+              BINARY_OP                0 (+)
+              STORE_FAST               7 (sl)
+
+ 97           LOAD_FAST_LOAD_FAST    101 (entry, risk_distance)
+              LOAD_GLOBAL              8 (TP1_R_MULTIPLIER)
+              BINARY_OP                5 (*)
+              BINARY_OP               10 (-)
+              STORE_FAST               8 (tp1)
+
+ 98           LOAD_FAST_LOAD_FAST    101 (entry, risk_distance)
+              LOAD_GLOBAL             10 (TP2_R_MULTIPLIER)
+              BINARY_OP                5 (*)
+              BINARY_OP               10 (-)
+              STORE_FAST               9 (tp2)
+              JUMP_FORWARD             1 (to L4)
+
+101   L3:     RETURN_CONST             0 (None)
+
+103   L4:     LOAD_GLOBAL             13 (abs + NULL)
+              LOAD_FAST_LOAD_FAST    103 (entry, sl)
+              BINARY_OP               10 (-)
+              CALL                     1
+              STORE_FAST              10 (risk)
+
+104           LOAD_GLOBAL             13 (abs + NULL)
+              LOAD_FAST_LOAD_FAST    150 (tp2, entry)
+              BINARY_OP               10 (-)
+              CALL                     1
+              STORE_FAST              11 (reward)
+
+106           LOAD_FAST               10 (risk)
+              LOAD_CONST               4 (0)
+              COMPARE_OP              58 (bool(<=))
+              POP_JUMP_IF_FALSE        1 (to L5)
+
+107           RETURN_CONST             0 (None)
+
+109   L5:     LOAD_FAST_LOAD_FAST    186 (reward, risk)
+              BINARY_OP               11 (/)
+              STORE_FAST              12 (rr)
+
+111           LOAD_FAST               12 (rr)
+              LOAD_GLOBAL             14 (MIN_RR)
+              COMPARE_OP              18 (bool(<))
+              POP_JUMP_IF_FALSE        1 (to L6)
+
+112           RETURN_CONST             0 (None)
+
+117   L6:     LOAD_CONST               7 (True)
+              STORE_FAST              13 (position_size_required)
+
+119           BUILD_MAP                0
+
+120           LOAD_CONST               1 ('symbol')
+              LOAD_FAST                1 (symbol)
+
+119           MAP_ADD                  1
+
+121           LOAD_CONST               2 ('direction')
+              LOAD_FAST                2 (direction)
+
+119           MAP_ADD                  1
+
+122           LOAD_CONST               8 ('constructed_at_utc')
+              LOAD_GLOBAL             17 (now_utc + NULL)
+              CALL                     0
+
+119           MAP_ADD                  1
+
+124           LOAD_CONST               9 ('market_data_source')
+              LOAD_CONST              10 ('BINANCE_SPOT_REST')
+
+119           MAP_ADD                  1
+
+125           LOAD_CONST              11 ('price_refreshed_before_construction')
+              LOAD_CONST               7 (True)
+
+119           MAP_ADD                  1
+
+127           LOAD_CONST              12 ('entry')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST                6 (entry)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+128           LOAD_CONST              13 ('sl')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST                7 (sl)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+129           LOAD_CONST              14 ('tp1')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST                8 (tp1)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+130           LOAD_CONST              15 ('tp2')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST                9 (tp2)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+132           LOAD_CONST              16 ('risk')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST               10 (risk)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+133           LOAD_CONST              17 ('reward')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST               11 (reward)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+134           LOAD_CONST              18 ('rr')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_FAST               12 (rr)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+136           LOAD_CONST              19 ('risk_per_trade')
+              LOAD_GLOBAL             19 (float + NULL)
+              LOAD_GLOBAL             20 (RISK_PER_TRADE)
+              CALL                     1
+
+119           MAP_ADD                  1
+
+137           LOAD_CONST              20 ('position_size_required')
+              LOAD_FAST               13 (position_size_required)
+
+119           MAP_ADD                  1
+
+139           LOAD_CONST              21 ('phase5_confidence')
+              LOAD_FAST                0 (candidate)
+              LOAD_ATTR               23 (get + NULL|self)
+              LOAD_CONST              22 ('confidence')
+              CALL                     1
+
+119           MAP_ADD                  1
+
+140           LOAD_CONST              23 ('phase6_owner')
+              LOAD_CONST              24 ('TRADE_VERIFICATION_FINAL_CONSTRUCTION')
+
+119           MAP_ADD                  1
+
+142           LOAD_CONST              25 ('execution_authorized')
+              LOAD_CONST              26 (False)
+
+119           MAP_ADD                  1
+
+143           LOAD_CONST              27 ('order_submission')
+              LOAD_CONST              26 (False)
+
+119           BUILD_MAP                1
+              DICT_UPDATE              1
+              RETURN_VALUE
+
+Disassembly of <code object main at 0xb4000076d5f10c60, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 147>:
+ 147            RESUME                   0
+
+ 148            LOAD_GLOBAL              0 (STATE)
+                LOAD_ATTR                3 (mkdir + NULL|self)
+                LOAD_CONST               1 (True)
+                LOAD_CONST               2 (('exist_ok',))
+                CALL_KW                  1
+                POP_TOP
+
+ 150            LOAD_GLOBAL              5 (load_json + NULL)
+                LOAD_GLOBAL              6 (PHASE5_STATE)
+                CALL                     1
+                STORE_FAST               0 (source)
+
+ 151            LOAD_FAST                0 (source)
+                LOAD_ATTR                9 (get + NULL|self)
+                LOAD_CONST               3 ('qualified')
+                BUILD_LIST               0
+                CALL                     2
+                STORE_FAST               1 (candidates)
+
+ 153            BUILD_LIST               0
+                STORE_FAST               2 (constructed)
+
+ 155            LOAD_FAST                1 (candidates)
+                GET_ITER
+        L1:     FOR_ITER                37 (to L5)
+                STORE_FAST               3 (candidate)
+
+ 156            NOP
+
+ 157    L2:     LOAD_GLOBAL             11 (build_trade + NULL)
+                LOAD_FAST                3 (candidate)
+                CALL                     1
+                STORE_FAST               4 (trade)
+
+ 159            LOAD_FAST                4 (trade)
+                POP_JUMP_IF_NONE        19 (to L4)
+
+ 160            LOAD_FAST                2 (constructed)
+                LOAD_ATTR               13 (append + NULL|self)
+                LOAD_FAST                4 (trade)
+                CALL                     1
+                POP_TOP
+        L3:     JUMP_BACKWARD           37 (to L1)
+
+ 159    L4:     JUMP_BACKWARD           39 (to L1)
+
+ 155    L5:     END_FOR
+                POP_TOP
+
+ 169            LOAD_CONST               8 (6)
+
+ 170            LOAD_CONST               9 ('TRADE VERIFICATION + FINAL CONSTRUCTION')
+
+ 171            LOAD_GLOBAL             19 (now_utc + NULL)
+                CALL                     0
+
+ 173            LOAD_GLOBAL             21 (len + NULL)
+                LOAD_FAST                1 (candidates)
+                CALL                     1
+
+ 174            LOAD_GLOBAL             21 (len + NULL)
+                LOAD_FAST                2 (constructed)
+                CALL                     1
+
+ 176            LOAD_FAST                2 (constructed)
+
+ 179            LOAD_CONST              10 ('PHASE_5')
+
+ 180            LOAD_CONST              11 ('PHASE_6')
+
+ 181            LOAD_CONST              12 ('PHASE_7')
+
+ 182            LOAD_CONST              13 ('PHASE_8')
+
+ 178            LOAD_CONST              14 (('trade_intelligence', 'final_construction', 'execution', 'lifecycle'))
+                BUILD_CONST_KEY_MAP      4
+
+ 186            LOAD_CONST              15 (False)
+
+ 187            LOAD_CONST              15 (False)
+
+ 188            LOAD_CONST              15 (False)
+
+ 185            LOAD_CONST              16 (('execution_authorized', 'order_submission', 'live_execution'))
+                BUILD_CONST_KEY_MAP      3
+
+ 168            LOAD_CONST              17 (('phase', 'phase_name', 'timestamp_utc', 'phase5_candidates', 'constructed_trades', 'trades', 'ownership', 'execution_boundary'))
+                BUILD_CONST_KEY_MAP      8
+                STORE_FAST               6 (output)
+
+ 192            LOAD_GLOBAL             23 (save_json + NULL)
+                LOAD_GLOBAL             24 (PHASE6_STATE)
+                LOAD_FAST                6 (output)
+                CALL                     2
+                POP_TOP
+
+ 194            LOAD_GLOBAL             17 (print + NULL)
+                CALL                     0
+                POP_TOP
+
+ 195            LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST              18 ('PHASE 6 — TRADE VERIFICATION + FINAL CONSTRUCTION')
+                CALL                     1
+                POP_TOP
+
+ 196            LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST              19 ('Phase 5 candidates : ')
+                LOAD_GLOBAL             21 (len + NULL)
+                LOAD_FAST                1 (candidates)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 197            LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST              20 ('Constructed trades : ')
+                LOAD_GLOBAL             21 (len + NULL)
+                LOAD_FAST                2 (constructed)
+                CALL                     1
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 198            LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST              21 ('State saved        : ')
+                LOAD_GLOBAL             24 (PHASE6_STATE)
+                FORMAT_SIMPLE
+                BUILD_STRING             2
+                CALL                     1
+                POP_TOP
+
+ 199            LOAD_GLOBAL             17 (print + NULL)
+                LOAD_CONST              22 ('ORDER SUBMISSION   : LOCKED')
+                CALL                     1
+                POP_TOP
+                RETURN_CONST             0 (None)
+
+  --    L6:     PUSH_EXC_INFO
+
+ 162            LOAD_GLOBAL             14 (Exception)
+                CHECK_EXC_MATCH
+                POP_JUMP_IF_FALSE       42 (to L10)
+                STORE_FAST               5 (exc)
+
+ 163    L7:     LOAD_GLOBAL             17 (print + NULL)
+
+ 164            LOAD_CONST               4 ('CONSTRUCTION ERROR ')
+                LOAD_FAST                3 (candidate)
+                LOAD_ATTR                9 (get + NULL|self)
+                LOAD_CONST               5 ('symbol')
+                CALL                     1
+                FORMAT_SIMPLE
+                LOAD_CONST               6 (': ')
+                LOAD_FAST                5 (exc)
+                FORMAT_SIMPLE
+                BUILD_STRING             4
+
+ 165            LOAD_CONST               1 (True)
+
+ 163            LOAD_CONST               7 (('flush',))
+                CALL_KW                  2
+                POP_TOP
+        L8:     POP_EXCEPT
+                LOAD_CONST               0 (None)
+                STORE_FAST               5 (exc)
+                DELETE_FAST              5 (exc)
+                JUMP_BACKWARD          247 (to L1)
+
+  --    L9:     LOAD_CONST               0 (None)
+                STORE_FAST               5 (exc)
+                DELETE_FAST              5 (exc)
+                RERAISE                  1
+
+ 162   L10:     RERAISE                  0
+
+  --   L11:     COPY                     3
+                POP_EXCEPT
+                RERAISE                  1
+ExceptionTable:
+  L2 to L3 -> L6 [1]
+  L6 to L7 -> L11 [2] lasti
+  L7 to L8 -> L9 [2] lasti
+  L9 to L11 -> L11 [2] lasti
+
+
+CODE OBJECT CONSTANTS
+=====================
+
+[0] '\nCryptoMasterX1\nPHASE 6 — TRADE VERIFICATION + FINAL CONSTRUCTION\n\nPhase 6 owns:\n    Entry\n    SL\n    TP1\n    TP2\n    risk\n    reward\n    R:R\n    position size\n\nPhase 6 refreshes Binance price data before construction.\n\nNO order submission.\n'
+[1] 0
+[2] None
+[3] ('datetime', 'timezone')
+[4] ('Decimal', 'ROUND_DOWN')
+[5] ('Path',)
+[6] 'state'
+[7] 'phase5_market_intelligence.json'
+[8] 'phase6_trade_intelligence.json'
+[9] 'https://api.binance.com'
+[10] '1.20'
+[11] '1.50'
+[12] '2.50'
+[13] '0.005'
+[14] 15
+[15] <code object now_utc at 0x7645631cb0, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 49>
+[16] <code object get_json at 0x76455c1a70, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 53>
+[17] <code object load_json at 0x7645613cf0, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 59>
+[18] <code object save_json at 0x76453a0030, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 63>
+[19] <code object current_price at 0x7645631a50, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 67>
+[20] <code object build_trade at 0xb4000076d5f07e10, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 75>
+[21] <code object main at 0xb4000076d5f10c60, file "./build_staging/phase6_position_sizing_backup_20260826_132054/phase6_trade_intelligence.py", line 147>
+[22] '__main__'
+[23] (None,)
+
+
+NAMES
+=====
+
+'__doc__'
+'json'
+'math'
+'datetime'
+'timezone'
+'decimal'
+'Decimal'
+'ROUND_DOWN'
+'pathlib'
+'Path'
+'requests'
+'__file__'
+'resolve'
+'parent'
+'ROOT'
+'STATE'
+'PHASE5_STATE'
+'PHASE6_STATE'
+'BINANCE'
+'SL_ATR_MULTIPLIER'
+'TP1_R_MULTIPLIER'
+'TP2_R_MULTIPLIER'
+'RISK_PER_TRADE'
+'MIN_RR'
+'TIMEOUT'
+'now_utc'
+'get_json'
+'load_json'
+'save_json'
+'current_price'
+'build_trade'
+'main'
+'__name__'
