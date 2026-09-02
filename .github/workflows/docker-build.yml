@@ -11,7 +11,7 @@ jobs:
     
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Build with Docker
       run: |
@@ -25,7 +25,7 @@ jobs:
       run: ls -la bin/ || echo "No bin directory"
     
     - name: Upload APK
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: CryptoMasterX1-APK
         path: bin/*.apk
