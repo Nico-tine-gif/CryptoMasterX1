@@ -5,7 +5,7 @@ package.domain = com.cmx1
 source.dir = .
 source.include_exts = py,png,jpg,jpeg,kv,atlas,json,txt,html,css
 version = 1.0.0
-requirements = python3,kivy,requests,websocket-client
+requirements = python3,kivy,requests,websocket-client,python-binance
 orientation = portrait
 fullscreen = 0
 
