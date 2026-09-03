@@ -1,12 +1,11 @@
 [app]
-
 title = CryptoMasterX1
 package.name = cryptomasterx1
 package.domain = com.cmx1
 source.dir = .
 source.include_exts = py,png,jpg,jpeg,kv,atlas,json,txt,html,css
 version = 1.0.0
-requirements = python3,kivy,requests,websocket-client,python-binance,pandas,numpy
+requirements = python3,kivy,requests,websocket-client
 orientation = portrait
 fullscreen = 0
 
