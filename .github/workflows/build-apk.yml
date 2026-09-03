@@ -7,37 +7,47 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04  # Use Ubuntu 22.04 which has libtinfo5
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.9'
-      
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            git \
+            zip \
+            unzip \
+            openjdk-17-jdk-headless \
+            autoconf \
+            libtool \
+            pkg-config \
+            zlib1g-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            libtinfo5 \
+            cmake \
+            libffi-dev \
+            libssl-dev
+
       - name: Install Buildozer
         run: |
           pip install --upgrade pip
           pip install buildozer
-      
+          pip install cython
+
       - name: Build APK
         run: |
-          cd $GITHUB_WORKSPACE
           buildozer android debug
-        timeout-minutes: 60
-      
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: CryptoMasterX1-APK
           path: bin/*.apk
-          if-no-files-found: error
-      
-      - name: Upload build log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: .buildozer/android/platform/build-*/dists/*/logs/*.log
-          if-no-files-found: warn
