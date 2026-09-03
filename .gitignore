@@ -42,5 +42,10 @@ Thumbs.db
 *.p12
 *.jks
 *.keystore
-.github/workflows/
-.github/
+
+# Local diagnostic artifacts
+build-logs/
+failure-logs/
+build-logs.zip
+failure-logs.zip
+response.json
