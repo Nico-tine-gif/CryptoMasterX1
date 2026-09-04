@@ -1,5 +1,4 @@
 [app]
-
 title = CryptoMasterX1
 package.name = cryptomasterx1
 package.domain = org.cmx1
@@ -15,19 +14,17 @@ orientation = portrait
 fullscreen = 0
 
 android.permissions = INTERNET,ACCESS_NETWORK_STATE,WAKE_LOCK
-
-android.api = 30
+android.api = 33
 android.minapi = 21
-android.sdk = 30
-android.ndk = 23b
+android.sdk = 33
+android.ndk = 25b
+android.python_version = 3.9
 android.accept_sdk_license = True
-android.archs = armeabi-v7a, arm64-v8a
-
+android.archs = arm64-v8a
 android.use_androidx = True
 android.allow_backup = True
 
 [buildozer]
-
 log_level = 2
 build_dir = ./.buildozer
 bin_dir = ./bin
