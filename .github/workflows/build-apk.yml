@@ -1,29 +1,93 @@
-name: Build APK
+name: Build CryptoMasterX1 APK
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-apk:
+    name: Build Android APK
+    runs-on: ubuntu-22.04
+
     steps:
-    - uses: actions/checkout@v3
-    
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-    
-    - name: Build APK
-      run: |
-        chmod +x gradlew
-        ./gradlew assembleDebug
-    
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: app-debug
-        path: app/build/outputs/apk/debug/
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Android build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git \
+            zip \
+            unzip \
+            openjdk-17-jdk \
+            autoconf \
+            automake \
+            autopoint \
+            ccache \
+            cmake \
+            g++ \
+            gcc \
+            libffi-dev \
+            libltdl-dev \
+            libssl-dev \
+            libtool \
+            make \
+            patch \
+            pkg-config \
+            zlib1g-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            libtinfo5 \
+            lbzip2
+
+      - name: Install Python build tools
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip install --upgrade buildozer
+          python -m pip install "Cython<3"
+
+      - name: Accept Android SDK licenses
+        run: |
+          mkdir -p "$HOME/.buildozer"
+          export APP_ANDROID_ACCEPT_SDK_LICENSE=1
+          yes | sdkmanager --licenses || true
+
+      - name: Build debug APK
+        env:
+          APP_ANDROID_ACCEPT_SDK_LICENSE: "1"
+        run: |
+          buildozer -v android debug
+
+      - name: Verify APK
+        run: |
+          echo "===== APK OUTPUT ====="
+          find bin -maxdepth 1 -type f \
+            \( -name "*.apk" -o -name "*.aab" \) \
+            -exec ls -lh {} \;
+
+          test -n "$(find bin -maxdepth 1 -type f -name '*.apk' -print -quit)"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CryptoMasterX1-debug-apk
+          path: bin/*.apk
+          if-no-files-found: error
