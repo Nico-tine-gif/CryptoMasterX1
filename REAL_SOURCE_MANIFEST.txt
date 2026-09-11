@@ -11,9 +11,7 @@ REAL PYTHON FILES:
 ------------------------------------------------------------
 cffc6d16cde081b31231123ce1170018c9b0879e4e34c47b09ffc04d132bfcd8  /data/data/com.termux/files/home/CryptoMasterX1/account_binding.py
 63135282a30bbf875d82e26b9ffb340def60bd683b7bb238ed291ad60501fed3  /data/data/com.termux/files/home/CryptoMasterX1/binance_account_readonly.py
-465232c6e8b791f16097f7802cdb9b2664ece8e12a06f7060e027a86b06d7650  /data/data/com.termux/files/home/CryptoMasterX1/build_consolidated_v8.py
 4c4245fa985280b2322b159e2dfe3e8980b4e96094370c774e685099f4913fac  /data/data/com.termux/files/home/CryptoMasterX1/conductor.py
-6fc3a862cb7d23678670045de557302768691f1789183e38107c64f87e117231  /data/data/com.termux/files/home/CryptoMasterX1/full_system_stability_scan.py
 06d165cf73933f86a5b98830207169d675d4f753bd400fb6a914ce6b5351c6e5  /data/data/com.termux/files/home/CryptoMasterX1/main.py
 574253fdd4a41d79fb2ee0863c814c44f04a698496104bd1348056c0183ccd04  /data/data/com.termux/files/home/CryptoMasterX1/master_pipeline.py
 07d432e92d65d28745748106f9d128d252300294f65b930b45d0d9f9aa3da356  /data/data/com.termux/files/home/CryptoMasterX1/phase10_monitoring.py
@@ -34,9 +32,7 @@ c7f575748fbf7f9db49541478017b9b75a08cf82d0b4e6508fb52c3cc1acb0a3  /data/data/com
 596af8ac20797a5ae3904ad62f801e9da6f8c77a673ec60d99ce6b365d38e41f  /data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py
 3441eb3cda1e9c4808098165041123d5a9697ffc7ba5aa3aabd5eabc11f06194  /data/data/com.termux/files/home/CryptoMasterX1/phase9_execution_lifecycle.py
 ed3447b530e9bf78d254bed5d6358ff690c172a0764cbe07c541eba8c2208234  /data/data/com.termux/files/home/CryptoMasterX1/pipeline.py
-0eed6ec02475276b2bbf58be1a46b9e307039730a565306a55a5a3192006eae6  /data/data/com.termux/files/home/CryptoMasterX1/pipeline_v8_contract.py
 3974ca7bbb123149bd1dc4d1636d367399339bc35da15bb27ed747919b483404  /data/data/com.termux/files/home/CryptoMasterX1/position_sizing.py
-c59cc388b446be1c7274745e8b4f7eed82170df48a5fbd77269d4dafcd1f6c1a  /data/data/com.termux/files/home/CryptoMasterX1/run_consolidated_v8.py
 2edd03b8a2673d3b65a04b004b46a505e677dec6ef0e0b9b5162f86a29648758  /data/data/com.termux/files/home/CryptoMasterX1/single_pipeline.py
 de781c57f32560f38f094e84b37c24f4e6bce54630e95b7c2ce1227ad07b0b1f  /data/data/com.termux/files/home/CryptoMasterX1/spot_execution_adapter.py
 
@@ -47,3 +43,27 @@ BUILD CONFIG:
 GITHUB WORKFLOWS:
 ------------------------------------------------------------
 233136ed706bb13c1c5d6d24dfebb5ed2c4bbc91eda4be9e2236f8923b32978f  /data/data/com.termux/files/home/CryptoMasterX1/.github/workflows/build.yml
+
+============================================================
+ CURRENT CLEAN SOURCE INVENTORY
+ Generated: 2026-09-11 08:15:52 UTC
+============================================================
+account_binding.py
+binance_account_readonly.py
+conductor.py
+main.py
+master_pipeline.py
+phase10_monitoring.py
+phase11_full_system_verification.py
+phase1_scanner.py
+phase3_account_verify.py
+phase4_market_discovery.py
+phase5_market_intelligence.py
+phase6_trade_intelligence.py
+phase7_entry_intelligence.py
+phase8_entry_validation.py
+phase9_decision_gate.py
+pipeline.py
+position_sizing.py
+single_pipeline.py
+spot_execution_adapter.py
