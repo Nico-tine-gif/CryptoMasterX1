@@ -4,9 +4,9 @@ package.name = cryptomasterx1
 package.domain = org.cryptomasterx1
 source.dir =.
 source.include_exts = py,png,jpg,kv,atlas,json
-source.exclude_patterns =.buildozer,bin,__pycache__,*.pyc,.git,reports,*.tar.gz
+source.exclude_patterns =.buildozer,bin,__pycache__,*.pyc,.git
 version = 1.1
-requirements = python3,kivy==2.3.0,pillow,requests,urllib3,certifi
+requirements = python3,kivy==2.2.0,pillow,requests,urllib3,certifi
 orientation = portrait
 fullscreen = 0
 
