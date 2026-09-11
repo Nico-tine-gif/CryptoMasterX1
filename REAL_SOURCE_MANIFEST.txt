@@ -1,0 +1,49 @@
+CryptoMasterX1 REAL SOURCE MANIFEST
+Generated: 2026-09-10 15:28:58 UTC
+
+SOURCE:
+/data/data/com.termux/files/home/CryptoMasterX1_RECOVERED_11_PHASE
+
+DESTINATION:
+/data/data/com.termux/files/home/CryptoMasterX1
+
+REAL PYTHON FILES:
+------------------------------------------------------------
+cffc6d16cde081b31231123ce1170018c9b0879e4e34c47b09ffc04d132bfcd8  /data/data/com.termux/files/home/CryptoMasterX1/account_binding.py
+63135282a30bbf875d82e26b9ffb340def60bd683b7bb238ed291ad60501fed3  /data/data/com.termux/files/home/CryptoMasterX1/binance_account_readonly.py
+465232c6e8b791f16097f7802cdb9b2664ece8e12a06f7060e027a86b06d7650  /data/data/com.termux/files/home/CryptoMasterX1/build_consolidated_v8.py
+4c4245fa985280b2322b159e2dfe3e8980b4e96094370c774e685099f4913fac  /data/data/com.termux/files/home/CryptoMasterX1/conductor.py
+6fc3a862cb7d23678670045de557302768691f1789183e38107c64f87e117231  /data/data/com.termux/files/home/CryptoMasterX1/full_system_stability_scan.py
+06d165cf73933f86a5b98830207169d675d4f753bd400fb6a914ce6b5351c6e5  /data/data/com.termux/files/home/CryptoMasterX1/main.py
+574253fdd4a41d79fb2ee0863c814c44f04a698496104bd1348056c0183ccd04  /data/data/com.termux/files/home/CryptoMasterX1/master_pipeline.py
+07d432e92d65d28745748106f9d128d252300294f65b930b45d0d9f9aa3da356  /data/data/com.termux/files/home/CryptoMasterX1/phase10_monitoring.py
+29b1f497d07402522d5f6c089280e803b63869c11804848fa3e8bbcc072c371e  /data/data/com.termux/files/home/CryptoMasterX1/phase10_pre_execution_gate.py
+fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880  /data/data/com.termux/files/home/CryptoMasterX1/phase10_trade_lifecycle.py
+9bb02a79aecff73a743473856f7c8d14521a3e21c044a82dc2d72566c595a9ca  /data/data/com.termux/files/home/CryptoMasterX1/phase11_full_system_verification.py
+3dfeb227df251f20915e47fdd1f103b7205c95ad6b97fe232910dde6c1a40d6a  /data/data/com.termux/files/home/CryptoMasterX1/phase1_scanner.py
+e9001608f48509c95498439d0f9003f74c0760ca20909c02bf8b8e16422fa92d  /data/data/com.termux/files/home/CryptoMasterX1/phase3_account_verify.py
+d7435fcb561c142d969100c14be6e7baaa3eccd854df6d3153ef204f2abeb447  /data/data/com.termux/files/home/CryptoMasterX1/phase4_market_discovery.py
+72cc26cc94c9066a2f1fa742805ce50b6edde336eae1f600e6e1160c950b7beb  /data/data/com.termux/files/home/CryptoMasterX1/phase5_market_intelligence.py
+9e628a4e4102814d2f66bd4844c805821ac62e2d19d9b47b76ed015d986d3bb3  /data/data/com.termux/files/home/CryptoMasterX1/phase6_trade_intelligence.py
+52767deda33fcacc261a076e88b8ddf0199944ae016ab8d8b12755e8724e13e2  /data/data/com.termux/files/home/CryptoMasterX1/phase6_trade_quality.py
+6a1f889f71ea9a50f52bdefc13329cc88a7590ab6cc928c5150295b04412e9ec  /data/data/com.termux/files/home/CryptoMasterX1/phase7_entry_intelligence.py
+f1e1805767611beb66186efe110665ca43d484eb23c3824427c646b143fa415f  /data/data/com.termux/files/home/CryptoMasterX1/phase7_final_validation.py
+2a5afd638c993050e93df0f44b037b2be45813c3f2b66d3b885c9c73f25edb85  /data/data/com.termux/files/home/CryptoMasterX1/phase8_entry_validation.py
+ec46acea1a631bf9866230cb9932b19058dfcad5cc8644ce1bd0ae04499cb3e8  /data/data/com.termux/files/home/CryptoMasterX1/phase8_execution_lifecycle_v8.py
+c7f575748fbf7f9db49541478017b9b75a08cf82d0b4e6508fb52c3cc1acb0a3  /data/data/com.termux/files/home/CryptoMasterX1/phase8_final_validation.py
+596af8ac20797a5ae3904ad62f801e9da6f8c77a673ec60d99ce6b365d38e41f  /data/data/com.termux/files/home/CryptoMasterX1/phase9_decision_gate.py
+3441eb3cda1e9c4808098165041123d5a9697ffc7ba5aa3aabd5eabc11f06194  /data/data/com.termux/files/home/CryptoMasterX1/phase9_execution_lifecycle.py
+ed3447b530e9bf78d254bed5d6358ff690c172a0764cbe07c541eba8c2208234  /data/data/com.termux/files/home/CryptoMasterX1/pipeline.py
+0eed6ec02475276b2bbf58be1a46b9e307039730a565306a55a5a3192006eae6  /data/data/com.termux/files/home/CryptoMasterX1/pipeline_v8_contract.py
+3974ca7bbb123149bd1dc4d1636d367399339bc35da15bb27ed747919b483404  /data/data/com.termux/files/home/CryptoMasterX1/position_sizing.py
+c59cc388b446be1c7274745e8b4f7eed82170df48a5fbd77269d4dafcd1f6c1a  /data/data/com.termux/files/home/CryptoMasterX1/run_consolidated_v8.py
+2edd03b8a2673d3b65a04b004b46a505e677dec6ef0e0b9b5162f86a29648758  /data/data/com.termux/files/home/CryptoMasterX1/single_pipeline.py
+de781c57f32560f38f094e84b37c24f4e6bce54630e95b7c2ce1227ad07b0b1f  /data/data/com.termux/files/home/CryptoMasterX1/spot_execution_adapter.py
+
+BUILD CONFIG:
+------------------------------------------------------------
+89e8b1da06a64199254227894c3041d7dc2ec08ff60efa535aeeabb1882eb3b7  /data/data/com.termux/files/home/CryptoMasterX1/buildozer.spec
+
+GITHUB WORKFLOWS:
+------------------------------------------------------------
+233136ed706bb13c1c5d6d24dfebb5ed2c4bbc91eda4be9e2236f8923b32978f  /data/data/com.termux/files/home/CryptoMasterX1/.github/workflows/build.yml

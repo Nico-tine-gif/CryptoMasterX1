@@ -1,0 +1,21 @@
+CryptoMasterX1 recovered source inventory
+Generated: 2026-08-29T14:39:28Z
+
+FOUND  phase1_scanner.py
+FOUND  account_binding.py
+FOUND  phase3_account_verify.py
+FOUND  phase4_market_discovery.py
+FOUND  phase5_market_intelligence.py
+FOUND  phase6_trade_intelligence.py
+FOUND  phase6_trade_quality.py
+FOUND  phase7_entry_intelligence.py
+FOUND  phase7_final_validation.py
+FOUND  phase8_entry_validation.py
+FOUND  phase8_execution_lifecycle_v8.py
+FOUND  phase8_final_validation.py
+FOUND  phase9_decision_gate.py
+FOUND  phase9_execution_lifecycle.py
+FOUND  phase10_pre_execution_gate.py
+FOUND  phase10_trade_lifecycle.py
+FOUND  phase10_monitoring.py
+FOUND  phase11_full_system_verification.py

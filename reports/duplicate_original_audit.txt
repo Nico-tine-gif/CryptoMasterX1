@@ -1,0 +1,1492 @@
+
+==================== 1. GIT ORIGINALS ====================
+
+Current branch:
+main
+
+Current commit:
+687818c fix old tools/bin/sdkmanager path
+
+Tracked Python/source files:
+.github/workflows/build.yml
+COMPLETE_CRYPTOMASTERX1_SOURCE.txt
+account_binding.py
+archive_candidates/account_binding.py
+archive_candidates/archive_clean_fix_20260825_phase10_trade_lifecycle.py
+archive_candidates/archive_clean_fix_20260825_phase11_full_system_verification.py
+archive_candidates/archive_final_contract_repair_20260825_phase10_trade_lifecycle.py
+archive_candidates/archive_final_contract_repair_20260825_phase11_full_system_verification.py
+archive_candidates/archive_final_contract_repair_20260825_v2_phase10_trade_lifecycle.py
+archive_candidates/archive_final_contract_repair_20260825_v2_phase11_full_system_verification.py
+archive_candidates/archive_structural_cleanup_20260825_phase11_full_system_verification.py
+archive_candidates/archive_structural_cleanup_20260825_phase3_account_verify.py
+archive_candidates/archive_structural_cleanup_repair_20260825_phase11_full_system_verification.py
+archive_candidates/archive_structural_cleanup_repair_20260825_phase3_account_verify.py
+archive_candidates/archive_unsafe_executors_phase10_live_executor.py
+archive_candidates/backup_contract_final_phase10_trade_lifecycle.py
+archive_candidates/backup_contract_final_phase6_trade_quality.py
+archive_candidates/backup_contract_final_phase7_entry_intelligence.py
+archive_candidates/backup_contract_final_phase8_entry_validation.py
+archive_candidates/backup_contract_final_phase9_decision_gate.py
+archive_candidates/backup_contract_repair_20260825_135902_phase5_market_intelligence.py
+archive_candidates/backup_contract_repair_20260825_135902_phase6_trade_quality.py
+archive_candidates/backup_contract_repair_20260825_135902_phase8_entry_validation.py
+archive_candidates/backup_contract_repair_20260825_135902_phase9_decision_gate.py
+archive_candidates/backup_one_pass_pipeline_fix_phase10_trade_lifecycle.py
+archive_candidates/backup_one_pass_pipeline_fix_phase6_trade_quality.py
+archive_candidates/backup_one_pass_pipeline_fix_phase7_entry_intelligence.py
+archive_candidates/backup_one_pass_pipeline_fix_phase8_entry_validation.py
+archive_candidates/backup_one_pass_pipeline_fix_phase9_decision_gate.py
+archive_candidates/backup_pipeline_contract_20260825_135041_phase5_market_intelligence.py
+archive_candidates/backup_pipeline_contract_20260825_135041_phase6_trade_quality.py
+archive_candidates/backup_pipeline_contract_20260825_135041_phase7_entry_intelligence.py
+archive_candidates/backup_pipeline_contract_20260825_135041_phase8_entry_validation.py
+archive_candidates/backup_pipeline_contract_20260825_135041_phase9_decision_gate.py
+archive_candidates/backup_pipeline_diagnostic_phase10_trade_lifecycle.py
+archive_candidates/backup_pipeline_diagnostic_phase6_trade_quality.py
+archive_candidates/backup_pipeline_diagnostic_phase7_entry_intelligence.py
+archive_candidates/backup_pipeline_diagnostic_phase8_entry_validation.py
+archive_candidates/backup_pipeline_diagnostic_phase9_decision_gate.py
+archive_candidates/phase10_trade_lifecycle.py
+archive_candidates/phase11_full_system_verification.py
+archive_candidates/phase1_scanner.py
+archive_candidates/phase3_account_verify.py
+archive_candidates/phase4_market_discovery.py
+archive_candidates/phase5_market_intelligence.py
+archive_candidates/phase6_trade_intelligence.py
+archive_candidates/phase6_trade_quality.py
+archive_candidates/phase7_entry_intelligence.py
+archive_candidates/phase7_final_validation.py
+archive_candidates/phase8_entry_validation.py
+archive_candidates/phase8_execution_lifecycle_v8.py
+archive_candidates/phase9_decision_gate.py
+binance_account_readonly.py
+build_consolidated_v8.py
+buildozer.spec
+conductor.py
+full_system_stability_scan.py
+main.py
+master_pipeline.py
+phase10_monitoring.py
+phase10_pre_execution_gate.py
+phase10_trade_lifecycle.py
+phase11_full_system_verification.py
+phase1_scanner.py
+phase3_account_verify.py
+phase4_market_discovery.py
+phase5_market_intelligence.py
+phase6_trade_intelligence.py
+phase6_trade_quality.py
+phase7_entry_intelligence.py
+phase7_final_validation.py
+phase8_entry_validation.py
+phase8_execution_lifecycle_v8.py
+phase8_final_validation.py
+phase9_decision_gate.py
+phase9_execution_lifecycle.py
+pipeline.py
+pipeline_v8_contract.py
+position_sizing.py
+reports/source_inventory.txt
+run_consolidated_v8.py
+spot_execution_adapter.py
+
+==================== 2. ACTIVE PIPELINE IMPORTS ====================
+
+master_pipeline.py:
+2:import importlib, json, traceback
+3:from datetime import datetime, timezone
+4:from pathlib import Path
+66:def run_pipeline():
+71:        "phase1_scanner","account_binding","phase3_account_verify",
+72:        "phase4_market_discovery","phase5_market_intelligence",
+73:        "phase6_trade_intelligence","phase7_entry_intelligence",
+74:        "phase8_entry_validation","phase9_decision_gate","phase10_monitoring"
+82:    run_pipeline()
+
+pipeline.py:
+1:import subprocess
+2:from pathlib import Path
+
+main.py:
+2:import os
+3:import time
+4:import json
+
+==================== 3. ROOT PYTHON FILES ====================
+
+account_binding.py
+binance_account_readonly.py
+build_consolidated_v8.py
+conductor.py
+full_system_stability_scan.py
+main.py
+master_pipeline.py
+phase10_monitoring.py
+phase10_pre_execution_gate.py
+phase10_trade_lifecycle.py
+phase11_full_system_verification.py
+phase1_scanner.py
+phase3_account_verify.py
+phase4_market_discovery.py
+phase5_market_intelligence.py
+phase6_trade_intelligence.py
+phase6_trade_quality.py
+phase7_entry_intelligence.py
+phase7_final_validation.py
+phase8_entry_validation.py
+phase8_execution_lifecycle_v8.py
+phase8_final_validation.py
+phase9_decision_gate.py
+phase9_execution_lifecycle.py
+pipeline.py
+pipeline_v8_contract.py
+position_sizing.py
+run_consolidated_v8.py
+spot_execution_adapter.py
+
+==================== 4. ARCHIVE FILES ====================
+
+account_binding.py
+archive_clean_fix_20260825_phase10_trade_lifecycle.py
+archive_clean_fix_20260825_phase11_full_system_verification.py
+archive_final_contract_repair_20260825_phase10_trade_lifecycle.py
+archive_final_contract_repair_20260825_phase11_full_system_verification.py
+archive_final_contract_repair_20260825_v2_phase10_trade_lifecycle.py
+archive_final_contract_repair_20260825_v2_phase11_full_system_verification.py
+archive_structural_cleanup_20260825_phase11_full_system_verification.py
+archive_structural_cleanup_20260825_phase3_account_verify.py
+archive_structural_cleanup_repair_20260825_phase11_full_system_verification.py
+archive_structural_cleanup_repair_20260825_phase3_account_verify.py
+archive_unsafe_executors_phase10_live_executor.py
+backup_contract_final_phase10_trade_lifecycle.py
+backup_contract_final_phase6_trade_quality.py
+backup_contract_final_phase7_entry_intelligence.py
+backup_contract_final_phase8_entry_validation.py
+backup_contract_final_phase9_decision_gate.py
+backup_contract_repair_20260825_135902_phase5_market_intelligence.py
+backup_contract_repair_20260825_135902_phase6_trade_quality.py
+backup_contract_repair_20260825_135902_phase8_entry_validation.py
+backup_contract_repair_20260825_135902_phase9_decision_gate.py
+backup_one_pass_pipeline_fix_phase10_trade_lifecycle.py
+backup_one_pass_pipeline_fix_phase6_trade_quality.py
+backup_one_pass_pipeline_fix_phase7_entry_intelligence.py
+backup_one_pass_pipeline_fix_phase8_entry_validation.py
+backup_one_pass_pipeline_fix_phase9_decision_gate.py
+backup_pipeline_contract_20260825_135041_phase5_market_intelligence.py
+backup_pipeline_contract_20260825_135041_phase6_trade_quality.py
+backup_pipeline_contract_20260825_135041_phase7_entry_intelligence.py
+backup_pipeline_contract_20260825_135041_phase8_entry_validation.py
+backup_pipeline_contract_20260825_135041_phase9_decision_gate.py
+backup_pipeline_diagnostic_phase10_trade_lifecycle.py
+backup_pipeline_diagnostic_phase6_trade_quality.py
+backup_pipeline_diagnostic_phase7_entry_intelligence.py
+backup_pipeline_diagnostic_phase8_entry_validation.py
+backup_pipeline_diagnostic_phase9_decision_gate.py
+phase10_trade_lifecycle.py
+phase11_full_system_verification.py
+phase1_scanner.py
+phase3_account_verify.py
+phase4_market_discovery.py
+phase5_market_intelligence.py
+phase6_trade_intelligence.py
+phase6_trade_quality.py
+phase7_entry_intelligence.py
+phase7_final_validation.py
+phase8_entry_validation.py
+phase8_execution_lifecycle_v8.py
+phase9_decision_gate.py
+
+==================== 5. EXACT BYTE-FOR-BYTE DUPLICATES ====================
+
+DUPLICATE HASH: 0574863473f7619b48acca86ff7a759cdeecf6139a785661eb9d571e60d42da9
+   ./archive_candidates/backup_contract_final_phase9_decision_gate.py
+   ./archive_candidates/backup_contract_repair_20260825_135902_phase9_decision_gate.py
+   ./archive_candidates/backup_one_pass_pipeline_fix_phase9_decision_gate.py
+   ./archive_candidates/backup_pipeline_contract_20260825_135041_phase9_decision_gate.py
+   ./archive_candidates/backup_pipeline_diagnostic_phase9_decision_gate.py
+DUPLICATE HASH: 2a5afd638c993050e93df0f44b037b2be45813c3f2b66d3b885c9c73f25edb85
+   ./archive_candidates/phase8_entry_validation.py
+   ./phase8_entry_validation.py
+DUPLICATE HASH: 3dfeb227df251f20915e47fdd1f103b7205c95ad6b97fe232910dde6c1a40d6a
+   ./archive_candidates/phase1_scanner.py
+   ./phase1_scanner.py
+DUPLICATE HASH: 596af8ac20797a5ae3904ad62f801e9da6f8c77a673ec60d99ce6b365d38e41f
+   ./archive_candidates/phase9_decision_gate.py
+   ./phase9_decision_gate.py
+DUPLICATE HASH: 70154f2a42eb78226ab4ffb869e754285d6a65714b14792ce7b7611fc0b0938d
+   ./archive_candidates/backup_contract_final_phase6_trade_quality.py
+   ./archive_candidates/backup_contract_repair_20260825_135902_phase6_trade_quality.py
+   ./archive_candidates/backup_one_pass_pipeline_fix_phase6_trade_quality.py
+   ./archive_candidates/backup_pipeline_diagnostic_phase6_trade_quality.py
+   ./archive_candidates/phase6_trade_quality.py
+DUPLICATE HASH: 74a327f600e1cb8519b8a7f327420238c94484b63aaaa78093a421983b7f487e
+   ./archive_candidates/archive_clean_fix_20260825_phase10_trade_lifecycle.py
+   ./archive_candidates/archive_final_contract_repair_20260825_phase10_trade_lifecycle.py
+   ./archive_candidates/archive_final_contract_repair_20260825_v2_phase10_trade_lifecycle.py
+DUPLICATE HASH: b0e22323b2556eaac2591956e5ed95a527e5879f29afb8e1b561ea8eb4f80459
+   ./archive_candidates/backup_contract_final_phase8_entry_validation.py
+   ./archive_candidates/backup_contract_repair_20260825_135902_phase8_entry_validation.py
+   ./archive_candidates/backup_one_pass_pipeline_fix_phase8_entry_validation.py
+   ./archive_candidates/backup_pipeline_diagnostic_phase8_entry_validation.py
+DUPLICATE HASH: b1cf457634b2e30c31ad6962a9b5c3d6104bf340564977ea0f749eba4eba9d6d
+   ./archive_candidates/archive_clean_fix_20260825_phase11_full_system_verification.py
+   ./archive_candidates/archive_final_contract_repair_20260825_phase11_full_system_verification.py
+   ./archive_candidates/archive_final_contract_repair_20260825_v2_phase11_full_system_verification.py
+DUPLICATE HASH: c5da8e43267c8208f3734b830e962fdb5e7706d018e196f61bfd5d36a5fa8106
+   ./archive_candidates/archive_structural_cleanup_repair_20260825_phase3_account_verify.py
+   ./archive_candidates/phase3_account_verify.py
+DUPLICATE HASH: d8069e48fd003b78a804d5517e80020b8511559eb0f29b520b918862fed89a79
+   ./archive_candidates/backup_contract_final_phase7_entry_intelligence.py
+   ./archive_candidates/backup_one_pass_pipeline_fix_phase7_entry_intelligence.py
+   ./archive_candidates/backup_pipeline_diagnostic_phase7_entry_intelligence.py
+   ./archive_candidates/phase7_entry_intelligence.py
+DUPLICATE HASH: ec46acea1a631bf9866230cb9932b19058dfcad5cc8644ce1bd0ae04499cb3e8
+   ./archive_candidates/phase8_execution_lifecycle_v8.py
+   ./phase8_execution_lifecycle_v8.py
+DUPLICATE HASH: f6fc959d61be01266a30cf4ddc3e8b713c69a6ee215db015c099985802e76548
+   ./archive_candidates/backup_contract_repair_20260825_135902_phase5_market_intelligence.py
+   ./archive_candidates/backup_pipeline_contract_20260825_135041_phase5_market_intelligence.py
+   ./archive_candidates/phase5_market_intelligence.py
+DUPLICATE HASH: fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880
+   ./archive_candidates/backup_contract_final_phase10_trade_lifecycle.py
+   ./archive_candidates/backup_one_pass_pipeline_fix_phase10_trade_lifecycle.py
+   ./archive_candidates/backup_pipeline_diagnostic_phase10_trade_lifecycle.py
+   ./archive_candidates/phase10_trade_lifecycle.py
+   ./phase10_trade_lifecycle.py
+
+==================== 6. SAME-NAME ROOT vs ARCHIVE ====================
+
+------------------------------------------------------------
+ROOT : account_binding.py
+ARCH : archive_candidates/account_binding.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/account_binding.py	2026-08-29 17:39:25.033586528 +0300
++++ account_binding.py	2026-08-29 17:39:23.993586528 +0300
+@@ -717,3 +717,96 @@
+ 
+     ensure_directories()
+     run()
++
++
++# ==============================================================
++# CRYPTOMASTERX1 READ-ONLY BINANCE CLIENT
++# ==============================================================
++def get_client():
++    import os
++    import time
++    import hmac
++    import hashlib
++    import requests
++    from urllib.parse import urlencode
++    from dotenv import load_dotenv
++
++    load_dotenv(Path(__file__).resolve().parent / ".env")
++
++    api_key = os.environ.get("BINANCE_API_KEY", "").strip()
++    api_secret = os.environ.get("BINANCE_API_SECRET", "").strip()
++
++    if not api_key or not api_secret:
++        raise RuntimeError("Binance API credentials unavailable")
++
++    class ReadOnlyBinanceClient:
++        BASE_URL = "https://api.binance.com"
++
++        def __init__(self, key, secret):
++            self.api_key = key
++            self.api_secret = secret
++            self.session = requests.Session()
++            self.session.headers.update({
++                "X-MBX-APIKEY": self.api_key
++            })
++
++        def _signed_get(self, endpoint, params=None):
++            params = dict(params or {})
++            params["timestamp"] = int(time.time() * 1000)
++            params["recvWindow"] = 5000
++
++            query = urlencode(params)
++
++            params["signature"] = hmac.new(
++                self.api_secret.encode("utf-8"),
++                query.encode("utf-8"),
++                hashlib.sha256,
++            ).hexdigest()
++
++            response = self.session.get(
++                self.BASE_URL + endpoint,
++                params=params,
++                timeout=15,
++            )
++
++            response.raise_for_status()
++            return response.json()
++
++        def get_account(self):
++            return self._signed_get("/api/v3/account")
++
++        def account(self):
++            return self.get_account()
++
++        def get_balance(self):
++            data = self.get_account()
++            return data.get("balances", [])
++
++        def get_asset_balance(self, asset):
++            asset = str(asset).upper()
++
++            for balance in self.get_balance():
++                if balance.get("asset") == asset:
++                    return balance
++
++            return {
++                "asset": asset,
++                "free": "0",
++                "locked": "0",
++            }
++
++        # ----------------------------------------------------------
++        # HARD SAFETY BOUNDARY
++        # ----------------------------------------------------------
++
++        def withdraw(self, *args, **kwargs):
++            raise PermissionError(
++                "CryptoMasterX1 withdrawals are FORBIDDEN"
++            )
++
++        def transfer(self, *args, **kwargs):
++            raise PermissionError(
++                "CryptoMasterX1 transfers are FORBIDDEN"
++            )
++
++    return ReadOnlyBinanceClient(api_key, api_secret)
+------------------------------------------------------------
+ROOT : phase10_trade_lifecycle.py
+ARCH : archive_candidates/phase10_trade_lifecycle.py
+
+RESULT: EXACT DUPLICATE
+------------------------------------------------------------
+ROOT : phase11_full_system_verification.py
+ARCH : archive_candidates/phase11_full_system_verification.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase11_full_system_verification.py	2026-08-29 17:39:26.297586528 +0300
++++ phase11_full_system_verification.py	2026-08-29 17:39:24.489586528 +0300
+@@ -1,742 +1,76 @@
+-import json
++#!/usr/bin/env python3
+ from pathlib import Path
++import json, sys, re
+ from datetime import datetime, timezone
+ 
+-PROJECT = "CryptoMasterX1"
+-PHASE = "PHASE_11"
+-VERSION = "3.0"
+-
+-BASE_DIR = Path(__file__).resolve().parent
+-STATE_DIR = BASE_DIR / "state"
+-REPORT_DIR = BASE_DIR / "reports"
+-
+-PHASE11_STATE = STATE_DIR / "phase11_full_system_verification.json"
+-PHASE11_REPORT = REPORT_DIR / "phase11_full_system_verification_report.json"
+-
+-# ================================================================
+-# SAFETY BOUNDARY — HARD LOCK
+-# ================================================================
+-
+-EXECUTION_AUTHORIZED = False
+-ORDER_SUBMISSION = False
+-BOT_ARMED = False
+-LIVE_EXECUTION = False
+-
+-
+-# ================================================================
+-# UTILITIES
+-# ================================================================
+-
+-def now_utc():
+-    return datetime.now(timezone.utc).isoformat()
+-
+-
+-def save_json(path, data):
+-    path.parent.mkdir(parents=True, exist_ok=True)
+-    path.write_text(
+-        json.dumps(data, indent=2, default=str)
+-    )
+-
+-
+-def load_json(path):
+-    if not path.exists():
+-        return None, "STATE_FILE_MISSING"
+-
+-    try:
+-        data = json.loads(path.read_text())
+-
+-        if not isinstance(data, dict):
+-            return None, "STATE_ROOT_NOT_OBJECT"
+-
+-        return data, None
+-
+-    except Exception as exc:
+-        return None, f"INVALID_JSON: {exc}"
+-
+-
+-# ================================================================
+-# LEGACY PHASE 1–3
+-#
+-# These artifacts are not part of the current active state chain.
+-# Missing files are reported honestly as NOT_PRESENT.
+-# They are NEVER recreated or fabricated.
+-# ================================================================
+-
+-def verify_legacy_phase(number, filename):
+-    path = STATE_DIR / filename
+-
+-    if not path.exists():
+-        return {
+-            "phase": number,
+-            "status": "NOT_PRESENT",
+-            "reason": "NO_CURRENT_STATE_ARTIFACT",
+-            "file": str(path),
+-        }
+-
+-    data, error = load_json(path)
+-
+-    if error:
+-        return {
+-            "phase": number,
+-            "status": "FAIL",
+-            "reason": error,
+-            "file": str(path),
+-        }
+-
+-    return {
+-        "phase": number,
+-        "status": "AVAILABLE",
+-        "reason": "STATE_PRESENT_AND_VALID",
+-        "file": str(path),
+-        "keys": list(data.keys()),
+-    }
+-
+-
+-# ================================================================
+-# ACTIVE PHASE 4–10 STATE VERIFICATION
+-# ================================================================
+-
+-def verify_active_phase(number, filename):
+-    path = STATE_DIR / filename
+-
+-    if not path.exists():
+-        return {
+-            "phase": number,
+-            "status": "FAIL",
+-            "reason": "ACTIVE_STATE_FILE_MISSING",
+-            "file": str(path),
+-        }
+-
+-    data, error = load_json(path)
+-
+-    if error:
+-        return {
+-            "phase": number,
+-            "status": "FAIL",
+------------------------------------------------------------
+ROOT : phase1_scanner.py
+ARCH : archive_candidates/phase1_scanner.py
+
+RESULT: EXACT DUPLICATE
+------------------------------------------------------------
+ROOT : phase3_account_verify.py
+ARCH : archive_candidates/phase3_account_verify.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase3_account_verify.py	2026-08-29 17:39:25.093586528 +0300
++++ phase3_account_verify.py	2026-08-29 17:39:24.029586528 +0300
+@@ -30,6 +30,7 @@
+ import hmac
+ import json
+ import os
++from dotenv import load_dotenv
+ import sys
+ import time
+ from datetime import datetime, timezone
+@@ -103,6 +104,9 @@
+ # API CREDENTIAL INPUT
+ # ============================================================
+ 
++load_dotenv(Path(__file__).resolve().parent / '.env')
++
++
+ def get_credentials():
+     print()
+     print(f"{BOLD}{CYAN}BINANCE API CREDENTIALS{RESET}")
+------------------------------------------------------------
+ROOT : phase4_market_discovery.py
+ARCH : archive_candidates/phase4_market_discovery.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase4_market_discovery.py	2026-08-29 17:39:25.149586528 +0300
++++ phase4_market_discovery.py	2026-08-29 17:39:24.069586528 +0300
+@@ -1,65 +1,279 @@
+ #!/usr/bin/env python3
+-import requests, json
++"""
++CryptoMasterX1 — PHASE 4
++MARKET DISCOVERY
++
++OWNER:
++    Discovery of the fresh Binance Spot/USDT universe.
++
++RESPONSIBILITIES:
++    - Discover currently tradable Spot/USDT symbols
++    - Collect current 24h market statistics
++    - Apply liquidity / activity filters
++    - Classify bullish / bearish candidates
++    - Produce the qualified universe consumed by Phase 5
++
++PHASE 4 DOES NOT:
++    - detect BOS / CHoCH
++    - detect Order Blocks
++    - detect FVG
++    - construct entries
++    - construct SL / TP
++    - calculate position size
++    - submit orders
++    - withdraw funds
++"""
++
++import json
++from datetime import datetime, timezone
+ from pathlib import Path
+-from datetime import datetime
+-STATE_DIR=Path("state"); REPORT_DIR=Path("reports")
+-STATE_DIR.mkdir(exist_ok=True); REPORT_DIR.mkdir(exist_ok=True)
++
++import requests
++
++
++ROOT = Path(__file__).resolve().parent
++STATE_DIR = ROOT / "state"
++REPORT_DIR = ROOT / "reports"
++
++STATE_DIR.mkdir(exist_ok=True)
++REPORT_DIR.mkdir(exist_ok=True)
++
++BINANCE = "https://api.binance.com"
++
++TIMEOUT = 15
++
++MIN_QUOTE_VOLUME = 5_000_000.0
++MIN_24H_TRADES = 10_000
++MIN_ABS_CHANGE_PERCENT = 1.0
++MAX_DISCOVERY_MARKETS = 200
++
++
++def now_utc():
++    return datetime.now(timezone.utc).isoformat()
++
++
++def get_json(path, params=None):
++    response = requests.get(
++        path,
++        params=params,
++        timeout=TIMEOUT,
++    )
++    response.raise_for_status()
++    return response.json()
++
+ 
+ def get_all_usdt():
+-    try:
+-        data=requests.get("https://api.binance.com/api/v3/exchangeInfo", timeout=15).json()
+-        spot=[s for s in data['symbols'] if s['symbol'].endswith('USDT') and s['status']=='TRADING']
+-        return [s['symbol'] for s in spot]
+-    except: return ["BTCUSDT","ETHUSDT","BNBUSDT","SOLUSDT","XRPUSDT"]
++    data = get_json(f"{BINANCE}/api/v3/exchangeInfo")
++
++    symbols = []
++
++    for item in data.get("symbols", []):
++        symbol = item.get("symbol")
++        status = item.get("status")
++        quote_asset = item.get("quoteAsset")
++        permissions = item.get("permissions", [])
++
++        if (
++            symbol
++            and symbol.endswith("USDT")
++            and status == "TRADING"
++            and quote_asset == "USDT"
++        ):
++            # Spot permission when Binance provides permission metadata.
++            if permissions and "SPOT" not in permissions:
++                continue
++
++            symbols.append(symbol)
++
++    return sorted(set(symbols))
++
++
++def get_24h():
++    return get_json(f"{BINANCE}/api/v3/ticker/24hr")
+ 
+-def get_24h(symbols):
++
++def qualify_ticker(ticker):
+     try:
+-        all24=requests.get("https://api.binance.com/api/v3/ticker/24hr", timeout=15).json()
+-        m={x['symbol']:x for x in all24}
+-        return [m[s] for s in symbols if s in m]
+-    except: return []
+-
+-print("DISCOVERING BINANCE SPOT/USDT UNIVERSE")
+-symbols=get_all_usdt()
+-print(f"Eligible Spot USDT markets : {len(symbols)}")
+-tickers=get_24h(symbols)
+-qualified=[]; bulls=[]; bears=[]
+-for t in tickers:
+------------------------------------------------------------
+ROOT : phase5_market_intelligence.py
+ARCH : archive_candidates/phase5_market_intelligence.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase5_market_intelligence.py	2026-08-29 17:39:25.209586528 +0300
++++ phase5_market_intelligence.py	2026-08-29 17:39:24.105586528 +0300
+@@ -1,135 +1,242 @@
+ #!/usr/bin/env python3
++"""
++CryptoMasterX1 — PHASE 5
++MARKET INTELLIGENCE ENGINE
++
++PHASE 5 OWNER:
++    Deep market intelligence / qualification.
++
++PHASE 5 CONSUMES:
++    Phase 4 fresh Binance Spot/USDT discovery universe.
++
++PHASE 5 DETECTS:
++    • Multi-timeframe trend/regime
++    • Internal structure
++    • Swing structure
++    • BOS
++    • CHoCH
++    • Structure confluence
++    • Internal Order Blocks
++    • Swing Order Blocks
++    • Order-block mitigation
++    • Fair Value Gaps
++    • FVG mitigation
++    • Equal Highs / Equal Lows
++    • Strong / Weak Highs / Lows
++    • Premium / Discount / Equilibrium
++    • ATR volatility
++    • Momentum
++    • RSI
++    • EMA structure
++    • Pullback / reclaim intelligence
++    • Liquidity/activity context
++    • Intelligence confidence
++    • Bull / bear / neutral market bias
++    • Intelligence qualification
++
++PHASE 5 MUST NOT:
++    • construct Entry
++    • construct SL
++    • construct TP1 / TP2
++    • calculate risk
++    • calculate reward
++    • calculate R:R
++    • calculate position size
++    • submit orders
++    • transmit orders
++    • withdraw funds
++
++IMPORTANT:
++    Phase 5 produces intelligence for later phases.
++    It does NOT become an execution phase.
++"""
+ 
+ import json
+ import math
++import threading
+ import time
+-from pathlib import Path
++from concurrent.futures import ThreadPoolExecutor, as_completed
++import statistics
+ from datetime import datetime, timezone
++from pathlib import Path
+ 
+ import requests
+-from concurrent.futures import ThreadPoolExecutor, as_completed
+ 
+ 
+-PROJECT = "CryptoMasterX1"
+-PHASE = "PHASE_5"
+-VERSION = "5.1-CLEAN"
+-
+-BASE_URL = "https://api.binance.com"
+-
+-REFRESH_SECONDS = 0
+-MONITOR_REFRESH_SECONDS = 300
+-REQUEST_TIMEOUT = 8
+-
+-LIMIT_1H = 100
+-LIMIT_15M = 100
+-LIMIT_5M = 100
++# ============================================================
++# CORE
++# ============================================================
+ 
+-MIN_CONFIDENCE = 75.0
+-MIN_RR = 1.50
++ROOT = Path(__file__).resolve().parent
++STATE = ROOT / "state"
++REPORTS = ROOT / "reports"
+ 
+-MAX_5M_EXTENSION_ATR = 2.0
+-RSI_OVERBOUGHT = 75.0
+-RSI_OVERSOLD = 25.0
++STATE.mkdir(exist_ok=True)
++REPORTS.mkdir(exist_ok=True)
+ 
+-SL_ATR_MULTIPLIER = 1.20
+-TP1_ATR_MULTIPLIER = 1.80
+-TP2_ATR_MULTIPLIER = 3.00
++PHASE4_STATE = STATE / "phase4_market_discovery.json"
++PHASE5_STATE = STATE / "phase5_market_intelligence.json"
+ 
+-ROOT = Path(__file__).resolve().parent
+-STATE_DIR = ROOT / "state"
+-REPORT_DIR = ROOT / "reports"
++BINANCE = "https://api.binance.com"
++
++# Fast/reliable feed configuration.
++# Keep concurrency controlled to avoid Binance/API/network pressure.
++REQUEST_CONNECT_TIMEOUT = 4
++REQUEST_READ_TIMEOUT = 8
++REQUEST_TIMEOUT = (
++    REQUEST_CONNECT_TIMEOUT,
++    REQUEST_READ_TIMEOUT,
++)
++
++MAX_WORKERS = 8
+------------------------------------------------------------
+ROOT : phase6_trade_intelligence.py
+ARCH : archive_candidates/phase6_trade_intelligence.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase6_trade_intelligence.py	2026-08-29 17:39:27.369586528 +0300
++++ phase6_trade_intelligence.py	2026-08-29 17:39:24.129586528 +0300
+@@ -1,577 +1,308 @@
++from account_binding import get_client
+ #!/usr/bin/env python3
+ 
++"""
++CryptoMasterX1
++PHASE 6 — TRADE VERIFICATION + FINAL CONSTRUCTION
++
++OWNER:
++    Final trade construction.
++
++PHASE 6 owns:
++    Entry
++    SL
++    TP1
++    TP2
++    Risk
++    Reward
++    R:R
++    Account-aware position size
++    Exchange quantity-step validation
++
++PHASE 6 DOES NOT:
++    - submit orders
++    - arm execution
++    - enable live trading
++    - withdraw funds
++"""
++
+ import json
+-import time
+-import hmac
+-import hashlib
+-import urllib.parse
++from datetime import datetime, timezone
+ from decimal import Decimal, ROUND_DOWN
+ from pathlib import Path
+-from datetime import datetime, timezone
+-from urllib.request import Request, urlopen
+-from urllib.error import HTTPError, URLError
+ 
+-PROJECT = "CryptoMasterX1"
+-PHASE = "PHASE_6"
+-VERSION = "6.0-CONSOLIDATED"
++import requests
++
+ 
+ ROOT = Path(__file__).resolve().parent
+ STATE = ROOT / "state"
+-REPORTS = ROOT / "reports"
+ 
+ PHASE5_STATE = STATE / "phase5_market_intelligence.json"
+ PHASE6_STATE = STATE / "phase6_trade_intelligence.json"
+-PHASE6_REPORT = REPORTS / "phase6_trade_intelligence_report.json"
+ 
+ BINANCE = "https://api.binance.com"
++TIMEOUT = 15
+ 
+-ATR_PERIOD = 14
+-EMA_FAST = 9
+-EMA_SLOW = 20
+-
+-MIN_CONFIDENCE = 75.0
+-MIN_RR = 1.50
+-
+-SL_ATR_MULTIPLIER = 1.20
+-TP1_R_MULTIPLIER = 1.50
+-TP2_R_MULTIPLIER = 2.50
+-
+-MAX_ENTRY_EXTENSION_ATR = 1.50
+-MAX_REFERENCE_DRIFT_ATR = 2.50
++# Trade construction
++SL_ATR_MULTIPLIER = Decimal("1.20")
++TP1_R_MULTIPLIER = Decimal("1.50")
++TP2_R_MULTIPLIER = Decimal("2.50")
+ 
++# Account risk
+ RISK_PER_TRADE = Decimal("0.005")
++MIN_RR = Decimal("1.50")
+ 
+-# ------------------------------------------------------------
+-# GLOBAL EXECUTION SAFETY
+-# ------------------------------------------------------------
+-
++# Safety boundary
+ EXECUTION_AUTHORIZED = False
+-ORDER_SUBMISSION = False
+ BOT_ARMED = False
+ LIVE_EXECUTION = False
+-TRANSMISSION_LOCKED = True
+-
++ORDER_SUBMISSION = False
+ WITHDRAWALS = False
+-DEPOSITS = False
+-TRANSFERS = False
+ 
+ 
+-def now():
++def now_utc():
+     return datetime.now(timezone.utc).isoformat()
+ 
+ 
+-def save(path, data):
+-    path.parent.mkdir(parents=True, exist_ok=True)
+-    path.write_text(json.dumps(data, indent=2, default=str))
+-
+-
+-def load(path):
+-    if not path.exists():
+-        raise FileNotFoundError(f"Required state missing: {path}")
+-    return json.loads(path.read_text())
+-
+-
+-def number(value, default=None):
+-    try:
+-        if value is None:
+-            return default
+-        return float(value)
+------------------------------------------------------------
+ROOT : phase6_trade_quality.py
+ARCH : archive_candidates/phase6_trade_quality.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase6_trade_quality.py	2026-08-29 17:39:25.265586528 +0300
++++ phase6_trade_quality.py	2026-08-29 17:39:24.161586528 +0300
+@@ -1,23 +1,64 @@
+ #!/usr/bin/env python3
++"""
++CryptoMasterX1 — PHASE 6
++TRADE QUALITY ENGINE
++
++OWNER:
++    Trade-quality qualification of Phase 5 intelligence.
++
++CONSUMES:
++    Phase 5 MARKET_INTELLIGENCE state.
++
++PHASE 6 DOES:
++    • Validate Phase 5 completion/coverage
++    • Validate intelligence records
++    • Evaluate multi-timeframe alignment
++    • Evaluate structure alignment
++    • Evaluate structure confluence
++    • Evaluate momentum
++    • Evaluate RSI condition
++    • Evaluate pullback/reclaim quality
++    • Evaluate active OB/FVG context
++    • Evaluate premium/discount context
++    • Evaluate volatility context
++    • Produce a quality score
++    • Approve/reject candidates for Phase 7
++
++PHASE 6 MUST NOT:
++    • construct Entry
++    • construct SL
++    • construct TP1 / TP2
++    • calculate Risk
++    • calculate Reward
++    • calculate R:R
++    • calculate Position Size
++    • submit orders
++    • transmit orders
++    • withdraw funds
++"""
+ 
+ import json
++import sys
+ import time
+-from pathlib import Path
+ from datetime import datetime, timezone
++from pathlib import Path
++
+ 
++# ============================================================
++# CORE
++# ============================================================
+ 
+ PROJECT = "CryptoMasterX1"
+ PHASE = "PHASE_6"
+-VERSION = "6.0-CLEAN"
++VERSION = "6.1-QUALITY"
+ 
+ REFRESH_SECONDS = 60
+-MONITOR_REFRESH_SECONDS = 300
+ 
+-MIN_CONFIDENCE = 75.0
+-# Phase 6 does NOT construct or require trade levels.
+-# R:R belongs to Phase 7 after actual entry/SL/TP construction.
++MIN_PHASE5_CONFIDENCE = 75.0
++MIN_QUALITY_SCORE = 70.0
+ 
+ ROOT = Path(__file__).resolve().parent
++
+ STATE_DIR = ROOT / "state"
+ REPORT_DIR = ROOT / "reports"
+ 
+@@ -25,6 +66,13 @@
+ STATE_FILE = STATE_DIR / "phase6_trade_quality.json"
+ REPORT_FILE = REPORT_DIR / "phase6_trade_quality_report.json"
+ 
++STATE_DIR.mkdir(parents=True, exist_ok=True)
++REPORT_DIR.mkdir(parents=True, exist_ok=True)
++
++
++# ============================================================
++# TIME / I/O
++# ============================================================
+ 
+ def now_utc():
+     return datetime.now(timezone.utc).isoformat()
+@@ -54,91 +102,582 @@
+     temp.replace(path)
+ 
+ 
+-def ensure_directories():
+-    STATE_DIR.mkdir(parents=True, exist_ok=True)
+-    REPORT_DIR.mkdir(parents=True, exist_ok=True)
++def number(value, default=0.0):
++    try:
++        return float(value)
++    except (TypeError, ValueError):
++        return default
++
+ 
++# ============================================================
++# PHASE 5 CONTRACT
++# ============================================================
+ 
+-def get_phase5_candidates():
++def load_phase5():
+     state = load_json(PHASE5_STATE)
+ 
+-    if not state:
++    if not isinstance(state, dict):
+         raise RuntimeError(
+-            "Phase 5 state file not found."
++            "Phase 5 state file missing or invalid."
+         )
+ 
+-    intelligence = state.get(
+-        "intelligence",
++    return state
++
+------------------------------------------------------------
+ROOT : phase7_entry_intelligence.py
+ARCH : archive_candidates/phase7_entry_intelligence.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase7_entry_intelligence.py	2026-08-29 17:39:25.341586528 +0300
++++ phase7_entry_intelligence.py	2026-08-29 17:39:24.185586528 +0300
+@@ -338,14 +338,35 @@
+ 
+ def construct_trade(candidate, market):
+     symbol = candidate.get("symbol")
+-    analytical_direction = candidate.get(
+-        "direction"
++    # --------------------------------------------------------------
++    # PHASE 6 CONTRACT
++    #
++    # Direction is owned by market_bias.direction.
++    # Phase-5 confidence is preserved by Phase 6 under
++    # phase6_quality.phase5_confidence.
++    # --------------------------------------------------------------
++    market_bias = candidate.get(
++        "market_bias",
++        {},
++    )
++
++    analytical_direction = market_bias.get(
++        "direction",
++        candidate.get("direction"),
++    )
++
++    phase6_quality = candidate.get(
++        "phase6_quality",
++        {},
+     )
+ 
+     confidence = number(
+-        candidate.get(
+-            "phase6_confidence",
+-            candidate.get("confidence", 0),
++        phase6_quality.get(
++            "phase5_confidence",
++            candidate.get(
++                "phase6_confidence",
++                candidate.get("confidence", 0),
++            ),
+         )
+     )
+ 
+@@ -494,6 +515,12 @@
+         "symbol": symbol,
+         "direction": analytical_direction,
+         "confidence": confidence,
++        "phase6_quality_score": number(
++            candidate.get(
++                "phase6_quality",
++                {},
++            ).get("score")
++        ),
+ 
+         # These are NEW Phase 7 authoritative values.
+         "entry": entry,
+@@ -520,12 +547,50 @@
+         "fresh_market": market,
+ 
+         # Preserve analytical context.
+-        "rsi_5m": candidate.get("rsi_5m"),
++        "rsi_5m": candidate.get(
++            "rsi_5m",
++            candidate.get("rsi", {}).get("5m")
++            if isinstance(candidate.get("rsi"), dict)
++            else None,
++        ),
+         "extension_atr": extension_atr,
+-        "h1_trend": candidate.get("h1_trend"),
+-        "m15_trend": candidate.get("m15_trend"),
+-        "m5_trend": candidate.get("m5_trend"),
++        "h1_trend": candidate.get(
++            "h1_trend",
++            candidate.get("market_bias", {}).get("h1")
++            if isinstance(candidate.get("market_bias"), dict)
++            else None,
++        ),
++        "m15_trend": candidate.get(
++            "m15_trend",
++            candidate.get("market_bias", {}).get("m15")
++            if isinstance(candidate.get("market_bias"), dict)
++            else None,
++        ),
++        "m5_trend": candidate.get(
++            "m5_trend",
++            candidate.get("market_bias", {}).get("m5")
++            if isinstance(candidate.get("market_bias"), dict)
++            else None,
++        ),
+         "analytical_direction": analytical_direction,
++
++        # ----------------------------------------------------------
++        # FRESH-FEED EVIDENCE
++        #
++        # Phase 7 constructed this trade from the fresh Binance
++        # market snapshot. Expose the evidence on the candidate so
++        # downstream Phase 8 validation can independently verify
++        # that construction was based on fresh market data.
++        # ----------------------------------------------------------
++        "fresh_direction": market.get(
++            "fresh_direction"
++        ),
++        "feed_checked_utc": market.get(
++            "feed_checked_utc"
++        ),
++        "feed_candle_close_time": market.get(
++            "feed_candle_close_time"
++        ),
+     }
+ 
+ 
+@@ -583,17 +648,20 @@
+                 rejected.append(result)
+ 
+         except Exception as exc:
+-            rejected.append(
+-                {
+-                    "symbol": symbol,
+-                    "entry_ready": False,
+-                    "qualified": False,
+------------------------------------------------------------
+ROOT : phase7_final_validation.py
+ARCH : archive_candidates/phase7_final_validation.py
+
+RESULT: DIFFERENT CONTENT
+
+--- archive_candidates/phase7_final_validation.py	2026-08-29 17:39:27.437586528 +0300
++++ phase7_final_validation.py	2026-08-29 17:39:24.209586528 +0300
+@@ -1,317 +1,172 @@
+ #!/usr/bin/env python3
+ 
++"""
++CryptoMasterX1
++PHASE 7 — EXECUTION + ORDER OPENING
++
++Phase 7 owns the exchange execution boundary.
++
++IMPORTANT:
++    This implementation is intentionally LOCKED.
++
++It can validate Phase 6 trade-ready objects and prepare an
++execution request, but cannot submit a live order until the
++explicit global execution gates are changed during a separate
++verified activation process.
++
++Withdrawals remain permanently forbidden.
++"""
++
+ import json
+-import time
+-from pathlib import Path
+ from datetime import datetime, timezone
++from pathlib import Path
+ 
+-PROJECT = "CryptoMasterX1"
+-PHASE = "PHASE_7"
+-VERSION = "7.0-CONSOLIDATED"
+ 
+ ROOT = Path(__file__).resolve().parent
+ STATE = ROOT / "state"
+-REPORTS = ROOT / "reports"
+ 
+ PHASE6_STATE = STATE / "phase6_trade_intelligence.json"
+ PHASE7_STATE = STATE / "phase7_final_validation.json"
+-PHASE7_REPORT = REPORTS / "phase7_final_validation_report.json"
+-
+-MIN_CONFIDENCE = 75.0
+-MIN_RR = 1.50
+ 
+ EXECUTION_AUTHORIZED = False
+-ORDER_SUBMISSION = False
+ BOT_ARMED = False
+ LIVE_EXECUTION = False
+-TRANSMISSION_LOCKED = True
++ORDER_SUBMISSION = False
+ 
++# HARD SAFETY BOUNDARY
+ WITHDRAWALS = False
+-DEPOSITS = False
+-TRANSFERS = False
+ 
+ 
+-def now():
++def now_utc():
+     return datetime.now(timezone.utc).isoformat()
+ 
+ 
+-def save(path, data):
+-    path.parent.mkdir(parents=True, exist_ok=True)
+-    path.write_text(json.dumps(data, indent=2, default=str))
+-
+-
+-def load():
+-    if not PHASE6_STATE.exists():
+-        raise FileNotFoundError(
+-            f"Phase 6 state missing: {PHASE6_STATE}"
+-        )
+-
+-    return json.loads(PHASE6_STATE.read_text())
++def load_json(path):
++    return json.loads(path.read_text())
+ 
+ 
+-def validate(candidate):
+-    reasons = []
++def save_json(path, data):
++    path.write_text(json.dumps(data, indent=2))
+ 
+-    symbol = candidate.get("symbol")
+-    direction = candidate.get("direction")
+ 
+-    if not symbol:
+-        reasons.append("MISSING_SYMBOL")
+-
+-    if direction not in ("LONG", "SHORT"):
+-        reasons.append("INVALID_DIRECTION")
+-
+-    try:
+-        confidence = float(
+-            candidate.get("confidence", 0)
+-        )
+-    except Exception:
+-        confidence = 0
+-        reasons.append("INVALID_CONFIDENCE")
+-
+-    try:
+-        rr = float(candidate.get("rr", 0))
+-    except Exception:
+-        rr = 0
+-        reasons.append("INVALID_RR")
+-
+-    if confidence < MIN_CONFIDENCE:
+-        reasons.append("CONFIDENCE_BELOW_GATE")
+-
+-    if rr < MIN_RR:
+-        reasons.append("RR_BELOW_GATE")
+-
+-    levels = {}
+-
+-    for name in (
++def validate_trade(trade):
++    required = (
++        "symbol",
++        "direction",
+         "entry",
+         "sl",
+------------------------------------------------------------
+ROOT : phase8_entry_validation.py
+ARCH : archive_candidates/phase8_entry_validation.py
+
+RESULT: EXACT DUPLICATE
+------------------------------------------------------------
+ROOT : phase8_execution_lifecycle_v8.py
+ARCH : archive_candidates/phase8_execution_lifecycle_v8.py
+
+RESULT: EXACT DUPLICATE
+------------------------------------------------------------
+ROOT : phase9_decision_gate.py
+ARCH : archive_candidates/phase9_decision_gate.py
+
+RESULT: EXACT DUPLICATE
+
+==================== 7. PHASE VERSION INVENTORY ====================
+
+
+---------------- PHASE 1 ----------------
+./archive_candidates/phase10_trade_lifecycle.py
+./archive_candidates/phase11_full_system_verification.py
+./archive_candidates/phase1_scanner.py
+./phase10_monitoring.py
+./phase10_pre_execution_gate.py
+./phase10_trade_lifecycle.py
+./phase11_full_system_verification.py
+./phase1_scanner.py
+
+---------------- PHASE 2 ----------------
+
+---------------- PHASE 3 ----------------
+./archive_candidates/phase3_account_verify.py
+./phase3_account_verify.py
+
+---------------- PHASE 4 ----------------
+./archive_candidates/phase4_market_discovery.py
+./phase4_market_discovery.py
+
+---------------- PHASE 5 ----------------
+./archive_candidates/phase5_market_intelligence.py
+./phase5_market_intelligence.py
+
+---------------- PHASE 6 ----------------
+./archive_candidates/phase6_trade_intelligence.py
+./archive_candidates/phase6_trade_quality.py
+./phase6_trade_intelligence.py
+./phase6_trade_quality.py
+
+---------------- PHASE 7 ----------------
+./archive_candidates/phase7_entry_intelligence.py
+./archive_candidates/phase7_final_validation.py
+./phase7_entry_intelligence.py
+./phase7_final_validation.py
+
+---------------- PHASE 8 ----------------
+./archive_candidates/phase8_entry_validation.py
+./archive_candidates/phase8_execution_lifecycle_v8.py
+./phase8_entry_validation.py
+./phase8_execution_lifecycle_v8.py
+./phase8_final_validation.py
+
+---------------- PHASE 9 ----------------
+./archive_candidates/phase9_decision_gate.py
+./phase9_decision_gate.py
+./phase9_execution_lifecycle.py
+
+---------------- PHASE 10 ----------------
+./archive_candidates/phase10_trade_lifecycle.py
+./phase10_monitoring.py
+./phase10_pre_execution_gate.py
+./phase10_trade_lifecycle.py
+
+---------------- PHASE 11 ----------------
+./archive_candidates/phase11_full_system_verification.py
+./phase11_full_system_verification.py
+
+==================== 8. POSSIBLE BACKUP FILES ====================
+
+./archive_candidates/archive_clean_fix_20260825_phase10_trade_lifecycle.py
+./archive_candidates/archive_clean_fix_20260825_phase11_full_system_verification.py
+./archive_candidates/archive_final_contract_repair_20260825_phase10_trade_lifecycle.py
+./archive_candidates/archive_final_contract_repair_20260825_phase11_full_system_verification.py
+./archive_candidates/archive_final_contract_repair_20260825_v2_phase10_trade_lifecycle.py
+./archive_candidates/archive_final_contract_repair_20260825_v2_phase11_full_system_verification.py
+./archive_candidates/archive_structural_cleanup_20260825_phase11_full_system_verification.py
+./archive_candidates/archive_structural_cleanup_20260825_phase3_account_verify.py
+./archive_candidates/archive_structural_cleanup_repair_20260825_phase11_full_system_verification.py
+./archive_candidates/archive_structural_cleanup_repair_20260825_phase3_account_verify.py
+./archive_candidates/archive_unsafe_executors_phase10_live_executor.py
+./archive_candidates/backup_contract_final_phase10_trade_lifecycle.py
+./archive_candidates/backup_contract_final_phase6_trade_quality.py
+./archive_candidates/backup_contract_final_phase7_entry_intelligence.py
+./archive_candidates/backup_contract_final_phase8_entry_validation.py
+./archive_candidates/backup_contract_final_phase9_decision_gate.py
+./archive_candidates/backup_contract_repair_20260825_135902_phase5_market_intelligence.py
+./archive_candidates/backup_contract_repair_20260825_135902_phase6_trade_quality.py
+./archive_candidates/backup_contract_repair_20260825_135902_phase8_entry_validation.py
+./archive_candidates/backup_contract_repair_20260825_135902_phase9_decision_gate.py
+./archive_candidates/backup_one_pass_pipeline_fix_phase10_trade_lifecycle.py
+./archive_candidates/backup_one_pass_pipeline_fix_phase6_trade_quality.py
+./archive_candidates/backup_one_pass_pipeline_fix_phase7_entry_intelligence.py
+./archive_candidates/backup_one_pass_pipeline_fix_phase8_entry_validation.py
+./archive_candidates/backup_one_pass_pipeline_fix_phase9_decision_gate.py
+./archive_candidates/backup_pipeline_contract_20260825_135041_phase5_market_intelligence.py
+./archive_candidates/backup_pipeline_contract_20260825_135041_phase6_trade_quality.py
+./archive_candidates/backup_pipeline_contract_20260825_135041_phase7_entry_intelligence.py
+./archive_candidates/backup_pipeline_contract_20260825_135041_phase8_entry_validation.py
+./archive_candidates/backup_pipeline_contract_20260825_135041_phase9_decision_gate.py
+./archive_candidates/backup_pipeline_diagnostic_phase10_trade_lifecycle.py
+./archive_candidates/backup_pipeline_diagnostic_phase6_trade_quality.py
+./archive_candidates/backup_pipeline_diagnostic_phase7_entry_intelligence.py
+./archive_candidates/backup_pipeline_diagnostic_phase8_entry_validation.py
+./archive_candidates/backup_pipeline_diagnostic_phase9_decision_gate.py
+./archive_candidates/phase7_final_validation.py
+./phase7_final_validation.py
+./phase8_final_validation.py
+./pipeline_v8_contract.py
+
+==================== 9. NON-SOURCE BUILD/JUNK ====================
+
+
+==================== 10. ROOT FILE HASHES ====================
+
+cffc6d16cde081b31231123ce1170018c9b0879e4e34c47b09ffc04d132bfcd8  account_binding.py
+63135282a30bbf875d82e26b9ffb340def60bd683b7bb238ed291ad60501fed3  binance_account_readonly.py
+465232c6e8b791f16097f7802cdb9b2664ece8e12a06f7060e027a86b06d7650  build_consolidated_v8.py
+4c4245fa985280b2322b159e2dfe3e8980b4e96094370c774e685099f4913fac  conductor.py
+6fc3a862cb7d23678670045de557302768691f1789183e38107c64f87e117231  full_system_stability_scan.py
+06d165cf73933f86a5b98830207169d675d4f753bd400fb6a914ce6b5351c6e5  main.py
+574253fdd4a41d79fb2ee0863c814c44f04a698496104bd1348056c0183ccd04  master_pipeline.py
+07d432e92d65d28745748106f9d128d252300294f65b930b45d0d9f9aa3da356  phase10_monitoring.py
+29b1f497d07402522d5f6c089280e803b63869c11804848fa3e8bbcc072c371e  phase10_pre_execution_gate.py
+fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880  phase10_trade_lifecycle.py
+9bb02a79aecff73a743473856f7c8d14521a3e21c044a82dc2d72566c595a9ca  phase11_full_system_verification.py
+3dfeb227df251f20915e47fdd1f103b7205c95ad6b97fe232910dde6c1a40d6a  phase1_scanner.py
+e9001608f48509c95498439d0f9003f74c0760ca20909c02bf8b8e16422fa92d  phase3_account_verify.py
+d7435fcb561c142d969100c14be6e7baaa3eccd854df6d3153ef204f2abeb447  phase4_market_discovery.py
+72cc26cc94c9066a2f1fa742805ce50b6edde336eae1f600e6e1160c950b7beb  phase5_market_intelligence.py
+9e628a4e4102814d2f66bd4844c805821ac62e2d19d9b47b76ed015d986d3bb3  phase6_trade_intelligence.py
+52767deda33fcacc261a076e88b8ddf0199944ae016ab8d8b12755e8724e13e2  phase6_trade_quality.py
+6a1f889f71ea9a50f52bdefc13329cc88a7590ab6cc928c5150295b04412e9ec  phase7_entry_intelligence.py
+f1e1805767611beb66186efe110665ca43d484eb23c3824427c646b143fa415f  phase7_final_validation.py
+2a5afd638c993050e93df0f44b037b2be45813c3f2b66d3b885c9c73f25edb85  phase8_entry_validation.py
+ec46acea1a631bf9866230cb9932b19058dfcad5cc8644ce1bd0ae04499cb3e8  phase8_execution_lifecycle_v8.py
+c7f575748fbf7f9db49541478017b9b75a08cf82d0b4e6508fb52c3cc1acb0a3  phase8_final_validation.py
+596af8ac20797a5ae3904ad62f801e9da6f8c77a673ec60d99ce6b365d38e41f  phase9_decision_gate.py
+3441eb3cda1e9c4808098165041123d5a9697ffc7ba5aa3aabd5eabc11f06194  phase9_execution_lifecycle.py
+ed3447b530e9bf78d254bed5d6358ff690c172a0764cbe07c541eba8c2208234  pipeline.py
+0eed6ec02475276b2bbf58be1a46b9e307039730a565306a55a5a3192006eae6  pipeline_v8_contract.py
+3974ca7bbb123149bd1dc4d1636d367399339bc35da15bb27ed747919b483404  position_sizing.py
+c59cc388b446be1c7274745e8b4f7eed82170df48a5fbd77269d4dafcd1f6c1a  run_consolidated_v8.py
+de781c57f32560f38f094e84b37c24f4e6bce54630e95b7c2ce1227ad07b0b1f  spot_execution_adapter.py
+
+==================== 11. ARCHIVE HASHES ====================
+
+0254d843d68d8dae9d685fc7290a22aedb7800287e89d8693246451ed924ffa8  archive_candidates/archive_unsafe_executors_phase10_live_executor.py
+0574863473f7619b48acca86ff7a759cdeecf6139a785661eb9d571e60d42da9  archive_candidates/backup_contract_final_phase9_decision_gate.py
+0574863473f7619b48acca86ff7a759cdeecf6139a785661eb9d571e60d42da9  archive_candidates/backup_contract_repair_20260825_135902_phase9_decision_gate.py
+0574863473f7619b48acca86ff7a759cdeecf6139a785661eb9d571e60d42da9  archive_candidates/backup_one_pass_pipeline_fix_phase9_decision_gate.py
+0574863473f7619b48acca86ff7a759cdeecf6139a785661eb9d571e60d42da9  archive_candidates/backup_pipeline_contract_20260825_135041_phase9_decision_gate.py
+0574863473f7619b48acca86ff7a759cdeecf6139a785661eb9d571e60d42da9  archive_candidates/backup_pipeline_diagnostic_phase9_decision_gate.py
+1ab16b56081dfb6a08fb117128df14d6d86292dfb15cf6d3a2f424a98f645bf5  archive_candidates/phase7_final_validation.py
+25582daae7a86cb5692ab9064bdd1a6991d009a4802e88738b429ae37a38e6a5  archive_candidates/archive_structural_cleanup_repair_20260825_phase11_full_system_verification.py
+2a5afd638c993050e93df0f44b037b2be45813c3f2b66d3b885c9c73f25edb85  archive_candidates/phase8_entry_validation.py
+3dfeb227df251f20915e47fdd1f103b7205c95ad6b97fe232910dde6c1a40d6a  archive_candidates/phase1_scanner.py
+44db7c60d738857581d078ce01fe21d88b9a3ae98dc3b2d0472795ab5d100ea8  archive_candidates/phase6_trade_intelligence.py
+596af8ac20797a5ae3904ad62f801e9da6f8c77a673ec60d99ce6b365d38e41f  archive_candidates/phase9_decision_gate.py
+70154f2a42eb78226ab4ffb869e754285d6a65714b14792ce7b7611fc0b0938d  archive_candidates/backup_contract_final_phase6_trade_quality.py
+70154f2a42eb78226ab4ffb869e754285d6a65714b14792ce7b7611fc0b0938d  archive_candidates/backup_contract_repair_20260825_135902_phase6_trade_quality.py
+70154f2a42eb78226ab4ffb869e754285d6a65714b14792ce7b7611fc0b0938d  archive_candidates/backup_one_pass_pipeline_fix_phase6_trade_quality.py
+70154f2a42eb78226ab4ffb869e754285d6a65714b14792ce7b7611fc0b0938d  archive_candidates/backup_pipeline_diagnostic_phase6_trade_quality.py
+70154f2a42eb78226ab4ffb869e754285d6a65714b14792ce7b7611fc0b0938d  archive_candidates/phase6_trade_quality.py
+74a327f600e1cb8519b8a7f327420238c94484b63aaaa78093a421983b7f487e  archive_candidates/archive_clean_fix_20260825_phase10_trade_lifecycle.py
+74a327f600e1cb8519b8a7f327420238c94484b63aaaa78093a421983b7f487e  archive_candidates/archive_final_contract_repair_20260825_phase10_trade_lifecycle.py
+74a327f600e1cb8519b8a7f327420238c94484b63aaaa78093a421983b7f487e  archive_candidates/archive_final_contract_repair_20260825_v2_phase10_trade_lifecycle.py
+7f46a7f24d7994b93ce92a3a2a8a0f7f6bceab7e98a9accc6d52e117225d026d  archive_candidates/phase4_market_discovery.py
+887741f1a657fd6316e336ee4ccfd6c46af45e88e97135a643500d6ad015aba2  archive_candidates/archive_structural_cleanup_20260825_phase11_full_system_verification.py
+9149f7075d772a3beca555a10fa1d34001be2ec6bd01ffc4c6516e546b2967df  archive_candidates/backup_pipeline_contract_20260825_135041_phase8_entry_validation.py
+ac47ddacd17964629e383c440a75210909a0e0863cfe85a45ef22c9935d86d7a  archive_candidates/archive_structural_cleanup_20260825_phase3_account_verify.py
+b0e22323b2556eaac2591956e5ed95a527e5879f29afb8e1b561ea8eb4f80459  archive_candidates/backup_contract_final_phase8_entry_validation.py
+b0e22323b2556eaac2591956e5ed95a527e5879f29afb8e1b561ea8eb4f80459  archive_candidates/backup_contract_repair_20260825_135902_phase8_entry_validation.py
+b0e22323b2556eaac2591956e5ed95a527e5879f29afb8e1b561ea8eb4f80459  archive_candidates/backup_one_pass_pipeline_fix_phase8_entry_validation.py
+b0e22323b2556eaac2591956e5ed95a527e5879f29afb8e1b561ea8eb4f80459  archive_candidates/backup_pipeline_diagnostic_phase8_entry_validation.py
+b1cf457634b2e30c31ad6962a9b5c3d6104bf340564977ea0f749eba4eba9d6d  archive_candidates/archive_clean_fix_20260825_phase11_full_system_verification.py
+b1cf457634b2e30c31ad6962a9b5c3d6104bf340564977ea0f749eba4eba9d6d  archive_candidates/archive_final_contract_repair_20260825_phase11_full_system_verification.py
+b1cf457634b2e30c31ad6962a9b5c3d6104bf340564977ea0f749eba4eba9d6d  archive_candidates/archive_final_contract_repair_20260825_v2_phase11_full_system_verification.py
+c496c2a550b685b55708893b587e95afe759b6d1efcd20cc69a25f9c8b9a31e5  archive_candidates/account_binding.py
+c5da8e43267c8208f3734b830e962fdb5e7706d018e196f61bfd5d36a5fa8106  archive_candidates/archive_structural_cleanup_repair_20260825_phase3_account_verify.py
+c5da8e43267c8208f3734b830e962fdb5e7706d018e196f61bfd5d36a5fa8106  archive_candidates/phase3_account_verify.py
+d8069e48fd003b78a804d5517e80020b8511559eb0f29b520b918862fed89a79  archive_candidates/backup_contract_final_phase7_entry_intelligence.py
+d8069e48fd003b78a804d5517e80020b8511559eb0f29b520b918862fed89a79  archive_candidates/backup_one_pass_pipeline_fix_phase7_entry_intelligence.py
+d8069e48fd003b78a804d5517e80020b8511559eb0f29b520b918862fed89a79  archive_candidates/backup_pipeline_diagnostic_phase7_entry_intelligence.py
+d8069e48fd003b78a804d5517e80020b8511559eb0f29b520b918862fed89a79  archive_candidates/phase7_entry_intelligence.py
+e946a250f9f9da9d29e42399e6f2af796d2dee19beb46544a76c26cb354d11b5  archive_candidates/backup_pipeline_contract_20260825_135041_phase6_trade_quality.py
+e94c0fb09d5c9efc5b6e98f94083958d566bec9b0341b4141f165908376cb095  archive_candidates/backup_pipeline_contract_20260825_135041_phase7_entry_intelligence.py
+ec46acea1a631bf9866230cb9932b19058dfcad5cc8644ce1bd0ae04499cb3e8  archive_candidates/phase8_execution_lifecycle_v8.py
+f31a8b68186f10655435f16ba4143cd9efb1eb49faadc3d54065dfb5d0d8de71  archive_candidates/phase11_full_system_verification.py
+f6fc959d61be01266a30cf4ddc3e8b713c69a6ee215db015c099985802e76548  archive_candidates/backup_contract_repair_20260825_135902_phase5_market_intelligence.py
+f6fc959d61be01266a30cf4ddc3e8b713c69a6ee215db015c099985802e76548  archive_candidates/backup_pipeline_contract_20260825_135041_phase5_market_intelligence.py
+f6fc959d61be01266a30cf4ddc3e8b713c69a6ee215db015c099985802e76548  archive_candidates/phase5_market_intelligence.py
+fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880  archive_candidates/backup_contract_final_phase10_trade_lifecycle.py
+fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880  archive_candidates/backup_one_pass_pipeline_fix_phase10_trade_lifecycle.py
+fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880  archive_candidates/backup_pipeline_diagnostic_phase10_trade_lifecycle.py
+fb8ba2abf417c560184fe892e6e1f322c49332cfdeec384e39c3e2ffe0be0880  archive_candidates/phase10_trade_lifecycle.py
+
+============================================================
+ AUDIT COMPLETE
+ Report: reports/duplicate_original_audit.txt
+============================================================
