@@ -8,21 +8,44 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Accept Android Licenses
+        run: |
+          sudo mkdir -p /usr/local/lib/android/sdk/licenses
+          echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > /tmp/lic1
+          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> /tmp/lic1
+          echo "24333f8a63b6825ea9c5514f83c1059b8ea731e" >> /tmp/lic1
+          mkdir -p $ANDROID_HOME/licenses
+          cp /tmp/lic1 $ANDROID_HOME/licenses/android-sdk-license 2>/dev/null || true
+          cp /tmp/lic1 $ANDROID_HOME/licenses/android-sdk-preview-license 2>/dev/null || true
+          yes | sdkmanager --licenses || true
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          sdkmanager "build-tools;33.0.2" "platforms;android-33" "platform-tools" || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;33.0.2" "platforms;android-33" "platform-tools" || true
+
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip openjdk-17-jdk zip unzip libffi-dev libssl-dev
+          sudo apt install -y python3-pip zip unzip libffi-dev libssl-dev
           pip install --upgrade pip
           pip install cython==0.29.36
-          pip install buildozer==1.5.0
-          pip install virtualenv
+          pip install buildozer==1.5.0 virtualenv
+
       - name: Build APK
         run: |
           buildozer android debug --verbose
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
