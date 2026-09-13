@@ -15,17 +15,20 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - uses: android-actions/setup-android@v3
-      - name: Fix SDK paths for Buildozer
+      - name: Install deps
         run: |
-          sdkmanager --install "build-tools;33.0.2" "platforms;android-33" "platform-tools" "ndk;25.1.8937393"
-          yes | sdkmanager --licenses || true
-          ls /usr/local/lib/android/sdk/build-tools/
-      - name: Build
+          sudo apt update -qq
+          sudo apt install -y zip unzip libffi-dev libssl-dev libbz2-dev libsqlite3-dev
+          pip install --upgrade pip
+          pip install cython==0.29.36
+          pip install https://github.com/kivy/buildozer/archive/master.zip
+          pip install https://github.com/kivy/python-for-android/archive/master.zip
+      - name: Build APK
         run: |
-          pip install cython==0.29.36 buildozer==1.5.0
+          rm -rf ~/.buildozer bin
           buildozer android debug --verbose
-      - uses: actions/upload-artifact@v4
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: cryptomasterx1-apk
           path: bin/*.apk

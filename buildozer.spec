@@ -9,8 +9,10 @@ version = 1.1
 requirements = python3,kivy==2.3.1,pillow,requests,urllib3,certifi
 orientation = portrait
 fullscreen = 0
+
 [buildozer]
 log_level = 2
+
 [app:android]
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
 android.api = 33
@@ -20,6 +22,4 @@ android.sdk = 33
 android.accept_sdk_license_agreement = True
 android.archs = arm64-v8a
 p4a.bootstrap = sdl2
-p4a.sdk_dir = /usr/local/lib/android/sdk
-p4a.ndk_dir = /usr/local/lib/android/sdk/ndk/25.1.8937393
 p4a.branch = master
