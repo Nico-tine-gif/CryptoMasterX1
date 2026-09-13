@@ -9,13 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Java 11 (for sdkmanager - fixes JAXB)
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '11'
-
-      - name: Setup Java 17 (for Gradle build)
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -24,42 +18,36 @@ jobs:
       - name: Build APK
         run: |
           set -e
-          # Java 11 for sdkmanager
-          export JAVA_HOME=$JAVA_HOME_11_X64
+          export JAVA_HOME=$JAVA_HOME_17_X64
           export PATH=$JAVA_HOME/bin:$PATH
           java -version
 
-          # Install Android SDK manually (no broken action)
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
+          rm -rf $ANDROID_SDK_ROOT
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           cd $ANDROID_SDK_ROOT/cmdline-tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
           unzip -q tools.zip
-          mkdir -p latest
-          mv cmdline-tools/* latest/ 2>/dev/null || true
-          mv latest latest_tmp 2>/dev/null || true
-          mkdir -p latest
-          mv latest_tmp/* latest/ 2>/dev/null || true
+          rm tools.zip
+          mv cmdline-tools latest
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
           yes | sdkmanager --licenses
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools" "ndk;25b"
 
-          # Fix aidl not found - link host SDK to p4a private SDK
+          ls $ANDROID_SDK_ROOT/build-tools/35.0.0/ | grep aidl
+          echo "aidl found OK"
+
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
-
-          # Switch to Java 17 for actual build
-          export JAVA_HOME=$JAVA_HOME_17_X64
-          export PATH=$JAVA_HOME/bin:$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools
-          java -version
 
           cd $GITHUB_WORKSPACE
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
+
           buildozer android debug --verbose
 
       - uses: actions/upload-artifact@v4
