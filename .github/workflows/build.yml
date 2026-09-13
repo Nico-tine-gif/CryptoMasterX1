@@ -28,29 +28,28 @@ jobs:
           rm tools.zip
           mv cmdline-tools latest
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
-
           yes | sdkmanager --licenses
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
-
           mkdir -p $ANDROID_SDK_ROOT/tools/bin
           echo '#!/bin/bash
           exec $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "$@"' > $ANDROID_SDK_ROOT/tools/bin/sdkmanager
           chmod +x $ANDROID_SDK_ROOT/tools/bin/sdkmanager
-
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
-
           cd $GITHUB_WORKSPACE
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
-
           rm -rf.buildozer bin
-
           buildozer android debug --verbose
 
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: apk
           path: bin/*.apk
+
+      - name: Show log on failure
+        if: failure()
+        run: cat ~/.buildozer/logs/buildozer.log || true
