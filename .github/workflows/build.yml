@@ -13,10 +13,6 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Free disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
-          df -h
       - name: Build APK
         run: |
           set -e
@@ -44,15 +40,9 @@ jobs:
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
-          buildozer android debug
+          buildozer android debug --verbose
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: apk
           path: bin/*.apk
-      - name: Upload buildozer log on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: buildozer-log
-          path: ~/.buildozer/logs/buildozer.log
