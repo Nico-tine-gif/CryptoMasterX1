@@ -40,9 +40,6 @@ jobs:
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
-          # Patch p4a to not upgrade pip to broken version
-          find $(python3 -c "import site; print(site.getsitepackages()[0])")/pythonforandroid -type f -name "*.py" -exec sed -i 's/pip install -U pip/pip install pip==24.0/g' {} \;
-          find $(python3 -c "import site; print(site.getsitepackages()[0])")/pythonforandroid -type f -name "*.py" -exec sed -i 's/pip install --upgrade pip/pip install pip==24.0/g' {} \;
           buildozer android debug --verbose
       - uses: actions/upload-artifact@v4
         if: always()
