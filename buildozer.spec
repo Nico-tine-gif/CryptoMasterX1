@@ -8,7 +8,7 @@ version = 1.1
 requirements = python3,kivy==2.3.1
 orientation = portrait
 [buildozer]
-log_level = 2
+log_level = 1
 [app:android]
 android.permissions = INTERNET
 android.api = 35
@@ -17,3 +17,5 @@ android.ndk = 28c
 android.accept_sdk_license_agreement = True
 android.archs = arm64-v8a
 p4a.bootstrap = sdl2
+# Fix: only build arm64 to save space/time
+p4a.arch = arm64-v8a
