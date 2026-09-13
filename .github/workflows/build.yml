@@ -15,11 +15,6 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Install dependencies
-        run: |
-          sudo apt update -qq
-          sudo apt install -y python3-pip zip unzip libncurses6 libstdc++6 libbz2-1.0 libffi-dev libssl-dev libltdl-dev autoconf automake libtool pkg-config
-
       - name: Build APK
         run: |
           set -e
@@ -38,10 +33,8 @@ jobs:
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
 
           mkdir -p $ANDROID_SDK_ROOT/tools/bin
-          cat > $ANDROID_SDK_ROOT/tools/bin/sdkmanager << 'SHIM'
-          #!/bin/bash
-          exec $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "$@"
-          SHIM
+          echo '#!/bin/bash
+          exec $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "$@"' > $ANDROID_SDK_ROOT/tools/bin/sdkmanager
           chmod +x $ANDROID_SDK_ROOT/tools/bin/sdkmanager
 
           mkdir -p $HOME/.buildozer/android/platform
@@ -49,22 +42,15 @@ jobs:
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
 
           cd $GITHUB_WORKSPACE
-          pip install --upgrade pip
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
 
-          # Clean old builds
           rm -rf.buildozer bin
 
-          buildozer android debug --verbose 2>&1 | tail -n 200
+          buildozer android debug --verbose
 
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: apk
           path: bin/*.apk
-
-      - name: Show log on failure
-        if: failure()
-        run: cat ~/.buildozer/logs/buildozer.log || true
