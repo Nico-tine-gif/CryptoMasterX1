@@ -17,27 +17,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Pre-Accept Buildozer Android Licenses
-        run: |
-          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          mkdir -p ~/.android/licenses
-          printf "8933bad161af4178b1185d1a37fbf41ea5269c55\n" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          printf "d56f5187479451eabf01fb78af6dfcb131a6481e\n" >> ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          printf "24333f8a63b6825ea9c5514f83c1059b8ea731e\n" >> ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          cp ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license ~/.android/licenses/ || true
-          cp ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license $ANDROID_HOME/licenses/ 2>/dev/null || true
-          mkdir -p $HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin 2>/dev/null || true
-          echo "Licenses created at:"
-          ls -l ~/.buildozer/android/platform/android-sdk/licenses/ || true
-          cat ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license || true
-      - name: Install dependencies
+      - name: Install Buildozer MASTER (fixes sdkmanager path)
         run: |
           sudo apt update
-          sudo apt install -y python3-pip zip unzip libffi-dev libssl-dev
+          sudo apt install -y python3-pip zip unzip libffi-dev libssl-dev libbz2-dev libsqlite3-dev
           pip install --upgrade pip
-          pip install cython==0.29.36 buildozer==1.5.0 virtualenv
+          pip install cython==0.29.36 virtualenv
+          pip install https://github.com/kivy/buildozer/archive/master.zip
+          pip install https://github.com/kivy/python-for-android/archive/master.zip
+          buildozer --version
+          p4a --version
       - name: Build APK
         run: |
+          rm -rf ~/.buildozer
           buildozer android debug --verbose
       - name: Upload APK
         uses: actions/upload-artifact@v4
