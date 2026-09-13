@@ -1,28 +1,33 @@
 name: Build APK
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-22.04
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+
       - uses: android-actions/setup-android@v3
+
       - name: Build APK
         run: |
-          set -euxo pipefail
           yes | sdkmanager --licenses >/dev/null || true
-          # FIXED: NO ndk here, let p4a download it
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
           buildozer android debug --verbose
+
       - uses: actions/upload-artifact@v4
         with:
           name: apk
