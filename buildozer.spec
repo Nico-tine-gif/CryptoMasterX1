@@ -8,11 +8,8 @@ source.exclude_patterns =.buildozer,bin,__pycache__,*.pyc,.git
 version = 1.1
 requirements = python3,kivy==2.3.1,pillow,requests,urllib3,certifi
 orientation = portrait
-fullscreen = 0
-
 [buildozer]
 log_level = 2
-
 [app:android]
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
 android.api = 35

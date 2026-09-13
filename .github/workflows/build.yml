@@ -13,19 +13,17 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@v3
-      - name: Build
+
+      - name: Build APK - No Symlink Needed
         run: |
           yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
-          mkdir -p "$HOME/.buildozer/android/platform"
-          rm -rf "$HOME/.buildozer/android/platform/android-sdk"
-          ln -s "$ANDROID_HOME" "$HOME/.buildozer/android/platform/android-sdk"
-          ls -l "$HOME/.buildozer/android/platform/"
-          ls "$HOME/.buildozer/android/platform/android-sdk/build-tools/35.0.0/" | grep aidl
+          sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools" "ndk;25b"
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
+          # Master p4a auto-finds $ANDROID_HOME, no mkdir/ln needed
           buildozer android debug --verbose
+
       - uses: actions/upload-artifact@v4
         with:
           name: apk
