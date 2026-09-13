@@ -15,10 +15,10 @@ log_level = 2
 
 [app:android]
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
-android.api = 33
+android.api = 35
 android.minapi = 21
 android.ndk = 25b
-android.sdk = 33
+android.sdk = 35
 android.accept_sdk_license_agreement = True
 android.archs = arm64-v8a
 p4a.bootstrap = sdl2
