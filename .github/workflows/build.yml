@@ -13,43 +13,17 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: android-actions/setup-android@v3
-
-      - name: Accept licenses + install SDK 35
+      - name: Build
         run: |
-          set -euxo pipefail
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
-          yes | sdkmanager --licenses >/dev/null || true
-          test -x "$ANDROID_HOME/build-tools/35.0.0/aidl"
-          ls -l "$ANDROID_HOME/build-tools/35.0.0/aidl"
-
-      - name: Symlink Buildozer SDK to Host SDK
-        run: |
-          set -euxo pipefail
-          BUILDOZER_SDK="$HOME/.buildozer/android/platform/android-sdk"
-          mkdir -p "$HOME/.buildozer/android/platform"
-          rm -rf "$BUILDOZER_SDK"
-          ln -s "$ANDROID_HOME" "$BUILDOZER_SDK"
-          ls -la "$BUILDOZER_SDK/build-tools/"
-          test -x "$BUILDOZER_SDK/build-tools/35.0.0/aidl"
-
-      - name: Install Python deps (FIXED CYTHON)
-        run: |
-          pip install --upgrade pip
+          yes | sdkmanager --licenses
+          sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
+          rm -rf "$HOME/.buildozer/android/platform/android-sdk"
+          ln -s "$ANDROID_HOME" "$HOME/.buildozer/android/platform/android-sdk"
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
-
-      - name: Build APK
-        run: |
-          set -euxo pipefail
-          export ANDROID_HOME=$ANDROID_HOME
-          export ANDROID_SDK_ROOT=$ANDROID_HOME
-          rm -rf bin
-          buildozer android debug --verbose
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+          buildozer android debug
+      - uses: actions/upload-artifact@v4
         with:
-          name: CryptoMasterX1-debug
+          name: apk
           path: bin/*.apk
