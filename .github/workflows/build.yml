@@ -10,12 +10,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Java 17
+        id: java17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Setup Java 11 for sdkmanager
+      - name: Setup Java 11
+        id: java11
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -26,26 +28,28 @@ jobs:
       - name: Build APK
         run: |
           set -e
-          echo "--- Using Java 11 for sdkmanager fix ---"
-          export JAVA_HOME=$JAVA_HOME_11_X64
+          # Fix 1: Use Java 11 for sdkmanager (fixes JAXBException)
+          export JAVA_HOME=${{ steps.java11.outputs.path }}
           export PATH=$JAVA_HOME/bin:$PATH
           java -version
 
-          yes | sdkmanager --licenses >/dev/null || true
+          yes | sdkmanager --licenses > /dev/null || true
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools" "ndk;25b"
 
+          # Fix 2: Symlink host SDK to p4a SDK (fixes aidl not found)
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
 
-          echo "--- Switch to Java 17 for Gradle build ---"
-          export JAVA_HOME=$JAVA_HOME_17_X64
+          # Switch back to Java 17 for build
+          export JAVA_HOME=${{ steps.java17.outputs.path }}
           export PATH=$JAVA_HOME/bin:$PATH
           java -version
 
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
+
           buildozer android debug --verbose
 
       - uses: actions/upload-artifact@v4
