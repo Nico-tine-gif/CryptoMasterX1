@@ -30,13 +30,18 @@ jobs:
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
           yes | sdkmanager --licenses
-          sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools" "ndk;25.1.8937393"
+          sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools" "ndk;28c"
 
-          # Create 25b alias for buildozer which expects 25b folder name
-          cd $ANDROID_SDK_ROOT/ndk/
-          ln -s 25.1.8937393 25b 2>/dev/null || true
-          ls $ANDROID_SDK_ROOT/ndk/
+          # SHIM: p4a old code calls tools/bin/sdkmanager -> forward to new
+          mkdir -p $ANDROID_SDK_ROOT/tools/bin
+          cat > $ANDROID_SDK_ROOT/tools/bin/sdkmanager << 'SHIM'
+          #!/bin/bash
+          exec $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "$@"
+          SHIM
+          chmod +x $ANDROID_SDK_ROOT/tools/bin/sdkmanager
+          ls $ANDROID_SDK_ROOT/tools/bin/sdkmanager
 
+          # Link to p4a
           mkdir -p $HOME/.buildozer/android/platform
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
