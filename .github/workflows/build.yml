@@ -8,13 +8,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-
       - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-
       - name: Build APK
         run: |
           set -e
@@ -43,13 +41,8 @@ jobs:
           pip install https://github.com/kivy/python-for-android/archive/master.zip
           rm -rf.buildozer bin
           buildozer android debug --verbose
-
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: apk
           path: bin/*.apk
-
-      - name: Show log on failure
-        if: failure()
-        run: cat ~/.buildozer/logs/buildozer.log || true
