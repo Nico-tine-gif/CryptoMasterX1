@@ -15,14 +15,17 @@ jobs:
       - uses: android-actions/setup-android@v3
       - name: Build
         run: |
-          yes | sdkmanager --licenses
+          yes | sdkmanager --licenses >/dev/null || true
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
+          mkdir -p "$HOME/.buildozer/android/platform"
           rm -rf "$HOME/.buildozer/android/platform/android-sdk"
           ln -s "$ANDROID_HOME" "$HOME/.buildozer/android/platform/android-sdk"
+          ls -l "$HOME/.buildozer/android/platform/"
+          ls "$HOME/.buildozer/android/platform/android-sdk/build-tools/35.0.0/" | grep aidl
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
-          buildozer android debug
+          buildozer android debug --verbose
       - uses: actions/upload-artifact@v4
         with:
           name: apk
