@@ -5,12 +5,12 @@ package.domain = org.cryptomasterx1
 source.dir =.
 source.include_exts = py,png,jpg,kv,atlas,json
 version = 1.1
-requirements = python3,kivy==2.3.1,pillow,requests,urllib3,certifi,openssl
+requirements = python3,kivy==2.3.1
 orientation = portrait
 [buildozer]
 log_level = 2
 [app:android]
-android.permissions = INTERNET,ACCESS_NETWORK_STATE
+android.permissions = INTERNET
 android.api = 35
 android.minapi = 21
 android.ndk = 28c

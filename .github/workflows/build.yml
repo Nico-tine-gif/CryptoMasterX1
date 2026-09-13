@@ -39,7 +39,7 @@ jobs:
           pip install cython==0.29.36
           pip install https://github.com/kivy/buildozer/archive/master.zip
           pip install https://github.com/kivy/python-for-android/archive/master.zip
-          buildozer android debug --verbose
+          buildozer android debug --verbose || (echo "=== LOG ==="; cat ~/.buildozer/logs/buildozer.log; exit 1)
       - uses: actions/upload-artifact@v4
         if: always()
         with:
