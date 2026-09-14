@@ -1,97 +1,25 @@
-name: CryptoMasterX1 — Build APK
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
+name: build
+on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-22.04
-
     steps:
-      - name: Checkout CryptoMasterX1
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK
-        run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platform-tools" \
-                     "platforms;android-35" \
-                     "build-tools;35.0.0"
-          sdkmanager --list_installed
-
-      - name: Verify Android tools
-        run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-          echo "AIDL:"
-          find "$ANDROID_HOME" -type f -name aidl -print
-          echo "SDK:"
-          ls -la "$ANDROID_HOME/platforms" || true
-          echo "Build tools:"
-          ls -la "$ANDROID_HOME/build-tools" || true
-
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            build-essential \
-            git \
-            zip \
-            unzip \
-            autoconf \
-            automake \
-            libtool \
-            pkg-config \
-            zlib1g-dev \
-            libffi-dev \
-            libssl-dev
-
-      - name: Install Python build tools
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          python -m pip install "cython<3.0" buildozer
-
-      - name: Show project
-        run: |
-          echo "===== PROJECT ====="
-          pwd
-          find . -maxdepth 2 -type f | sort
-          echo "===== BUILDOZER ====="
-          cat buildozer.spec
-
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
       - name: Build debug APK
-        env:
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
         run: |
-          yes | buildozer android debug
-
-      - name: Locate APK
-        run: |
-          echo "===== APK FILES ====="
-          find . -type f \( -name "*.apk" -o -name "*.aab" \) -print
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+          pip install "pip==24.0" -q
+          pip install Cython==0.29.36 buildozer -q
+          pip install https://github.com/kivy/python-for-android/archive/master.zip -q
+          # kill the pip 25 bug that was in your 9:55 photo
+          PY=$(python -c "import site; print(site.getsitepackages()[0])")
+          sed -i 's/pip install -U pip/pip install pip==24.0/g' $PY/pythonforandroid/build.py
+          sed -i 's/--upgrade pip/==24.0/g' $PY/pythonforandroid/build.py
+          buildozer android debug
+      - uses: actions/upload-artifact@v4
         with:
-          name: CryptoMasterX1-debug-APK
-          path: |
-            bin/*.apk
-            .buildozer/android/platform/build-*/dists/*/build/outputs/apk/**/*.apk
-          if-no-files-found: error
+          name: apk
+          path: bin/*.apk
