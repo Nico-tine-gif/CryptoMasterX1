@@ -13,6 +13,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+      - name: Free disk space
+        run: sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android; df -h
       - name: Build APK
         run: |
           set -e
@@ -22,9 +24,7 @@ jobs:
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           cd $ANDROID_SDK_ROOT/cmdline-tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
-          unzip -q tools.zip
-          rm tools.zip
-          mv cmdline-tools latest
+          unzip -q tools.zip; rm tools.zip; mv cmdline-tools latest
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
           yes | sdkmanager --licenses
           sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
@@ -36,13 +36,20 @@ jobs:
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
           cd $GITHUB_WORKSPACE
-          pip install "pip==24.0" --force-reinstall
-          pip install cython==0.29.36
-          pip install https://github.com/kivy/buildozer/archive/master.zip
-          pip install https://github.com/kivy/python-for-android/archive/master.zip
-          buildozer android debug --verbose
+          pip install "pip==24.0" --force-reinstall -q
+          pip install cython==0.29.36 -q
+          pip install https://github.com/kivy/buildozer/archive/master.zip -q
+          pip install https://github.com/kivy/python-for-android/archive/master.zip -q
+          cat buildozer.spec
+          buildozer android debug --verbose || (cat ~/.buildozer/logs/buildozer.log | tail -n 500; exit 1)
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: apk
           path: bin/*.apk
+      - name: Upload full log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-buildozer-log
+          path: ~/.buildozer/logs/buildozer.log
