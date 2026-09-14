@@ -1,5 +1,5 @@
 name: build
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -14,7 +14,6 @@ jobs:
           pip install "pip==24.0" -q
           pip install Cython==0.29.36 buildozer -q
           pip install https://github.com/kivy/python-for-android/archive/master.zip -q
-          # kill the pip 25 bug that was in your 9:55 photo
           PY=$(python -c "import site; print(site.getsitepackages()[0])")
           sed -i 's/pip install -U pip/pip install pip==24.0/g' $PY/pythonforandroid/build.py
           sed -i 's/--upgrade pip/==24.0/g' $PY/pythonforandroid/build.py
