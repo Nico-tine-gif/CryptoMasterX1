@@ -1,67 +1,17 @@
 name: Build APK
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Python 3.11
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Setup Java 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Free disk + clean cache
-        run: |
-          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android
-          rm -rf ~/.buildozer $HOME/.buildozer
-          rm -rf.buildozer bin
-          df -h
       - name: Build APK
-        run: |
-          set -e
-          python --version
-          pip install "pip==24.0" --force-reinstall -q
-          export ANDROID_SDK_ROOT=$HOME/android-sdk
-          export ANDROID_HOME=$ANDROID_SDK_ROOT
-          rm -rf $ANDROID_SDK_ROOT
-          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
-          cd $ANDROID_SDK_ROOT/cmdline-tools
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
-          unzip -q tools.zip; rm tools.zip; mv cmdline-tools latest
-          export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH
-          yes | sdkmanager --licenses
-          sdkmanager "build-tools;35.0.0" "platforms;android-35" "platform-tools"
-          mkdir -p $ANDROID_SDK_ROOT/tools/bin
-          echo '#!/bin/bash
-          exec $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "$@"' > $ANDROID_SDK_ROOT/tools/bin/sdkmanager
-          chmod +x $ANDROID_SDK_ROOT/tools/bin/sdkmanager
-          mkdir -p $HOME/.buildozer/android/platform
-          rm -rf $HOME/.buildozer/android/platform/android-sdk
-          ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
-          cd $GITHUB_WORKSPACE
-          cat buildozer.spec
-          pip install cython==0.29.36 -q
-          pip install https://github.com/kivy/buildozer/archive/master.zip -q
-          pip install https://github.com/kivy/python-for-android/archive/master.zip -q
-          PYLIB=$(python3 -c "import site; print(site.getsitepackages()[0])")
-          find $PYLIB/pythonforandroid -type f -name "*.py" -exec sed -i 's/pip install -U pip/pip install pip==24.0/g' {} \;
-          find $PYLIB/pythonforandroid -type f -name "*.py" -exec sed -i 's/pip install --upgrade pip/pip install pip==24.0/g' {} \;
-          buildozer android debug --verbose || (echo "--- LAST 800 LINES OF LOG ---"; tail -n 800 ~/.buildozer/logs/buildozer.log; exit 1)
-      - uses: actions/upload-artifact@v4
-        if: always()
+        uses: diggermini/buildozer-action@v2
+        with:
+          buildozer_version: master
+          command: buildozer android debug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: apk
           path: bin/*.apk
-      - name: Upload full log
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: full-buildozer-log
-          path: ~/.buildozer/logs/buildozer.log
