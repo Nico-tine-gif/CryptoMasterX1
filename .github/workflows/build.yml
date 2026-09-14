@@ -16,6 +16,9 @@ jobs:
           pip install https://github.com/kivy/python-for-android/archive/master.zip -q
           PY=$(python -c "import site; print(site.getsitepackages()[0])")
           sed -i 's/pip install -U pip/pip install pip==24.0/g' $PY/pythonforandroid/build.py
+          sed -i 's/--upgrade pip/==24.0/g' $PY/pythonforandroid/build.py
+          mkdir -p ~/.buildozer/android/platform
+          yes | sdkmanager --licenses 2>/dev/null || true
           buildozer android debug
       - uses: actions/upload-artifact@v4
         with:
