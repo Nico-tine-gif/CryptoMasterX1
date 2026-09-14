@@ -17,13 +17,17 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Free disk
-        run: sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android; df -h
+      - name: Free disk + clean cache
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/lib/android
+          rm -rf ~/.buildozer $HOME/.buildozer
+          rm -rf.buildozer bin
+          df -h
       - name: Build APK
         run: |
           set -e
           python --version
-          pip install "pip==24.0" --force-reinstall
+          pip install "pip==24.0" --force-reinstall -q
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export ANDROID_HOME=$ANDROID_SDK_ROOT
           rm -rf $ANDROID_SDK_ROOT
@@ -42,18 +46,22 @@ jobs:
           rm -rf $HOME/.buildozer/android/platform/android-sdk
           ln -s $ANDROID_SDK_ROOT $HOME/.buildozer/android/platform/android-sdk
           cd $GITHUB_WORKSPACE
-          pip install cython==0.29.36
-          pip install https://github.com/kivy/buildozer/archive/master.zip
-          pip install https://github.com/kivy/python-for-android/archive/master.zip
-          # CRITICAL FIX: Patch p4a to NEVER upgrade pip to 25
+          cat buildozer.spec
+          pip install cython==0.29.36 -q
+          pip install https://github.com/kivy/buildozer/archive/master.zip -q
+          pip install https://github.com/kivy/python-for-android/archive/master.zip -q
           PYLIB=$(python3 -c "import site; print(site.getsitepackages()[0])")
-          echo "Patching p4a in $PYLIB"
-          grep -rn "install.*-U.*pip" $PYLIB/pythonforandroid || true
           find $PYLIB/pythonforandroid -type f -name "*.py" -exec sed -i 's/pip install -U pip/pip install pip==24.0/g' {} \;
           find $PYLIB/pythonforandroid -type f -name "*.py" -exec sed -i 's/pip install --upgrade pip/pip install pip==24.0/g' {} \;
-          find $PYLIB/pythonforandroid -type f -name "*.py" -exec sed -i 's/\"-U\", \"pip\"/\"pip==24.0\"/g' {} \;
-          buildozer android debug
+          buildozer android debug --verbose || (echo "--- LAST 800 LINES OF LOG ---"; tail -n 800 ~/.buildozer/logs/buildozer.log; exit 1)
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: apk
           path: bin/*.apk
+      - name: Upload full log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-buildozer-log
+          path: ~/.buildozer/logs/buildozer.log
