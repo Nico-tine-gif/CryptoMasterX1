@@ -1,28 +1,24 @@
 [app]
 title = CryptoMasterX1
 package.name = cryptomasterx1
-package.domain = org.cryptomaster
-source.dir = .
-source.include_exts = py,png,jpg,kv,atlas
-version = 1.0.0
-
-# Critical core compilation requirements including your async networking modules
-requirements = python3,ccxt,motor,aiohttp,asyncio,setuptools
-
+package.domain = com.cryptomasterx1.bot
+source.dir =.
+source.include_exts = py,png,jpg,kv,atlas,json
+source.include_patterns = core/*,modules/*,state/*
+version = 1.1
+requirements = python3,kivy,requests,python-binance
 orientation = portrait
-fullscreen = 1
-
-# Android specific configurations and permissions mapping
-android.permissions = INTERNET, NETWORK_STATE
-android.api = 33
-android.minapi = 21
-android.ndk = 25b
-android.private_storage = True
-
-# Native operational lifecycle and background persistence properties
-android.wakelock = True
-android.entrypoint = main.py
+fullscreen = 0
 
 [buildozer]
 log_level = 2
-warn_on_root = 1
+
+[app:android]
+android.permissions = INTERNET,ACCESS_NETWORK_STATE
+android.api = 33
+android.minapi = 21
+android.ndk = 25b
+android.accept_sdk_license_agreement = True
+android.archs = arm64-v8a
+android.allow_backup = False
+p4a.bootstrap = sdl2

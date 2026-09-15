@@ -1,0 +1,22 @@
+name: Build APK
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk zip unzip
+          pip install buildozer cython==0.29.36
+      - run: buildozer android debug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CryptoMasterX1-APK
+          path: bin/*.apk

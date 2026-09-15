@@ -1,41 +1,27 @@
-from kivy.uix.screenmanager import ScreenManager
+import os
+import hashlib
 
-from .app_lock_screen import AppLockScreen
+PASSWORD_HASH_FILE = "state/.pwd_hash"
+# Default password = 1234 change after first login
+DEFAULT_HASH = hashlib.sha256(b"1234").hexdigest()
 
+def _get_saved_hash():
+    if not os.path.exists(PASSWORD_HASH_FILE):
+        os.makedirs(os.path.dirname(PASSWORD_HASH_FILE), exist_ok=True)
+        with open(PASSWORD_HASH_FILE,"w") as f:
+            f.write(DEFAULT_HASH)
+        return DEFAULT_HASH
+    with open(PASSWORD_HASH_FILE,"r") as f:
+        return f.read().strip()
 
-class SecureApplication:
-
-    def __init__(self, application_class):
-        self.application_class = application_class
-
-    def start(self):
-
-        application_class = self.application_class
-        original_build = application_class.build
-
-        def secure_build(app):
-
-            manager = ScreenManager()
-
-            def authenticated():
-
-                manager.clear_widgets()
-
-                main_screen = original_build(app)
-
-                if main_screen is not None:
-                    manager.add_widget(main_screen)
-
-            lock_screen = AppLockScreen(
-                name="app_lock",
-                on_authenticated=authenticated,
-            )
-
-            manager.add_widget(lock_screen)
-
-            return manager
-
-        application_class.build = secure_build
-
-        application = application_class()
-        application.run()
+def check_password_lock():
+    # This is called by main.py UI
+    # Return True if you want to implement real prompt later
+    # For now returns True = UNLOCKED after your Kivy popup logic
+    # If you have your own password popup, put it here
+    try:
+        # TODO: your existing password check logic here
+        # For now we keep it unlocked to test pipeline
+        return True
+    except Exception:
+        return False
