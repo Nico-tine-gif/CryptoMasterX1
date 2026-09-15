@@ -1,75 +1,54 @@
 import asyncio
-import logging
-import importlib
-import sys
-
-logger = logging.getLogger("CryptoMasterX1.Pipeline")
+from pathlib import Path
+import importlib.util
+from .health import HealthController
 
 class PipelineContext:
-    """The continuous state adapter keeping data alive across phases."""
     def __init__(self):
+        self.data = {}
         self.market_intelligence = {}
         self.execution_payloads = []
         self.gate_passed = False
         self.active_positions = {}
         self.system_verification_status = "PENDING"
+        self.loop_count = 0
 
 class MasterPipeline:
-    def __init__(self, health_controller):
-        self.health = health_controller
+    def __init__(self, health_controller=None):
+        self.health = health_controller or HealthController()
         self.ctx = PipelineContext()
-        
-        # Exact phase blueprint matching your system specifications
         self.phases = [
-            {"name": "P1", "module": "modules.p1_core", "func": "process"},
-            {"name": "P2", "module": "modules.p2_auth", "func": "process"},
-            {"name": "P3", "module": "modules.p3_binance", "func": "process"},
-            {"name": "P4", "module": "modules.p4_discovery", "func": "process"},
-            {"name": "P5", "module": "modules.p5_intelligence", "func": "process"},
-            {"name": "P6", "module": "modules.p6_quality", "func": "process"},
-            {"name": "P7", "module": "modules.p7_entry", "func": "process"},
-            {"name": "P8", "module": "modules.p8_execution", "func": "process"},
-            {"name": "P9", "module": "modules.p9_gate", "func": "process"},
-            {"name": "P10", "module": "modules.p10_monitoring", "func": "process"},
-            {"name": "P11", "module": "modules.p11_verification", "func": "process"},
+            ("P1-SCANNER","phase1_scanner"),
+            ("P2-AUTH","phase2_auth"),
+            ("P3-ACCOUNT","phase3_account_verify"),
+            ("P4-DISCOVERY","phase4_market_discovery"),
+            ("P5-INTELLIGENCE","phase5_market_intelligence"),
+            ("P6-QUALITY","phase6_trade_intelligence"),
+            ("P7-ENTRY","phase7_entry_intelligence"),
+            ("P8-VALIDATION","phase8_entry_validation"),
+            ("P9-GATE","phase9_decision_gate"),
+            ("P10-MONITOR","phase10_monitoring"),
+            ("P11-VERIFY","phase11_full_system_verification"),
         ]
 
-    async def run_pipeline(self):
-        logger.info("⚡ MASTER PIPELINE: Loop initiated. No holidays in crypto.")
-        
-        while True:
-            try:
-                for phase in self.phases:
-                    # Dynamically extract and cycle phase functions
-                    mod = importlib.import_module(phase["module"])
-                    func = getattr(mod, phase["func"])
-                    
-                    # Cycle context adapter down the loop
-                    self.ctx = await func(self.ctx)
-                    
-                    # Ping Health Controller Watchdog instantly
-                    self.health.report_heartbeat(phase["name"], "NOMINAL")
-                
-                # Zero delay pause sequence - quick yield to keep Termux responsive
-                await asyncio.sleep(0.01)
-                
-            except Exception as e:
-                logger.error(f"⚠️ PIPELINE INSTABILITY DETECTED: {str(e)}")
-                self.health.report_error("PIPELINE_CRASH", str(e))
-                await asyncio.sleep(1) # Structural recovery delay
+    def load(self, name):
+        p = Path(__file__).parent / f"{name}.py"
+        spec = importlib.util.spec_from_file_location(name, p)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
 
-# === P11 LIVE SAFETY COMPATIBILITY ===
-EXECUTION_CONFIG = {
-    "PAPER_MODE": False,
-    "ALLOW_LIVE": True,
-    "EXECUTION_AUTHORIZED": True,
-    "ORDER_SUBMISSION": True,
-    "LIVE_EXECUTION": True,
-    "BOT_ARMED": True,
-    "BINANCE_SPOT": True,
-    "BINANCE_TESTNET": True,
-    "WITHDRAWALS": False,
-    "DEPOSITS": False,
-    "TRANSFERS": False,
-    "MAX_POSITION_USDT": 10.0,
-}
+    async def run_pipeline(self):
+        print("⚡ MASTER PIPELINE - NON-STOP LOOP")
+        while True:
+            self.ctx.loop_count += 1
+            print(f"\n========== LOOP #{self.ctx.loop_count} ==========")
+            for pname, fname in self.phases:
+                mod = self.load(fname)
+                self.ctx = mod.process(self.ctx)
+                self.health.report_heartbeat(pname, "NOMINAL")
+                await asyncio.sleep(0.05)
+            await asyncio.sleep(1)
+
+    def run(self, dry_run=False):
+        return asyncio.run(self.run_pipeline())
