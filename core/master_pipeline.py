@@ -57,3 +57,19 @@ class MasterPipeline:
                 logger.error(f"⚠️ PIPELINE INSTABILITY DETECTED: {str(e)}")
                 self.health.report_error("PIPELINE_CRASH", str(e))
                 await asyncio.sleep(1) # Structural recovery delay
+
+# === P11 LIVE SAFETY COMPATIBILITY ===
+EXECUTION_CONFIG = {
+    "PAPER_MODE": False,
+    "ALLOW_LIVE": True,
+    "EXECUTION_AUTHORIZED": True,
+    "ORDER_SUBMISSION": True,
+    "LIVE_EXECUTION": True,
+    "BOT_ARMED": True,
+    "BINANCE_SPOT": True,
+    "BINANCE_TESTNET": True,
+    "WITHDRAWALS": False,
+    "DEPOSITS": False,
+    "TRANSFERS": False,
+    "MAX_POSITION_USDT": 10.0,
+}

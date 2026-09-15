@@ -2,3 +2,67 @@
 bin/
 .buildozer/
 bin/
+
+# Android / Buildozer
+.buildozer/
+bin/
+build/
+dist/
+
+# Runtime / build logs
+build-logs/
+failure-logs/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Local virtual environments
+venv/
+
+# APK outputs
+*.apk
+
+# Android / Buildozer
+.buildozer/
+bin/
+build/
+dist/
+
+# Runtime / build logs
+build-logs/
+failure-logs/
+
+# Python
+__pycache__/
+*.pyc
+
+# Local secrets
+.env
+.env.*
+!.env.example
+
+# Local virtual environments
+venv/
+
+# APK outputs
+*.apk
+
+.buildozer/
+bin/
+build/
+dist/
+build-logs/
+failure-logs/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+venv/
+*.apk
