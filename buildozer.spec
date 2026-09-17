@@ -9,7 +9,7 @@ source.include_patterns = core/**,modules/**,state/**,reports/**
 
 version = 1.1
 
-requirements = python3,kivy
+requirements = python3,kivy==2.3.0,kivymd==0.104.2,requests,urllib3,certifi,chardet,idna
 
 orientation = portrait
 fullscreen = 0
