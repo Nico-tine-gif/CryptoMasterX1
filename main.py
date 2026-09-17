@@ -1,142 +1,194 @@
 #!/usr/bin/env python3
 """
-CryptoMasterX1 - Kivy Dashboard
-Dark professional trading terminal UI
+CryptoMasterX1 — Kivy Trading Terminal Dashboard
+Dark professional UI. Reads reports/*.json live.
 """
 import json
 import threading
 import importlib.util
 from pathlib import Path
+from datetime import datetime, timezone
 
 from kivy.app import App
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.properties import (
-    StringProperty, ListProperty, BooleanProperty,
-)
+from kivy.properties import StringProperty, ListProperty, BooleanProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.metrics import dp
 
-# ---------------- Theme ----------------
-COLORS = {
-    'bg':       (0.03, 0.04, 0.06, 1),
-    'card':     (0.07, 0.09, 0.12, 1),
-    'card_alt': (0.09, 0.11, 0.15, 1),
-    'border':   (0.15, 0.18, 0.24, 1),
-    'text':     (0.90, 0.93, 0.96, 1),
-    'text_dim': (0.55, 0.60, 0.68, 1),
-    'accent':   (0.10, 0.85, 0.70, 1),
-    'green':    (0.20, 0.90, 0.55, 1),
-    'red':      (0.95, 0.35, 0.45, 1),
-    'yellow':   (0.98, 0.78, 0.25, 1),
-    'blue':     (0.35, 0.65, 0.98, 1),
-    'muted':    (0.20, 0.24, 0.30, 1),
-}
-Window.clearcolor = COLORS['bg']
+# ---------- Palette ----------
+C_BG      = (0.027, 0.035, 0.055, 1)
+C_CARD    = (0.055, 0.075, 0.105, 1)
+C_CARD_2  = (0.075, 0.100, 0.140, 1)
+C_BORDER  = (0.130, 0.170, 0.230, 1)
+C_TEXT    = (0.910, 0.940, 0.970, 1)
+C_DIM     = (0.520, 0.590, 0.680, 1)
+C_ACCENT  = (0.130, 0.850, 0.750, 1)
+C_GREEN   = (0.200, 0.900, 0.550, 1)
+C_RED     = (0.960, 0.350, 0.440, 1)
+C_YELLOW  = (0.980, 0.780, 0.250, 1)
+C_BLUE    = (0.350, 0.650, 0.980, 1)
+C_MUTED   = (0.150, 0.190, 0.250, 1)
+C_GOLD    = (0.950, 0.740, 0.300, 1)
+
+Window.clearcolor = C_BG
+
 
 KV = r'''
-#:import COLORS __main__.COLORS
-#:import dp kivy.metrics.dp
-
 <Card@BoxLayout>:
     canvas.before:
         Color:
-            rgba: COLORS['card']
+            rgba: (0.055, 0.075, 0.105, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [12]
+            radius: [14]
         Color:
-            rgba: COLORS['border']
+            rgba: (0.130, 0.170, 0.230, 1)
         Line:
-            rounded_rectangle: (self.x, self.y, self.width, self.height, 12)
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 14)
             width: 1
-    padding: [14, 12]
-    spacing: 8
+    padding: [16, 14]
+    spacing: 6
 
-<PhaseDot>:
+<SectionLabel@Label>:
+    font_size: '11sp'
+    color: (0.520, 0.590, 0.680, 1)
+    bold: True
+    halign: 'left'
+    valign: 'middle'
+    text_size: self.size
+    size_hint_y: None
+    height: '18dp'
+
+<PhaseCard>:
     orientation: 'vertical'
     size_hint_x: None
-    width: '60dp'
+    width: '66dp'
     padding: [4, 6]
     canvas.before:
         Color:
-            rgba: self.bg_color
+            rgba: self.card_bg
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [10]
         Color:
-            rgba: self.border_color
+            rgba: self.card_border
         Line:
             rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
             width: 1
     Label:
-        text: root.phase_id
-        font_size: '13sp'
+        text: root.pid
+        font_size: '14sp'
         bold: True
-        color: COLORS['text']
+        color: (0.910, 0.940, 0.970, 1)
         halign: 'center'
+        valign: 'middle'
         text_size: self.size
     Label:
-        text: root.phase_label
+        text: root.plabel
         font_size: '9sp'
-        color: COLORS['text_dim']
+        color: (0.520, 0.590, 0.680, 1)
         halign: 'center'
+        valign: 'middle'
         text_size: self.size
+    Label:
+        id: dot
+        text: root.pstatus
+        font_size: '8sp'
+        bold: True
+        color: root.status_color
+        halign: 'center'
+        valign: 'middle'
+        text_size: self.size
+
+<MetricRow@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: '22dp'
+    Label:
+        text: root.lbl if hasattr(root, 'lbl') else ''
+        font_size: '12sp'
+        color: (0.520, 0.590, 0.680, 1)
+        halign: 'left'
+        valign: 'middle'
+        text_size: self.size
+        size_hint_x: 0.55
+    Label:
+        text: root.val if hasattr(root, 'val') else ''
+        font_size: '12sp'
+        bold: True
+        color: root.vcolor if hasattr(root, 'vcolor') else (0.910, 0.940, 0.970, 1)
+        halign: 'right'
+        valign: 'middle'
+        text_size: self.size
+        size_hint_x: 0.45
 
 <CryptoMasterX1Dashboard>:
     orientation: 'vertical'
-    canvas.before:
-        Color:
-            rgba: COLORS['bg']
-        Rectangle:
-            pos: self.pos
-            size: self.size
 
-    # ======= HEADER =======
+    # ======================= HEADER =======================
     BoxLayout:
         size_hint_y: None
-        height: '66dp'
-        padding: [16, 8, 16, 4]
-        spacing: 10
+        height: '72dp'
+        padding: [18, 10, 18, 8]
+        spacing: 12
         canvas.before:
             Color:
-                rgba: COLORS['card_alt']
+                rgba: (0.075, 0.100, 0.140, 1)
             Rectangle:
                 pos: self.pos
                 size: self.size
             Color:
-                rgba: COLORS['accent']
+                rgba: (0.130, 0.850, 0.750, 1)
             Rectangle:
                 pos: self.x, self.y
                 size: self.width, 2
-        Label:
-            text: '[b]CryptoMasterX1[/b]'
-            markup: True
-            font_size: '22sp'
-            color: COLORS['text']
+        BoxLayout:
+            orientation: 'vertical'
             size_hint_x: None
-            width: self.texture_size[0] + dp(10)
-        Label:
-            text: 'SPOT ONLY  |  LIVE P1-P12'
-            font_size: '11sp'
-            color: COLORS['text_dim']
-            valign: 'middle'
+            width: '210dp'
+            Label:
+                text: '[b]CryptoMasterX1[/b]'
+                markup: True
+                font_size: '22sp'
+                color: (0.910, 0.940, 0.970, 1)
+                halign: 'left'
+                valign: 'bottom'
+                text_size: self.size
+            Label:
+                text: 'AUTONOMOUS SPOT TERMINAL'
+                font_size: '9sp'
+                color: (0.130, 0.850, 0.750, 1)
+                halign: 'left'
+                valign: 'top'
+                text_size: self.size
         Widget:
-        Label:
-            id: live_pill
-            text: 'IDLE'
-            font_size: '13sp'
-            bold: True
-            color: COLORS['text_dim']
+        BoxLayout:
+            orientation: 'vertical'
             size_hint_x: None
-            width: '90dp'
-            halign: 'right'
-            text_size: self.size
+            width: '110dp'
+            Label:
+                id: pill_status
+                text: 'IDLE'
+                font_size: '14sp'
+                bold: True
+                color: (0.520, 0.590, 0.680, 1)
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
+            Label:
+                id: pill_time
+                text: '--:--:--'
+                font_size: '10sp'
+                color: (0.520, 0.590, 0.680, 1)
+                halign: 'right'
+                valign: 'middle'
+                text_size: self.size
 
-    # ======= SCROLL BODY =======
+    # ======================= BODY =======================
     ScrollView:
         do_scroll_x: False
         bar_width: dp(4)
@@ -144,246 +196,250 @@ KV = r'''
             orientation: 'vertical'
             size_hint_y: None
             height: self.minimum_height
-            padding: [12, 12]
-            spacing: 12
+            padding: [14, 14]
+            spacing: 14
 
-            # --- PIPELINE ---
+            # ---------- PIPELINE ----------
             Card:
                 size_hint_y: None
-                height: '190dp'
+                height: '176dp'
                 orientation: 'vertical'
-                Label:
-                    text: 'PIPELINE STATUS  |  P1 -> P12'
-                    font_size: '12sp'
-                    color: COLORS['text_dim']
-                    size_hint_y: None
-                    height: '18dp'
-                    halign: 'left'
-                    text_size: self.size
-                GridLayout:
-                    id: pipeline_grid
-                    cols: 6
-                    spacing: 6
-                    row_default_height: '60dp'
-                    row_force_default: True
-
-            # --- SIGNAL ---
-            Card:
-                size_hint_y: None
-                height: '200dp'
-                orientation: 'vertical'
-                Label:
-                    text: 'ACTIVE SIGNAL'
-                    font_size: '12sp'
-                    color: COLORS['text_dim']
-                    size_hint_y: None
-                    height: '18dp'
-                    halign: 'left'
-                    text_size: self.size
+                SectionLabel:
+                    text: 'PIPELINE  |  P1 -> P12'
                 BoxLayout:
+                    id: pipeline_row
                     orientation: 'horizontal'
-                    spacing: 20
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: 4
-                        Label:
-                            id: sig_symbol
-                            text: '--'
-                            font_size: '26sp'
-                            bold: True
-                            color: COLORS['text']
-                            halign: 'left'
-                            text_size: self.size
-                            size_hint_y: None
-                            height: '36dp'
-                        Label:
-                            id: sig_direction
-                            text: 'NO SIGNAL'
-                            font_size: '18sp'
-                            bold: True
-                            color: COLORS['text_dim']
-                            halign: 'left'
-                            text_size: self.size
-                            size_hint_y: None
-                            height: '28dp'
-                        Label:
-                            id: sig_conf
-                            text: 'Confidence: --'
-                            font_size: '13sp'
-                            color: COLORS['text_dim']
-                            halign: 'left'
-                            text_size: self.size
-                        Widget:
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: 4
-                        Label:
-                            id: sig_price
-                            text: 'Price: --'
-                            font_size: '13sp'
-                            color: COLORS['text']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: sig_atr
-                            text: 'ATR: --'
-                            font_size: '13sp'
-                            color: COLORS['text_dim']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: sig_sl
-                            text: 'SL: --'
-                            font_size: '13sp'
-                            color: COLORS['red']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: sig_tp1
-                            text: 'TP1: --'
-                            font_size: '13sp'
-                            color: COLORS['green']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: sig_tp2
-                            text: 'TP2: --'
-                            font_size: '13sp'
-                            color: COLORS['green']
-                            halign: 'left'
-                            text_size: self.size
+                    spacing: 6
+                    size_hint_y: None
+                    height: '108dp'
 
-            # --- MARKET SCANNER ---
-            Card:
+            # ---------- SIGNAL + EXECUTION ----------
+            BoxLayout:
                 size_hint_y: None
                 height: '240dp'
+                spacing: 14
+
+                Card:
+                    orientation: 'vertical'
+                    SectionLabel:
+                        text: 'ACTIVE SIGNAL'
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        spacing: 16
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size_hint_x: 0.55
+                            Label:
+                                id: sig_symbol
+                                text: '--'
+                                font_size: '30sp'
+                                bold: True
+                                color: (0.910, 0.940, 0.970, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '42dp'
+                            Label:
+                                id: sig_direction
+                                text: 'NO SIGNAL'
+                                font_size: '16sp'
+                                bold: True
+                                color: (0.520, 0.590, 0.680, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '26dp'
+                            Label:
+                                id: sig_conf
+                                text: 'confidence  --'
+                                font_size: '12sp'
+                                color: (0.520, 0.590, 0.680, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                            Widget:
+                        BoxLayout:
+                            orientation: 'vertical'
+                            size_hint_x: 0.45
+                            spacing: 0
+                            Label:
+                                id: m_price
+                                text: 'PRICE     --'
+                                font_size: '12sp'
+                                color: (0.910, 0.940, 0.970, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '24dp'
+                            Label:
+                                id: m_atr
+                                text: 'ATR       --'
+                                font_size: '12sp'
+                                color: (0.520, 0.590, 0.680, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '24dp'
+                            Label:
+                                id: m_sl
+                                text: 'SL        --'
+                                font_size: '12sp'
+                                color: (0.960, 0.350, 0.440, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '24dp'
+                            Label:
+                                id: m_tp1
+                                text: 'TP1       --'
+                                font_size: '12sp'
+                                color: (0.200, 0.900, 0.550, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '24dp'
+                            Label:
+                                id: m_tp2
+                                text: 'TP2       --'
+                                font_size: '12sp'
+                                color: (0.200, 0.900, 0.550, 1)
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.size
+                                size_hint_y: None
+                                height: '24dp'
+
+                Card:
+                    orientation: 'vertical'
+                    SectionLabel:
+                        text: 'EXECUTION BOUNDARY'
+                    Label:
+                        id: ex_spot
+                        text: 'Spot Only        --'
+                        font_size: '12sp'
+                        color: (0.910, 0.940, 0.970, 1)
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        size_hint_y: None
+                        height: '22dp'
+                    Label:
+                        id: ex_fut
+                        text: 'Futures          --'
+                        font_size: '12sp'
+                        color: (0.520, 0.590, 0.680, 1)
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        size_hint_y: None
+                        height: '22dp'
+                    Label:
+                        id: ex_with
+                        text: 'Withdrawals      --'
+                        font_size: '12sp'
+                        color: (0.910, 0.940, 0.970, 1)
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        size_hint_y: None
+                        height: '22dp'
+                    Label:
+                        id: ex_armed
+                        text: 'Bot Armed        --'
+                        font_size: '12sp'
+                        color: (0.130, 0.850, 0.750, 1)
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        size_hint_y: None
+                        height: '22dp'
+                    Label:
+                        id: ex_exec
+                        text: 'Live Execution   --'
+                        font_size: '12sp'
+                        color: (0.130, 0.850, 0.750, 1)
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        size_hint_y: None
+                        height: '22dp'
+                    Label:
+                        id: ex_status
+                        text: 'Status           --'
+                        font_size: '12sp'
+                        color: (0.520, 0.590, 0.680, 1)
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        size_hint_y: None
+                        height: '22dp'
+
+            # ---------- MARKET SCANNER ----------
+            Card:
+                size_hint_y: None
+                height: '248dp'
                 orientation: 'vertical'
-                Label:
+                SectionLabel:
                     text: 'MARKET SCANNER  |  BINANCE SPOT'
-                    font_size: '12sp'
-                    color: COLORS['text_dim']
-                    size_hint_y: None
-                    height: '18dp'
-                    halign: 'left'
-                    text_size: self.size
                 GridLayout:
                     id: scanner_grid
-                    cols: 4
+                    cols: 5
                     spacing: 2
-                    row_default_height: '24dp'
+                    row_default_height: '26dp'
                     row_force_default: True
-
-            # --- EXECUTION BOUNDARY ---
-            Card:
-                size_hint_y: None
-                height: '160dp'
-                orientation: 'vertical'
-                Label:
-                    text: 'EXECUTION BOUNDARY'
-                    font_size: '12sp'
-                    color: COLORS['text_dim']
                     size_hint_y: None
-                    height: '18dp'
-                    halign: 'left'
-                    text_size: self.size
-                BoxLayout:
-                    orientation: 'horizontal'
-                    spacing: 12
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: 4
-                        Label:
-                            id: ex_spot
-                            text: 'Spot Only: --'
-                            font_size: '12sp'
-                            color: COLORS['green']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: ex_fut
-                            text: 'Futures: --'
-                            font_size: '12sp'
-                            color: COLORS['text_dim']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: ex_with
-                            text: 'Withdrawals: --'
-                            font_size: '12sp'
-                            color: COLORS['green']
-                            halign: 'left'
-                            text_size: self.size
-                    BoxLayout:
-                        orientation: 'vertical'
-                        spacing: 4
-                        Label:
-                            id: ex_armed
-                            text: 'Bot Armed: --'
-                            font_size: '12sp'
-                            color: COLORS['accent']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: ex_exec
-                            text: 'Live Execution: --'
-                            font_size: '12sp'
-                            color: COLORS['accent']
-                            halign: 'left'
-                            text_size: self.size
-                        Label:
-                            id: ex_status
-                            text: 'Status: --'
-                            font_size: '12sp'
-                            color: COLORS['accent']
-                            halign: 'left'
-                            text_size: self.size
+                    height: self.minimum_height
 
-            # --- STATUS ---
+            # ---------- STATUS ----------
             Card:
                 size_hint_y: None
-                height: '70dp'
+                height: '66dp'
                 Label:
                     id: status_line
                     text: 'Status: Idle'
-                    font_size: '13sp'
-                    color: COLORS['text']
+                    font_size: '12sp'
+                    color: (0.910, 0.940, 0.970, 1)
                     halign: 'left'
                     valign: 'middle'
                     text_size: self.size
 
-    # ======= FOOTER =======
+    # ======================= FOOTER =======================
     BoxLayout:
         size_hint_y: None
         height: '76dp'
-        padding: [12, 12]
+        padding: [14, 12]
         spacing: 12
         canvas.before:
             Color:
-                rgba: COLORS['card_alt']
+                rgba: (0.075, 0.100, 0.140, 1)
             Rectangle:
                 pos: self.pos
                 size: self.size
             Color:
-                rgba: COLORS['border']
+                rgba: (0.130, 0.170, 0.230, 1)
             Rectangle:
                 pos: self.x, self.top - 1
                 size: self.width, 1
         Button:
-            id: btn_start
             text: 'START'
             font_size: '15sp'
             bold: True
             background_normal: ''
-            background_color: COLORS['green']
-            color: (0.04, 0.06, 0.08, 1)
+            background_color: (0.200, 0.900, 0.550, 1)
+            color: (0.027, 0.035, 0.055, 1)
             on_release: root.start_pipeline()
         Button:
-            id: btn_stop
             text: 'STOP'
             font_size: '15sp'
             bold: True
             background_normal: ''
-            background_color: COLORS['red']
+            background_color: (0.960, 0.350, 0.440, 1)
             color: (1, 1, 1, 1)
             on_release: root.stop_pipeline()
 '''
@@ -392,10 +448,18 @@ Builder.load_string(KV)
 
 
 PHASES = [
-    ('P1', 'Scanner'), ('P2', 'Auth'), ('P3', 'Acct'),
-    ('P4', 'Universe'), ('P5', 'Mkt'), ('P6', 'Trades'),
-    ('P7', 'Entry'), ('P8', 'Lifecycle'), ('P9', 'Gate'),
-    ('P10', 'Monitor'), ('P11', 'Verify'), ('P12', 'Execute'),
+    ('P1',  'SCAN'),
+    ('P2',  'AUTH'),
+    ('P3',  'ACCT'),
+    ('P4',  'UNIV'),
+    ('P5',  'MKT'),
+    ('P6',  'TRADES'),
+    ('P7',  'ENTRY'),
+    ('P8',  'LIFE'),
+    ('P9',  'GATE'),
+    ('P10', 'MON'),
+    ('P11', 'VERIFY'),
+    ('P12', 'EXEC'),
 ]
 
 REPORT_MAP = {
@@ -414,18 +478,21 @@ REPORT_MAP = {
 }
 
 
-class PhaseDot(BoxLayout):
-    phase_id = StringProperty('')
-    phase_label = StringProperty('')
-    bg_color = ListProperty(COLORS['card'])
-    border_color = ListProperty(COLORS['border'])
+class PhaseCard(BoxLayout):
+    pid = StringProperty('')
+    plabel = StringProperty('')
+    pstatus = StringProperty('IDLE')
+    card_bg = ListProperty(list(C_CARD_2))
+    card_border = ListProperty(list(C_BORDER))
+    status_color = ListProperty(list(C_DIM))
 
 
 class CryptoMasterX1Dashboard(BoxLayout):
     running = BooleanProperty(False)
-    _dots = {}
-    _runner_thread = None
-    _stop_event = None
+    _cards = {}
+    _thread = None
+    _stop = None
+    _pulse = 0
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -433,16 +500,20 @@ class CryptoMasterX1Dashboard(BoxLayout):
         self.reports_dir = Path(self.app.reports_dir)
         self.reports_dir.mkdir(parents=True, exist_ok=True)
         Clock.schedule_once(self._build_pipeline, 0)
-        Clock.schedule_interval(self._refresh_ui, 1.5)
+        Clock.schedule_interval(self._refresh, 1.5)
+        Clock.schedule_interval(self._tick_time, 1.0)
 
     def _build_pipeline(self, dt):
-        grid = self.ids.pipeline_grid
-        grid.clear_widgets()
-        self._dots = {}
+        row = self.ids.pipeline_row
+        row.clear_widgets()
+        self._cards = {}
         for pid, label in PHASES:
-            d = PhaseDot(phase_id=pid, phase_label=label)
-            self._dots[pid] = d
-            grid.add_widget(d)
+            c = PhaseCard(pid=pid, plabel=label)
+            self._cards[pid] = c
+            row.add_widget(c)
+
+    def _tick_time(self, dt):
+        self.ids.pill_time.text = datetime.now().strftime('%H:%M:%S')
 
     def _read_json(self, name):
         p = self.reports_dir / name
@@ -453,203 +524,215 @@ class CryptoMasterX1Dashboard(BoxLayout):
         except Exception:
             return None
 
-    def _refresh_ui(self, dt):
-        # ---- Pipeline dots ----
-        for pid, fname in REPORT_MAP.items():
-            data = self._read_json(fname)
-            dot = self._dots.get(pid)
-            if not dot:
-                continue
-            if data is None:
-                dot.bg_color = COLORS['card']
-                dot.border_color = COLORS['border']
-            else:
-                status = str(data.get('status', '')).upper()
-                if 'FAIL' in status or 'REJECT' in status:
-                    dot.bg_color = COLORS['red']
-                elif 'FLAT' in status:
-                    dot.bg_color = COLORS['yellow']
-                else:
-                    dot.bg_color = COLORS['green']
-                dot.border_color = COLORS['accent']
+    def _refresh(self, dt):
+        self._refresh_pipeline()
+        self._refresh_signal()
+        self._refresh_scanner()
+        self._refresh_boundary()
+        self._refresh_status()
 
-        # ---- Signal ----
+    def _refresh_pipeline(self):
+        for pid, fname in REPORT_MAP.items():
+            card = self._cards.get(pid)
+            if not card:
+                continue
+            data = self._read_json(fname)
+            if data is None:
+                card.card_bg = list(C_CARD_2)
+                card.card_border = list(C_BORDER)
+                card.pstatus = 'IDLE'
+                card.status_color = list(C_DIM)
+                continue
+            status = str(data.get('status', 'OK')).upper()
+            if 'FAIL' in status or 'REJECT' in status:
+                card.card_bg = list(C_RED)
+                card.card_border = list(C_RED)
+                card.status_color = list(C_TEXT)
+                card.pstatus = 'FAIL'
+            elif 'FLAT' in status:
+                card.card_bg = list(C_YELLOW)
+                card.card_border = list(C_YELLOW)
+                card.status_color = (0.027, 0.035, 0.055, 1)
+                card.pstatus = 'FLAT'
+            elif status in ('RUNNING', 'IN_PROGRESS'):
+                card.card_bg = list(C_BLUE)
+                card.card_border = list(C_BLUE)
+                card.status_color = list(C_TEXT)
+                card.pstatus = 'RUN'
+            else:
+                card.card_bg = list(C_GREEN)
+                card.card_border = list(C_GREEN)
+                card.status_color = (0.027, 0.035, 0.055, 1)
+                card.pstatus = 'OK'
+
+    def _refresh_signal(self):
         p6 = self._read_json('p6_trade_quality.json') or {}
         trades = p6.get('trades') or []
-        if trades:
-            t = trades[0]
-            self.ids.sig_symbol.text = str(t.get('symbol', '--'))
-            d = str(t.get('direction', '--')).upper()
-            self.ids.sig_direction.text = d
-            self.ids.sig_direction.color = (
-                COLORS['green'] if d == 'LONG'
-                else COLORS['red'] if d == 'SHORT'
-                else COLORS['text_dim']
-            )
-            conf = t.get('confidence')
-            self.ids.sig_conf.text = (
-                f"Confidence: {conf}%" if conf is not None else "Confidence: --"
-            )
-            e = t.get('entry') or {}
-            r = t.get('risk') or {}
-            tg = t.get('targets') or {}
-            self.ids.sig_price.text = f"Price: {e.get('reference_price', '--')}"
-            self.ids.sig_atr.text = f"ATR: {e.get('atr_15m', '--')}"
-            self.ids.sig_sl.text = f"SL: {r.get('stop_loss', '--')}"
-            self.ids.sig_tp1.text = f"TP1: {tg.get('tp1', '--')}"
-            self.ids.sig_tp2.text = f"TP2: {tg.get('tp2', '--')}"
-        else:
+        if not trades:
             self.ids.sig_symbol.text = '--'
             self.ids.sig_direction.text = 'NO SIGNAL'
-            self.ids.sig_direction.color = COLORS['text_dim']
-            self.ids.sig_conf.text = 'Confidence: --'
-            self.ids.sig_price.text = 'Price: --'
-            self.ids.sig_atr.text = 'ATR: --'
-            self.ids.sig_sl.text = 'SL: --'
-            self.ids.sig_tp1.text = 'TP1: --'
-            self.ids.sig_tp2.text = 'TP2: --'
-
-        # ---- Scanner ----
-        self._refresh_scanner()
-
-        # ---- Execution boundary ----
-        exec_data = (
-            (self._read_json('p12_live_execution.json') or {}).get('execution')
-            or (self._read_json('p11_full_system_verification.json') or {}).get('execution_boundary')
-            or (self._read_json('p10_trade_lifecycle.json') or {}).get('execution_boundary')
-            or {}
+            self.ids.sig_direction.color = C_DIM
+            self.ids.sig_conf.text = 'confidence  --'
+            for k in ('m_price', 'm_atr', 'm_sl', 'm_tp1', 'm_tp2'):
+                self.ids[k].text = self.ids[k].text.split('  ')[0] + '  --'
+            return
+        t = trades[0]
+        self.ids.sig_symbol.text = str(t.get('symbol', '--'))
+        d = str(t.get('direction', '--')).upper()
+        self.ids.sig_direction.text = d
+        self.ids.sig_direction.color = (
+            C_GREEN if d == 'LONG' else C_RED if d == 'SHORT' else C_DIM
         )
-        if exec_data:
-            spot = exec_data.get('spot_only', False)
-            fut = exec_data.get('futures_enabled', False)
-            with_ = exec_data.get('withdrawals', True)
-            armed = exec_data.get('bot_armed', False)
-            live = exec_data.get('live_execution', False)
-            status = exec_data.get('status', '--')
-            self.ids.ex_spot.text = f"Spot Only: {'ON' if spot else 'OFF'}"
-            self.ids.ex_spot.color = COLORS['green'] if spot else COLORS['red']
-            self.ids.ex_fut.text = f"Futures: {'ON' if fut else 'OFF'}"
-            self.ids.ex_fut.color = COLORS['red'] if fut else COLORS['text_dim']
-            self.ids.ex_with.text = f"Withdrawals: {'LOCKED' if not with_ else 'OPEN'}"
-            self.ids.ex_with.color = COLORS['green'] if not with_ else COLORS['red']
-            self.ids.ex_armed.text = f"Bot Armed: {'YES' if armed else 'NO'}"
-            self.ids.ex_armed.color = COLORS['accent'] if armed else COLORS['text_dim']
-            self.ids.ex_exec.text = f"Live Execution: {'ON' if live else 'OFF'}"
-            self.ids.ex_exec.color = COLORS['accent'] if live else COLORS['text_dim']
-            self.ids.ex_status.text = f"Status: {status}"
-
-        # ---- Status line ----
-        p12 = self._read_json('p12_live_execution.json') or {}
-        p12s = p12.get('status', '--')
-        orders = p12.get('orders_placed', 0)
-        self.ids.status_line.text = (
-            f"Status: {'RUNNING' if self.running else 'Idle'}    "
-            f"Orders: {orders}    P12: {p12s}"
+        conf = t.get('confidence')
+        self.ids.sig_conf.text = (
+            f"confidence  {conf}%" if conf is not None else "confidence  --"
         )
+        e = t.get('entry') or {}
+        r = t.get('risk') or {}
+        tg = t.get('targets') or {}
+        self.ids.m_price.text = f"PRICE     {e.get('reference_price', '--')}"
+        self.ids.m_atr.text = f"ATR       {e.get('atr_15m', '--')}"
+        self.ids.m_sl.text = f"SL        {r.get('stop_loss', '--')}"
+        self.ids.m_tp1.text = f"TP1       {tg.get('tp1', '--')}"
+        self.ids.m_tp2.text = f"TP2       {tg.get('tp2', '--')}"
 
     def _refresh_scanner(self):
         grid = self.ids.scanner_grid
         grid.clear_widgets()
-        for h in ('Symbol', 'Price', 'Change', 'Signal'):
-            grid.add_widget(Label(
-                text=f'[b]{h}[/b]', markup=True, font_size='11sp',
-                color=COLORS['text_dim'], halign='left', valign='middle',
-            ))
+        headers = ('SYMBOL', 'PRICE', '24H%', 'SIGNAL', 'CONF')
+        for h in headers:
+            grid.add_widget(self._scanner_cell(h, C_DIM, bold=True))
+        rows = []
         scan = self._read_json('binance_universe_scan.json') or {}
         rows = scan.get('symbols') or scan.get('universe') or []
         if not rows:
             p6 = self._read_json('p6_trade_quality.json') or {}
-            for t in (p6.get('trades') or [])[:8]:
+            for t in (p6.get('trades') or [])[:7]:
                 rows.append({
                     'symbol': t.get('symbol', '--'),
                     'price': (t.get('entry') or {}).get('reference_price', '--'),
                     'change': '--',
                     'signal': t.get('direction', 'NEUTRAL'),
+                    'conf': t.get('confidence', '--'),
                 })
         if not rows:
-            for s in ('BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT', 'FILUSDT'):
-                rows.append({'symbol': s, 'price': '--',
-                             'change': '--', 'signal': 'NEUTRAL'})
-        for row in rows[:8]:
-            sym = row.get('symbol', '--') if isinstance(row, dict) else str(row)
-            price = row.get('price', '--') if isinstance(row, dict) else '--'
-            chg = row.get('change', '--') if isinstance(row, dict) else '--'
-            sig = row.get('signal', 'NEUTRAL') if isinstance(row, dict) else 'NEUTRAL'
-            grid.add_widget(Label(text=str(sym), font_size='12sp',
-                                  color=COLORS['text'], halign='left',
-                                  valign='middle'))
-            grid.add_widget(Label(text=str(price), font_size='12sp',
-                                  color=COLORS['text_dim'], halign='left',
-                                  valign='middle'))
-            grid.add_widget(Label(text=str(chg), font_size='12sp',
-                                  color=COLORS['text_dim'], halign='left',
-                                  valign='middle'))
+            for s in ('BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'BNBUSDT',
+                      'FILUSDT', 'XRPUSDT', 'ADAUSDT'):
+                rows.append({'symbol': s, 'price': '--', 'change': '--',
+                             'signal': 'NEUTRAL', 'conf': '--'})
+        for row in rows[:7]:
+            sym = str(row.get('symbol', '--'))
+            price = str(row.get('price', '--'))
+            chg = str(row.get('change', '--'))
+            sig = str(row.get('signal', 'NEUTRAL')).upper()
+            conf = str(row.get('conf', '--'))
             sig_color = (
-                COLORS['green'] if str(sig).upper() == 'LONG'
-                else COLORS['red'] if str(sig).upper() == 'SHORT'
-                else COLORS['text_dim']
+                C_GREEN if sig == 'LONG' else C_RED if sig == 'SHORT' else C_DIM
             )
-            grid.add_widget(Label(text=str(sig), font_size='12sp', bold=True,
-                                  color=sig_color, halign='left',
-                                  valign='middle'))
+            grid.add_widget(self._scanner_cell(sym, C_TEXT, bold=True))
+            grid.add_widget(self._scanner_cell(price, C_TEXT))
+            grid.add_widget(self._scanner_cell(chg, C_DIM))
+            grid.add_widget(self._scanner_cell(sig, sig_color, bold=True))
+            grid.add_widget(self._scanner_cell(conf, C_DIM))
 
+    def _scanner_cell(self, text, color, bold=False):
+        from kivy.uix.label import Label
+        return Label(
+            text=text, font_size='11sp', bold=bold, color=color,
+            halign='left', valign='middle',
+        )
+
+    def _refresh_boundary(self):
+        ex = (
+            (self._read_json('p12_live_execution.json') or {}).get('execution')
+            or (self._read_json('p11_full_system_verification.json') or {}).get('execution_boundary')
+            or (self._read_json('p10_trade_lifecycle.json') or {}).get('execution_boundary')
+            or {}
+        )
+        if not ex:
+            return
+        spot  = ex.get('spot_only', False)
+        fut   = ex.get('futures_enabled', False)
+        wd    = ex.get('withdrawals', True)
+        armed = ex.get('bot_armed', False)
+        live  = ex.get('live_execution', False)
+        stat  = ex.get('status', '--')
+        self.ids.ex_spot.text = f"Spot Only        {'ON' if spot else 'OFF'}"
+        self.ids.ex_spot.color = C_GREEN if spot else C_RED
+        self.ids.ex_fut.text = f"Futures          {'ON' if fut else 'OFF'}"
+        self.ids.ex_fut.color = C_RED if fut else C_DIM
+        self.ids.ex_with.text = f"Withdrawals      {'LOCKED' if not wd else 'OPEN'}"
+        self.ids.ex_with.color = C_GREEN if not wd else C_RED
+        self.ids.ex_armed.text = f"Bot Armed        {'YES' if armed else 'NO'}"
+        self.ids.ex_armed.color = C_ACCENT if armed else C_DIM
+        self.ids.ex_exec.text = f"Live Execution   {'ON' if live else 'OFF'}"
+        self.ids.ex_exec.color = C_ACCENT if live else C_DIM
+        self.ids.ex_status.text = f"Status           {stat}"
+
+    def _refresh_status(self):
+        p12 = self._read_json('p12_live_execution.json') or {}
+        p12s = p12.get('status', '--')
+        orders = p12.get('orders_placed', 0)
+        self.ids.status_line.text = (
+            f"State: {'RUNNING' if self.running else 'IDLE'}     "
+            f"Orders: {orders}     P12: {p12s}"
+        )
+
+    # ---------- Controls ----------
     def start_pipeline(self):
         if self.running:
             return
         self.running = True
-        self.ids.live_pill.text = 'RUNNING'
-        self.ids.live_pill.color = COLORS['accent']
-        self._stop_event = threading.Event()
-        self._runner_thread = threading.Thread(
-            target=self._run_pipeline, daemon=True)
-        self._runner_thread.start()
+        self.ids.pill_status.text = 'RUNNING'
+        self.ids.pill_status.color = C_ACCENT
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._run, daemon=True)
+        self._thread.start()
 
     def stop_pipeline(self):
         self.running = False
-        self.ids.live_pill.text = 'IDLE'
-        self.ids.live_pill.color = COLORS['text_dim']
-        if self._stop_event:
-            self._stop_event.set()
+        self.ids.pill_status.text = 'IDLE'
+        self.ids.pill_status.color = C_DIM
+        if self._stop:
+            self._stop.set()
 
-    def _log_ui(self, msg):
-        def _do(dt):
-            self.ids.status_line.text = f"Status: {msg}"
-        Clock.schedule_once(_do, 0)
+    def _log(self, msg):
+        Clock.schedule_once(lambda dt: setattr(
+            self.ids.status_line, 'text', f"Status: {msg}"), 0)
 
-    def _run_pipeline(self):
+    def _run(self):
         try:
-            master_path = Path(self.app.master_path)
-            if not master_path.exists():
-                self._log_ui(f"Master not found: {master_path}")
+            mp = Path(self.app.master_path)
+            if not mp.exists():
+                self._log(f"master missing: {mp}")
                 return
-            spec = importlib.util.spec_from_file_location(
-                "cryptomasterx1_master", str(master_path))
+            spec = importlib.util.spec_from_file_location("cmx1_master", str(mp))
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
             mod.REPORTS = self.reports_dir
-            mod.P1()
-            mod.P2(None)
-            mod.P3(None)
-            mod.P4(None)
-            mod.P5(None)
-            mod.P6(None)
-            p7 = mod.P7(None)
+            p1 = mod.P1()
+            p2 = mod.P2(p1)
+            p3 = mod.P3(p2)
+            p4 = mod.P4(p3)
+            p5 = mod.P5(p4)
+            p6 = mod.P6(p5)
+            p7 = mod.P7(p6)
             p8 = mod.P8(p7)
             p9 = mod.P9(p8)
             p10 = mod.P10(p9)
             p11 = mod.P11(p10)
             p12 = mod.P12(p11)
-            self._log_ui(
-                f"Cycle done. P7={p7['summary']['validated']} "
+            self._log(
+                f"done — P7 validated={p7['summary']['validated']} "
                 f"P12={p12['status']}"
             )
         except Exception as e:
-            self._log_ui(f"Pipeline error: {e}")
+            self._log(f"error: {e}")
         finally:
             def _done(dt):
                 self.running = False
-                self.ids.live_pill.text = 'IDLE'
-                self.ids.live_pill.color = COLORS['text_dim']
+                self.ids.pill_status.text = 'IDLE'
+                self.ids.pill_status.color = C_DIM
             Clock.schedule_once(_done, 0)
 
 
