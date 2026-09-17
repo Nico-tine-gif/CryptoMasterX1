@@ -14,3 +14,5 @@ bin/
 *.apk
 *.pyc
 __pycache__/
+*.bak
+*.bak.*
