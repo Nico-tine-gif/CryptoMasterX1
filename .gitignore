@@ -9,3 +9,8 @@ reports/
 .env
 *.log
 *.apk
+.buildozer/
+bin/
+*.apk
+*.pyc
+__pycache__/

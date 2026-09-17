@@ -2,11 +2,11 @@
 title = CryptoMasterX1
 package.name = cryptomasterx1
 package.domain = com.cryptomasterx1.bot
-source.dir = .
+source.dir =.
 source.include_exts = py,png,jpg,kv,atlas,json
 source.include_patterns = core/*,modules/*,state/*
 version = 1.1
-requirements = python3,kivy
+requirements = python3,kivy==2.3.0,requests,urllib3,charset-normalizer,idna,certifi,python-binance
 orientation = portrait
 fullscreen = 0
 p4a.bootstrap = sdl2
